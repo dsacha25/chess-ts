@@ -1,14 +1,24 @@
 import React from 'react';
+import useActions from '../../hooks/use-actions/use-actions.hook';
 import { ToolbarButton, ToolbarContainer } from './toolbar.styles';
 
 const Toolbar = () => {
+	const { setDashboardIndex } = useActions();
 	return (
 		<ToolbarContainer>
 			Toolbar
-			<ToolbarButton color="light">Fuck You</ToolbarButton>
-			<ToolbarButton color="light">Enemies</ToolbarButton>
-			<ToolbarButton color="light">Inadequacies</ToolbarButton>
-			<ToolbarButton color="light">Profile</ToolbarButton>
+			<ToolbarButton onClick={() => setDashboardIndex(0)} color="light">
+				Fuck You
+			</ToolbarButton>
+			<ToolbarButton onClick={() => setDashboardIndex(1)} color="light">
+				Enemies
+			</ToolbarButton>
+			<ToolbarButton onClick={() => setDashboardIndex(2)} color="light">
+				Inadequacies
+			</ToolbarButton>
+			<ToolbarButton onClick={() => setDashboardIndex(3)} color="light">
+				Profile
+			</ToolbarButton>
 		</ToolbarContainer>
 	);
 };

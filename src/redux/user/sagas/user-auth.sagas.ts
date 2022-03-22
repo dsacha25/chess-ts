@@ -17,7 +17,7 @@ import {
 	logOutSuccess,
 	checkUserSession,
 	userError,
-} from '../user.action';
+} from '../user.actions';
 import {
 	DeleteUserAccountAction,
 	LogInStartAction,
