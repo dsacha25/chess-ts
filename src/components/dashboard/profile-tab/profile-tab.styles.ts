@@ -14,4 +14,5 @@ export const DeleteAccountButton = styled(CustomButton)`
 	width: 250px;
 	height: 60px;
 	font-size: 15px;
+	border-radius: 30px;
 `;
