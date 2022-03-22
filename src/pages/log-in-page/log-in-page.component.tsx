@@ -10,7 +10,12 @@ import Paths from '../../utils/types/paths/paths';
 const LogInPage = () => {
 	const navigate = useNavigate();
 	const { logInStart } = useActions();
-	const { register, handleSubmit } = useForm<Credentials>();
+	const {
+		register,
+		watch,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<Credentials>();
 
 	const onSubmit: SubmitHandler<Credentials> = (data) => {
 		logInStart(data, () => navigate(`/${Paths.DASHBOARD}`));
@@ -21,10 +26,18 @@ const LogInPage = () => {
 			<LoginTitle color="secondary" margin="0">
 				Log In
 			</LoginTitle>
-			<FormInput {...register('email', { required: true })} label="Email" />
+			<FormInput
+				{...register('email', { required: true })}
+				label="Email"
+				hasData={!!watch('email')}
+				error={errors.email}
+			/>
 			<FormInput
 				{...register('password', { required: true })}
 				label="Password"
+				type="password"
+				hasData={!!watch('password')}
+				error={errors.password}
 			/>
 			<LogInButton color="main">Log In</LogInButton>
 		</LogInContainer>
