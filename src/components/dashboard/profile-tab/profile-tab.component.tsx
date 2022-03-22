@@ -7,7 +7,8 @@ const ProfileTab = () => {
 	const { deleteUserAccount } = useActions();
 	return (
 		<ProfileContainer>
-			<Title>Profile Page</Title>
+			<Title fontWeight={200}>Profile Page</Title>
+			<p>Good ridence. You sucked anyways. Bitch.</p>
 			<DeleteAccountButton
 				onClick={() =>
 					deleteUserAccount({ email: 'scooty@nooty.com', password: 'asdqwe' })

@@ -8,6 +8,12 @@ export const ProfileContainer = styled.div`
 	height: 100%;
 
 	place-items: center;
+
+	grid-template-rows: 1fr auto auto 1fr;
+
+	p {
+		color: white;
+	}
 `;
 
 export const DeleteAccountButton = styled(CustomButton)`
