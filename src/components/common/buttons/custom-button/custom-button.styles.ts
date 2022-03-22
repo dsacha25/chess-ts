@@ -82,7 +82,8 @@ const borderlessStyles = css`
 const outlineStyles = css<BaseButtonProps>`
 	color: ${({ color, theme }) => color && theme[color]} !important;
 	border: 2px solid !important;
-	background-color: transparent !important;
+	background-color: ${({ theme }) => theme.accent} !important;
+	font-weight: 600;
 
 	:hover {
 		background-color: ${({ color, theme }) => color && theme[color]};
@@ -130,6 +131,8 @@ export const CustomButtonMain = styled(BaseButton)<BaseButtonProps>`
 	}
 
 	${({ inverted }) => inverted && outlineStyles};
+
+	${({ active }) => active && outlineStyles};
 
 	${({ color }) => color && ButtonStyles[color]};
 `;

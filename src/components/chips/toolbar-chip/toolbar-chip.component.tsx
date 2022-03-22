@@ -7,7 +7,9 @@ import {
 import {
 	ChipAvatar,
 	ChipInfoContianer,
+	Rating,
 	ToolbarChipContainer,
+	UserName,
 } from './toolbar-chip.styles';
 
 const ToolbarChip = () => {
@@ -16,7 +18,12 @@ const ToolbarChip = () => {
 	return (
 		<ToolbarChipContainer>
 			<ChipAvatar url={photoURL} />
-			<ChipInfoContianer>{chessUser?.rating}</ChipInfoContianer>
+			<ChipInfoContianer>
+				<UserName>
+					{chessUser ? chessUser.displayName : 'Noot McScooter'}
+				</UserName>
+				<Rating>{chessUser ? chessUser.rating : 800}</Rating>
+			</ChipInfoContianer>
 		</ToolbarChipContainer>
 	);
 };
