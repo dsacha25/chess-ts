@@ -42,5 +42,5 @@ export const ExpandableButton = styled(CustomButton)`
 
 	${({ hover }) => (hover ? expandedStyles : colapsedStyles)};
 
-	transition: all 0.4s ease-out;
+	transition: all 0.4s ease-in;
 `;

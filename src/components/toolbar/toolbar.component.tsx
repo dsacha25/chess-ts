@@ -20,7 +20,9 @@ const Toolbar = () => {
 	return (
 		<ToolbarContainer>
 			<ToolbarChip />
-			<ExpandingButton icon={<FaHandMiddleFinger />}>Fuck You</ExpandingButton>
+			<ExpandingButton icon={<FaHandMiddleFinger size="24px" />}>
+				Fuck You
+			</ExpandingButton>
 			<ToolbarButton
 				onClick={() => setDashboardIndex(0)}
 				color="light"
