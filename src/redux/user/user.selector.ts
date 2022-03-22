@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { auth } from '../../utils/classes/firestore/firestore-app';
 import { RootState } from '../root-reducer';
 
 const selectUser = (state: RootState) => state.user;
