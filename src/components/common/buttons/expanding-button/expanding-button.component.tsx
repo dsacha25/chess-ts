@@ -14,7 +14,9 @@ const ExpandingButton: FC<ExpandingButtonProps> = (props) => {
 			hover={hover}
 		>
 			{hover ? (
-				<ExpandableButton color="light" hover={hover}>{props.children}</ExpandableButton>
+				<ExpandableButton {...props} color="light" hover={hover} {...props}>
+					{props.children}
+				</ExpandableButton>
 			) : (
 				<ExpandableButton {...props} color="light" hover={hover}>
 					{props.icon}
