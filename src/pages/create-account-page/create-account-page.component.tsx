@@ -16,6 +16,7 @@ const CreateAccountPage = () => {
 
 	const onSubmit: SubmitHandler<NewCredentials> = (data) => {
 		//
+		//
 	};
 
 	return (
