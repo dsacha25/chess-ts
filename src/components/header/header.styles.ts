@@ -20,8 +20,7 @@ export const HeaderContainer = styled.div`
 	place-items: center;
 	place-content: center;
 
-	background-color: ${({ theme }) => theme.main};
-
+	border: 4px solid ${({ theme }) => theme.secondary};
 	z-index: inherit;
 `;
 
@@ -41,7 +40,7 @@ export const LogOutButton = styled(CustomButton)`
 	width: 120px;
 	height: 44px;
 
-	background-color: ${({ theme }) => theme.accentBright};
+	background-color: ${({ theme }) => theme.secondary};
 
 	border-top-left-radius: 22px;
 	border-bottom-left-radius: 22px;

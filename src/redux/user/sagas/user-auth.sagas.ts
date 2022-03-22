@@ -24,6 +24,7 @@ import {
 	checkUserSession,
 	userError,
 	getChessUserSuccess,
+	getChessUserStart,
 } from '../user.actions';
 import {
 	DeleteUserAccountAction,
@@ -48,11 +49,14 @@ export function* uploadProfilePictureToStorage(
 	uid: string
 ): Generator<string> | SelectEffect {
 	try {
+		yield console.log('UPLOAD TO STORAGE');
+
 		const path = `users/${uid}/userPhoto_${uid}`;
 
 		const uploadResult: UploadResult = yield storage.uploadFile(blob, path);
 
 		const photoURL: string = yield storage.getFileUrl(uploadResult.ref);
+		yield console.log('PHOTO FROM STORAGE: ', photoURL);
 
 		return photoURL;
 	} catch (err) {
@@ -78,6 +82,10 @@ export function* uploadUserPhotoAsync(uid: string): Generator | SelectEffect {
 
 			console.log('RESULT: ', photoURL);
 
+			if (!photoURL) {
+				console.log('NO PHOTO');
+				return;
+			}
 			/// UPDATE AUTH OBJECT
 			yield auth.updateUserProfile({ photoURL });
 
@@ -90,6 +98,8 @@ export function* uploadUserPhotoAsync(uid: string): Generator | SelectEffect {
 					console.log('UPLOAD ERROR: ', err);
 				});
 		}
+
+		yield put(getChessUserStart());
 	} catch (err) {
 		yield put(userError(getErrorMessage(err)));
 	}

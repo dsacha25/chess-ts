@@ -29,8 +29,10 @@ const CreateAccountPage = () => {
 	} = useForm<NewCredentials>();
 
 	const createAccountCallback = () => {
-		navigate(`/${Paths.DASHBOARD}`);
-		setLoading(false);
+		setTimeout(() => {
+			navigate(`/${Paths.DASHBOARD}`);
+			setLoading(false);
+		}, 1000);
 	};
 
 	const onSubmit: SubmitHandler<NewCredentials> = (data) => {
