@@ -60,11 +60,18 @@ export class SagaListener {
 		yield fork(this.setListener, channel, callback);
 	}
 
-	generateDocumentListener(query: DocumentReference) {
+	generateDocumentListener<T>(
+		query: DocumentReference<T>,
+		includeId?: boolean
+	): EventChannel<T> {
 		return eventChannel((emitter) => {
 			const unsubscribe = onSnapshot(query, (snapshot) => {
 				if (snapshot.exists()) {
-					return emitter({ ...snapshot.data(), id: snapshot.id });
+					if (includeId) {
+						return emitter({ ...snapshot.data(), id: snapshot.id });
+					} else {
+						return emitter({ ...snapshot.data() });
+					}
 				} else {
 					emitter(END);
 				}

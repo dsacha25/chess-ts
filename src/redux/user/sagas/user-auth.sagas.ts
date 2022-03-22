@@ -23,6 +23,7 @@ import {
 	logOutSuccess,
 	checkUserSession,
 	userError,
+	getChessUserSuccess,
 } from '../user.actions';
 import {
 	DeleteUserAccountAction,
@@ -35,6 +36,8 @@ import { UploadResult } from 'firebase/storage';
 import { BaseImage } from '../../../utils/types/image-types/base-image/base-image';
 import { selectNewCredentails, selectUserUID } from '../user.selector';
 import { NewCredentials } from '../../../utils/types/new-credentials/new-credentials';
+import { EventChannel } from 'redux-saga';
+import { ChessUser } from '../../../utils/types/chess-user/chess-user';
 
 // ==== UPLOAD PHOTO TO STORAGE
 export function* uploadProfilePictureToStorage(
@@ -148,16 +151,32 @@ export function* logInUser() {
 }
 
 /// ==== LISTEN FOR CHESS USER
-export function* listenForChessUser() {
+export function* listenForChessUser(chessUser: ChessUser) {
+	yield console.log('CHESS USER:', chessUser);
+
+	yield put(getChessUserSuccess(chessUser));
+}
+
+export function* openChessUserListener(): Generator | SelectEffect {
 	try {
-		//
+		const uid = yield select(selectUserUID);
+
+		const docRef = yield db.getDocumentReference(`users/${uid}`);
+
+		const chessUserChannel: EventChannel<ChessUser> =
+			yield listener.generateDocumentListener<ChessUser>(docRef);
+
+		yield listener.initializeChannel<ChessUser>(
+			chessUserChannel,
+			listenForChessUser
+		);
 	} catch (err) {
 		yield put(userError(getErrorMessage(err)));
 	}
 }
 
 export function* onGetChessUserStart() {
-	yield takeEvery(UserTypes.GET_CHESS_USER_START, listenForChessUser);
+	yield takeEvery(UserTypes.GET_CHESS_USER_START, openChessUserListener);
 }
 
 /// ==== CREATE ACCOUNT
