@@ -33,7 +33,6 @@ import {
 } from '../user.action-types';
 import UserTypes from '../user.types';
 import { UploadResult } from 'firebase/storage';
-import { BaseImage } from '../../../utils/types/image-types/base-image/base-image';
 import { selectNewCredentails, selectUserUID } from '../user.selector';
 import { NewCredentials } from '../../../utils/types/new-credentials/new-credentials';
 import { EventChannel } from 'redux-saga';
