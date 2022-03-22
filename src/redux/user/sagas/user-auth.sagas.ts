@@ -44,7 +44,7 @@ export function* uploadProfilePictureToStorage(
 	uid: string
 ): Generator<string> | SelectEffect {
 	try {
-		const path = `user/${uid}/userPhoto_${uid}`;
+		const path = `users/${uid}/userPhoto_${uid}`;
 
 		const uploadResult: UploadResult = yield storage.uploadFile(blob, path);
 
@@ -61,6 +61,8 @@ export function* uploadUserPhotoAsync(uid: string): Generator | SelectEffect {
 		const { photoURL }: NewCredentials = yield select(selectNewCredentails);
 		if (!photoURL) return;
 		/// converts DATA URL to BLOB
+		console.log('PHOTO URL: ', photoURL);
+
 		const url: Blob = yield fetch(photoURL.image).then((res) => res.blob());
 
 		if (url instanceof Blob) {

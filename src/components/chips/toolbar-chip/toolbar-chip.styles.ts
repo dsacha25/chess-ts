@@ -28,5 +28,5 @@ export const ChipInfoContianer = styled.div`
 	background-color: ${({ theme }) => theme.main};
 	border-radius: 20px;
 
-	z-index: 0;
+	z-index: 1;
 `;
