@@ -33,6 +33,7 @@ export const PhotoDisplay = styled.div<PhotoDisplayProps>`
 	z-index: 1;
 
 	border-radius: 26px;
+	overflow: hidden;
 
 	background-image: ${({ url }) => `url(${url})`};
 	background-size: cover;

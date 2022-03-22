@@ -16,6 +16,7 @@ export const UploadControlsContainer = styled.div<
 	background-color: ${({ theme }) => theme.light}e2;
 
 	z-index: 2;
+	border-radius: 26px;
 `;
 
 export const HiddenInput = styled.input`
