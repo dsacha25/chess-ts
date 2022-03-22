@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, FormEvent, ReactNode } from 'react';
 
-export type ButtonColors = 'main' | 'secondary' | 'grey' | 'warn';
+export type ButtonColors = 'main' | 'light' | 'secondary' | 'grey' | 'warn';
 
 export interface StyleTypes {
 	size?: string;
