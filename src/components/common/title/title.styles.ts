@@ -7,7 +7,7 @@ const Title = styled.h2<StyleTypes>`
 
 	height: ${({ height }) => height};
 	font-size: ${({ fontSize }) => (fontSize ? fontSize : '58px')};
-	font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 100)};
+	font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 200)};
 	text-transform: ${({ transform }) => (transform ? transform : 'uppercase')};
 	letter-spacing: ${({ letterSpacing }) =>
 		letterSpacing ? letterSpacing : '0.2rem'};
@@ -16,7 +16,7 @@ const Title = styled.h2<StyleTypes>`
 
 	white-space: nowrap;
 
-	color: ${({ theme, color }) => (color ? theme[color] : theme.light)};
+	color: ${({ theme, color }) => (color ? theme[color] : theme.main)};
 `;
 
 export default Title;
