@@ -10,11 +10,11 @@ export const PhotoUploadContainer = styled.div`
 	padding: 0;
 	margin: 20px 0;
 
-	border: 4px solid ${({ theme }) => theme.light};
+	border: 3px solid ${({ theme }) => theme.grey};
 	border-radius: 30px;
-	background-color: ${({ theme }) => theme.light}e2;
+	background-color: ${({ theme }) => theme.grey}e2;
 
-	overflow: hidden;
+	/* overflow: hidden; */
 
 	position: relative;
 
@@ -32,8 +32,34 @@ export const PhotoDisplay = styled.div<PhotoDisplayProps>`
 
 	z-index: 1;
 
+	border-radius: 26px;
+
 	background-image: ${({ url }) => `url(${url})`};
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
+`;
+
+export const PhotoLabel = styled.label`
+	display: flex;
+	align-items: center;
+	color: ${({ theme }) => theme.grey};
+	font-size: 18px;
+	font-weight: 300;
+	position: absolute;
+	top: -14%;
+	font-style: italic;
+	letter-spacing: 0.05rem;
+	pointer-events: none;
+	transition: 300ms ease all;
+	z-index: 5;
+
+	&.shrink {
+		display: unset;
+		align-items: unset;
+		top: -20px;
+		font-size: 16px;
+		font-weight: 600;
+		color: ${({ theme }) => theme.main};
+	}
 `;

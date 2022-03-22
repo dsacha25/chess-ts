@@ -3,7 +3,11 @@ import { photo } from '../../../../utils/classes/image/image';
 import { BaseImage } from '../../../../utils/types/image-types/base-image/base-image';
 import Cropper from '../../images/cropper/cropper.component';
 import ImageUploadControls from '../../images/image-upload-controls/image-upload-controls.component';
-import { PhotoDisplay, PhotoUploadContainer } from './photo-uploader.styles';
+import {
+	PhotoDisplay,
+	PhotoLabel,
+	PhotoUploadContainer,
+} from './photo-uploader.styles';
 import { PhotoUploaderProps } from './types';
 import DefualtPhoto from '../../../../assets/default-photo/DefaultPhoto.png';
 
@@ -49,6 +53,7 @@ const PhotoUploader: FC<PhotoUploaderProps> = (props) => {
 			onMouseEnter={() => setHover(true)}
 			onMouseLeave={() => setHover(false)}
 		>
+			{props.label && <PhotoLabel>{props.label}</PhotoLabel>}
 			{inputImage ? (
 				<Cropper inputImage={inputImage} handleCrop={handleCrop} />
 			) : (

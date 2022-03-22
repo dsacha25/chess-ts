@@ -5,4 +5,5 @@ export interface PhotoUploaderProps {
 	setValue: UseFormSetValue<any>;
 	defaultPhoto?: SessionDefaultPhotos | string;
 	name: string;
+	label?: string;
 }
