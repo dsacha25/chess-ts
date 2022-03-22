@@ -50,6 +50,7 @@ export interface BaseButtonProps extends ComponentPropsWithRef<'button'> {
 	inverted?: boolean;
 	borderless?: boolean;
 	flex?: string;
+	hover?: boolean;
 }
 
 export default BaseButtonProps;

@@ -3,11 +3,14 @@ import useActions from '../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
 import { selectDashboardIndex } from '../../redux/indexes/indexes.selector';
 import ToolbarChip from '../chips/toolbar-chip/toolbar-chip.component';
+import ExpandingButton from '../common/buttons/expanding-button/expanding-button.component';
 import {
 	AestheticBar,
 	ToolbarButton,
 	ToolbarContainer,
 } from './toolbar.styles';
+
+import { FaHandMiddleFinger } from 'react-icons/fa';
 
 const Toolbar = () => {
 	const { setDashboardIndex } = useActions();
@@ -17,6 +20,7 @@ const Toolbar = () => {
 	return (
 		<ToolbarContainer>
 			<ToolbarChip />
+			<ExpandingButton icon={<FaHandMiddleFinger />}>Fuck You</ExpandingButton>
 			<ToolbarButton
 				onClick={() => setDashboardIndex(0)}
 				color="light"
