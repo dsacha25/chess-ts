@@ -1,0 +1,66 @@
+import firebase, { FirebaseApp, initializeApp } from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/functions';
+import 'firebase/storage';
+import { FirestoreDatabase } from '../database/firestore-database';
+import { FirebaseAuth } from '../auth/firebase-auth';
+import FirebaseFunctions from '../functions/firebase-functions';
+import { FirebaseStorage } from '../storage/firebase-storage';
+
+const firebaseConfig = {
+	apiKey: 'AIzaSyAIu_0OHjiUObOZJj2YE4didA65vUgA-JU',
+	authDomain: 'chess-project-ts.firebaseapp.com',
+	projectId: 'chess-project-ts',
+	storageBucket: 'chess-project-ts.appspot.com',
+	messagingSenderId: '843781004415',
+	appId: '1:843781004415:web:2312ca4533b9c27dd3f34a',
+	measurementId: 'G-F5W74SB73D',
+};
+
+export class FirestoreApp {
+	public app: firebase.FirebaseApp;
+	public auth: FirebaseAuth;
+	public db: FirestoreDatabase;
+	public functions: FirebaseFunctions;
+	public storage: FirebaseStorage;
+
+	constructor(app: FirebaseApp) {
+		this.app = app;
+		this.auth = new FirebaseAuth(app);
+		this.db = new FirestoreDatabase('*', app);
+		this.functions = new FirebaseFunctions(app);
+		this.storage = new FirebaseStorage(app);
+	}
+}
+
+export const firestore = new FirestoreApp(initializeApp(firebaseConfig));
+
+export const auth = firestore.auth;
+export const db = firestore.db;
+export const functions = firestore.functions;
+export const storage = firestore.storage;
+
+/*
+// Import the functions you need from the SDKs you need
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+	apiKey: 'AIzaSyAIu_0OHjiUObOZJj2YE4didA65vUgA-JU',
+	authDomain: 'chess-project-ts.firebaseapp.com',
+	projectId: 'chess-project-ts',
+	storageBucket: 'chess-project-ts.appspot.com',
+	messagingSenderId: '843781004415',
+	appId: '1:843781004415:web:2312ca4533b9c27dd3f34a',
+	measurementId: 'G-F5W74SB73D',
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+*/
