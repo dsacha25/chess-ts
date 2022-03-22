@@ -1,4 +1,5 @@
 import { User } from 'firebase/auth';
+import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import { Credentials } from '../../utils/types/credentials/credentials';
 import { NewCredentials } from '../../utils/types/new-credentials/new-credentials';
 import { UpdateProfileData } from '../../utils/types/profile-info/profile-info-types';
@@ -13,6 +14,8 @@ import {
 	UserErrorAction,
 	CheckUserSessionAction,
 	UpdateProfileInfoAction,
+	GetChessUserStartAction,
+	GetChessUserSuccessAction,
 } from './user.action-types';
 import UserTypes from './user.types';
 
@@ -59,6 +62,18 @@ export const createAccountSuccess = (
 ): CreateAccountSuccessAction => ({
 	type: UserTypes.CREATE_ACCOUNT_SUCCESS,
 	payload: user,
+});
+
+/// ==== GET CHESS USER
+export const getChessUserStart = (): GetChessUserStartAction => ({
+	type: UserTypes.GET_CHESS_USER_START,
+});
+
+export const getChessUserSuccess = (
+	chessUser: ChessUser
+): GetChessUserSuccessAction => ({
+	type: UserTypes.GET_CHESS_USER_SUCCESS,
+	payload: chessUser,
 });
 
 /// ==== DELETE ACCOUNT

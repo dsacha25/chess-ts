@@ -1,4 +1,5 @@
 import { User } from 'firebase/auth';
+import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import { Credentials } from '../../utils/types/credentials/credentials';
 import { NewCredentials } from '../../utils/types/new-credentials/new-credentials';
 import { UpdateProfileData } from '../../utils/types/profile-info/profile-info-types';
@@ -28,6 +29,16 @@ export interface CreateAccountStartAction {
 export interface CreateAccountSuccessAction {
 	type: UserTypes.CREATE_ACCOUNT_SUCCESS;
 	payload: User;
+}
+
+// GET CHESS USER
+export interface GetChessUserStartAction {
+	type: UserTypes.GET_CHESS_USER_START;
+}
+
+export interface GetChessUserSuccessAction {
+	type: UserTypes.GET_CHESS_USER_SUCCESS;
+	payload: ChessUser;
 }
 
 // ==== LOG OUT ACTIONS
@@ -62,6 +73,8 @@ type UserActions =
 	| LogInSuccessAction
 	| CreateAccountStartAction
 	| CreateAccountSuccessAction
+	| GetChessUserStartAction
+	| GetChessUserSuccessAction
 	| LogOutStartAction
 	| LogOutSuccessAction
 	| DeleteUserAccountAction

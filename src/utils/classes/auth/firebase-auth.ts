@@ -19,6 +19,7 @@ import {
 	signInWithPopup,
 	updateProfile,
 } from 'firebase/auth';
+import { ChessUser } from '../../types/chess-user/chess-user';
 import { Credentials } from '../../types/credentials/credentials';
 import { Customer } from '../../types/customer/customer';
 import { NewCredentials } from '../../types/new-credentials/new-credentials';
@@ -46,33 +47,33 @@ export class FirebaseAuth implements Authentication<User> {
 		});
 	}
 
-	async createNewUser(credentials: NewCredentials): Promise<User> {
+	async createNewUser(newCredential: NewCredentials): Promise<User> {
 		const credential = await createUserWithEmailAndPassword(
 			this.auth,
-			credentials.email,
-			credentials.password
+			newCredential.email,
+			newCredential.password
 		);
 
 		await updateProfile(credential.user, {
-			displayName: credentials.displayName,
+			displayName: newCredential.displayName,
 		}).then(async () => {
-			const newCustomer: Customer = {
-				id: credential.user.uid,
+			const newChessUser: ChessUser = {
 				uid: credential.user.uid,
 				displayName: credential.user.displayName,
 				email: credential.user.email,
 				photoURL: credential.user.photoURL,
 				phoneNumber: credential.user.phoneNumber,
 				providerId: credential.providerId || '',
+				rating: 800,
 			};
-			await this.createUserDocument(newCustomer);
+			await this.createUserDocument(newChessUser);
 		});
 
 		return credential.user;
 	}
 
-	async createUserDocument(user: Customer): Promise<void> {
-		await db.create('customers', user.uid, user);
+	async createUserDocument(user: ChessUser): Promise<void> {
+		await db.create('users', user.uid, user);
 	}
 
 	async fetchUserDocument(uid: string): Promise<Customer | undefined> {

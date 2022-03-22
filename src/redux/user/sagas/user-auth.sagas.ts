@@ -4,10 +4,16 @@ import {
 	call,
 	put,
 	PutEffect,
+	select,
+	SelectEffect,
 	takeEvery,
 	takeLatest,
 } from 'redux-saga/effects';
-import { auth } from '../../../utils/classes/firestore/firestore-app';
+import {
+	auth,
+	db,
+	storage,
+} from '../../../utils/classes/firestore/firestore-app';
 import { listener } from '../../../utils/classes/sagas/saga-listener';
 import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
 import {
@@ -25,6 +31,61 @@ import {
 	CreateAccountStartAction,
 } from '../user.action-types';
 import UserTypes from '../user.types';
+import { UploadResult } from 'firebase/storage';
+import { BaseImage } from '../../../utils/types/image-types/base-image/base-image';
+import { selectNewCredentails, selectUserUID } from '../user.selector';
+import { NewCredentials } from '../../../utils/types/new-credentials/new-credentials';
+
+// ==== UPLOAD PHOTO TO STORAGE
+export function* uploadProfilePictureToStorage(
+	blob: Blob,
+	uid: string
+): Generator<string> | SelectEffect {
+	try {
+		const path = `user/${uid}/userPhoto_${uid}`;
+
+		const uploadResult: UploadResult = yield storage.uploadFile(blob, path);
+
+		const photoURL: string = yield storage.getFileUrl(uploadResult.ref);
+
+		return photoURL;
+	} catch (err) {
+		yield userError(getErrorMessage(err));
+	}
+}
+
+export function* uploadUserPhotoAsync(uid: string): Generator | SelectEffect {
+	try {
+		const { photoURL }: NewCredentials = yield select(selectNewCredentails);
+		if (!photoURL) return;
+		/// converts DATA URL to BLOB
+		const url: Blob = yield fetch(photoURL.image).then((res) => res.blob());
+
+		if (url instanceof Blob) {
+			const photoURL: string = yield call(
+				uploadProfilePictureToStorage,
+				url,
+				uid
+			);
+
+			console.log('RESULT: ', photoURL);
+
+			/// UPDATE AUTH OBJECT
+			yield auth.updateUserProfile({ photoURL });
+
+			/// UPDATE CHESS-USER OBJECT
+			yield db
+				.update('users', uid, {
+					photoURL,
+				})
+				.catch((err) => {
+					console.log('UPLOAD ERROR: ', err);
+				});
+		}
+	} catch (err) {
+		yield put(userError(getErrorMessage(err)));
+	}
+}
 
 export function* checkUserState(user: User | null | string) {
 	if (user && typeof user !== 'string') {
@@ -86,6 +147,20 @@ export function* logInUser() {
 	yield takeEvery(UserTypes.LOG_IN_START, logInUserAsync);
 }
 
+/// ==== LISTEN FOR CHESS USER
+export function* listenForChessUser() {
+	try {
+		//
+	} catch (err) {
+		yield put(userError(getErrorMessage(err)));
+	}
+}
+
+export function* onGetChessUserStart() {
+	yield takeEvery(UserTypes.GET_CHESS_USER_START, listenForChessUser);
+}
+
+/// ==== CREATE ACCOUNT
 export function* createAccountAsync({
 	payload: { credentials, callback },
 }: CreateAccountStartAction): Generator<Promise<User>> | PutEffect {
@@ -94,10 +169,11 @@ export function* createAccountAsync({
 
 		const user: User = yield auth.createNewUser(credentials);
 
-		if (user && callback) callback();
+		if (user && callback) yield callback();
 
 		yield put(createAccountSuccess(user));
 		yield put(checkUserSession());
+		yield call(uploadUserPhotoAsync, user.uid);
 	} catch (err) {
 		yield put(userError(getErrorMessage(err)));
 	}
