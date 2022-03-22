@@ -23,27 +23,23 @@ export const HeaderContainer = styled.div`
 	background-color: ${({ theme }) => theme.main};
 
 	z-index: inherit;
-	padding: 4px;
 `;
 
 export const Avatar = styled(ImageContainer)`
-	width: 42px;
-	height: 42px;
+	width: 44px;
+	height: 44px;
 	border-radius: 25px;
-	/* justify-self: center flex-end; */
 
 	grid-column: 2 / 3;
 
 	z-index: 2;
-
-	/* position: absolute; */
 
 	transform: translate(-10px, 0);
 `;
 
 export const LogOutButton = styled(CustomButton)`
 	width: 120px;
-	height: 42px;
+	height: 44px;
 
 	background-color: ${({ theme }) => theme.accentBright};
 
