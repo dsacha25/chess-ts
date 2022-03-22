@@ -5,8 +5,8 @@ import Title from '../../components/common/title/title.styles';
 
 export const CreateAccountContainer = styled.form`
 	display: grid;
-	width: 60vw;
-	height: 50vh;
+	width: 80vw;
+	height: 60vh;
 
 	grid-template-columns: 1fr 250px;
 	grid-template-rows: auto 1fr;
