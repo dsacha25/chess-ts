@@ -107,38 +107,21 @@ export class SagaListener {
 		});
 	}
 
-	generateAuthListener(): EventChannel<User | null | string> {
+	generateAuthListener(): EventChannel<User> {
 		return eventChannel((emitter) => {
 			const unsubscribe = auth.onAuthChange((user) => {
+				console.log('AUTH LISTENER: ', user);
+
 				if (user) {
-					console.log('AUTH LISTENER');
 					emitter(user);
 				} else {
-					console.log('NO USER FOUND');
-					const error = 'No User';
-					emitter(error);
+					emitter(END);
 				}
 			});
 
 			return unsubscribe;
 		});
 	}
-
-	countdown = (secs: number): EventChannel<unknown> =>
-		eventChannel((emitter) => {
-			const iv = setInterval(() => {
-				secs -= 1;
-				if (secs > 0) {
-					emitter(secs);
-				} else {
-					emitter(END);
-				}
-			}, 1000);
-
-			return () => {
-				clearInterval(iv);
-			};
-		});
 }
 
 export const listener = new SagaListener();

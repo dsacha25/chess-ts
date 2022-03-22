@@ -33,7 +33,11 @@ import {
 } from '../user.action-types';
 import UserTypes from '../user.types';
 import { UploadResult } from 'firebase/storage';
-import { selectNewCredentails, selectUserUID } from '../user.selector';
+import {
+	selectNewCredentails,
+	selectUserAuth,
+	selectUserUID,
+} from '../user.selector';
 import { NewCredentials } from '../../../utils/types/new-credentials/new-credentials';
 import { EventChannel } from 'redux-saga';
 import { ChessUser } from '../../../utils/types/chess-user/chess-user';
@@ -91,24 +95,29 @@ export function* uploadUserPhotoAsync(uid: string): Generator | SelectEffect {
 	}
 }
 
-export function* checkUserState(user: User | null | string) {
-	if (user && typeof user !== 'string') {
-		console.log('USER LOG IN: ', user);
+export function* checkUserState(user: User) {
+	yield console.log('USER: ', user);
 
-		yield put(logInSuccess(user));
-	} else {
-		yield put(logOutStart());
-	}
+	yield put(logInSuccess(user));
+
+	return;
 }
 
-export function* openAuthListener() {
+export function* openAuthListener(): Generator | SelectEffect {
 	try {
 		yield console.log('USER LISTENER OPENED');
 
-		yield listener.initializeListener(
+		yield listener.initializeListener<User>(
 			listener.generateAuthListener,
 			checkUserState
 		);
+		yield console.log('LISTENER CLOSED');
+
+		const auth = yield select(selectUserAuth);
+
+		if (auth) {
+			yield put(logOutStart());
+		}
 	} catch (err) {
 		yield put(userError(getErrorMessage(err)));
 	}
