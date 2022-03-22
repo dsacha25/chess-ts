@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ImageContainer from '../../components/common/containers/image-container/image-container.component';
+import ImageContainer from '../common/containers/image-container/image-container.component';
 
 export const HeaderContainer = styled.div`
 	display: grid;
