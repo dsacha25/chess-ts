@@ -10,8 +10,10 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { NewCredentials } from '../../utils/types/new-credentials/new-credentials';
 import FormInput from '../../components/common/inputs/form-input/form-input.component';
 import PhotoUploader from '../../components/common/inputs/photo-uploader/photo-uploader.component';
+import useActions from '../../hooks/use-actions/use-actions.hook';
 
 const CreateAccountPage = () => {
+	const { createAccountStart } = useActions();
 	const {
 		register,
 		setValue,
@@ -22,7 +24,6 @@ const CreateAccountPage = () => {
 	} = useForm<NewCredentials>();
 
 	const onSubmit: SubmitHandler<NewCredentials> = (data) => {
-		//
 		//
 	};
 

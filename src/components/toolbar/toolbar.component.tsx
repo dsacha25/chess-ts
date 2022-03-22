@@ -1,12 +1,13 @@
 import React from 'react';
 import useActions from '../../hooks/use-actions/use-actions.hook';
+import ToolbarChip from '../chips/toolbar-chip/toolbar-chip.component';
 import { ToolbarButton, ToolbarContainer } from './toolbar.styles';
 
 const Toolbar = () => {
 	const { setDashboardIndex } = useActions();
 	return (
 		<ToolbarContainer>
-			Toolbar
+			<ToolbarChip />
 			<ToolbarButton onClick={() => setDashboardIndex(0)} color="light">
 				Fuck You
 			</ToolbarButton>
