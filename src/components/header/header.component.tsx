@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Avatar, HeaderContainer, LogOutButton } from './header.styles';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
@@ -9,6 +9,10 @@ import useActions from '../../hooks/use-actions/use-actions.hook';
 const Header = () => {
 	const photoURL = useSelector((state) => selectProfilePicture(state));
 	const { logOutStart } = useActions();
+
+	useEffect(() => {
+		console.log('PHOTO URL HEADER: ', photoURL);
+	});
 
 	return createPortal(
 		<UsersOnly>

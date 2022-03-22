@@ -19,7 +19,7 @@ export const selectUserUID = createSelector(
 );
 
 export const selectProfilePicture = createSelector(
-	selectUserAuth,
+	selectChessUser,
 	(user) => user?.photoURL
 );
 

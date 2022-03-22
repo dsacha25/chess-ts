@@ -259,5 +259,6 @@ export function* userAuthSagas() {
 		call(onLogOutUser),
 		call(onDeleteUserAccount),
 		call(onOpenAuthListener),
+		call(onGetChessUserStart),
 	]);
 }
