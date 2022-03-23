@@ -22,7 +22,7 @@ const ToolbarChip = () => {
 				<UserName>
 					{chessUser ? chessUser.displayName : 'Noot McScooter'}
 				</UserName>
-				<Rating>{chessUser ? chessUser.rating : 800}</Rating>
+				<Rating>{chessUser?.rating}</Rating>
 			</ChipInfoContianer>
 		</ToolbarChipContainer>
 	);

@@ -21,7 +21,7 @@ export const ChipAvatar = styled(ImageContainer)`
 
 export const ChipInfoContianer = styled.div`
 	display: grid;
-	width: 96%;
+	width: 100%;
 	max-width: 320px;
 	height: 60px;
 	justify-self: flex-end;

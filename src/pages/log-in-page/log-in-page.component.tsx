@@ -17,8 +17,14 @@ const LogInPage = () => {
 		formState: { errors },
 	} = useForm<Credentials>();
 
+	const callback = () => {
+		setTimeout(() => {
+			navigate(`/${Paths.DASHBOARD}`);
+		}, 1000);
+	};
+
 	const onSubmit: SubmitHandler<Credentials> = (data) => {
-		logInStart(data, () => navigate(`/${Paths.DASHBOARD}`));
+		logInStart(data, callback);
 	};
 
 	return (

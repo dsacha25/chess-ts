@@ -4,11 +4,7 @@ import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
 import { selectDashboardIndex } from '../../redux/indexes/indexes.selector';
 import ToolbarChip from '../chips/toolbar-chip/toolbar-chip.component';
 import ExpandingButton from '../common/buttons/expanding-button/expanding-button.component';
-import {
-	AestheticBar,
-	ToolbarButton,
-	ToolbarContainer,
-} from './toolbar.styles';
+import { AestheticBar, ToolbarContainer } from './toolbar.styles';
 
 import { FaHandMiddleFinger } from 'react-icons/fa';
 import { GiEvilLove } from 'react-icons/gi';

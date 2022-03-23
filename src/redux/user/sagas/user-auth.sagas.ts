@@ -161,6 +161,7 @@ export function* logInUserAsync({
 		}
 
 		yield put(logInSuccess(user));
+		yield put(getChessUserStart());
 	} catch (err) {
 		yield put(userError(getErrorMessage(err)));
 	}
