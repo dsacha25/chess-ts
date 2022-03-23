@@ -21,7 +21,7 @@ export const ToolbarButton = styled(CustomButton)`
 
 export const AestheticBar = styled.div`
 	width: 50px;
-	height: 100%;
+	height: 90%;
 
 	top: 50px;
 	left: 10px;

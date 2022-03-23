@@ -16,6 +16,7 @@ export const ChipAvatar = styled(ImageContainer)`
 	justify-self: flex-start;
 	z-index: 1;
 	border: 2px solid ${({ theme }) => theme.main};
+	background-color: ${({ theme }) => theme.main};
 `;
 
 export const ChipInfoContianer = styled.div`

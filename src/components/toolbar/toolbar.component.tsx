@@ -11,6 +11,9 @@ import {
 } from './toolbar.styles';
 
 import { FaHandMiddleFinger } from 'react-icons/fa';
+import { GiEvilLove } from 'react-icons/gi';
+import { IoStatsChart } from 'react-icons/io5';
+import { CgProfile } from 'react-icons/cg';
 
 const Toolbar = () => {
 	const { setDashboardIndex } = useActions();
@@ -28,34 +31,30 @@ const Toolbar = () => {
 			>
 				Fuck You
 			</ExpandingButton>
-			<ToolbarButton
-				onClick={() => setDashboardIndex(0)}
-				color="light"
-				active={index === 0}
-			>
-				Fuck You
-			</ToolbarButton>
-			<ToolbarButton
+			<ExpandingButton
 				onClick={() => setDashboardIndex(1)}
 				color="light"
 				active={index === 1}
+				icon={<GiEvilLove size="28px" />}
 			>
 				Enemies
-			</ToolbarButton>
-			<ToolbarButton
+			</ExpandingButton>
+			<ExpandingButton
 				onClick={() => setDashboardIndex(2)}
 				color="light"
 				active={index === 2}
+				icon={<IoStatsChart size="24px" />}
 			>
 				You Suck
-			</ToolbarButton>
-			<ToolbarButton
+			</ExpandingButton>
+			<ExpandingButton
 				onClick={() => setDashboardIndex(3)}
 				color="light"
 				active={index === 3}
+				icon={<CgProfile size="30px" />}
 			>
 				Profile
-			</ToolbarButton>
+			</ExpandingButton>
 			<AestheticBar />
 		</ToolbarContainer>
 	);
