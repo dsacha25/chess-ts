@@ -1,16 +1,35 @@
 import React from 'react';
 import Title from '../common/title/title.styles';
-import { AuxiliaryPanelContainer } from './auxiliary-panel.styles';
+import {
+	AuxiliaryPanelContainer,
+	PanelButton,
+	PanelControlsContainer,
+	PanelInfoContainer,
+} from './auxiliary-panel.styles';
+
+import { BiMessage } from 'react-icons/bi';
 
 const AuxiliaryPanel = () => {
 	return (
 		<AuxiliaryPanelContainer>
 			<Title margin="0" fontSize="30px" color="light">
-				Game Info
+				Move List
 			</Title>
-			<p>Stats</p>
+			<PanelInfoContainer>
+				<ul>
+					<li>c4</li>
+					<li>f6</li>
+					<li>Kc3</li>
+				</ul>
+			</PanelInfoContainer>
 
-			<p>Make a new enemy</p>
+			<PanelControlsContainer>
+				<PanelButton color="warn">Resign</PanelButton>
+				<PanelButton color="light">Draw</PanelButton>
+				<PanelButton color="light" inverted>
+					<BiMessage size="60%" />
+				</PanelButton>
+			</PanelControlsContainer>
 		</AuxiliaryPanelContainer>
 	);
 };

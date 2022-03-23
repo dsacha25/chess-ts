@@ -2,7 +2,9 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 import {
 	BoardContainer,
 	CustomButton,
+	OpponentContainer,
 	OrientationDisplay,
+	PlayerContainer,
 } from './chessboard-display.styles';
 import Chessboard, { Piece } from 'chessboardjsx';
 import { ChessInstance, Square, Move } from 'chess.js';
@@ -163,9 +165,9 @@ const ChessboardDisplay = () => {
 
 	return (
 		<BoardContainer>
-			<OrientationDisplay>
-				Turn: {getOrientation(game.turn())}
-			</OrientationDisplay>
+			<OpponentContainer>
+				<div>Opponent Chip</div>
+			</OpponentContainer>
 			<Chessboard
 				draggable
 				position={fen}
@@ -178,14 +180,11 @@ const ChessboardDisplay = () => {
 				squareStyles={squareStyles}
 				dropSquareStyle={dropStyles}
 				orientation={orientation}
+				width={700}
 			/>
-			{gameOver && (
-				<div>
-					<h1 style={{ color: 'white' }}>GAME OVER</h1>
-
-					<CustomButton onClick={handleReset}>Reset Game</CustomButton>
-				</div>
-			)}
+			<PlayerContainer>
+				<div>Player Chip</div>
+			</PlayerContainer>
 		</BoardContainer>
 	);
 };

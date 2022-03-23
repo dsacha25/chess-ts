@@ -6,7 +6,7 @@ export const PlayContainer = styled.div`
 	height: 100vh;
 	/* place-items: center; */
 	padding: 80px;
-	grid-template-columns: 300px 1fr 500px;
+	grid-template-columns: 300px 1fr 400px;
 	position: relative;
-	grid-gap: 100px;
+	grid-gap: 50px;
 `;
