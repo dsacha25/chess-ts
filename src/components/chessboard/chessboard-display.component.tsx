@@ -2,7 +2,6 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 import {
 	BoardContainer,
 	CustomButton,
-	MainWindow,
 	OrientationDisplay,
 } from './chessboard-display.styles';
 import Chessboard, { Piece } from 'chessboardjsx';
@@ -163,33 +162,31 @@ const ChessboardDisplay = () => {
 	};
 
 	return (
-		<MainWindow>
-			<BoardContainer>
-				<OrientationDisplay>
-					Turn: {getOrientation(game.turn())}
-				</OrientationDisplay>
-				<Chessboard
-					draggable
-					position={fen}
-					onMouseOverSquare={onMouseOverSquare}
-					onMouseOutSquare={onMouseOutSquare}
-					onDragOverSquare={onDragOverSquare}
-					onSquareClick={onSquareClick}
-					onPieceClick={onPieceClick}
-					onDrop={onDrop}
-					squareStyles={squareStyles}
-					dropSquareStyle={dropStyles}
-					orientation={orientation}
-				/>
-				{gameOver && (
-					<div>
-						<h1 style={{ color: 'white' }}>GAME OVER</h1>
+		<BoardContainer>
+			<OrientationDisplay>
+				Turn: {getOrientation(game.turn())}
+			</OrientationDisplay>
+			<Chessboard
+				draggable
+				position={fen}
+				onMouseOverSquare={onMouseOverSquare}
+				onMouseOutSquare={onMouseOutSquare}
+				onDragOverSquare={onDragOverSquare}
+				onSquareClick={onSquareClick}
+				onPieceClick={onPieceClick}
+				onDrop={onDrop}
+				squareStyles={squareStyles}
+				dropSquareStyle={dropStyles}
+				orientation={orientation}
+			/>
+			{gameOver && (
+				<div>
+					<h1 style={{ color: 'white' }}>GAME OVER</h1>
 
-						<CustomButton onClick={handleReset}>Reset Game</CustomButton>
-					</div>
-				)}
-			</BoardContainer>
-		</MainWindow>
+					<CustomButton onClick={handleReset}>Reset Game</CustomButton>
+				</div>
+			)}
+		</BoardContainer>
 	);
 };
 

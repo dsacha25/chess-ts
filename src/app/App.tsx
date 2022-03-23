@@ -12,6 +12,8 @@ import DashboardPage from '../pages/dashboard-page/dashboard-page.component';
 import { useSelector } from '../hooks/use-selector/use-typed-selector.hook';
 import { selectUserAuth } from '../redux/user/user.selector';
 import useActions from '../hooks/use-actions/use-actions.hook';
+import PlayPage from '../pages/play-page/play-page.component';
+import AnalysisPage from '../pages/analysis-page/analysis-page.component';
 
 function App() {
 	const { checkUserSession } = useActions();
@@ -31,6 +33,14 @@ function App() {
 					<Route path={Paths.LOGIN} element={<LogInPage />} />
 					<Route path={Paths.DASHBOARD} element={<PrivateRoute />}>
 						<Route index element={<DashboardPage />} />
+					</Route>
+
+					<Route path={Paths.PLAY} element={<PrivateRoute />}>
+						<Route index element={<PlayPage />} />
+					</Route>
+
+					<Route path={Paths.ANALYSIS} element={<PrivateRoute />}>
+						<Route index element={<AnalysisPage />} />
 					</Route>
 				</Routes>
 			</SiteContainer>

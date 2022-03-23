@@ -1,25 +1,18 @@
 import styled from 'styled-components';
 
-export const MainWindow = styled.div`
-	display: grid;
-	place-items: center;
-	width: 100vw;
-	height: 100vh;
-	background-color: ${({ theme }) => theme.main};
-`;
-
 export const BoardContainer = styled.div`
 	display: grid;
 	place-items: center;
-	width: 400px;
-	height: 100vh;
+	width: 500px;
+	height: 100%;
+	justify-self: center;
 
-	grid-template-rows: auto 1fr 1fr;
+	grid-template-rows: auto 500px auto;
 `;
 
 export const OrientationDisplay = styled.h1`
 	text-transform: capitalize;
-	color: ${({ theme }) => theme.light};
+	color: ${({ theme }) => theme.main};
 	justify-self: flex-start;
 `;
 
