@@ -27,7 +27,7 @@ const Toolbar = () => {
 				onClick={() => setDashboardIndex(0)}
 				color="light"
 				active={index === 0}
-				icon={<FaHandMiddleFinger size="24px" />}
+				icon={<FaHandMiddleFinger color="black" size="24px" />}
 			>
 				Fuck You
 			</ExpandingButton>
@@ -35,7 +35,7 @@ const Toolbar = () => {
 				onClick={() => setDashboardIndex(1)}
 				color="light"
 				active={index === 1}
-				icon={<GiEvilLove size="28px" />}
+				icon={<GiEvilLove color="black" size="30px" />}
 			>
 				Enemies
 			</ExpandingButton>
@@ -43,7 +43,7 @@ const Toolbar = () => {
 				onClick={() => setDashboardIndex(2)}
 				color="light"
 				active={index === 2}
-				icon={<IoStatsChart size="24px" />}
+				icon={<IoStatsChart color="black" size="24px" />}
 			>
 				You Suck
 			</ExpandingButton>
@@ -51,7 +51,7 @@ const Toolbar = () => {
 				onClick={() => setDashboardIndex(3)}
 				color="light"
 				active={index === 3}
-				icon={<CgProfile size="30px" />}
+				icon={<CgProfile color="black" size="32px" />}
 			>
 				Profile
 			</ExpandingButton>
