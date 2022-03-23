@@ -29,8 +29,8 @@ export const PanelInfoContainer = styled.div`
 
 	border-top: 2px solid ${({ theme }) => theme.light};
 	border-bottom: 2px solid ${({ theme }) => theme.light};
-	border-left: 1px solid ${({ theme }) => theme.grey};
-	border-right: 1px solid ${({ theme }) => theme.grey};
+	border-left: 1px solid ${({ theme }) => theme.light}55;
+	border-right: 1px solid ${({ theme }) => theme.light}55;
 `;
 
 export const PanelControlsContainer = styled.div`

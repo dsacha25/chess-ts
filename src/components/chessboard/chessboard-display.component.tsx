@@ -10,6 +10,8 @@ import Chessboard, { Piece } from 'chessboardjsx';
 import { ChessInstance, Square, Move } from 'chess.js';
 import Orientation from '../../utils/types/orientation/orientation';
 import getOrientation from '../../utils/helpers/orientation/get-orientation';
+import OpponentChip from '../chips/game-chips/opponent-chip/opponent-chip.component';
+import PlayerChip from '../chips/game-chips/player-chip/player-chip.component';
 const Chess = require('chess.js');
 const game: ChessInstance = new Chess();
 
@@ -166,7 +168,7 @@ const ChessboardDisplay = () => {
 	return (
 		<BoardContainer>
 			<OpponentContainer>
-				<div>Opponent Chip</div>
+				<OpponentChip />
 			</OpponentContainer>
 			<Chessboard
 				draggable
@@ -183,7 +185,7 @@ const ChessboardDisplay = () => {
 				width={700}
 			/>
 			<PlayerContainer>
-				<div>Player Chip</div>
+				<PlayerChip />
 			</PlayerContainer>
 		</BoardContainer>
 	);
