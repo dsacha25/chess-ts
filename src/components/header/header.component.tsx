@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Avatar, HeaderContainer, LogOutButton } from './header.styles';
+import {
+	Avatar,
+	LogOutContainer,
+	LogOutButton,
+	HeaderContainer,
+} from './header.styles';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
 import { selectProfilePicture } from '../../redux/user/user.selector';
 import UsersOnly from '../../HOCs/with-user/with-user.hoc';
 import useActions from '../../hooks/use-actions/use-actions.hook';
+import NotificationButton from '../notifications/notification-button/notification-button.component';
 
 const Header = () => {
 	const photoURL = useSelector((state) => selectProfilePicture(state));
@@ -17,10 +23,13 @@ const Header = () => {
 	return createPortal(
 		<UsersOnly>
 			<HeaderContainer>
-				<LogOutButton onClick={() => logOutStart()} color="light">
-					Log Out
-				</LogOutButton>
-				<Avatar url={photoURL} />
+				<NotificationButton />
+				<LogOutContainer>
+					<LogOutButton onClick={() => logOutStart()} color="light">
+						Log Out
+					</LogOutButton>
+					<Avatar url={photoURL} />
+				</LogOutContainer>
 			</HeaderContainer>
 		</UsersOnly>,
 		document.getElementById('portal') as HTMLElement

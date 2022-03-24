@@ -4,18 +4,29 @@ import ImageContainer from '../common/containers/image-container/image-container
 
 export const HeaderContainer = styled.div`
 	display: grid;
+	width: 210px;
 	height: 50px;
-	width: 150px;
+
+	grid-template-columns: 50px 150px;
+	place-items: center;
+
+	position: absolute;
+	right: 20px;
+	top: 20px;
+
+	grid-gap: 10px;
+	margin-right: 30px;
+`;
+
+export const LogOutContainer = styled.div`
+	display: grid;
+	height: 50px;
+	width: 100%;
 
 	grid-template-columns: 1fr auto;
 
 	border-radius: 40px;
-	margin-right: 30px;
 	flex: 1;
-	max-width: 28%;
-	position: absolute;
-	right: 0;
-	top: 20px;
 
 	place-items: center;
 	place-content: center;
