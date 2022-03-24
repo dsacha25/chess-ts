@@ -52,6 +52,11 @@ const gradients: Gradient[] = [
 		gradient: 'to bottom, #5691c8, #457fca',
 	},
 	{
+		name: 'inbox2',
+		fallback: '#77a8d6',
+		gradient: 'to bottom, #719fcb, #77a8d6, #719fcb',
+	},
+	{
 		name: 'lawrencium',
 		fallback: '#0f0c29',
 		gradient: 'to right, #24243e, #302b63, #0f0c29',
@@ -64,7 +69,7 @@ const gradients: Gradient[] = [
 	{
 		name: 'royal',
 		fallback: '#141E30',
-		gradient: 'to top, #141E30, #243B55, #141E30',
+		gradient: 'to top, #141E30 -20%, #243B55, #141E30 120%',
 	},
 	{
 		name: 'pinot noir',
@@ -79,7 +84,7 @@ const gradients: Gradient[] = [
 	},
 ];
 
-const index: number = 7;
+const index: number = 5;
 
 export const SiteContainer = styled.div`
 	display: grid;
