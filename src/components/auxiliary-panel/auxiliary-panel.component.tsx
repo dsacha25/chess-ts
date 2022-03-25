@@ -9,7 +9,7 @@ import {
 
 import { BiMessage } from 'react-icons/bi';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
-import { selectGameHistory, selectTurns } from '../../redux/game/game.selector';
+import { selectTurns } from '../../redux/game/game.selector';
 
 const AuxiliaryPanel = () => {
 	const history = useSelector((state) => selectTurns(state));
