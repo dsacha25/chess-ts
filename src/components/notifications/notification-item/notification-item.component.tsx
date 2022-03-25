@@ -3,6 +3,7 @@ import { NotificationFlag } from '../notification-flag/notification-flag.styles'
 import {
 	DeleteNotifButton,
 	NotificationElement,
+	NotificationMessage,
 } from './notification-item.styles';
 import { NotificationItemProps } from './types';
 import { GrClose } from 'react-icons/gr';
@@ -11,21 +12,17 @@ import useActions from '../../../hooks/use-actions/use-actions.hook';
 const NotificationItem: FC<NotificationItemProps> = ({ notification }) => {
 	const { readNotification, deleteNotification } = useActions();
 	const handleMarkAsRead = () => {
-		if (notification) {
-			readNotification(notification.id);
-		}
+		readNotification(notification.id);
 	};
 
 	const handleDeleteNotification = () => {
-		if (notification) {
-			deleteNotification(notification.id);
-		}
+		deleteNotification(notification.id);
 	};
 
 	return (
 		<NotificationElement onMouseOut={handleMarkAsRead}>
-			<NotificationFlag unread={true} />
-			<p>Notification Message</p>
+			<NotificationFlag unread={notification.unread} />
+			<NotificationMessage>{notification.message}</NotificationMessage>
 			<DeleteNotifButton
 				onClick={handleDeleteNotification}
 				color="warn"

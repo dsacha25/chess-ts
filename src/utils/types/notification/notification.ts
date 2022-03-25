@@ -4,6 +4,6 @@ export interface Notification {
 	id: string;
 	message: string;
 	source_uid: string;
-	read: boolean;
+	unread: boolean;
 	createdAt: Date | Timestamp;
 }
