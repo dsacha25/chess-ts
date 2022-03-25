@@ -54,6 +54,10 @@ class ChessGame {
 		return this.game.moves({ square, verbose: true });
 	}
 
+	getMovesToHighlight(square: Square): Square[] {
+		return this.getMoves(square).map((move) => move.to);
+	}
+
 	movePiece(from: Square, to: Square): Move | null {
 		return this.game.move({
 			from,
@@ -68,7 +72,7 @@ class ChessGame {
 		const targetSquare =
 			this.history.length && this.history[this.history.length - 1].to;
 
-		const backgroundColor = 'rgba(255, 255, 0, 0.4)';
+		const backgroundColor = 'rgba(255, 0, 0, 0.4)';
 
 		return (this.squareStyles = {
 			[pieceSquare ? pieceSquare : '']: { backgroundColor },

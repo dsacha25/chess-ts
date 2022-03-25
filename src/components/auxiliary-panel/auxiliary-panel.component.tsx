@@ -23,8 +23,8 @@ const AuxiliaryPanel = () => {
 			</Title>
 			<PanelInfoContainer>
 				<ul>
-					{history.map((move) => (
-						<li>
+					{history.map((move, i) => (
+						<li key={i}>
 							W:{move[0]} B:{move[1]}
 						</li>
 					))}

@@ -1,7 +1,8 @@
 import Orientation from '../../types/orientation/orientation';
+import Side from '../../types/side/side';
 
-const getOrientation = (orientation: 'w' | 'b'): Orientation => {
-	return orientation === 'w' ? 'white' : 'black';
+const getOrientation = (side: Side): Orientation => {
+	return side === 'w' ? 'white' : 'black';
 };
 
 export default getOrientation;
