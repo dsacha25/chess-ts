@@ -12,8 +12,9 @@ import Orientation from '../../utils/types/orientation/orientation';
 import getOrientation from '../../utils/helpers/orientation/get-orientation';
 import OpponentChip from '../chips/game-chips/opponent-chip/opponent-chip.component';
 import PlayerChip from '../chips/game-chips/player-chip/player-chip.component';
+import ChessGame from '../../utils/classes/chess-game/chess-game';
 const Chess = require('chess.js');
-const game: ChessInstance = new Chess();
+const game = new ChessGame();
 
 const ChessboardDisplay = () => {
 	const [fen, setFen] = useState('start');
@@ -24,81 +25,51 @@ const ChessboardDisplay = () => {
 	const [pieceSquare, setPieceSquare] = useState<Square>();
 	const [square, setSquare] = useState<Square>();
 	const [history, setHistory] = useState<Move[]>([]);
-	const [gameOver, setGameOver] = useState(game.game_over());
+	const [gameOver, setGameOver] = useState(game.isGameOver);
 
 	const [orientation, setOrientation] = useState<Orientation>('white');
 
-	const handleReset = () => {
-		game.reset();
-		setFen(game.fen());
-		setSquareStyles({});
-	};
+	const [playerSide, setPlayerSide] = useState('w');
 
 	useEffect(() => {
-		setGameOver(game.game_over());
+		console.log('TURN: ', game.turn);
+		game.setGameType('solo');
+
+		return () => {
+			setFen(game.resetGame());
+		};
+	}, []);
+
+	useEffect(() => {
+		setGameOver(game.isGameOver);
 		console.log('GAME OVER?: ', gameOver);
 
 		// eslint-disable-next-line
 	}, [fen]);
 
-	const squareStyling = (pieceSquare: Square | undefined, history: Move[]) => {
-		const sourceSquare = history.length && history[history.length - 1].from;
-		const targetSquare = history.length && history[history.length - 1].to;
-
-		const backgroundColor = 'rgba(255, 255, 0, 0.4)';
-
-		return {
-			[pieceSquare ? pieceSquare : '']: { backgroundColor },
-			...(history.length && {
-				[sourceSquare]: {
-					backgroundColor,
-				},
-			}),
-			...(history.length && {
-				[targetSquare]: {
-					backgroundColor,
-				},
-			}),
-		};
-	};
-
 	const highlightSquare = (
 		sourceSquare: Square,
 		squaresToHighlight: Square[]
 	) => {
-		const highlightStyles = [sourceSquare, ...squaresToHighlight].reduce(
-			(a, c) => {
-				return {
-					...a,
-					...{
-						[c]: {
-							background:
-								'radial-gradient(circle, #fffc00 36%, transparent 40%)',
-							borderRadius: '50%',
-						},
-					},
-					...squareStyling(square, history),
-				};
-			},
-			{}
+		const highlightStyles = game.highlightSquare(
+			sourceSquare,
+			squaresToHighlight
 		);
 
 		setSquareStyles({ ...squareStyles, ...highlightStyles });
 	};
 
 	const removeHighlightSquare = () => {
-		setSquareStyles(squareStyling(pieceSquare, history));
+		setSquareStyles(game.squareStyling(pieceSquare));
 	};
 
 	const onMouseOverSquare = (square: Square) => {
 		// console.log('MOUSE OVER: ', square);
+
 		setPieceSquare(square);
 
 		// get list of possible moves for this square
-		let moves = game.moves({
-			square: square,
-			verbose: true,
-		});
+		let moves = game.getMoves(square);
 
 		// return if no moves available
 		if (moves.length === 0) return;
@@ -109,7 +80,13 @@ const ChessboardDisplay = () => {
 			squaresToHighlight.push(moves[i].to);
 		}
 
-		highlightSquare(square, squaresToHighlight);
+		if (game.type === 'online') {
+			if (game.turn === playerSide) {
+				highlightSquare(square, squaresToHighlight);
+			}
+		} else {
+			highlightSquare(square, squaresToHighlight);
+		}
 	};
 
 	const onMouseOutSquare = () => {
@@ -117,23 +94,28 @@ const ChessboardDisplay = () => {
 	};
 
 	const onDrop = (props: { sourceSquare: Square; targetSquare: Square }) => {
-		// console.log('DROP');
-
 		const { sourceSquare, targetSquare } = props;
 
-		let move = game.move({
-			from: sourceSquare,
-			to: targetSquare,
-			promotion: 'q',
-		});
+		// is online
+		if (game.type === 'online') {
+			if (game.turn === playerSide) {
+				let move = game.movePiece(sourceSquare, targetSquare);
 
-		if (move === null) return;
-		console.log('MOVE: ', move);
+				if (move === null) return;
+				setFen(game.fen);
+				setHistory(game.history);
+				setSquareStyles(game.squareStyling(pieceSquare));
+			}
+		} else {
+			// solo
+			let move = game.movePiece(sourceSquare, targetSquare);
 
-		setFen(game.fen());
-		setHistory(game.history({ verbose: true }));
-		setSquareStyles(squareStyling(pieceSquare, history));
-		setOrientation(getOrientation(game.turn()));
+			if (move === null) return;
+			setFen(game.fen);
+			setHistory(game.history);
+			setSquareStyles(game.squareStyling(pieceSquare));
+			setOrientation(game.orientation);
+		}
 	};
 
 	const onDragOverSquare = () => {
@@ -141,28 +123,43 @@ const ChessboardDisplay = () => {
 	};
 
 	const onSquareClick = (square: Square) => {
-		console.log('SQUARE CLICK: ', pieceSquare);
+		if (game.type === 'online') {
+			// ONLINE
+			if (game.turn === playerSide) {
+				setSquareStyles(game.squareStyling(square));
+				setPieceSquare(square);
 
-		setSquareStyles(squareStyling(square, history));
-		setPieceSquare(square);
+				let move = game.movePiece(pieceSquare ? pieceSquare : square, square);
 
-		let move = game.move({
-			from: pieceSquare ? pieceSquare : square,
-			to: square,
-			promotion: 'q',
-		});
+				if (move === null) return;
 
-		if (move === null) return;
+				setFen(game.fen);
+				setHistory(game.history);
+				setPieceSquare(undefined);
+			}
+		} else {
+			// SOLO
+			setSquareStyles(game.squareStyling(square));
+			setPieceSquare(square);
 
-		console.log('move: ', move);
-		setFen(game.fen());
-		setHistory(game.history({ verbose: true }));
-		setPieceSquare(undefined);
-		console.log('SQUARE CLICK END: ', pieceSquare);
+			let move = game.movePiece(pieceSquare ? pieceSquare : square, square);
+
+			if (move === null) return;
+
+			setFen(game.fen);
+			setHistory(game.history);
+			setPieceSquare(undefined);
+		}
 	};
 
 	const onPieceClick = (piece: Piece) => {
 		console.log('PIECE CLICK: ', piece);
+
+		const pieceColor = piece.charAt(0);
+
+		if (game.turn === playerSide) {
+			console.log('Player can move');
+		}
 	};
 
 	return (
