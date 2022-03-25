@@ -44,6 +44,12 @@ class ChessGame {
 		return this.fen;
 	}
 
+	getMoveString(move: Move): string {
+		const { san } = move;
+
+		return '';
+	}
+
 	getMoves(square: Square): Move[] {
 		return this.game.moves({ square, verbose: true });
 	}

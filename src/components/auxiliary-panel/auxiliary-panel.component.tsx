@@ -8,8 +8,14 @@ import {
 } from './auxiliary-panel.styles';
 
 import { BiMessage } from 'react-icons/bi';
+import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
+import { selectGameHistory, selectTurns } from '../../redux/game/game.selector';
 
 const AuxiliaryPanel = () => {
+	const history = useSelector((state) => selectTurns(state));
+
+	console.log('HISTORY: ', history);
+
 	return (
 		<AuxiliaryPanelContainer>
 			<Title margin="0" fontSize="30px" color="light">
@@ -17,9 +23,11 @@ const AuxiliaryPanel = () => {
 			</Title>
 			<PanelInfoContainer>
 				<ul>
-					<li>c4</li>
-					<li>f6</li>
-					<li>Kc3</li>
+					{history.map((move) => (
+						<li>
+							W:{move[0]} B:{move[1]}
+						</li>
+					))}
 				</ul>
 			</PanelInfoContainer>
 

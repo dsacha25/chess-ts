@@ -1,23 +1,28 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
 import {
 	BoardContainer,
-	CustomButton,
 	OpponentContainer,
-	OrientationDisplay,
 	PlayerContainer,
 } from './chessboard-display.styles';
 import Chessboard, { Piece } from 'chessboardjsx';
-import { ChessInstance, Square, Move } from 'chess.js';
+import { Square, Move } from 'chess.js';
 import Orientation from '../../utils/types/orientation/orientation';
-import getOrientation from '../../utils/helpers/orientation/get-orientation';
 import OpponentChip from '../chips/game-chips/opponent-chip/opponent-chip.component';
 import PlayerChip from '../chips/game-chips/player-chip/player-chip.component';
 import ChessGame from '../../utils/classes/chess-game/chess-game';
-const Chess = require('chess.js');
+import useActions from '../../hooks/use-actions/use-actions.hook';
+import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
+import { selectFen, selectGameType } from '../../redux/game/game.selector';
+import { useLocation } from 'react-router-dom';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
-	const [fen, setFen] = useState('start');
+	const location = useLocation();
+
+	const gameType = useSelector((state) => selectGameType(state));
+	const fen = useSelector((state) => selectFen(state));
+	const { movePiece, resetGame, setGameType, setFen } = useActions();
+
 	const [dropStyles, setDropStyles] = useState({});
 	const [squareStyles, setSquareStyles] = useState<{
 		[square in Square]?: CSSProperties;
@@ -34,9 +39,16 @@ const ChessboardDisplay = () => {
 	useEffect(() => {
 		console.log('TURN: ', game.turn);
 		game.setGameType('solo');
+		if (location.pathname === '/play') {
+			console.log('PLAY');
+			setGameType('online');
+		} else if (location.pathname === '/analysis') {
+			setGameType('solo');
+		}
 
 		return () => {
 			setFen(game.resetGame());
+			resetGame();
 		};
 	}, []);
 
@@ -80,7 +92,7 @@ const ChessboardDisplay = () => {
 			squaresToHighlight.push(moves[i].to);
 		}
 
-		if (game.type === 'online') {
+		if (gameType === 'online') {
 			if (game.turn === playerSide) {
 				highlightSquare(square, squaresToHighlight);
 			}
@@ -97,7 +109,7 @@ const ChessboardDisplay = () => {
 		const { sourceSquare, targetSquare } = props;
 
 		// is online
-		if (game.type === 'online') {
+		if (gameType === 'online') {
 			if (game.turn === playerSide) {
 				let move = game.movePiece(sourceSquare, targetSquare);
 
@@ -109,8 +121,8 @@ const ChessboardDisplay = () => {
 		} else {
 			// solo
 			let move = game.movePiece(sourceSquare, targetSquare);
-
 			if (move === null) return;
+			movePiece(move);
 			setFen(game.fen);
 			setHistory(game.history);
 			setSquareStyles(game.squareStyling(pieceSquare));
@@ -123,7 +135,7 @@ const ChessboardDisplay = () => {
 	};
 
 	const onSquareClick = (square: Square) => {
-		if (game.type === 'online') {
+		if (gameType === 'online') {
 			// ONLINE
 			if (game.turn === playerSide) {
 				setSquareStyles(game.squareStyling(square));

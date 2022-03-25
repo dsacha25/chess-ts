@@ -11,12 +11,6 @@ export const BoardContainer = styled.div`
 	grid-template-rows: auto 700px auto;
 `;
 
-export const OrientationDisplay = styled.h1`
-	text-transform: capitalize;
-	color: ${({ theme }) => theme.main};
-	justify-self: flex-start;
-`;
-
 export const CustomButton = styled.button`
 	height: 60px;
 	width: 200px;
