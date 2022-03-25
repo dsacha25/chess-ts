@@ -5,8 +5,8 @@ export interface OpenNotificationListenerAction {
 	type: NotificationTypes.OPEN_NOTIFICATION_LISTENER;
 }
 
-export interface NewNotificationAction {
-	type: NotificationTypes.NEW_NOTIFICATION;
+export interface EmitNewNotificationAction {
+	type: NotificationTypes.EMIT_NEW_NOTIFICATION;
 	payload: Notification;
 }
 
@@ -22,7 +22,7 @@ export interface ReadNotificationAction {
 
 type NotificationActionTypes =
 	| OpenNotificationListenerAction
-	| NewNotificationAction
+	| EmitNewNotificationAction
 	| DeleteNotificationAction
 	| ReadNotificationAction;
 

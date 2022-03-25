@@ -7,8 +7,12 @@ export const NotificationsContainer = styled.div`
 	place-items: flex-start;
 	border-radius: 25px;
 
-	background-color: ${({ theme }) => theme.grey};
+	color: black;
+
+	background-color: ${({ theme }) => theme.white};
 	border: 2px solid ${({ theme }) => theme.main};
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 4px;
 
 	position: absolute;
 
@@ -16,4 +20,8 @@ export const NotificationsContainer = styled.div`
 	right: 30px;
 
 	z-index: 0;
+
+	overflow: hidden;
+
+	overflow-y: auto;
 `;

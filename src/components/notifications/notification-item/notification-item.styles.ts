@@ -10,6 +10,10 @@ export const NotificationElement = styled.div`
 	grid-template-columns: 50px 1fr 50px;
 
 	font-size: 9px;
+
+	:hover {
+		background-color: ${({ theme }) => theme.main}33;
+	}
 `;
 
 export const DeleteNotifButton = styled(CustomButton)`

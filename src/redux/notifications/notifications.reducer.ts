@@ -19,7 +19,7 @@ const notificationsReducer = produce(
 		action: NotificationActionTypes
 	) => {
 		switch (action.type) {
-			case NotificationTypes.NEW_NOTIFICATION:
+			case NotificationTypes.EMIT_NEW_NOTIFICATION:
 				state.unreadNotifications.push(action.payload);
 				return state;
 			case NotificationTypes.READ_NOTIFICATION:

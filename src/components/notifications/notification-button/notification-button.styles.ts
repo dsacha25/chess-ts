@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import CustomButton from '../../common/buttons/custom-button/custom-button.component';
-import { NotificationButtonProps } from './types';
+import { NotificationFlag } from '../notification-flag/notification-flag.styles';
 
-export const NotificationButtonContainer = styled(CustomButton)`
+export const NotificationButtonContainer = styled.div`
 	display: grid;
 	width: 50px;
 	height: 50px;
@@ -13,19 +13,20 @@ export const NotificationButtonContainer = styled(CustomButton)`
 
 	grid-column: 1 / 2;
 	margin: 0;
+	background-color: ${({ theme }) => theme.main};
+	border: 2px solid ${({ theme }) => theme.main};
+
+	color: ${({ theme }) => theme.white};
+
+	:focus,
+	:hover {
+		background-color: ${({ theme }) => theme.light};
+	}
 `;
 
-export const UnreadNotifFlag = styled.div<NotificationButtonProps>`
-	display: ${({ hasUnreadNotifs }) => (hasUnreadNotifs ? 'grid' : 'none')};
-
+export const NotifButtonFlag = styled(NotificationFlag)`
 	position: absolute;
 	top: -4px;
 	right: -4px;
 	z-index: 1;
-
-	width: 18px;
-	height: 18px;
-	border-radius: 9px;
-
-	background-color: ${({ theme }) => theme.warn};
 `;

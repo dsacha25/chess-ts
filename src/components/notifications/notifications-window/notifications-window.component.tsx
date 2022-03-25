@@ -10,6 +10,19 @@ const NotificationsWindow = () => {
 	return (
 		<NotificationsContainer>
 			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
+			<NotificationItem />
 			{unreadNotifs.map((notification) => (
 				<NotificationItem notification={notification} />
 			))}

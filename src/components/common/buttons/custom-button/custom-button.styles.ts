@@ -57,10 +57,10 @@ const warnStyles = css`
 
 const borderlessStyles = css`
 	border: none !important;
+	background-color: transparent !important;
 
 	:hover {
 		color: ${({ theme }) => theme.light} !important;
-		background-color: transparent !important;
 		font-weight: 600 !important;
 		border: none !important;
 	}
