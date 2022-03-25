@@ -9,7 +9,6 @@ import { chunk, map } from 'lodash';
 export interface GameState {
 	fen: string;
 	history: Move[];
-	turns: string[][];
 	gameType: GameType;
 	orientation: Orientation;
 }
@@ -17,7 +16,6 @@ export interface GameState {
 const INITIAL_STATE: GameState = {
 	fen: 'start',
 	history: [],
-	turns: [],
 	gameType: 'solo',
 	orientation: 'white',
 };
@@ -26,13 +24,6 @@ const gameReducer = produce(
 	(state: GameState = INITIAL_STATE, action: GameActions) => {
 		switch (action.type) {
 			case GameTypes.MOVE_PIECE:
-				const moves = [...state.history, action.payload];
-				const turns = chunk(
-					map(moves, (move: Move) => move.san),
-					2
-				);
-
-				state.turns = turns;
 				state.history.push(action.payload);
 				return state;
 			case GameTypes.RESET_GAME_HISTORY:

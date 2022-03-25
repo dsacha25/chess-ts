@@ -1,4 +1,5 @@
-import { create } from 'lodash';
+import { Move } from 'chess.js';
+import { chunk, create, map } from 'lodash';
 import { createSelector } from 'reselect';
 import { RootState } from '../root-reducer';
 
@@ -19,6 +20,11 @@ export const selectOrientation = createSelector(
 	(game) => game.orientation
 );
 
-export const selectTurns = createSelector(selectGame, (game) => game.turns);
+export const selectTurns = createSelector(selectGame, (game) =>
+	chunk(
+		map(game.history, (move: Move) => move.san),
+		2
+	)
+);
 
 export const selectFen = createSelector(selectGame, (game) => game.fen);

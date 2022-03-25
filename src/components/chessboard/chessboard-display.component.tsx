@@ -12,7 +12,11 @@ import PlayerChip from '../chips/game-chips/player-chip/player-chip.component';
 import ChessGame from '../../utils/classes/chess-game/chess-game';
 import useActions from '../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
-import { selectFen, selectGameType } from '../../redux/game/game.selector';
+import {
+	selectFen,
+	selectGameType,
+	selectOrientation,
+} from '../../redux/game/game.selector';
 import { useLocation } from 'react-router-dom';
 const game = new ChessGame();
 
@@ -21,18 +25,17 @@ const ChessboardDisplay = () => {
 
 	const gameType = useSelector((state) => selectGameType(state));
 	const fen = useSelector((state) => selectFen(state));
-	const { movePiece, resetGame, setGameType, setFen } = useActions();
+	const orientation = useSelector((state) => selectOrientation(state));
+	const { movePiece, resetGame, setGameType, setFen, setOrientation } =
+		useActions();
 
 	const [dropStyles, setDropStyles] = useState({});
 	const [squareStyles, setSquareStyles] = useState<{
 		[square in Square]?: CSSProperties;
 	}>({});
 	const [pieceSquare, setPieceSquare] = useState<Square>();
-	const [square, setSquare] = useState<Square>();
-	const [history, setHistory] = useState<Move[]>([]);
-	const [gameOver, setGameOver] = useState(game.isGameOver);
 
-	const [orientation, setOrientation] = useState<Orientation>('white');
+	const [gameOver, setGameOver] = useState(game.isGameOver);
 
 	const [playerSide, setPlayerSide] = useState('w');
 
@@ -115,7 +118,7 @@ const ChessboardDisplay = () => {
 
 				if (move === null) return;
 				setFen(game.fen);
-				setHistory(game.history);
+
 				setSquareStyles(game.squareStyling(pieceSquare));
 			}
 		} else {
@@ -124,7 +127,7 @@ const ChessboardDisplay = () => {
 			if (move === null) return;
 			movePiece(move);
 			setFen(game.fen);
-			setHistory(game.history);
+
 			setSquareStyles(game.squareStyling(pieceSquare));
 			setOrientation(game.orientation);
 		}
@@ -146,7 +149,7 @@ const ChessboardDisplay = () => {
 				if (move === null) return;
 
 				setFen(game.fen);
-				setHistory(game.history);
+
 				setPieceSquare(undefined);
 			}
 		} else {
@@ -159,15 +162,13 @@ const ChessboardDisplay = () => {
 			if (move === null) return;
 
 			setFen(game.fen);
-			setHistory(game.history);
+
 			setPieceSquare(undefined);
 		}
 	};
 
 	const onPieceClick = (piece: Piece) => {
 		console.log('PIECE CLICK: ', piece);
-
-		const pieceColor = piece.charAt(0);
 
 		if (game.turn === playerSide) {
 			console.log('Player can move');
