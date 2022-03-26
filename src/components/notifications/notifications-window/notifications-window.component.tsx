@@ -8,7 +8,7 @@ const NotificationsWindow = () => {
 	const notifications = useSelector((state) => selectAllNotifications(state));
 
 	return (
-		<NotificationsContainer>
+		<NotificationsContainer role="presentation">
 			{notifications.map((notification, i) => (
 				<NotificationItem key={i} notification={notification} />
 			))}

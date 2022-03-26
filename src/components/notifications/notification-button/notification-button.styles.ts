@@ -4,24 +4,28 @@ import { NotificationFlag } from '../notification-flag/notification-flag.styles'
 
 export const NotificationButtonContainer = styled.div`
 	display: grid;
-	width: 50px;
-	height: 50px;
-	place-content: center;
 	position: relative;
 
 	border-radius: 25px;
 
 	grid-column: 1 / 2;
 	margin: 0;
-	background-color: ${({ theme }) => theme.main};
-	border: 2px solid ${({ theme }) => theme.main};
-
-	color: ${({ theme }) => theme.white};
 
 	:focus,
 	:hover {
 		background-color: ${({ theme }) => theme.light};
 	}
+`;
+
+export const NotifButton = styled(CustomButton)`
+	display: grid;
+	width: 50px;
+	height: 50px;
+	place-content: center;
+
+	border-radius: 25px;
+
+	margin: 0;
 `;
 
 export const NotifButtonFlag = styled(NotificationFlag)`

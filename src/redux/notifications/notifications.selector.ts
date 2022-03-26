@@ -1,3 +1,4 @@
+import { orderBy } from 'lodash';
 import { createSelector } from 'reselect';
 import { RootState } from '../root-reducer';
 
@@ -15,5 +16,5 @@ export const selectReadNotifications = createSelector(
 
 export const selectAllNotifications = createSelector(
 	[selectUnreadNotifications, selectReadNotifications],
-	(unread, read) => [...unread, ...read]
+	(unread, read) => orderBy([...unread, ...read], 'unread', 'desc')
 );

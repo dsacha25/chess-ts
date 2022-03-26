@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import {
 	Avatar,
@@ -15,10 +15,6 @@ import NotificationButton from '../notifications/notification-button/notificatio
 const Header = () => {
 	const photoURL = useSelector((state) => selectProfilePicture(state));
 	const { logOutStart } = useActions();
-
-	useEffect(() => {
-		console.log('PHOTO URL HEADER: ', photoURL);
-	});
 
 	return createPortal(
 		<UsersOnly>

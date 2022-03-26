@@ -5,10 +5,10 @@ import ImageContainer from '../common/containers/image-container/image-container
 export const HeaderContainer = styled.div`
 	display: grid;
 	width: 210px;
-	height: 50px;
+	/* height: 50px; */
 
-	grid-template-columns: 50px 150px;
-	place-items: center;
+	grid-template-columns: auto 150px;
+	place-items: flex-start center;
 
 	position: absolute;
 	right: 20px;
@@ -16,6 +16,7 @@ export const HeaderContainer = styled.div`
 
 	grid-gap: 10px;
 	margin-right: 30px;
+	z-index: 10;
 `;
 
 export const LogOutContainer = styled.div`

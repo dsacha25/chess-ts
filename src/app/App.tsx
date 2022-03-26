@@ -22,8 +22,16 @@ function App() {
 	useEffect(() => {
 		// if (!auth) {
 		checkUserSession();
-		openNotificationListener();
+
+		// eslint-disable-next-line
 	}, [auth]);
+
+	useEffect(() => {
+		openNotificationListener();
+
+		// eslint-disable-next-line
+	}, []);
+
 	return (
 		<div className="App">
 			<SiteContainer>

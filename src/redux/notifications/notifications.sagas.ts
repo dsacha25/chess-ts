@@ -1,4 +1,4 @@
-import { where } from 'firebase/firestore';
+import { orderBy, where } from 'firebase/firestore';
 import { EventChannel } from 'redux-saga';
 import {
 	all,
@@ -13,16 +13,56 @@ import getErrorMessage from '../../utils/helpers/errors/get-error-message';
 import { Notification } from '../../utils/types/notification/notification';
 import { selectUserUID } from '../user/user.selector';
 import {
-	emitNewNotification,
+	DeleteNotificationAction,
+	ReadNotificationAction,
+} from './notifications.action-types';
+import {
+	addReadNotification,
+	addUnreadNotification,
 	notificationError,
 } from './notifications.actions';
 import { NotificationTypes } from './notifications.types';
 
-export function* getNotification(notifications: Notification[]) {
-	yield console.log('NOTIFICATION: ', notifications);
+export function* deleteNotificationAsync({
+	payload: id,
+}: DeleteNotificationAction) {
+	try {
+		yield console.log('DELETE NOTIFICATION', id);
+	} catch (err) {
+		yield put(notificationError(getErrorMessage(err)));
+	}
+}
+
+export function* onDeleteNotification() {
+	yield takeEvery(
+		NotificationTypes.DELETE_NOTIFICATION,
+		deleteNotificationAsync
+	);
+}
+
+export function* markNotificationAsRead({
+	payload: notification,
+}: ReadNotificationAction) {
+	try {
+		yield console.log('READ NOTIFICATION: ', notification);
+	} catch (err) {
+		yield put(notificationError(getErrorMessage(err)));
+	}
+}
+
+export function* onReadNotification() {
+	yield takeEvery(NotificationTypes.READ_NOTIFICATION, markNotificationAsRead);
+}
+
+export function* getNotifications(notifications: Notification[]) {
+	yield console.log('ALL NOTIFICATIONS: ', notifications);
 
 	for (const notification of notifications) {
-		yield put(emitNewNotification(notification));
+		if (notification.unread) {
+			yield put(addUnreadNotification(notification));
+		} else {
+			yield put(addReadNotification(notification));
+		}
 	}
 }
 
@@ -33,10 +73,11 @@ export function* openNotificationListener(): Generator | SelectEffect {
 		const notificationsChannel: EventChannel<unknown> =
 			yield listener.generateCollectionListener(
 				'notifications',
-				where('reciever', '==', uid)
+				where('reciever', '==', uid),
+				orderBy('createdAt')
 			);
 
-		yield listener.initializeChannel(notificationsChannel, getNotification);
+		yield listener.initializeChannel(notificationsChannel, getNotifications);
 	} catch (err) {
 		yield put(notificationError(getErrorMessage(err)));
 	}
@@ -50,14 +91,18 @@ export function* onOpenNotificationListener() {
 }
 
 export function* notificationSagas() {
-	yield all([call(onOpenNotificationListener)]);
+	yield all([
+		call(onOpenNotificationListener),
+		call(onReadNotification),
+		call(onDeleteNotification),
+	]);
 }
 
 /* 
 
 export function* emitNotification(notification: Notification) {
 	yield console.log('NEW NOTIF: ', notification);
-	yield put(emitNewNotification(notification));
+	yield put(addUnreadNotification(notification));
 }
 
 export function* openNotificationListener(): Generator | SelectEffect {
@@ -72,7 +117,7 @@ export function* openNotificationListener(): Generator | SelectEffect {
 
 		yield console.log('OPEN LISTENER');
 
-		yield listener.initializeChannel(notificationsChannel, emitNewNotification);
+		yield listener.initializeChannel(notificationsChannel, addUnreadNotification);
 	} catch (err) {
 		yield put(notificationError(getErrorMessage(err)));
 	}

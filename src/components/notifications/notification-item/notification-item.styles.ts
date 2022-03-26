@@ -12,6 +12,12 @@ export const NotificationElement = styled.div`
 	:hover {
 		background-color: ${({ theme }) => theme.main}33;
 	}
+
+	:active {
+		background-color: ${({ theme }) => theme.main}77;
+	}
+
+	cursor: pointer;
 `;
 
 export const NotificationMessage = styled.p`

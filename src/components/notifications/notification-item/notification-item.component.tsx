@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { NotificationFlag } from '../notification-flag/notification-flag.styles';
 import {
 	DeleteNotifButton,
@@ -8,21 +8,43 @@ import {
 import { NotificationItemProps } from './types';
 import { GrClose } from 'react-icons/gr';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
+import { time } from 'console';
 
 const NotificationItem: FC<NotificationItemProps> = ({ notification }) => {
 	const { readNotification, deleteNotification } = useActions();
+	const [timeout, setTO] = useState<NodeJS.Timeout | null>(null);
+
 	const handleMarkAsRead = () => {
-		readNotification(notification.id);
+		if (notification.unread && !timeout) {
+			console.log('MOUSE OUT');
+			readNotification(notification);
+		}
+		if (timeout) {
+			clearTimeout(timeout);
+			setTO(null);
+		}
+	};
+
+	const handleStartTimeout = () => {
+		const to = setTimeout(() => {
+			clearTimeout(to);
+			setTO(null);
+		}, 1000);
+
+		setTO(to);
 	};
 
 	const handleDeleteNotification = () => {
+		console.log('DELETE');
+
 		deleteNotification(notification.id);
 	};
 
-	console.log(notification);
-
 	return (
-		<NotificationElement onMouseOut={handleMarkAsRead}>
+		<NotificationElement
+			onMouseEnter={handleStartTimeout}
+			onMouseLeave={handleMarkAsRead}
+		>
 			<NotificationFlag unread={notification.unread} />
 			<NotificationMessage>{notification.type}</NotificationMessage>
 			<DeleteNotifButton

@@ -5,6 +5,9 @@
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0",
     "@material-ui/core": "^4.12.3",
+    "@mui/material": "^5.5.2",
+    "@mui/styled-engine-sc": "^5.5.2",
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -40,6 +43,9 @@
     "styled-components": "^5.3.3",
     "typescript": "^4.6.2",
     "web-vitals": "^2.1.4"
+  },
+  "resolutions": {
+        "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
   },
   "scripts": {
     "start": "react-scripts start",

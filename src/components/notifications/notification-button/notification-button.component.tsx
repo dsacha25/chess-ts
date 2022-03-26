@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import {
+	NotifButton,
 	NotifButtonFlag,
 	NotificationButtonContainer,
 } from './notification-button.styles';
 
 import { RiNotificationFill } from 'react-icons/ri';
 import NotificationsWindow from '../notifications-window/notifications-window.component';
-import { ClickAwayListener } from '@material-ui/core';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectUnreadNotifications } from '../../../redux/notifications/notifications.selector';
+import { ClickAwayListener } from '@mui/material';
 
 const NotificationButton = () => {
 	const unreadNotifs = useSelector((state) => selectUnreadNotifications(state));
@@ -16,11 +17,13 @@ const NotificationButton = () => {
 
 	return (
 		<ClickAwayListener onClickAway={() => setOpen(false)}>
-			<NotificationButtonContainer onClick={() => setOpen(!open)} color="main">
-				<NotifButtonFlag unread={unreadNotifs.length > 0} />
-				<RiNotificationFill size="28px" />
+			<NotificationButtonContainer>
+				<NotifButton onClick={() => setOpen(!open)} color="main">
+					<NotifButtonFlag unread={unreadNotifs.length > 0} />
+					<RiNotificationFill size="28px" />
+				</NotifButton>
 
-				{open && <NotificationsWindow />}
+				{open ? <NotificationsWindow /> : null}
 			</NotificationButtonContainer>
 		</ClickAwayListener>
 	);

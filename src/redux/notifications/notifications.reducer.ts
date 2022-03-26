@@ -2,6 +2,7 @@ import { Notification } from '../../utils/types/notification/notification';
 import NotificationActionTypes from './notifications.action-types';
 import { NotificationTypes } from './notifications.types';
 import { produce } from 'immer';
+import { concat, filter, isEqual, orderBy, uniqWith } from 'lodash';
 
 export interface NotificationsState {
 	unreadNotifications: Notification[];
@@ -21,21 +22,40 @@ const notificationsReducer = produce(
 		action: NotificationActionTypes
 	) => {
 		switch (action.type) {
-			case NotificationTypes.EMIT_NEW_NOTIFICATION:
-				state.unreadNotifications.push(action.payload);
+			case NotificationTypes.ADD_UNREAD_NOTIFICATION:
+				state.unreadNotifications = uniqWith(
+					concat(state.unreadNotifications, action.payload),
+					isEqual
+				);
+				state.error = '';
+				return state;
+			case NotificationTypes.ADD_READ_NOTIFICATION:
+				state.readNotifications = uniqWith(
+					concat(state.readNotifications, action.payload),
+					isEqual
+				);
 				return state;
 			case NotificationTypes.READ_NOTIFICATION:
-				state.unreadNotifications.filter(
-					(notification) => notification.id !== action.payload
+				state.unreadNotifications = filter(
+					state.unreadNotifications,
+					(notif) => notif.id !== action.payload.id
 				);
+				state.readNotifications = orderBy(
+					concat(state.readNotifications, { ...action.payload, unread: false }),
+					'createdAt'
+				);
+				state.error = '';
 				return state;
 			case NotificationTypes.DELETE_NOTIFICATION:
-				state.unreadNotifications.filter(
+				state.unreadNotifications = filter(
+					state.unreadNotifications,
 					(notification) => notification.id !== action.payload
 				);
-				state.readNotifications.filter(
+				state.readNotifications = filter(
+					state.readNotifications,
 					(notification) => notification.id !== action.payload
 				);
+				state.error = '';
 				return state;
 			case NotificationTypes.NOTIFICATION_ERROR:
 				state.error = action.payload;

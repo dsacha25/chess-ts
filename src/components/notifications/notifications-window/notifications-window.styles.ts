@@ -21,7 +21,7 @@ export const NotificationsContainer = styled.div`
 
 	z-index: 0;
 
-	overflow: hidden;
+	/* overflow: hidden; */
 
 	overflow-y: auto;
 `;
