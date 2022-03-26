@@ -8,6 +8,7 @@ import {
 	SelectEffect,
 	takeEvery,
 } from 'redux-saga/effects';
+import { db } from '../../utils/classes/firestore/firestore-app';
 import { listener } from '../../utils/classes/sagas/saga-listener';
 import getErrorMessage from '../../utils/helpers/errors/get-error-message';
 import { Notification } from '../../utils/types/notification/notification';
@@ -28,6 +29,8 @@ export function* deleteNotificationAsync({
 }: DeleteNotificationAction) {
 	try {
 		yield console.log('DELETE NOTIFICATION', id);
+
+		yield db.delete('notifications', id);
 	} catch (err) {
 		yield put(notificationError(getErrorMessage(err)));
 	}
@@ -45,6 +48,7 @@ export function* markNotificationAsRead({
 }: ReadNotificationAction) {
 	try {
 		yield console.log('READ NOTIFICATION: ', notification);
+		yield db.update('notifications', notification.id, { unread: false });
 	} catch (err) {
 		yield put(notificationError(getErrorMessage(err)));
 	}

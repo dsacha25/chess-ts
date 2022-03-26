@@ -121,6 +121,7 @@ export class FirestoreDatabase implements Database {
 		item: UpdateData<any>
 	): Promise<void> {
 		const collectionRef = this.getCollection(collectionName);
+		// TODO: is setting collection necessary?
 		this.setCollection(collectionName);
 		const docRef = doc(collectionRef, id);
 		await updateDoc(docRef, item).catch((err) => {
@@ -128,8 +129,9 @@ export class FirestoreDatabase implements Database {
 		});
 	}
 
-	async delete(id: string): Promise<void> {
-		const docRef = doc(this.db, this.collection.id, id);
+	async delete(collectionName: string, id: string): Promise<void> {
+		const collectionRef = this.getCollection(collectionName);
+		const docRef = doc(collectionRef, id);
 		await deleteDoc(docRef)
 			.then(() => {
 				console.log(`Document ${id} deleted`);
