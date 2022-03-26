@@ -6,10 +6,12 @@ import { useForm } from 'react-hook-form';
 import { SearchInputProps } from './types';
 
 const SearchInput: FC<SearchInputProps> = (props) => {
-	const { handleSubmit } = useForm();
 	return (
-		<SearchInputContainer onSubmit={handleSubmit(props.onSubmit)}>
-			<FormInput label={props.label} />
+		<SearchInputContainer onSubmit={props.onSubmit}>
+			<FormInput
+				{...props.register(props.name, { required: true })}
+				label={props.label}
+			/>
 			<SearchButton color="main">
 				<MdSearch size="30px" />
 			</SearchButton>

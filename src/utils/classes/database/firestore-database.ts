@@ -21,6 +21,10 @@ import {
 	onSnapshot,
 	Unsubscribe,
 	DocumentReference,
+	startAt,
+	endAt,
+	limit,
+	orderBy,
 } from 'firebase/firestore';
 import { Database } from './database';
 
@@ -72,7 +76,24 @@ export class FirestoreDatabase implements Database {
 		let pendingQuery = query<T>(this.collection, ...queryContstraints);
 
 		const snapshot = await getDocs(pendingQuery);
+
 		return this.convertSnapshot<T>(snapshot);
+	}
+
+	async getAllPaginated<T>(
+		collectionName: string,
+		...queryContstraints: QueryConstraint[]
+	) {
+		this.setCollection(collectionName);
+		let pendingQuery = query<T>(this.collection, ...queryContstraints);
+
+		const snapshot = await getDocs<T>(pendingQuery);
+		const docs = snapshot.docs;
+
+		const startRef = docs[0].ref;
+		const endRef = docs[docs.length - 1].ref;
+		const data = this.convertSnapshot<T>(snapshot);
+		return { data, startRef, endRef };
 	}
 
 	async get<T>(collectionName: string, id: string): Promise<T | undefined> {
@@ -140,5 +161,28 @@ export class FirestoreDatabase implements Database {
 
 		const unsubscribe = onSnapshot<T>(pendingQuery, observer);
 		return unsubscribe;
+	}
+
+	async searchCollection<T>(
+		searchQuery: string,
+		collectionName: string,
+		_orderBy?: string
+	): Promise<T[]> {
+		if (_orderBy) {
+			return this.getAll<T>(
+				collectionName,
+				orderBy(_orderBy),
+				startAt(searchQuery),
+				endAt(searchQuery + '\uf8ff'),
+				limit(10)
+			);
+		} else {
+			return this.getAll<T>(
+				collectionName,
+				startAt(searchQuery),
+				endAt(searchQuery + '\uf8ff'),
+				limit(10)
+			);
+		}
 	}
 }
