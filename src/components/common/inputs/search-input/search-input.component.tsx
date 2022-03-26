@@ -11,6 +11,7 @@ const SearchInput: FC<SearchInputProps> = (props) => {
 			<FormInput
 				{...props.register(props.name, { required: true })}
 				label={props.label}
+                hasData={props.hasData}
 			/>
 			<SearchButton color="main">
 				<MdSearch size="30px" />

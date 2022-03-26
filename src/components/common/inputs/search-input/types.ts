@@ -9,4 +9,5 @@ export interface SearchInputProps {
 	label: string;
 	register: UseFormRegister<any>;
 	name: string;
+	hasData: boolean;
 }
