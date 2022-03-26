@@ -28,8 +28,6 @@ export function* deleteNotificationAsync({
 	payload: id,
 }: DeleteNotificationAction) {
 	try {
-		yield console.log('DELETE NOTIFICATION', id);
-
 		yield db.delete('notifications', id);
 	} catch (err) {
 		yield put(notificationError(getErrorMessage(err)));
@@ -47,7 +45,6 @@ export function* markNotificationAsRead({
 	payload: notification,
 }: ReadNotificationAction) {
 	try {
-		yield console.log('READ NOTIFICATION: ', notification);
 		yield db.update('notifications', notification.id, { unread: false });
 	} catch (err) {
 		yield put(notificationError(getErrorMessage(err)));
@@ -59,8 +56,6 @@ export function* onReadNotification() {
 }
 
 export function* getNotifications(notifications: Notification[]) {
-	yield console.log('ALL NOTIFICATIONS: ', notifications);
-
 	for (const notification of notifications) {
 		if (notification.unread) {
 			yield put(addUnreadNotification(notification));
