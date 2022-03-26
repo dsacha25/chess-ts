@@ -98,7 +98,7 @@ export class SagaListener {
 							}))
 						);
 					} else {
-						emitter('No subscriptions found.');
+						emitter([]);
 					}
 				}
 			);
