@@ -20,10 +20,16 @@ export interface ReadNotificationAction {
 	payload: string;
 }
 
+export interface NotificationErrorAction {
+	type: NotificationTypes.NOTIFICATION_ERROR;
+	payload: string;
+}
+
 type NotificationActionTypes =
 	| OpenNotificationListenerAction
 	| EmitNewNotificationAction
 	| DeleteNotificationAction
-	| ReadNotificationAction;
+	| ReadNotificationAction
+	| NotificationErrorAction;
 
 export default NotificationActionTypes;

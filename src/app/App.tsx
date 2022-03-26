@@ -16,12 +16,13 @@ import PlayPage from '../pages/play-page/play-page.component';
 import AnalysisPage from '../pages/analysis-page/analysis-page.component';
 
 function App() {
-	const { checkUserSession } = useActions();
+	const { checkUserSession, openNotificationListener } = useActions();
 	const auth = useSelector((state) => selectUserAuth(state));
 
 	useEffect(() => {
 		// if (!auth) {
 		checkUserSession();
+		openNotificationListener();
 	}, [auth]);
 	return (
 		<div className="App">

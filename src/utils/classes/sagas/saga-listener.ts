@@ -83,7 +83,7 @@ export class SagaListener {
 
 	generateCollectionListener<T>(
 		collectionName: string,
-		constraints: QueryConstraint[]
+		...constraints: QueryConstraint[]
 	): EventChannel<unknown> {
 		const collectionRef = db.getCollection<T>(collectionName);
 		return eventChannel<any>((emitter) => {

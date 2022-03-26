@@ -6,11 +6,13 @@ import { produce } from 'immer';
 export interface NotificationsState {
 	unreadNotifications: Notification[];
 	readNotifications: Notification[];
+	error: string;
 }
 
 const INITIAL_STATE: NotificationsState = {
 	unreadNotifications: [],
 	readNotifications: [],
+	error: '',
 };
 
 const notificationsReducer = produce(
@@ -34,6 +36,9 @@ const notificationsReducer = produce(
 				state.readNotifications.filter(
 					(notification) => notification.id !== action.payload
 				);
+				return state;
+			case NotificationTypes.NOTIFICATION_ERROR:
+				state.error = action.payload;
 				return state;
 			default:
 				return state;

@@ -4,7 +4,7 @@ export const NotificationsContainer = styled.div`
 	display: grid;
 	width: 300px;
 	height: 400px;
-	place-items: flex-start;
+	place-content: flex-start stretch;
 	border-radius: 25px;
 
 	color: black;

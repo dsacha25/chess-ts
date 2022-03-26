@@ -2,6 +2,7 @@ import { Notification } from '../../utils/types/notification/notification';
 import {
 	DeleteNotificationAction,
 	EmitNewNotificationAction,
+	NotificationErrorAction,
 	OpenNotificationListenerAction,
 	ReadNotificationAction,
 } from './notifications.action-types';
@@ -26,4 +27,9 @@ export const readNotification = (id: string): ReadNotificationAction => ({
 export const deleteNotification = (id: string): DeleteNotificationAction => ({
 	type: NotificationTypes.DELETE_NOTIFICATION,
 	payload: id,
+});
+
+export const notificationError = (error: string): NotificationErrorAction => ({
+	type: NotificationTypes.NOTIFICATION_ERROR,
+	payload: error,
 });

@@ -19,10 +19,12 @@ const NotificationItem: FC<NotificationItemProps> = ({ notification }) => {
 		deleteNotification(notification.id);
 	};
 
+	console.log(notification);
+
 	return (
 		<NotificationElement onMouseOut={handleMarkAsRead}>
 			<NotificationFlag unread={notification.unread} />
-			<NotificationMessage>{notification.message}</NotificationMessage>
+			<NotificationMessage>{notification.type}</NotificationMessage>
 			<DeleteNotifButton
 				onClick={handleDeleteNotification}
 				color="warn"

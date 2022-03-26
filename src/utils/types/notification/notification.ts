@@ -1,9 +1,11 @@
 import { Timestamp } from 'firebase/firestore';
+import { NotificationTypes } from '../notification-types/notification-types';
 
 export interface Notification {
 	id: string;
-	message: string;
-	source_uid: string;
+	type: NotificationTypes;
+	sender: string;
+	reciever: string;
 	unread: boolean;
 	createdAt: Date | Timestamp;
 }

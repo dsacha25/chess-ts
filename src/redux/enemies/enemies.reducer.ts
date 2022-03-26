@@ -26,6 +26,9 @@ const enemyReducer = produce(
 				state.enemySearchResults = action.payload;
 				state.error = '';
 				return state;
+			case EnemyTypes.CLEAR_SEARCH_RESULT:
+				state.enemySearchResults = [];
+				return state;
 			case EnemyTypes.ENEMY_ERROR:
 				state.error = action.payload;
 				return state;
