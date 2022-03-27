@@ -6,11 +6,48 @@ import {
 	SelectEffect,
 	takeEvery,
 } from 'redux-saga/effects';
-import { db } from '../../../utils/classes/firestore/firestore-app';
+import { db, functions } from '../../../utils/classes/firestore/firestore-app';
 import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
+import {
+	AcceptEnemyRequestAction,
+	RejectEnemyRequestAction,
+} from '../user.action-types';
 import { fetchEnemyRequestsSuccess, userError } from '../user.actions';
-import { selectUserUID } from '../user.selector';
+import { selectUserAuth, selectUserUID } from '../user.selector';
 import UserTypes from '../user.types';
+
+export function* rejectEnemyRequestAsync({
+	payload: enemyUID,
+}: RejectEnemyRequestAction) {
+	try {
+		yield functions.callFirebaseFunction('rejectEnemyRequest', { enemyUID });
+	} catch (err) {
+		yield put(userError(getErrorMessage(err)));
+	}
+}
+
+export function* onRejectEnemyRequest() {
+	yield takeEvery(UserTypes.ACCEPT_ENEMY_REQUEST, rejectEnemyRequestAsync);
+}
+
+export function* acceptEnemyRequestAsync({
+	payload: enemyUID,
+}: AcceptEnemyRequestAction): Generator | SelectEffect {
+	try {
+		const { displayName } = yield select(selectUserAuth);
+
+		yield functions.callFirebaseFunction('acceptEnemyRequest', {
+			enemyUID,
+			displayName,
+		});
+	} catch (err) {
+		yield put(userError(getErrorMessage(err)));
+	}
+}
+
+export function* onAcceptEnemyRequest() {
+	yield takeEvery(UserTypes.ACCEPT_ENEMY_REQUEST, acceptEnemyRequestAsync);
+}
 
 export function* fetchEnemyRequestsAsync(): Generator | SelectEffect {
 	try {
@@ -33,5 +70,9 @@ export function* onFetchEnemyRequests() {
 }
 
 export function* userEnemyRequestsSagas() {
-	yield all([call(onFetchEnemyRequests)]);
+	yield all([
+		call(onFetchEnemyRequests),
+		call(onAcceptEnemyRequest),
+		call(onRejectEnemyRequest),
+	]);
 }

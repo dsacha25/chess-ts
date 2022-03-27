@@ -2,10 +2,10 @@ import { NotifSender } from '../../../types/notif-sender/notif-sender';
 import { NotificationTypes } from '../../../types/notification-types/notification-types';
 
 const constructNotifMessage = (
-	notifType: NotificationTypes,
+	notificationType: NotificationTypes,
 	sender: NotifSender
 ): string => {
-	switch (notifType) {
+	switch (notificationType) {
 		case 'enemy_request':
 			return `${sender.displayName} wants to be your enemy`;
 		case 'game_invite':

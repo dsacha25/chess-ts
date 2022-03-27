@@ -72,6 +72,17 @@ export interface FetchEnemyRequestsSuccessAction {
 	payload: NotifSender[];
 }
 
+// ACCEPT/REJECT ENEMY REQUEST
+export interface AcceptEnemyRequestAction {
+	type: UserTypes.ACCEPT_ENEMY_REQUEST;
+	payload: string;
+}
+
+export interface RejectEnemyRequestAction {
+	type: UserTypes.REJECT_ENEMY_REQUEST;
+	payload: string;
+}
+
 // ==== ERROR ACTION
 export interface UserErrorAction {
 	type: UserTypes.USER_ERROR;
@@ -92,6 +103,8 @@ type UserActions =
 	| UpdateProfileInfoAction
 	| FetchEnemyRequestsStartAction
 	| FetchEnemyRequestsSuccessAction
+	| AcceptEnemyRequestAction
+	| RejectEnemyRequestAction
 	| UserErrorAction;
 
 export default UserActions;

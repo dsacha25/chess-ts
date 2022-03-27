@@ -21,8 +21,9 @@ export const NotificationElement = styled.div`
 `;
 
 export const NotificationMessage = styled.p`
-	font-size: 9px;
+	font-size: 14px;
 	justify-self: flex-start;
+	letter-spacing: -0.075rem;
 `;
 
 export const DeleteNotifButton = styled(CustomButton)`

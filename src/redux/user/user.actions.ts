@@ -19,6 +19,8 @@ import {
 	GetChessUserSuccessAction,
 	FetchEnemyRequestsStartAction,
 	FetchEnemyRequestsSuccessAction,
+	AcceptEnemyRequestAction,
+	RejectEnemyRequestAction,
 } from './user.action-types';
 import UserTypes from './user.types';
 
@@ -105,6 +107,21 @@ export const fetchEnemyRequestsSuccess = (
 ): FetchEnemyRequestsSuccessAction => ({
 	type: UserTypes.FETCH_ENEMY_REQUESTS_SUCCESS,
 	payload: requests,
+});
+
+// ACCEPT/REJECT ENEMY REQUEST
+export const acceptEnemyRequest = (
+	enemyUID: string
+): AcceptEnemyRequestAction => ({
+	type: UserTypes.ACCEPT_ENEMY_REQUEST,
+	payload: enemyUID,
+});
+
+export const rejectEnemyRequest = (
+	enemyUID: string
+): RejectEnemyRequestAction => ({
+	type: UserTypes.REJECT_ENEMY_REQUEST,
+	payload: enemyUID,
 });
 
 /// ==== ERRORS
