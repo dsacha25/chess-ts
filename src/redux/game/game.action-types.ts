@@ -1,5 +1,6 @@
 import { Move } from 'chess.js';
 import GameType from '../../utils/types/game-type/game-type';
+import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
 import { GameTypes } from './game.types';
 
@@ -27,11 +28,48 @@ export interface SetFenAction {
 	payload: string;
 }
 
+// CHALLENGES
+export interface SendGameChallengeAction {
+	type: GameTypes.SEND_GAME_CHALLENGE;
+	payload: string;
+}
+
+export interface AcceptGameChallengeAction {
+	type: GameTypes.ACCEPT_GAME_CHALLENGE;
+	payload: string;
+}
+
+export interface RejectGameChallengeAction {
+	type: GameTypes.REJECT_GAME_CHALLENGE;
+	payload: string;
+}
+
+export interface FetchGameChallengesStart {
+	type: GameTypes.FETCH_GAME_CHALLENGES_START;
+}
+
+export interface FetchGameChallengesSuccess {
+	type: GameTypes.FETCH_GAME_CHALLENGES_SUCCESS;
+	payload: NotifSender[];
+}
+
+// ==== GAME ERROR
+export interface GameErrorAction {
+	type: GameTypes.GAME_ERROR;
+	payload: string;
+}
+
 type GameActions =
 	| MovePieceAction
 	| ResetGameHistoryAction
 	| SetOrientationAction
 	| SetGameTypeAction
-	| SetFenAction;
+	| SetFenAction
+	| SendGameChallengeAction
+	| AcceptGameChallengeAction
+	| RejectGameChallengeAction
+	| FetchGameChallengesStart
+	| FetchGameChallengesSuccess
+	| GameErrorAction;
 
 export default GameActions;

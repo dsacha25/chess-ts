@@ -33,3 +33,8 @@ export const selectTurns = createSelector(selectGame, (game) =>
 );
 
 export const selectFen = createSelector(selectGame, (game) => game.fen);
+
+export const selectGameChallenges = createSelector(
+	selectGame,
+	(game) => game.challengeRequests
+);

@@ -39,6 +39,13 @@ const userReducer = produce(
 			case UserTypes.FETCH_ENEMY_REQUESTS_SUCCESS:
 				state.enemyRequests = action.payload;
 				return state;
+
+			case UserTypes.ACCEPT_ENEMY_REQUEST:
+			case UserTypes.REJECT_ENEMY_REQUEST:
+				state.enemyRequests = state.enemyRequests.filter(
+					(request) => request.uid !== action.payload
+				);
+				return state;
 			case UserTypes.USER_ERROR:
 				state.error = action.payload;
 				return state;

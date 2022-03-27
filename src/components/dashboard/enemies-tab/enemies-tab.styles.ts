@@ -13,5 +13,11 @@ export const EnemiesContainer = styled.div`
 		text-align: center;
 	}
 
-	grid-template-rows: 1fr auto auto 1fr;
+	grid-template-rows: auto auto auto 1fr;
+`;
+
+export const EnemySearchContainer = styled.div`
+	display: grid;
+	place-items: flex-start center;
+	width: 100%;
 `;

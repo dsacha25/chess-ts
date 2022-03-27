@@ -30,6 +30,16 @@ export interface SendEnemyRequestAction {
 	payload: string;
 }
 
+// FETCH ENEMIES
+export interface FetchEnemiesStartAction {
+	type: EnemyTypes.FETCH_ENEMIES_START;
+}
+
+export interface FetchEnemiesSuccessAction {
+	type: EnemyTypes.FETCH_ENEMIES_SUCCESS;
+	payload: ChessUser[];
+}
+
 export interface EnemyErrorAction {
 	type: EnemyTypes.ENEMY_ERROR;
 	payload: string;
@@ -42,6 +52,8 @@ type EnemyActions =
 	| FetchEnemyInfoStartAction
 	| FetchEnemyInfoSuccessAction
 	| SendEnemyRequestAction
+	| FetchEnemiesStartAction
+	| FetchEnemiesSuccessAction
 	| EnemyErrorAction;
 
 export default EnemyActions;

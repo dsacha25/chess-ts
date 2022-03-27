@@ -6,12 +6,14 @@ import { ChessUser } from '../../utils/types/chess-user/chess-user';
 export interface EnemyState {
 	enemySearchResults: ChessUser[];
 	enemyInfo: ChessUser | null;
+	enemies: ChessUser[];
 	error: string;
 }
 
 const INITIAL_STATE: EnemyState = {
 	enemySearchResults: [],
 	enemyInfo: null,
+	enemies: [],
 	error: '',
 };
 
@@ -28,6 +30,9 @@ const enemyReducer = produce(
 				return state;
 			case EnemyTypes.CLEAR_SEARCH_RESULT:
 				state.enemySearchResults = [];
+				return state;
+			case EnemyTypes.FETCH_ENEMIES_SUCCESS:
+				state.enemies = action.payload;
 				return state;
 			case EnemyTypes.ENEMY_ERROR:
 				state.error = action.payload;

@@ -1,3 +1,4 @@
+import { where } from 'firebase/firestore';
 import {
 	all,
 	call,
@@ -27,7 +28,7 @@ export function* rejectEnemyRequestAsync({
 }
 
 export function* onRejectEnemyRequest() {
-	yield takeEvery(UserTypes.ACCEPT_ENEMY_REQUEST, rejectEnemyRequestAsync);
+	yield takeEvery(UserTypes.REJECT_ENEMY_REQUEST, rejectEnemyRequestAsync);
 }
 
 export function* acceptEnemyRequestAsync({
@@ -53,7 +54,10 @@ export function* fetchEnemyRequestsAsync(): Generator | SelectEffect {
 	try {
 		const uid = yield select(selectUserUID);
 
-		const enemyRequests = yield db.getAll(`users/${uid}/requests`);
+		const enemyRequests = yield db.getAll(
+			`users/${uid}/requests`,
+			where('type', '==', 'enmity')
+		);
 
 		yield console.log('ENEMY REQUESTS:', enemyRequests);
 		yield put(fetchEnemyRequestsSuccess(enemyRequests));

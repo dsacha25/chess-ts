@@ -12,3 +12,13 @@ export const selectEnemyInfo = createSelector(
 	selectEnemy,
 	(enemy) => enemy.enemyInfo
 );
+
+export const selectEnemies = createSelector(
+	selectEnemy,
+	(enemy) => enemy.enemies
+);
+
+export const selectEnemyError = createSelector(
+	selectEnemy,
+	(enemy) => enemy.error
+);

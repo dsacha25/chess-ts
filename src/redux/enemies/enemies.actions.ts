@@ -2,6 +2,8 @@ import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import {
 	ClearSearchResultAction,
 	EnemyErrorAction,
+	FetchEnemiesStartAction,
+	FetchEnemiesSuccessAction,
 	FetchEnemyInfoStartAction,
 	FetchEnemyInfoSuccessAction,
 	SearchEnemiesStartAction,
@@ -45,6 +47,18 @@ export const fetchEnemyInfoSuccess = (
 export const sendEnemyRequest = (enemyUID: string): SendEnemyRequestAction => ({
 	type: EnemyTypes.SEND_ENEMY_REQUEST,
 	payload: enemyUID,
+});
+
+// FETCH ENEMIES
+export const fetchEnemiesStart = (): FetchEnemiesStartAction => ({
+	type: EnemyTypes.FETCH_ENEMIES_START,
+});
+
+export const fetchEnemiesSuccess = (
+	enemies: ChessUser[]
+): FetchEnemiesSuccessAction => ({
+	type: EnemyTypes.FETCH_ENEMIES_SUCCESS,
+	payload: enemies,
 });
 
 export const enemyError = (error: string): EnemyErrorAction => ({

@@ -1,3 +1,5 @@
+import { where } from 'firebase/firestore';
+import { filter, flatMap } from 'lodash';
 import {
 	all,
 	call,
@@ -10,13 +12,53 @@ import {
 import { db, functions } from '../../utils/classes/firestore/firestore-app';
 import getErrorMessage from '../../utils/helpers/errors/get-error-message';
 import { ChessUser } from '../../utils/types/chess-user/chess-user';
-import { selectChessUser } from '../user/user.selector';
+import { selectChessUser, selectUserUID } from '../user/user.selector';
 import {
 	SearchEnemiesStartAction,
 	SendEnemyRequestAction,
 } from './enemies.action-types';
-import { enemyError, searchEnemiesSuccess } from './enemies.actions';
+import {
+	enemyError,
+	fetchEnemiesSuccess,
+	searchEnemiesSuccess,
+} from './enemies.actions';
 import { EnemyTypes } from './enemies.types';
+
+export function* fetchEnemiesAsync(): Generator | SelectEffect {
+	try {
+		const uid = yield select(selectUserUID);
+
+		const enemyDocuments = yield db.getAll(
+			'enmities',
+			where('users', 'array-contains', uid)
+		);
+
+		yield console.log('ENEMIES: ', enemyDocuments);
+
+		const enemyships = flatMap(enemyDocuments, (enemy) =>
+			filter(enemy.users, (userUID) => userUID !== uid)
+		);
+
+		yield console.log('ENEMYSHIPS: ', enemyships);
+
+		let enemies: ChessUser[] = [];
+
+		for (const enemyUID of enemyships) {
+			const enemy: ChessUser = yield db.get<ChessUser>('users', enemyUID);
+			yield console.log('ENEMY: ', enemy);
+
+			enemies.push(enemy);
+		}
+
+		yield put(fetchEnemiesSuccess(enemies));
+	} catch (err) {
+		yield put(enemyError(getErrorMessage(err)));
+	}
+}
+
+export function* onFetchEnemiesStart() {
+	yield takeEvery(EnemyTypes.FETCH_ENEMIES_START, fetchEnemiesAsync);
+}
 
 export function* sendEnemyRequestAsync({
 	payload: enemyUID,
@@ -60,5 +102,9 @@ export function* onSearchEnemiesStart() {
 }
 
 export function* enemySagas() {
-	yield all([call(onSearchEnemiesStart), call(onSendEnemyRequest)]);
+	yield all([
+		call(onSearchEnemiesStart),
+		call(onSendEnemyRequest),
+		call(onFetchEnemiesStart),
+	]);
 }

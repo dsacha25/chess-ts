@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../common/title/title.styles';
 import {
@@ -7,9 +7,19 @@ import {
 	ChallengesContainer,
 } from './challenge-tab.styles';
 import Paths from '../../../utils/types/paths/paths';
+import useActions from '../../../hooks/use-actions/use-actions.hook';
+import ChallengesList from '../../challenges/challenges-list/challenges-list.component';
 
 const ChallengeTab = () => {
 	const navigate = useNavigate();
+	const { fetchGameChallengesStart } = useActions();
+
+	useEffect(() => {
+		fetchGameChallengesStart();
+
+		// eslint-disable-next-line
+	}, []);
+
 	return (
 		<ChallengesContainer>
 			<Title>Challenge Area</Title>
@@ -28,7 +38,7 @@ const ChallengeTab = () => {
 				</ChallengeButton>
 			</ButtonsContainer>
 			Challenge Someone to a Game
-			<p>You'll probably lose, but you might as well try anyways!</p>
+			<ChallengesList />
 		</ChallengesContainer>
 	);
 };
