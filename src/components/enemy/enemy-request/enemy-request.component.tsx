@@ -7,14 +7,16 @@ import {
 import { EnemyRequestProps } from './types';
 import { FiCheck } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
+import useActions from '../../../hooks/use-actions/use-actions.hook';
 
 const EnemyRequest: FC<EnemyRequestProps> = ({ request }) => {
+	const { acceptEnemyRequest, rejectEnemyRequest } = useActions();
 	const handleAcceptRequest = () => {
-		//
+		acceptEnemyRequest(request.uid);
 	};
 
 	const handleRejectRequest = () => {
-		//
+		rejectEnemyRequest(request.uid);
 	};
 
 	return (

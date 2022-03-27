@@ -11,8 +11,8 @@ const EnemyRequestsList = () => {
 	return (
 		<EnemyRequestsListContainer>
 			<Title fontSize="30px">Enemy Requests</Title>
-			{requests?.map((request) => (
-				<EnemyRequest request={request} />
+			{requests?.map((request, i) => (
+				<EnemyRequest key={i} request={request} />
 			))}
 		</EnemyRequestsListContainer>
 	);
