@@ -48,3 +48,8 @@ export const selectActiveGames = createSelector(
 	selectGame,
 	(game) => game.games
 );
+
+export const selectActiveGame = createSelector(
+	selectGame,
+	(game) => game.activeGame
+);

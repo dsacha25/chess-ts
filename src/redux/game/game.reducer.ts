@@ -17,6 +17,7 @@ export interface GameState {
 	challengeRequests: NotifSender[];
 	pendingChallenges: PendingRequest[];
 	games: ChessGameType[];
+	activeGame: ChessGameType | null;
 	error: string;
 }
 
@@ -28,6 +29,7 @@ const INITIAL_STATE: GameState = {
 	challengeRequests: [],
 	pendingChallenges: [],
 	games: [],
+	activeGame: null,
 	error: '',
 };
 
@@ -70,6 +72,12 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.FETCH_ACTIVE_GAMES_SUCCESS:
 				state.games = action.payload;
+				return state;
+			case GameTypes.SET_ACTIVE_GAME:
+				state.activeGame = action.payload;
+				return state;
+			case GameTypes.CLEAR_ACTIVE_GAME:
+				state.activeGame = null;
 				return state;
 			case GameTypes.GAME_ERROR:
 				state.error = action.payload;

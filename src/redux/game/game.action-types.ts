@@ -65,7 +65,7 @@ export interface FetchPendingChallengesSuccessAction {
 	payload: PendingRequest[];
 }
 
-// ==== ACTIVE GAMES
+// ==== ALL ACTIVE GAMES
 export interface FetchActiveGamesStartAction {
 	type: GameTypes.FETCH_ACTIVE_GAMES_START;
 }
@@ -73,6 +73,16 @@ export interface FetchActiveGamesStartAction {
 export interface FetchActiveGamesSuccessAction {
 	type: GameTypes.FETCH_ACTIVE_GAMES_SUCCESS;
 	payload: ChessGameType[];
+}
+
+// ==== ACTIVE GAME
+export interface SetActiveGameAction {
+	type: GameTypes.SET_ACTIVE_GAME;
+	payload: ChessGameType;
+}
+
+export interface ClearActiveGameAction {
+	type: GameTypes.CLEAR_ACTIVE_GAME;
 }
 
 // ==== GAME ERROR
@@ -96,6 +106,8 @@ type GameActions =
 	| FetchPendingChallengesSuccessAction
 	| FetchActiveGamesStartAction
 	| FetchActiveGamesSuccessAction
+	| SetActiveGameAction
+	| ClearActiveGameAction
 	| GameErrorAction;
 
 export default GameActions;

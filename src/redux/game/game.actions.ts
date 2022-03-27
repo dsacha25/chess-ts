@@ -1,10 +1,12 @@
 import { Move } from 'chess.js';
+import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import GameType from '../../utils/types/game-type/game-type';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import {
 	AcceptGameChallengeAction,
+	ClearActiveGameAction,
 	FetchActiveGamesStartAction,
 	FetchActiveGamesSuccessAction,
 	FetchGameChallengesStart,
@@ -16,6 +18,7 @@ import {
 	RejectGameChallengeAction,
 	ResetGameHistoryAction,
 	SendGameChallengeAction,
+	SetActiveGameAction,
 	SetFenAction,
 	SetGameTypeAction,
 	SetOrientationAction,
@@ -94,7 +97,7 @@ export const fetchPendingChallengesSuccess = (
 	payload: pendingChallenges,
 });
 
-// ACTIVE GAMES
+// ALL ACTIVE GAMES
 export const fetchActiveGamesStart = (): FetchActiveGamesStartAction => ({
 	type: GameTypes.FETCH_ACTIVE_GAMES_START,
 });
@@ -104,6 +107,16 @@ export const fetchActiveGamesSuccess = (
 ): FetchActiveGamesSuccessAction => ({
 	type: GameTypes.FETCH_ACTIVE_GAMES_SUCCESS,
 	payload: games,
+});
+
+// ==== ACTIVE GAMES
+export const setActiveGame = (game: ChessGameType): SetActiveGameAction => ({
+	type: GameTypes.SET_ACTIVE_GAME,
+	payload: game,
+});
+
+export const clearActiveGame = (): ClearActiveGameAction => ({
+	type: GameTypes.CLEAR_ACTIVE_GAME,
 });
 
 // GAME ERROR

@@ -8,8 +8,10 @@ import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook
 import { selectUserUID } from '../../../redux/user/user.selector';
 import { useNavigate } from 'react-router-dom';
 import Paths from '../../../utils/types/paths/paths';
+import useActions from '../../../hooks/use-actions/use-actions.hook';
 
 const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
+	const { setActiveGame } = useActions();
 	const navigate = useNavigate();
 	const uid = useSelector((state) => selectUserUID(state));
 
@@ -23,10 +25,13 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 		if (game.white.uid !== uid) {
 			setOpponentName(game.white.displayName);
 		}
+
+		// eslint-disable-next-line
 	}, []);
 
 	const handleJoinGame = () => {
 		// Set active game
+		setActiveGame(game);
 		// Redirect to /play
 		navigate(`/${Paths.PLAY}`);
 	};
