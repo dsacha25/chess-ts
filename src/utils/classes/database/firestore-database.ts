@@ -39,11 +39,17 @@ export class FirestoreDatabase implements Database {
 		this.collection = this.getCollection<DocumentData>(collectionName);
 	}
 
-	convertSnapshot<T>(snapshot: QuerySnapshot<T>): T[] {
-		return snapshot.docs.map((doc) => ({
-			...doc.data(),
-			id: doc.id,
-		}));
+	convertSnapshot<T>(snapshot: QuerySnapshot<T>, includeId?: boolean): T[] {
+		if (includeId) {
+			return snapshot.docs.map((doc) => ({
+				...doc.data(),
+				id: doc.id,
+			}));
+		} else {
+			return snapshot.docs.map((doc) => ({
+				...doc.data(),
+			}));
+		}
 	}
 
 	convertDocSnapshot<T>(snapshot: DocumentSnapshot<T>): T | undefined {
@@ -78,6 +84,18 @@ export class FirestoreDatabase implements Database {
 		const snapshot = await getDocs(pendingQuery);
 
 		return this.convertSnapshot<T>(snapshot);
+	}
+
+	async getAllWithID<T>(
+		collectionName: string,
+		...queryContstraints: QueryConstraint[]
+	): Promise<T[]> {
+		this.setCollection(collectionName);
+		let pendingQuery = query<T>(this.collection, ...queryContstraints);
+
+		const snapshot = await getDocs(pendingQuery);
+
+		return this.convertSnapshot<T>(snapshot, true);
 	}
 
 	async getAllPaginated<T>(

@@ -7,14 +7,13 @@ export const ChallengeItem = styled.div`
 	width: 100%;
 	height: 60px;
 
-	grid-template-columns: 1fr 100px;
+	grid-template-columns: 1fr 100px 100px;
 
 	border: 1px solid ${({ theme }) => theme.border};
 	border-radius: 30px;
 	place-content: center;
 	place-items: center flex-start;
 	padding: 4px;
-	grid-gap: 10px;
 `;
 
 export const EnemyName = styled.p`
@@ -25,7 +24,7 @@ export const EnemyName = styled.p`
 `;
 
 export const AcceptChallengeButton = styled(CustomButton)`
-	width: 100%;
+	width: 100px;
 	height: 50px;
 	border-top-left-radius: 25px;
 	border-bottom-left-radius: 25px;
@@ -36,7 +35,7 @@ export const AcceptChallengeButton = styled(CustomButton)`
 `;
 
 export const RejectChallengeButton = styled(CustomButton)`
-	width: 100%;
+	width: 100px;
 	height: 50px;
 	border-radius: 25px;
 	margin: 0;

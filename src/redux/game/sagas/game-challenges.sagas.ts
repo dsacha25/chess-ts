@@ -9,26 +9,27 @@ import {
 } from 'redux-saga/effects';
 import { db, functions } from '../../../utils/classes/firestore/firestore-app';
 import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
+import { NotifSender } from '../../../utils/types/notif-sender/notif-sender';
 import { selectChessUser, selectUserUID } from '../../user/user.selector';
-import UserTypes from '../../user/user.types';
 import {
 	AcceptGameChallengeAction,
 	RejectGameChallengeAction,
 	SendGameChallengeAction,
 } from '../game.action-types';
-import { gameError } from '../game.actions';
+import { fetchGameChallengesSuccess, gameError } from '../game.actions';
 import { GameTypes } from '../game.types';
 
 export function* fetchGameChallengesAsync(): Generator | SelectEffect {
 	try {
 		const uid = yield select(selectUserUID);
 
-		const challengeRequests = yield db.getAll(
-			`users/${uid}/request`,
+		const challengeRequests = yield db.getAll<NotifSender[]>(
+			`users/${uid}/requests`,
 			where('type', '==', 'challenge')
 		);
 
 		yield console.log('GAME CHALLENGES: ', challengeRequests);
+		yield put(fetchGameChallengesSuccess(challengeRequests));
 	} catch (err) {
 		yield put(gameError(getErrorMessage(err)));
 	}
@@ -36,7 +37,7 @@ export function* fetchGameChallengesAsync(): Generator | SelectEffect {
 
 export function* onFetchGameChallenges() {
 	yield takeEvery(
-		UserTypes.FETCH_ENEMY_REQUESTS_START,
+		GameTypes.FETCH_GAME_CHALLENGES_START,
 		fetchGameChallengesAsync
 	);
 }
