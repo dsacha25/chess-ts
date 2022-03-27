@@ -7,6 +7,7 @@ import {
 	select,
 	SelectEffect,
 	takeEvery,
+	takeLatest,
 } from 'redux-saga/effects';
 import { db } from '../../utils/classes/firestore/firestore-app';
 import { listener } from '../../utils/classes/sagas/saga-listener';
@@ -83,7 +84,7 @@ export function* openNotificationListener(): Generator | SelectEffect {
 }
 
 export function* onOpenNotificationListener() {
-	yield takeEvery(
+	yield takeLatest(
 		NotificationTypes.OPEN_NOTIFICATION_LISTENER,
 		openNotificationListener
 	);

@@ -14,6 +14,8 @@ const constructNotifMessage = (
 			return `It's your turn against ${sender.displayName}`;
 		case 'request_accepted':
 			return `${sender.displayName} is now your enemy!`;
+		case 'game_invite_accepted':
+			return `${sender.displayName} has accepted your challenge. PREPARE FOR BATTLE!`;
 		default:
 			return 'New notification';
 	}

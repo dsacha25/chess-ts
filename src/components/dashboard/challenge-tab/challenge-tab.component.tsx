@@ -12,10 +12,11 @@ import ChallengesList from '../../challenges/challenges-list/challenges-list.com
 
 const ChallengeTab = () => {
 	const navigate = useNavigate();
-	const { fetchGameChallengesStart } = useActions();
+	const { fetchGameChallengesStart, fetchActiveGamesStart } = useActions();
 
 	useEffect(() => {
 		fetchGameChallengesStart();
+		fetchActiveGamesStart();
 
 		// eslint-disable-next-line
 	}, []);

@@ -38,3 +38,8 @@ export const selectGameChallenges = createSelector(
 	selectGame,
 	(game) => game.challengeRequests
 );
+
+export const selectActiveGames = createSelector(
+	selectGame,
+	(game) => game.games
+);

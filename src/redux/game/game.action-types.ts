@@ -1,4 +1,5 @@
 import { Move } from 'chess.js';
+import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import GameType from '../../utils/types/game-type/game-type';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
@@ -53,6 +54,16 @@ export interface FetchGameChallengesSuccess {
 	payload: NotifSender[];
 }
 
+// ==== ACTIVE GAMES
+export interface FetchActiveGamesStartAction {
+	type: GameTypes.FETCH_ACTIVE_GAMES_START;
+}
+
+export interface FetchActiveGamesSuccessAction {
+	type: GameTypes.FETCH_ACTIVE_GAMES_SUCCESS;
+	payload: ChessGameType[];
+}
+
 // ==== GAME ERROR
 export interface GameErrorAction {
 	type: GameTypes.GAME_ERROR;
@@ -70,6 +81,8 @@ type GameActions =
 	| RejectGameChallengeAction
 	| FetchGameChallengesStart
 	| FetchGameChallengesSuccess
+	| FetchActiveGamesStartAction
+	| FetchActiveGamesSuccessAction
 	| GameErrorAction;
 
 export default GameActions;

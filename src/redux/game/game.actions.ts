@@ -4,6 +4,8 @@ import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
 import {
 	AcceptGameChallengeAction,
+	FetchActiveGamesStartAction,
+	FetchActiveGamesSuccessAction,
 	FetchGameChallengesStart,
 	FetchGameChallengesSuccess,
 	GameErrorAction,
@@ -74,6 +76,18 @@ export const fetchGameChallengesSuccess = (
 ): FetchGameChallengesSuccess => ({
 	type: GameTypes.FETCH_GAME_CHALLENGES_SUCCESS,
 	payload: senders,
+});
+
+// ACTIVE GAMES
+export const fetchActiveGamesStart = (): FetchActiveGamesStartAction => ({
+	type: GameTypes.FETCH_ACTIVE_GAMES_START,
+});
+
+export const fetchActiveGamesSuccess = (
+	games: any[]
+): FetchActiveGamesSuccessAction => ({
+	type: GameTypes.FETCH_ACTIVE_GAMES_SUCCESS,
+	payload: games,
 });
 
 // GAME ERROR

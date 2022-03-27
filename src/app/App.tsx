@@ -27,10 +27,12 @@ function App() {
 	}, [auth]);
 
 	useEffect(() => {
-		openNotificationListener();
+		if (auth) {
+			openNotificationListener();
+		}
 
 		// eslint-disable-next-line
-	}, []);
+	}, [auth]);
 
 	return (
 		<div className="App">
