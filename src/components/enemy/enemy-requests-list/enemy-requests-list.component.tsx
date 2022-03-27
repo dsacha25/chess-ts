@@ -8,6 +8,8 @@ import { EnemyRequestsListContainer } from './enemy-requests-list.styles';
 const EnemyRequestsList = () => {
 	const requests = useSelector((state) => selectEnemyRequests(state));
 
+	if (requests.length === 0) return null;
+
 	return (
 		<EnemyRequestsListContainer>
 			<Title fontSize="30px">Enemy Requests</Title>

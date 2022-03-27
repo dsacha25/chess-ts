@@ -7,6 +7,9 @@ import { EnemyListContainer } from './enemy-list.styles';
 
 const EnemyList = () => {
 	const enemies = useSelector((state) => selectEnemies(state));
+
+	if (enemies.length === 0) return null;
+
 	return (
 		<EnemyListContainer>
 			<Title fontSize="30px">Enmities</Title>

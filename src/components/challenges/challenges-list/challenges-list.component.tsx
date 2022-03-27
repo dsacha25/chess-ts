@@ -7,6 +7,9 @@ import { ChallengesListContainer } from './challenges-list.styles';
 
 const ChallengesList = () => {
 	const challenges = useSelector((state) => selectGameChallenges(state));
+
+	if (challenges.length === 0) return null;
+
 	return (
 		<ChallengesListContainer>
 			<Title fontSize="30px">Challenges</Title>
