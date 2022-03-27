@@ -33,7 +33,7 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 
 	return (
 		<ListItem columns={1}>
-			<ListItemText>David{opponentName}</ListItemText>
+			<ListItemText>{opponentName}</ListItemText>
 			<JoinGameButton onClick={handleJoinGame} color="main">
 				<FaChessKing size="30px" />
 			</JoinGameButton>
