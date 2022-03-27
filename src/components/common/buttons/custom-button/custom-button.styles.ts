@@ -49,9 +49,9 @@ const warnStyles = css`
 
 	:focus,
 	:hover {
-		color: ${({ theme }) => theme.warn} !important;
-		background-color: ${({ theme }) => theme.light};
-		border: 2px solid !important;
+		color: ${({ theme }) => theme.white} !important;
+		background-color: ${({ theme }) => theme.secondary};
+		border: 2px solid black !important;
 	}
 `;
 

@@ -4,11 +4,13 @@ import UserTypes from './user.types';
 import { produce } from 'immer';
 import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import { NewCredentials } from '../../utils/types/new-credentials/new-credentials';
+import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 
 export interface UserState {
 	auth: User | null;
 	user: ChessUser | null;
 	newCredentials: NewCredentials | null;
+	enemyRequests: NotifSender[];
 	error: string;
 }
 
@@ -16,6 +18,7 @@ export const INITIAL_STATE = {
 	auth: null,
 	user: null,
 	newCredentials: null,
+	enemyRequests: [],
 	error: '',
 };
 
@@ -32,6 +35,9 @@ const userReducer = produce(
 				return state;
 			case UserTypes.GET_CHESS_USER_SUCCESS:
 				state.user = action.payload;
+				return state;
+			case UserTypes.FETCH_ENEMY_REQUESTS_SUCCESS:
+				state.enemyRequests = action.payload;
 				return state;
 			case UserTypes.USER_ERROR:
 				state.error = action.payload;

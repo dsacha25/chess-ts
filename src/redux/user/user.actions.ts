@@ -2,6 +2,7 @@ import { User } from 'firebase/auth';
 import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import { Credentials } from '../../utils/types/credentials/credentials';
 import { NewCredentials } from '../../utils/types/new-credentials/new-credentials';
+import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import { UpdateProfileData } from '../../utils/types/profile-info/profile-info-types';
 import {
 	LogInStartAction,
@@ -16,6 +17,8 @@ import {
 	UpdateProfileInfoAction,
 	GetChessUserStartAction,
 	GetChessUserSuccessAction,
+	FetchEnemyRequestsStartAction,
+	FetchEnemyRequestsSuccessAction,
 } from './user.action-types';
 import UserTypes from './user.types';
 
@@ -90,6 +93,18 @@ export const updateProfileInfo = (
 ): UpdateProfileInfoAction => ({
 	type: UserTypes.UPDATE_PROFILE_INFO,
 	payload: profileData,
+});
+
+// ==== FETCH ENEMY REQUESTS
+export const fetchEnemyRequestsStart = (): FetchEnemyRequestsStartAction => ({
+	type: UserTypes.FETCH_ENEMY_REQUESTS_START,
+});
+
+export const fetchEnemyRequestsSuccess = (
+	requests: NotifSender[]
+): FetchEnemyRequestsSuccessAction => ({
+	type: UserTypes.FETCH_ENEMY_REQUESTS_SUCCESS,
+	payload: requests,
 });
 
 /// ==== ERRORS

@@ -22,4 +22,9 @@ export const selectProfilePicture = createSelector(
 	(user) => user?.photoURL
 );
 
+export const selectEnemyRequests = createSelector(
+	selectUser,
+	(user) => user.enemyRequests
+);
+
 export const selectAuthError = createSelector(selectUser, (user) => user.error);

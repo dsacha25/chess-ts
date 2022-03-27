@@ -8,7 +8,6 @@ import {
 import { NotificationItemProps } from './types';
 import { GrClose } from 'react-icons/gr';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
-import { time } from 'console';
 
 const NotificationItem: FC<NotificationItemProps> = ({ notification }) => {
 	const { readNotification, deleteNotification } = useActions();
