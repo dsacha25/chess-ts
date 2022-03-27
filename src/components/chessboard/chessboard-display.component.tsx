@@ -13,23 +13,36 @@ import ChessGame from '../../utils/classes/chess-game/chess-game';
 import useActions from '../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
 import {
+	selectActiveGame,
 	selectFen,
 	selectGameType,
 	selectOrientation,
 	selectSide,
 } from '../../redux/game/game.selector';
 import { useLocation } from 'react-router-dom';
+import { selectUserUID } from '../../redux/user/user.selector';
+import { find, remove } from 'lodash';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
 	const location = useLocation();
 
+	const activeGame = useSelector((state) => selectActiveGame(state));
+
+	const uid = useSelector((state) => selectUserUID(state));
 	const gameType = useSelector((state) => selectGameType(state));
 	const fen = useSelector((state) => selectFen(state));
 	const orientation = useSelector((state) => selectOrientation(state));
 	const side = useSelector((state) => selectSide(state));
-	const { movePiece, resetGame, setGameType, setFen, setOrientation } =
-		useActions();
+	const {
+		movePiece,
+		resetGame,
+		setGameType,
+		setFen,
+		setOrientation,
+		fetchEnemyInfoStart,
+		clearActiveGame,
+	} = useActions();
 
 	const [dropStyles, setDropStyles] = useState({});
 	const [squareStyles, setSquareStyles] = useState<{
@@ -40,6 +53,25 @@ const ChessboardDisplay = () => {
 	const [selectedSquare, setSelectedSquare] = useState<Square>();
 
 	const [gameOver, setGameOver] = useState(game.isGameOver);
+
+	useEffect(() => {
+		return () => {
+			// clearActiveGame();
+		};
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		if (location.pathname === '/play' && activeGame) {
+			const enemyUID = find(activeGame.users, (player) => player !== uid);
+			console.log('ENEMY UID: ', enemyUID);
+			if (enemyUID) {
+				fetchEnemyInfoStart(enemyUID);
+			}
+		}
+
+		// eslint-disable-next-line
+	}, [activeGame]);
 
 	useEffect(() => {
 		console.log('TURN: ', game.turn);

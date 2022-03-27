@@ -15,6 +15,7 @@ export interface ClearSearchResultAction {
 	type: EnemyTypes.CLEAR_SEARCH_RESULT;
 }
 
+// ==== FETCH ENEMY INFO
 export interface FetchEnemyInfoStartAction {
 	type: EnemyTypes.FETCH_ENEMY_INFO_START;
 	payload: string;
@@ -25,6 +26,11 @@ export interface FetchEnemyInfoSuccessAction {
 	payload: ChessUser;
 }
 
+export interface ClearEnemyInfoAction {
+	type: EnemyTypes.CLEAR_ENEMY_INFO;
+}
+
+// ===== SEND ENEMY REQUEST
 export interface SendEnemyRequestAction {
 	type: EnemyTypes.SEND_ENEMY_REQUEST;
 	payload: string;
@@ -51,6 +57,7 @@ type EnemyActions =
 	| ClearSearchResultAction
 	| FetchEnemyInfoStartAction
 	| FetchEnemyInfoSuccessAction
+	| ClearEnemyInfoAction
 	| SendEnemyRequestAction
 	| FetchEnemiesStartAction
 	| FetchEnemiesSuccessAction

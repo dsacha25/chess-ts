@@ -14,15 +14,36 @@ import getErrorMessage from '../../utils/helpers/errors/get-error-message';
 import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import { selectChessUser, selectUserUID } from '../user/user.selector';
 import {
+	FetchEnemyInfoStartAction,
 	SearchEnemiesStartAction,
 	SendEnemyRequestAction,
 } from './enemies.action-types';
 import {
 	enemyError,
 	fetchEnemiesSuccess,
+	fetchEnemyInfoSuccess,
 	searchEnemiesSuccess,
 } from './enemies.actions';
 import { EnemyTypes } from './enemies.types';
+
+export function* fetchEnemyInfoAsync({
+	payload: enemyUID,
+}: FetchEnemyInfoStartAction):
+	| Generator<Promise<ChessUser | undefined>>
+	| PutEffect {
+	try {
+		const enemy: ChessUser = yield db.get<ChessUser>('users', enemyUID);
+
+		yield console.log('ENEMY INFO: ', enemy);
+		yield put(fetchEnemyInfoSuccess(enemy));
+	} catch (err) {
+		yield put(enemyError(getErrorMessage(err)));
+	}
+}
+
+export function* onFetchEnemyInfoStart() {
+	yield takeEvery(EnemyTypes.FETCH_ENEMY_INFO_START, fetchEnemyInfoAsync);
+}
 
 export function* fetchEnemiesAsync(): Generator | SelectEffect {
 	try {
@@ -106,5 +127,6 @@ export function* enemySagas() {
 		call(onSearchEnemiesStart),
 		call(onSendEnemyRequest),
 		call(onFetchEnemiesStart),
+		call(onFetchEnemyInfoStart),
 	]);
 }
