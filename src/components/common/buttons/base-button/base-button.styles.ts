@@ -33,13 +33,15 @@ const buttonState = css<BaseButtonProps>`
 	}
 
 	:disabled {
-		background-color: ${({ theme }) => theme.main};
+		background-color: ${({ theme }) => theme.border} !important;
 		color: ${({ theme }) => theme.grey};
 		cursor: unset;
 		border: unset !important;
+		transform: unset;
 
 		:hover {
 			border: unset !important;
+			color: ${({ theme }) => theme.grey} !important;
 		}
 	}
 `;

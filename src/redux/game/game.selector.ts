@@ -39,6 +39,11 @@ export const selectGameChallenges = createSelector(
 	(game) => game.challengeRequests
 );
 
+export const selectPendingChallenges = createSelector(
+	selectGame,
+	(game) => game.pendingChallenges
+);
+
 export const selectActiveGames = createSelector(
 	selectGame,
 	(game) => game.games

@@ -2,12 +2,15 @@ import { Move } from 'chess.js';
 import GameType from '../../utils/types/game-type/game-type';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
+import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import {
 	AcceptGameChallengeAction,
 	FetchActiveGamesStartAction,
 	FetchActiveGamesSuccessAction,
 	FetchGameChallengesStart,
 	FetchGameChallengesSuccess,
+	FetchPendingChallengesStartAction,
+	FetchPendingChallengesSuccessAction,
 	GameErrorAction,
 	MovePieceAction,
 	RejectGameChallengeAction,
@@ -54,10 +57,10 @@ export const sendGameChallenge = (
 });
 
 export const acceptGameChallenge = (
-	enemyUID: string
+	enemy: NotifSender
 ): AcceptGameChallengeAction => ({
 	type: GameTypes.ACCEPT_GAME_CHALLENGE,
-	payload: enemyUID,
+	payload: enemy,
 });
 
 export const rejectGameChallenge = (
@@ -76,6 +79,19 @@ export const fetchGameChallengesSuccess = (
 ): FetchGameChallengesSuccess => ({
 	type: GameTypes.FETCH_GAME_CHALLENGES_SUCCESS,
 	payload: senders,
+});
+
+// ==== PENDING CHALLENGES
+export const fetchPendingChallengesStart =
+	(): FetchPendingChallengesStartAction => ({
+		type: GameTypes.FETCH_PENDING_CHALLENGES_START,
+	});
+
+export const fetchPendingChallengesSuccess = (
+	pendingChallenges: PendingRequest[]
+): FetchPendingChallengesSuccessAction => ({
+	type: GameTypes.FETCH_PENDING_CHALLENGES_SUCCESS,
+	payload: pendingChallenges,
 });
 
 // ACTIVE GAMES

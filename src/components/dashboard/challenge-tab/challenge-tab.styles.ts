@@ -4,7 +4,7 @@ import CustomButton from '../../common/buttons/custom-button/custom-button.compo
 export const ChallengesContainer = styled.div`
 	display: grid;
 
-	grid-template-rows: auto auto auto 1fr;
+	grid-template-rows: auto auto auto auto 1fr;
 
 	width: 100%;
 	height: 100%;

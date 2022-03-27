@@ -27,7 +27,7 @@ export const EnemyName = styled.p`
 export const ChallengeButton = styled(CustomButton)`
 	width: 100%;
 	height: 50px;
-	border-radius: 25px;
+	border-radius: 25px !important;
 	margin: 0;
 	place-content: center;
 `;

@@ -3,6 +3,7 @@ import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type
 import GameType from '../../utils/types/game-type/game-type';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
+import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import { GameTypes } from './game.types';
 
 export interface MovePieceAction {
@@ -29,7 +30,7 @@ export interface SetFenAction {
 	payload: string;
 }
 
-// CHALLENGES
+// ==== CHALLENGES
 export interface SendGameChallengeAction {
 	type: GameTypes.SEND_GAME_CHALLENGE;
 	payload: string;
@@ -37,7 +38,7 @@ export interface SendGameChallengeAction {
 
 export interface AcceptGameChallengeAction {
 	type: GameTypes.ACCEPT_GAME_CHALLENGE;
-	payload: string;
+	payload: NotifSender;
 }
 
 export interface RejectGameChallengeAction {
@@ -52,6 +53,16 @@ export interface FetchGameChallengesStart {
 export interface FetchGameChallengesSuccess {
 	type: GameTypes.FETCH_GAME_CHALLENGES_SUCCESS;
 	payload: NotifSender[];
+}
+
+// ==== PENDING CHALLENGES
+export interface FetchPendingChallengesStartAction {
+	type: GameTypes.FETCH_PENDING_CHALLENGES_START;
+}
+
+export interface FetchPendingChallengesSuccessAction {
+	type: GameTypes.FETCH_PENDING_CHALLENGES_SUCCESS;
+	payload: PendingRequest[];
 }
 
 // ==== ACTIVE GAMES
@@ -81,6 +92,8 @@ type GameActions =
 	| RejectGameChallengeAction
 	| FetchGameChallengesStart
 	| FetchGameChallengesSuccess
+	| FetchPendingChallengesStartAction
+	| FetchPendingChallengesSuccessAction
 	| FetchActiveGamesStartAction
 	| FetchActiveGamesSuccessAction
 	| GameErrorAction;

@@ -14,7 +14,7 @@ const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
 	const { acceptGameChallenge, rejectGameChallenge } = useActions();
 
 	const handleAcceptChallenge = () => {
-		acceptGameChallenge(enemy.uid);
+		acceptGameChallenge(enemy);
 	};
 
 	const handleRejectChallenge = () => {

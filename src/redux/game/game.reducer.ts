@@ -7,6 +7,7 @@ import { produce } from 'immer';
 import { chunk, concat, map } from 'lodash';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
+import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 
 export interface GameState {
 	fen: string;
@@ -14,6 +15,7 @@ export interface GameState {
 	gameType: GameType;
 	orientation: Orientation;
 	challengeRequests: NotifSender[];
+	pendingChallenges: PendingRequest[];
 	games: ChessGameType[];
 	error: string;
 }
@@ -24,6 +26,7 @@ const INITIAL_STATE: GameState = {
 	gameType: 'solo',
 	orientation: 'white',
 	challengeRequests: [],
+	pendingChallenges: [],
 	games: [],
 	error: '',
 };
@@ -62,7 +65,9 @@ const gameReducer = produce(
 				state.challengeRequests = action.payload;
 				state.error = '';
 				return state;
-
+			case GameTypes.FETCH_PENDING_CHALLENGES_SUCCESS:
+				state.pendingChallenges = action.payload;
+				return state;
 			case GameTypes.FETCH_ACTIVE_GAMES_SUCCESS:
 				state.games = action.payload;
 				return state;

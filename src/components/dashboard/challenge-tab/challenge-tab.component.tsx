@@ -9,6 +9,7 @@ import {
 import Paths from '../../../utils/types/paths/paths';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import ChallengesList from '../../challenges/challenges-list/challenges-list.component';
+import ActiveGamesList from '../../active-games/active-games-list/active-games-list.component';
 
 const ChallengeTab = () => {
 	const navigate = useNavigate();
@@ -40,6 +41,7 @@ const ChallengeTab = () => {
 			</ButtonsContainer>
 			Challenge Someone to a Game
 			<ChallengesList />
+			<ActiveGamesList />
 		</ChallengesContainer>
 	);
 };
