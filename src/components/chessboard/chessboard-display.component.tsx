@@ -99,15 +99,12 @@ const ChessboardDisplay = () => {
 	}, [fen]);
 
 	useEffect(() => {
-		if (selectedSquare) {
-			console.log('SQUARE SELECTED');
-
+		if (selectedSquare && game.turn === side) {
 			const moves = game.getMovesToHighlight(selectedSquare);
 			if (moves.length > 0) {
 				highlightSquare(selectedSquare, moves);
 			}
 		} else {
-			console.log('NO SQUARE SELECTED');
 			setSquareStyles(game.squareStyling(selectedSquare));
 		}
 
@@ -151,13 +148,14 @@ const ChessboardDisplay = () => {
 	};
 
 	const makeMove = (from: Square, to: Square) => {
+		if (gameType === 'online' && game.turn !== side) return;
 		let move = game.movePiece(from, to);
 
 		if (move === null) return;
 
 		setSquareStyles(game.squareStyling(selectedSquare));
 
-		if (gameType === 'online' && game.turn === side) {
+		if (gameType === 'online') {
 			setFen(game.fen);
 			makePendingMove({
 				fen: game.fen,

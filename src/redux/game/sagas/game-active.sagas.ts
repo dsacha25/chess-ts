@@ -9,6 +9,8 @@ import {
 } from 'redux-saga/effects';
 import { db, functions } from '../../../utils/classes/firestore/firestore-app';
 import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
+import { getPlayerOrientation } from '../../../utils/helpers/get-player-orientation/get-player-orientation';
+import getOrientation from '../../../utils/helpers/orientation/get-orientation';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../../utils/types/chess-move/chess-move';
 import { ConfirmedMove } from '../../../utils/types/confirmed-move/confirmed-move';
@@ -52,11 +54,14 @@ export function* onMakeConfirmedMove() {
 	yield takeEvery(GameTypes.MAKE_CONFIRMED_MOVE_START, makeConfirmedMoveAsync);
 }
 
-export function* setActiveGame({ payload: game }: SetActiveGameAction) {
+export function* setActiveGame({
+	payload: game,
+}: SetActiveGameAction): Generator | SelectEffect {
 	yield console.log('ACTIVE GAME: ', game);
+	const uid = yield select(selectUserUID);
 
 	yield put(setFen(game.fen));
-	yield put(setOrientation(game.turn));
+	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
 }
 
@@ -88,7 +93,7 @@ export function* onFetchActiveGames() {
 export function* gameActiveSagas() {
 	yield all([
 		call(onFetchActiveGames),
-		call(onMakeConfirmedMove),
 		call(onSetActiveGame),
+		call(onMakeConfirmedMove),
 	]);
 }
