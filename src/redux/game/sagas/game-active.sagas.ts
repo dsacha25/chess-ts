@@ -71,7 +71,6 @@ export function* onSetActiveGame() {
 export function* fetchActiveGamesAsync(): Generator | SelectEffect {
 	try {
 		const uid = yield select(selectUserUID);
-		yield console.log('UID GAME: ', uid);
 
 		const games: ChessGameType[] = yield db.getAllWithID<ChessGameType[]>(
 			'games',
