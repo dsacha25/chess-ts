@@ -1,4 +1,5 @@
 import { where } from 'firebase/firestore';
+import { EventChannel } from 'redux-saga';
 import {
 	all,
 	call,
@@ -7,7 +8,9 @@ import {
 	SelectEffect,
 	takeEvery,
 } from 'redux-saga/effects';
+import ChessGame from '../../../utils/classes/chess-game/chess-game';
 import { db, functions } from '../../../utils/classes/firestore/firestore-app';
+import { listener } from '../../../utils/classes/sagas/saga-listener';
 import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
 import { getPlayerOrientation } from '../../../utils/helpers/get-player-orientation/get-player-orientation';
 import getOrientation from '../../../utils/helpers/orientation/get-orientation';
@@ -17,10 +20,13 @@ import { ConfirmedMove } from '../../../utils/types/confirmed-move/confirmed-mov
 import { selectUserUID } from '../../user/user.selector';
 import { SetActiveGameAction } from '../game.action-types';
 import {
+	fetchActiveGamesStart,
 	fetchActiveGamesSuccess,
 	gameError,
+	makeConfirmedMoveSuccess,
 	setFen,
 	setGameHistory,
+	setGameInstance,
 	setOrientation,
 } from '../game.actions';
 import { selectActiveGame, selectPendingMove } from '../game.selector';
@@ -45,6 +51,8 @@ export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
 
 		yield console.log('CONFIRMED MOVE:', confirmedMove);
 		yield functions.callFirebaseFunction('makeConfirmedMove', confirmedMove);
+		yield put(makeConfirmedMoveSuccess());
+		yield put(fetchActiveGamesStart());
 	} catch (err) {
 		yield put(gameError(getErrorMessage(err)));
 	}
@@ -59,6 +67,10 @@ export function* setActiveGame({
 }: SetActiveGameAction): Generator | SelectEffect {
 	const uid = yield select(selectUserUID);
 
+	yield console.log('GAME STATE FEN: ', game.fen);
+	const gameInstance = new ChessGame(game.fen);
+
+	yield put(setGameInstance(gameInstance));
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
@@ -66,6 +78,41 @@ export function* setActiveGame({
 
 export function* onSetActiveGame() {
 	yield takeEvery(GameTypes.SET_ACTIVE_GAME, setActiveGame);
+}
+
+export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
+	yield console.log('CHESS GAME LISTENER: ', game);
+	const uid = yield select(selectUserUID);
+
+	const gameInstance = new ChessGame(game.fen);
+
+	yield put(setGameInstance(gameInstance));
+	yield put(setFen(game.fen));
+	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
+	yield put(setGameHistory(game.moves));
+}
+
+export function* openActiveGameListenerAsync(): Generator | SelectEffect {
+	try {
+		const game: ChessGameType | null = yield select(selectActiveGame);
+
+		if (!game) return;
+
+		const gameRef = yield db.getDocumentReference(`games/${game.id}`);
+		const gameChannel: EventChannel<ChessGameType> =
+			yield listener.generateDocumentListener<ChessGameType>(gameRef);
+
+		yield listener.initializeChannel<ChessGameType>(gameChannel, getActiveGame);
+	} catch (err) {
+		yield put(gameError(getErrorMessage(err)));
+	}
+}
+
+export function* onOpenActiveGameListener() {
+	yield takeEvery(
+		GameTypes.OPEN_ACTIVE_GAME_LISTENER,
+		openActiveGameListenerAsync
+	);
 }
 
 export function* fetchActiveGamesAsync(): Generator | SelectEffect {
@@ -93,5 +140,6 @@ export function* gameActiveSagas() {
 		call(onFetchActiveGames),
 		call(onSetActiveGame),
 		call(onMakeConfirmedMove),
+		call(onOpenActiveGameListener),
 	]);
 }

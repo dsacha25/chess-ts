@@ -8,8 +8,10 @@ import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
+import ChessGame from '../../utils/classes/chess-game/chess-game';
 
 export interface GameState {
+	game: ChessGame | null;
 	fen: string;
 	history: Move[];
 	gameType: GameType;
@@ -23,6 +25,7 @@ export interface GameState {
 }
 
 const INITIAL_STATE: GameState = {
+	game: null,
 	fen: 'start',
 	history: [],
 	gameType: 'solo',
@@ -38,6 +41,14 @@ const INITIAL_STATE: GameState = {
 const gameReducer = produce(
 	(state: GameState = INITIAL_STATE, action: GameActions) => {
 		switch (action.type) {
+			case GameTypes.SET_GAME_INSTANCE:
+				state.game = action.payload;
+				state.error = '';
+				return state;
+			case GameTypes.CLEAR_GAME_INSTANCE:
+				state.game = null;
+				state.error = '';
+				return state;
 			case GameTypes.MOVE_PIECE:
 				state.history.push(action.payload);
 				state.error = '';

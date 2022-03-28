@@ -11,6 +11,10 @@ class ChessGame {
 	public squareStyles: { [square in Square]?: CSSProperties } = {};
 	public type: GameType = 'solo';
 
+	constructor(fen: string) {
+		this.game = new Chess(fen);
+	}
+
 	get fen(): string {
 		return this.game.fen();
 	}

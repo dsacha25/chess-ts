@@ -13,6 +13,7 @@ import { db } from '../../utils/classes/firestore/firestore-app';
 import { listener } from '../../utils/classes/sagas/saga-listener';
 import getErrorMessage from '../../utils/helpers/errors/get-error-message';
 import { Notification } from '../../utils/types/notification/notification';
+import { fetchActiveGamesStart } from '../game/game.actions';
 import { selectUserUID } from '../user/user.selector';
 import {
 	DeleteNotificationAction,
@@ -60,6 +61,10 @@ export function* getNotifications(notifications: Notification[]) {
 	for (const notification of notifications) {
 		if (notification.unread) {
 			yield put(addUnreadNotification(notification));
+
+			if (notification.type === 'players_turn') {
+				yield put(fetchActiveGamesStart());
+			}
 		} else {
 			yield put(addReadNotification(notification));
 		}

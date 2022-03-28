@@ -1,4 +1,5 @@
 import { Move } from 'chess.js';
+import ChessGame from '../../utils/classes/chess-game/chess-game';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
@@ -92,6 +93,10 @@ export interface ClearActiveGameAction {
 	type: GameTypes.CLEAR_ACTIVE_GAME;
 }
 
+export interface OpenActiveGameListenerAction {
+	type: GameTypes.OPEN_ACTIVE_GAME_LISTENER;
+}
+
 // ==== MOVES
 export interface MakePendingMoveAction {
 	type: GameTypes.MAKE_PENDING_MOVE;
@@ -108,6 +113,16 @@ export interface MakeConfirmedMoveSuccessAction {
 
 export interface RejectPendngMoveAction {
 	type: GameTypes.REJECT_PENDING_MOVE;
+}
+
+// ==== GAME INSTANCE
+export interface SetGameInstanceAction {
+	type: GameTypes.SET_GAME_INSTANCE;
+	payload: ChessGame;
+}
+
+export interface ClearGameInstanceAction {
+	type: GameTypes.CLEAR_GAME_INSTANCE;
 }
 
 // ==== GAME ERROR
@@ -134,10 +149,13 @@ type GameActions =
 	| FetchActiveGamesSuccessAction
 	| SetActiveGameAction
 	| ClearActiveGameAction
+	| OpenActiveGameListenerAction
 	| MakePendingMoveAction
 	| MakeConfirmedMoveStartAction
 	| MakeConfirmedMoveSuccessAction
 	| RejectPendngMoveAction
+	| SetGameInstanceAction
+	| ClearGameInstanceAction
 	| GameErrorAction;
 
 export default GameActions;

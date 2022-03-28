@@ -14,6 +14,7 @@ import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
 import {
 	selectActiveGame,
 	selectFen,
+	selectGameInstance,
 	selectGameType,
 	selectOrientation,
 	selectSide,
@@ -21,13 +22,14 @@ import {
 import { useLocation } from 'react-router-dom';
 import { selectUserUID } from '../../redux/user/user.selector';
 import { find } from 'lodash';
-const game = new ChessGame();
+const gameInstance = new ChessGame('start');
 
 const ChessboardDisplay = () => {
 	const location = useLocation();
 
 	const activeGame = useSelector((state) => selectActiveGame(state));
 
+	const gameState = useSelector((state) => selectGameInstance(state));
 	const uid = useSelector((state) => selectUserUID(state));
 	const gameType = useSelector((state) => selectGameType(state));
 	const fen = useSelector((state) => selectFen(state));
@@ -41,17 +43,28 @@ const ChessboardDisplay = () => {
 		setOrientation,
 		fetchEnemyInfoStart,
 		makePendingMove,
+		openActiveGameListener,
 	} = useActions();
+
+	const [game, setGameState] = useState(gameInstance);
 
 	const [dropStyles, setDropStyles] = useState({});
 	const [squareStyles, setSquareStyles] = useState<{
 		[square in Square]?: CSSProperties;
 	}>({});
-	const [pieceSquare, setPieceSquare] = useState<Square>();
 
 	const [selectedSquare, setSelectedSquare] = useState<Square>();
 
 	const [gameOver, setGameOver] = useState(game.isGameOver);
+
+	useEffect(() => {
+		if (gameState) {
+			setGameState(gameState);
+			openActiveGameListener();
+		}
+
+		// eslint-disable-next-line
+	}, [gameState]);
 
 	useEffect(() => {
 		return () => {
@@ -74,6 +87,7 @@ const ChessboardDisplay = () => {
 
 	useEffect(() => {
 		console.log('TURN: ', game.turn);
+		console.log('FEN: ', game.fen);
 		game.setGameType('solo');
 		if (location.pathname === '/play') {
 			console.log('PLAY');

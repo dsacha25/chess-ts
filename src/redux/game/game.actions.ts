@@ -1,4 +1,5 @@
 import { Move } from 'chess.js';
+import ChessGame from '../../utils/classes/chess-game/chess-game';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
@@ -8,6 +9,7 @@ import { PendingRequest } from '../../utils/types/pending-request/pending-reques
 import {
 	AcceptGameChallengeAction,
 	ClearActiveGameAction,
+	ClearGameInstanceAction,
 	FetchActiveGamesStartAction,
 	FetchActiveGamesSuccessAction,
 	FetchGameChallengesStart,
@@ -19,6 +21,7 @@ import {
 	MakeConfirmedMoveSuccessAction,
 	MakePendingMoveAction,
 	MovePieceAction,
+	OpenActiveGameListenerAction,
 	RejectGameChallengeAction,
 	RejectPendngMoveAction,
 	ResetGameHistoryAction,
@@ -26,6 +29,7 @@ import {
 	SetActiveGameAction,
 	SetFenAction,
 	SetGameHistoryAction,
+	SetGameInstanceAction,
 	SetGameTypeAction,
 	SetOrientationAction,
 } from './game.action-types';
@@ -131,6 +135,10 @@ export const clearActiveGame = (): ClearActiveGameAction => ({
 	type: GameTypes.CLEAR_ACTIVE_GAME,
 });
 
+export const openActiveGameListener = (): OpenActiveGameListenerAction => ({
+	type: GameTypes.OPEN_ACTIVE_GAME_LISTENER,
+});
+
 // MAKE MOVE
 export const makePendingMove = (move: ChessMove): MakePendingMoveAction => ({
 	type: GameTypes.MAKE_PENDING_MOVE,
@@ -147,6 +155,16 @@ export const makeConfirmedMoveSuccess = (): MakeConfirmedMoveSuccessAction => ({
 
 export const rejectPendingMove = (): RejectPendngMoveAction => ({
 	type: GameTypes.REJECT_PENDING_MOVE,
+});
+
+// ==== GAME INSTANCE
+export const setGameInstance = (game: ChessGame): SetGameInstanceAction => ({
+	type: GameTypes.SET_GAME_INSTANCE,
+	payload: game,
+});
+
+export const clearGameInstance = (): ClearGameInstanceAction => ({
+	type: GameTypes.CLEAR_GAME_INSTANCE,
 });
 
 // GAME ERROR
