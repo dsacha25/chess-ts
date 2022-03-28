@@ -4,10 +4,10 @@ import Orientation from '../../utils/types/orientation/orientation';
 import GameActions from './game.action-types';
 import { GameTypes } from './game.types';
 import { produce } from 'immer';
-import { chunk, concat, map } from 'lodash';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
+import { ChessMove } from '../../utils/types/chess-move/chess-move';
 
 export interface GameState {
 	fen: string;
@@ -19,6 +19,7 @@ export interface GameState {
 	games: ChessGameType[];
 	activeGame: ChessGameType | null;
 	error: string;
+	pendingMove: ChessMove | null;
 }
 
 const INITIAL_STATE: GameState = {
@@ -30,6 +31,7 @@ const INITIAL_STATE: GameState = {
 	pendingChallenges: [],
 	games: [],
 	activeGame: null,
+	pendingMove: null,
 	error: '',
 };
 
@@ -38,6 +40,10 @@ const gameReducer = produce(
 		switch (action.type) {
 			case GameTypes.MOVE_PIECE:
 				state.history.push(action.payload);
+				state.error = '';
+				return state;
+			case GameTypes.SET_GAME_HISTORY:
+				state.history = action.payload;
 				state.error = '';
 				return state;
 			case GameTypes.RESET_GAME_HISTORY:
@@ -69,15 +75,27 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.FETCH_PENDING_CHALLENGES_SUCCESS:
 				state.pendingChallenges = action.payload;
+				state.error = '';
 				return state;
 			case GameTypes.FETCH_ACTIVE_GAMES_SUCCESS:
 				state.games = action.payload;
+				state.error = '';
 				return state;
 			case GameTypes.SET_ACTIVE_GAME:
 				state.activeGame = action.payload;
+				state.error = '';
 				return state;
 			case GameTypes.CLEAR_ACTIVE_GAME:
 				state.activeGame = null;
+				state.error = '';
+				return state;
+			case GameTypes.MAKE_PENDING_MOVE:
+				state.pendingMove = action.payload;
+				return state;
+			case GameTypes.REJECT_PENDING_MOVE:
+			case GameTypes.MAKE_CONFIRMED_MOVE_SUCCESS:
+				state.pendingMove = null;
+				state.error = '';
 				return state;
 			case GameTypes.GAME_ERROR:
 				state.error = action.payload;

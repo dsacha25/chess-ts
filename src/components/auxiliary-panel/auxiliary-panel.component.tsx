@@ -2,19 +2,36 @@ import React from 'react';
 import Title from '../common/title/title.styles';
 import {
 	AuxiliaryPanelContainer,
+	ConfirmMoveButton,
+	ConfirmMoveContainer,
 	PanelButton,
 	PanelControlsContainer,
 	PanelInfoContainer,
+	RejectMoveButton,
 } from './auxiliary-panel.styles';
 
 import { BiMessage } from 'react-icons/bi';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
-import { selectTurns } from '../../redux/game/game.selector';
+import { selectPendingMove, selectTurns } from '../../redux/game/game.selector';
+import { FiCheck } from 'react-icons/fi';
+import { IoClose } from 'react-icons/io5';
+import useActions from '../../hooks/use-actions/use-actions.hook';
 
 const AuxiliaryPanel = () => {
 	const history = useSelector((state) => selectTurns(state));
+	const pendingMove = useSelector((state) => selectPendingMove(state));
+
+	const { makeConfirmedMoveStart, rejectPendingMove } = useActions();
 
 	console.log('HISTORY: ', history);
+
+	const handleConfirmMove = () => {
+		makeConfirmedMoveStart();
+	};
+
+	const handleRejectMove = () => {
+		rejectPendingMove();
+	};
 
 	return (
 		<AuxiliaryPanelContainer>
@@ -38,6 +55,16 @@ const AuxiliaryPanel = () => {
 					<BiMessage size="60%" />
 				</PanelButton>
 			</PanelControlsContainer>
+			{pendingMove && (
+				<ConfirmMoveContainer>
+					<ConfirmMoveButton onClick={handleConfirmMove} color="main">
+						<FiCheck size="30px" />
+					</ConfirmMoveButton>
+					<RejectMoveButton onClick={handleRejectMove} color="secondary">
+						<IoClose size="30px" />
+					</RejectMoveButton>
+				</ConfirmMoveContainer>
+			)}
 		</AuxiliaryPanelContainer>
 	);
 };

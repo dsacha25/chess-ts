@@ -31,6 +31,15 @@ class ChessGame {
 		return this.game.game_over();
 	}
 
+	getWinner(): Orientation | null {
+		if (this.game.turn() === 'b' && this.game.in_checkmate()) {
+			return 'white';
+		} else if (this.game.turn() === 'w' && this.game.in_checkmate()) {
+			return 'black';
+		}
+		return null;
+	}
+
 	setGameType(gameType: GameType): GameType {
 		return (this.type = gameType);
 	}

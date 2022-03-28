@@ -4,9 +4,8 @@ import {
 	OpponentContainer,
 	PlayerContainer,
 } from './chessboard-display.styles';
-import Chessboard, { Piece } from 'chessboardjsx';
-import { Square, Move } from 'chess.js';
-import Orientation from '../../utils/types/orientation/orientation';
+import Chessboard from 'chessboardjsx';
+import { Square } from 'chess.js';
 import OpponentChip from '../chips/game-chips/opponent-chip/opponent-chip.component';
 import PlayerChip from '../chips/game-chips/player-chip/player-chip.component';
 import ChessGame from '../../utils/classes/chess-game/chess-game';
@@ -21,7 +20,7 @@ import {
 } from '../../redux/game/game.selector';
 import { useLocation } from 'react-router-dom';
 import { selectUserUID } from '../../redux/user/user.selector';
-import { find, remove } from 'lodash';
+import { find } from 'lodash';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
@@ -41,7 +40,7 @@ const ChessboardDisplay = () => {
 		setFen,
 		setOrientation,
 		fetchEnemyInfoStart,
-		clearActiveGame,
+		makePendingMove,
 	} = useActions();
 
 	const [dropStyles, setDropStyles] = useState({});
@@ -92,6 +91,9 @@ const ChessboardDisplay = () => {
 	useEffect(() => {
 		setGameOver(game.isGameOver);
 		console.log('GAME OVER?: ', gameOver);
+		if (game.isGameOver) {
+			console.log('WINNER: ', game.getWinner());
+		}
 
 		// eslint-disable-next-line
 	}, [fen]);
@@ -148,52 +150,43 @@ const ChessboardDisplay = () => {
 		removeHighlightSquare();
 	};
 
-	const onDrop = (props: { sourceSquare: Square; targetSquare: Square }) => {
-		const { sourceSquare, targetSquare } = props;
+	const makeMove = (from: Square, to: Square) => {
+		let move = game.movePiece(from, to);
 
-		console.log('SELECTED SQUARE: ', selectedSquare);
+		if (move === null) return;
 
-		// is online
-		if (gameType === 'online') {
-			if (game.turn === side) {
-				let move = game.movePiece(sourceSquare, targetSquare);
+		setSquareStyles(game.squareStyling(selectedSquare));
 
-				if (move === null) return;
-				setFen(game.fen);
-
-				setSquareStyles(game.squareStyling(selectedSquare));
-			}
-		} else {
-			// solo
-			let move = game.movePiece(sourceSquare, targetSquare);
-			if (move === null) return;
-			movePiece(move);
+		if (gameType === 'online' && game.turn === side) {
 			setFen(game.fen);
-
-			setSquareStyles(game.squareStyling(selectedSquare));
+			makePendingMove({
+				fen: game.fen,
+				move,
+				winner: game.getWinner(),
+				gameOver: game.isGameOver,
+			});
+		} else if (gameType === 'solo') {
+			setFen(game.fen);
+			movePiece(move);
 			setTimeout(() => {
 				setOrientation(game.orientation);
 			}, 500);
 		}
+	};
+
+	const onDrop = (props: { sourceSquare: Square; targetSquare: Square }) => {
+		const { sourceSquare, targetSquare } = props;
+
+		makeMove(sourceSquare, targetSquare);
 
 		setSelectedSquare(undefined);
 	};
 
 	const onSquareClick = (square: Square) => {
-		console.log('SQUARE: ', square);
 		setSelectedSquare(square);
 
 		if (selectedSquare) {
-			let move = game.movePiece(selectedSquare, square);
-
-			if (move === null) return;
-			setFen(game.fen);
-
-			if (gameType === 'solo') {
-				setTimeout(() => {
-					setOrientation(game.orientation);
-				}, 500);
-			}
+			makeMove(selectedSquare, square);
 
 			setSelectedSquare(undefined);
 		}

@@ -1,5 +1,6 @@
 import { Move } from 'chess.js';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
+import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
@@ -14,17 +15,23 @@ import {
 	FetchPendingChallengesStartAction,
 	FetchPendingChallengesSuccessAction,
 	GameErrorAction,
+	MakeConfirmedMoveStartAction,
+	MakeConfirmedMoveSuccessAction,
+	MakePendingMoveAction,
 	MovePieceAction,
 	RejectGameChallengeAction,
+	RejectPendngMoveAction,
 	ResetGameHistoryAction,
 	SendGameChallengeAction,
 	SetActiveGameAction,
 	SetFenAction,
+	SetGameHistoryAction,
 	SetGameTypeAction,
 	SetOrientationAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 
+// ==== GAME STATE
 export const setGameType = (gameType: GameType): SetGameTypeAction => ({
 	type: GameTypes.SET_GAME_TYPE,
 	payload: gameType,
@@ -51,7 +58,12 @@ export const setFen = (fen: string): SetFenAction => ({
 	payload: fen,
 });
 
-// GAME CHALLENGES
+export const setGameHistory = (history: Move[]): SetGameHistoryAction => ({
+	type: GameTypes.SET_GAME_HISTORY,
+	payload: history,
+});
+
+// ==== GAME CHALLENGES
 export const sendGameChallenge = (
 	enemyUID: string
 ): SendGameChallengeAction => ({
@@ -117,6 +129,24 @@ export const setActiveGame = (game: ChessGameType): SetActiveGameAction => ({
 
 export const clearActiveGame = (): ClearActiveGameAction => ({
 	type: GameTypes.CLEAR_ACTIVE_GAME,
+});
+
+// MAKE MOVE
+export const makePendingMove = (move: ChessMove): MakePendingMoveAction => ({
+	type: GameTypes.MAKE_PENDING_MOVE,
+	payload: move,
+});
+
+export const makeConfirmedMoveStart = (): MakeConfirmedMoveStartAction => ({
+	type: GameTypes.MAKE_CONFIRMED_MOVE_START,
+});
+
+export const makeConfirmedMoveSuccess = (): MakeConfirmedMoveSuccessAction => ({
+	type: GameTypes.MAKE_CONFIRMED_MOVE_SUCCESS,
+});
+
+export const rejectPendingMove = (): RejectPendngMoveAction => ({
+	type: GameTypes.REJECT_PENDING_MOVE,
 });
 
 // GAME ERROR

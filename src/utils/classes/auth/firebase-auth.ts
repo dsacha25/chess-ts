@@ -65,6 +65,9 @@ export class FirebaseAuth implements Authentication<User> {
 				phoneNumber: credential.user.phoneNumber,
 				providerId: credential.providerId || '',
 				rating: 800,
+				totalOppRating: 0,
+				wins: 0,
+				losses: 0,
 			};
 			await this.createUserDocument(newChessUser);
 		});
