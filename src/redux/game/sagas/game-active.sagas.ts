@@ -57,7 +57,6 @@ export function* onMakeConfirmedMove() {
 export function* setActiveGame({
 	payload: game,
 }: SetActiveGameAction): Generator | SelectEffect {
-	yield console.log('ACTIVE GAME: ', game);
 	const uid = yield select(selectUserUID);
 
 	yield put(setFen(game.fen));
