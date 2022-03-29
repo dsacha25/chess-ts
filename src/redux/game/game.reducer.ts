@@ -9,6 +9,7 @@ import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import ChessGame from '../../utils/classes/chess-game/chess-game';
+import { initial } from 'lodash';
 
 export interface GameState {
 	game: ChessGame | null;
@@ -26,7 +27,7 @@ export interface GameState {
 
 const INITIAL_STATE: GameState = {
 	game: null,
-	fen: 'start',
+	fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
 	history: [],
 	gameType: 'solo',
 	orientation: 'white',
@@ -104,6 +105,18 @@ const gameReducer = produce(
 				state.pendingMove = action.payload;
 				return state;
 			case GameTypes.REJECT_PENDING_MOVE:
+				const chessGame = state.game;
+				if (chessGame && chessGame.game) {
+					state.game = chessGame.undoMove();
+					if (state.history.length === 0) {
+						state.fen = 'start';
+					} else {
+						state.fen = chessGame.game.fen();
+					}
+				}
+				state.pendingMove = null;
+				state.error = '';
+				return state;
 			case GameTypes.MAKE_CONFIRMED_MOVE_SUCCESS:
 				state.pendingMove = null;
 				state.error = '';

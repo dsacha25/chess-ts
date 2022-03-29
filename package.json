@@ -6,8 +6,8 @@
     "@chrisoakman/chessboardjs": "^1.0.0",
     "@material-ui/core": "^4.12.3",
     "@mui/material": "^5.5.2",
-    "@mui/styled-engine-sc": "^5.5.2",
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
+    "@mui/styled-engine-sc": "^5.5.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -26,6 +26,7 @@
     "chessboardjsx": "^2.4.7",
     "firebase": "^9.6.9",
     "immer": "^9.0.12",
+    "js-chess-engine": "^1.0.2",
     "lodash": "^4.17.21",
     "react": "16.14.0",
     "react-dom": "^17.0.2",
@@ -44,8 +45,9 @@
     "typescript": "^4.6.2",
     "web-vitals": "^2.1.4"
   },
+  "types": ".src/types/js-chess-engine/index.d.ts",
   "resolutions": {
-        "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
   },
   "scripts": {
     "start": "react-scripts start",

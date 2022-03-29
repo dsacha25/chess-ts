@@ -10,7 +10,7 @@ import userReducer from './user/user.reducer';
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['user', 'game'],
+	whitelist: ['user', 'enemy'],
 };
 
 const rootReducer = combineReducers({

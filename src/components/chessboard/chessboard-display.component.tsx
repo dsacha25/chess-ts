@@ -22,7 +22,9 @@ import {
 import { useLocation } from 'react-router-dom';
 import { selectUserUID } from '../../redux/user/user.selector';
 import { find } from 'lodash';
-const gameInstance = new ChessGame('start');
+import { Game, move, status, moves, aiMove, getFen } from 'js-chess-engine';
+const jsGame = new Game();
+const game = new ChessGame();
 
 const ChessboardDisplay = () => {
 	const location = useLocation();
@@ -43,12 +45,10 @@ const ChessboardDisplay = () => {
 		setOrientation,
 		fetchEnemyInfoStart,
 		makePendingMove,
-		openActiveGameListener,
 	} = useActions();
 
-	const [game, setGameState] = useState(gameInstance);
+	const [gameI, setGameState] = useState<ChessGame>(game);
 
-	const [dropStyles, setDropStyles] = useState({});
 	const [squareStyles, setSquareStyles] = useState<{
 		[square in Square]?: CSSProperties;
 	}>({});
@@ -60,7 +60,6 @@ const ChessboardDisplay = () => {
 	useEffect(() => {
 		if (gameState) {
 			setGameState(gameState);
-			openActiveGameListener();
 		}
 
 		// eslint-disable-next-line
@@ -143,10 +142,15 @@ const ChessboardDisplay = () => {
 
 	const onMouseOverSquare = (square: Square) => {
 		// get list of possible moves for this square
+		// console.log('GAME FUCK SHIT: ', game);
+		// console.log(game.squareStyling);
+
 		const movesToHighlight = game.getMovesToHighlight(square);
+		// console.log('HIGHLIGHT: ', movesToHighlight);
 
 		// return if no moves available
 		if (movesToHighlight.length === 0) return;
+		// console.log('GAME TURN: ', game.turn);
 
 		if (gameType === 'online') {
 			if (game.turn === side) {
@@ -162,24 +166,42 @@ const ChessboardDisplay = () => {
 	};
 
 	const makeMove = (from: Square, to: Square) => {
+		// console.log('TYPE:', gameType);
+		// console.log('GAME:', game);
+		// console.log('TURN:', game.turn);
+		// console.log('SIDE:', side);
+		// console.log('MOVE JS:', move(fen));
+
+		let moveJS = move(fen, from, to);
+		console.log('MOVE JS:', moveJS);
+		console.log(gameType === 'online' && game.turn !== side);
+
 		if (gameType === 'online' && game.turn !== side) return;
-		let move = game.movePiece(from, to);
+		// console.log('FROM:', from);
+		// console.log('TO:', to);
 
-		if (move === null) return;
+		let move2 = game.game.move({ from, to, promotion: 'q' });
 
-		setSquareStyles(game.squareStyling(selectedSquare));
+		let move1 = game.movePiece(from, to);
+
+		console.log('MOVE:', move1);
+
+		if (move2 === null) return;
+
+		// setSquareStyles(game.squareStyling(selectedSquare));
 
 		if (gameType === 'online') {
+			console.log('MAKE PENDING MOVE');
 			setFen(game.fen);
 			makePendingMove({
 				fen: game.fen,
-				move,
+				move: move2,
 				winner: game.getWinner(),
 				gameOver: game.isGameOver,
 			});
 		} else if (gameType === 'solo') {
 			setFen(game.fen);
-			movePiece(move);
+			movePiece(move2);
 			setTimeout(() => {
 				setOrientation(game.orientation);
 			}, 500);
@@ -219,7 +241,6 @@ const ChessboardDisplay = () => {
 				onSquareClick={onSquareClick}
 				onDrop={onDrop}
 				squareStyles={squareStyles}
-				dropSquareStyle={dropStyles}
 				orientation={orientation}
 				width={700}
 			/>

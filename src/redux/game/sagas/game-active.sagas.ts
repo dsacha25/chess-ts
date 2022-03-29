@@ -24,6 +24,7 @@ import {
 	fetchActiveGamesSuccess,
 	gameError,
 	makeConfirmedMoveSuccess,
+	openActiveGameListener,
 	setFen,
 	setGameHistory,
 	setGameInstance,
@@ -68,12 +69,14 @@ export function* setActiveGame({
 	const uid = yield select(selectUserUID);
 
 	yield console.log('GAME STATE FEN: ', game.fen);
-	const gameInstance = new ChessGame(game.fen);
+	// const gameInstance = new ChessGame(game.fen);
 
-	yield put(setGameInstance(gameInstance));
+	// yield put(setGameInstance(gameInstance));
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
+
+	yield put(openActiveGameListener());
 }
 
 export function* onSetActiveGame() {
@@ -84,9 +87,9 @@ export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
 	yield console.log('CHESS GAME LISTENER: ', game);
 	const uid = yield select(selectUserUID);
 
-	const gameInstance = new ChessGame(game.fen);
+	// const gameInstance = new ChessGame(game.fen);
 
-	yield put(setGameInstance(gameInstance));
+	// yield put(setGameInstance(gameInstance));
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
@@ -98,11 +101,11 @@ export function* openActiveGameListenerAsync(): Generator | SelectEffect {
 
 		if (!game) return;
 
-		const gameRef = yield db.getDocumentReference(`games/${game.id}`);
-		const gameChannel: EventChannel<ChessGameType> =
-			yield listener.generateDocumentListener<ChessGameType>(gameRef);
+		// const gameRef = yield db.getDocumentReference(`games/${game.id}`);
+		// const gameChannel: EventChannel<ChessGameType> =
+		// yield listener.generateDocumentListener<ChessGameType>(gameRef);
 
-		yield listener.initializeChannel<ChessGameType>(gameChannel, getActiveGame);
+		// yield listener.initializeChannel<ChessGameType>(gameChannel, getActiveGame);
 	} catch (err) {
 		yield put(gameError(getErrorMessage(err)));
 	}
@@ -121,7 +124,8 @@ export function* fetchActiveGamesAsync(): Generator | SelectEffect {
 
 		const games: ChessGameType[] = yield db.getAllWithID<ChessGameType[]>(
 			'games',
-			where('users', 'array-contains', uid)
+			where('users', 'array-contains', uid),
+			where('gameOver', '==', false)
 		);
 
 		yield console.log('GAMES: ', games);

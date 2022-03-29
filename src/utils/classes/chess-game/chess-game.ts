@@ -11,10 +11,6 @@ class ChessGame {
 	public squareStyles: { [square in Square]?: CSSProperties } = {};
 	public type: GameType = 'solo';
 
-	constructor(fen: string) {
-		this.game = new Chess(fen);
-	}
-
 	get fen(): string {
 		return this.game.fen();
 	}
@@ -33,6 +29,11 @@ class ChessGame {
 
 	get isGameOver(): boolean {
 		return this.game.game_over();
+	}
+
+	undoMove(): ChessGame {
+		this.game.undo();
+		return this;
 	}
 
 	getWinner(): Orientation | null {
@@ -57,12 +58,6 @@ class ChessGame {
 		return this.fen;
 	}
 
-	getMoveString(move: Move): string {
-		const { san } = move;
-
-		return '';
-	}
-
 	getMoves(square: Square): Move[] {
 		return this.game.moves({ square, verbose: true });
 	}
@@ -79,7 +74,7 @@ class ChessGame {
 		});
 	}
 
-	squareStyling(pieceSquare: Square | undefined) {
+	public squareStyling(pieceSquare: Square | undefined) {
 		const sourceSquare =
 			this.history.length && this.history[this.history.length - 1].from;
 		const targetSquare =

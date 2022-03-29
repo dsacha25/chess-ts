@@ -1893,6 +1893,7 @@
     prop-types "^15.7.2"
 
 "@mui/styled-engine-sc@^5.5.2", "@mui/styled-engine@^5.5.2", "@mui/styled-engine@npm:@mui/styled-engine-sc@latest":
+  name "@mui/styled-engine"
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/@mui/styled-engine-sc/-/styled-engine-sc-5.5.2.tgz#d35d3b226f79d051181bf098276a90ba718e474d"
   integrity sha512-mFIaowtodHmrm4tLWJEWYxthQ4O9JxsN54u06kuf0DGYF08qPz2B9fQHN4Kwf0YM7F/bLkrGUYiF+/7TUk0LYA==
@@ -6402,6 +6403,11 @@ jquery@>=3.4.1:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
+
+js-chess-engine@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/js-chess-engine/-/js-chess-engine-1.0.2.tgz#db9485579cd67e427e4e1dc62e6d86e878e164d6"
+  integrity sha512-oOFuP3/+Ef7SAWcL+8tDAQNcPFuyul6XI/2NypRblqchI4UbYkWNNxVi//XEQW8L242Jk21ljLhllSyRGEFlGg==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
