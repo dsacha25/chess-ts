@@ -40,6 +40,8 @@ export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
 			selectPendingMove
 		);
 
+		yield console.log('ACTIVE GAME: ', game);
+
 		if (!game) return;
 
 		const confirmedMove: ConfirmedMove = {
@@ -69,9 +71,7 @@ export function* setActiveGame({
 	const uid = yield select(selectUserUID);
 
 	yield console.log('GAME STATE FEN: ', game.fen);
-	// const gameInstance = new ChessGame(game.fen);
 
-	// yield put(setGameInstance(gameInstance));
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
@@ -87,9 +87,6 @@ export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
 	yield console.log('CHESS GAME LISTENER: ', game);
 	const uid = yield select(selectUserUID);
 
-	// const gameInstance = new ChessGame(game.fen);
-
-	// yield put(setGameInstance(gameInstance));
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
@@ -101,11 +98,11 @@ export function* openActiveGameListenerAsync(): Generator | SelectEffect {
 
 		if (!game) return;
 
-		// const gameRef = yield db.getDocumentReference(`games/${game.id}`);
-		// const gameChannel: EventChannel<ChessGameType> =
-		// yield listener.generateDocumentListener<ChessGameType>(gameRef);
+		const gameRef = yield db.getDocumentReference(`games/${game.id}`);
+		const gameChannel: EventChannel<ChessGameType> =
+			yield listener.generateDocumentListener<ChessGameType>(gameRef);
 
-		// yield listener.initializeChannel<ChessGameType>(gameChannel, getActiveGame);
+		yield listener.initializeChannel<ChessGameType>(gameChannel, getActiveGame);
 	} catch (err) {
 		yield put(gameError(getErrorMessage(err)));
 	}

@@ -14,16 +14,12 @@ import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
 import {
 	selectActiveGame,
 	selectFen,
-	selectGameInstance,
 	selectGameType,
 	selectOrientation,
-	selectSide,
 } from '../../redux/game/game.selector';
 import { useLocation } from 'react-router-dom';
 import { selectUserUID } from '../../redux/user/user.selector';
 import { find } from 'lodash';
-import { Game, move, status, moves, aiMove, getFen } from 'js-chess-engine';
-const jsGame = new Game();
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
@@ -31,12 +27,10 @@ const ChessboardDisplay = () => {
 
 	const activeGame = useSelector((state) => selectActiveGame(state));
 
-	const gameState = useSelector((state) => selectGameInstance(state));
 	const uid = useSelector((state) => selectUserUID(state));
 	const gameType = useSelector((state) => selectGameType(state));
 	const fen = useSelector((state) => selectFen(state));
 	const orientation = useSelector((state) => selectOrientation(state));
-	const side = useSelector((state) => selectSide(state));
 	const {
 		movePiece,
 		resetGame,
@@ -47,8 +41,6 @@ const ChessboardDisplay = () => {
 		makePendingMove,
 	} = useActions();
 
-	const [gameI, setGameState] = useState<ChessGame>(game);
-
 	const [squareStyles, setSquareStyles] = useState<{
 		[square in Square]?: CSSProperties;
 	}>({});
@@ -56,14 +48,6 @@ const ChessboardDisplay = () => {
 	const [selectedSquare, setSelectedSquare] = useState<Square>();
 
 	const [gameOver, setGameOver] = useState(game.isGameOver);
-
-	useEffect(() => {
-		if (gameState) {
-			setGameState(gameState);
-		}
-
-		// eslint-disable-next-line
-	}, [gameState]);
 
 	useEffect(() => {
 		return () => {
@@ -85,13 +69,12 @@ const ChessboardDisplay = () => {
 	}, [activeGame]);
 
 	useEffect(() => {
-		console.log('TURN: ', game.turn);
-		console.log('FEN: ', game.fen);
-		game.setGameType('solo');
 		if (location.pathname === '/play') {
 			console.log('PLAY');
+			game.setGameType('online');
 			setGameType('online');
 		} else if (location.pathname === '/analysis') {
+			game.setGameType('solo');
 			setGameType('solo');
 		}
 
@@ -105,20 +88,20 @@ const ChessboardDisplay = () => {
 		setGameOver(game.isGameOver);
 		console.log('GAME OVER?: ', gameOver);
 		if (game.isGameOver) {
-			console.log('WINNER: ', game.getWinner());
+			console.log('WINNER: ', game.getWinner(fen));
 		}
 
 		// eslint-disable-next-line
 	}, [fen]);
 
 	useEffect(() => {
-		if (selectedSquare && game.turn === side) {
-			const moves = game.getMovesToHighlight(selectedSquare);
-			if (moves.length > 0) {
+		if (selectedSquare && game.turn === orientation) {
+			const moves = game.getMovesToHighlight(fen, selectedSquare);
+			if (moves && moves.length > 0) {
 				highlightSquare(selectedSquare, moves);
 			}
 		} else {
-			setSquareStyles(game.squareStyling(selectedSquare));
+			setSquareStyles(game.squareStyling(fen, selectedSquare));
 		}
 
 		// eslint-disable-next-line
@@ -129,6 +112,7 @@ const ChessboardDisplay = () => {
 		squaresToHighlight: Square[]
 	) => {
 		const highlightStyles = game.highlightSquare(
+			fen,
 			sourceSquare,
 			squaresToHighlight
 		);
@@ -137,7 +121,7 @@ const ChessboardDisplay = () => {
 	};
 
 	const removeHighlightSquare = () => {
-		setSquareStyles(game.squareStyling(selectedSquare));
+		setSquareStyles(game.squareStyling(fen, selectedSquare));
 	};
 
 	const onMouseOverSquare = (square: Square) => {
@@ -145,15 +129,15 @@ const ChessboardDisplay = () => {
 		// console.log('GAME FUCK SHIT: ', game);
 		// console.log(game.squareStyling);
 
-		const movesToHighlight = game.getMovesToHighlight(square);
-		// console.log('HIGHLIGHT: ', movesToHighlight);
+		const movesToHighlight = game.getMovesToHighlight(fen, square);
+		console.log('HIGHLIGHT: ', movesToHighlight);
 
 		// return if no moves available
-		if (movesToHighlight.length === 0) return;
+		if (!movesToHighlight || movesToHighlight.length === 0) return;
 		// console.log('GAME TURN: ', game.turn);
 
 		if (gameType === 'online') {
-			if (game.turn === side) {
+			if (game.turn === orientation) {
 				highlightSquare(square, movesToHighlight);
 			}
 		} else {
@@ -166,42 +150,27 @@ const ChessboardDisplay = () => {
 	};
 
 	const makeMove = (from: Square, to: Square) => {
-		// console.log('TYPE:', gameType);
-		// console.log('GAME:', game);
-		// console.log('TURN:', game.turn);
-		// console.log('SIDE:', side);
-		// console.log('MOVE JS:', move(fen));
+		console.log('FEN: ', fen);
+		console.log('TYPE: ', gameType);
 
-		let moveJS = move(fen, from, to);
-		console.log('MOVE JS:', moveJS);
-		console.log(gameType === 'online' && game.turn !== side);
+		let chessMove = game.movePieceServer(fen, from, to);
+		console.log('CHESS MOVE:', chessMove);
+		if (chessMove === null) return;
 
-		if (gameType === 'online' && game.turn !== side) return;
-		// console.log('FROM:', from);
-		// console.log('TO:', to);
-
-		let move2 = game.game.move({ from, to, promotion: 'q' });
-
-		let move1 = game.movePiece(from, to);
-
-		console.log('MOVE:', move1);
-
-		if (move2 === null) return;
-
-		// setSquareStyles(game.squareStyling(selectedSquare));
+		setSquareStyles(game.squareStyling(fen, selectedSquare));
 
 		if (gameType === 'online') {
-			console.log('MAKE PENDING MOVE');
-			setFen(game.fen);
+			console.log('MAKE PENDING MOVE: ', chessMove);
+			setFen(chessMove.fen);
 			makePendingMove({
-				fen: game.fen,
-				move: move2,
-				winner: game.getWinner(),
+				fen: chessMove.fen,
+				move: chessMove.san,
+				winner: game.getWinner(game.fen),
 				gameOver: game.isGameOver,
 			});
 		} else if (gameType === 'solo') {
 			setFen(game.fen);
-			movePiece(move2);
+			// movePiece(move2);
 			setTimeout(() => {
 				setOrientation(game.orientation);
 			}, 500);
@@ -225,7 +194,7 @@ const ChessboardDisplay = () => {
 			setSelectedSquare(undefined);
 		}
 
-		setSquareStyles(game.squareStyling(square));
+		setSquareStyles(game.squareStyling(fen, square));
 	};
 
 	return (

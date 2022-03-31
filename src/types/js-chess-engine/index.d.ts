@@ -1,10 +1,10 @@
 declare module 'js-chess-engine' {
-	type PlayedMove = { string: string };
-
+	import Board from '../../../node_modules/js-chess-engine/lib/Board.mjs';
 	type WhitePieces = 'P' | 'N' | 'B' | 'R' | 'Q' | 'K';
 	type BlackPieces = 'p' | 'n' | 'b' | 'r' | 'q' | 'k';
 
 	type Columns = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h';
+
 	type Rows = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
 	type Position = `${Columns}${Rows}`;
@@ -13,9 +13,9 @@ declare module 'js-chess-engine' {
 
 	type Turn = 'black' | 'white';
 
-	type AiLevel = 0 | 1 | 2 | 3 | 4;
+	export type AiLevel = 0 | 1 | 2 | 3 | 4;
 
-	interface ConfigObject {
+	export interface ConfigObject {
 		turn: Turn;
 		pieces: { [key: Position]: Pieces };
 		moves: { [key: Position]: Position[] };
@@ -33,7 +33,7 @@ declare module 'js-chess-engine' {
 		fullMove: number;
 	}
 
-	type BoardConfig = ConfigObject | string;
+	export type BoardConfig = ConfigObject | string;
 
 	interface BoardMove {
 		from: Position;
@@ -43,10 +43,18 @@ declare module 'js-chess-engine' {
 
 	type History = BoardMove[];
 
-	export class Game {
-		move(from: Position, to: Position): { [key: Position]: Position };
+	type Move = { [position in Position]: Position };
 
-		moves(from: Position | null): Position[];
+	type Moves = { [position in Position | string]: Position[] };
+
+	export class Game {
+		public board: Board;
+
+		constructor(configuration?: BoardConfig);
+
+		move(from: Position, to: Position): Move;
+
+		moves(from: Position | null): Moves;
 
 		setPiece(location, piece): void;
 
@@ -54,7 +62,7 @@ declare module 'js-chess-engine' {
 
 		aiMove(level: AiLevel): { [key: Position]: Position };
 
-		getHistory(reversed: boolean): History;
+		getHistory(reversed?: boolean): History;
 
 		printToConsole(): void;
 
@@ -63,9 +71,7 @@ declare module 'js-chess-engine' {
 		exportFEN(): string;
 	}
 
-	export function moves(config: BoardConfig): {
-		[key: Position]: Position[];
-	};
+	export function moves(config: BoardConfig): Moves;
 
 	export function status(config: BoardConfig): ConfigObject;
 

@@ -3,7 +3,7 @@ import Orientation from '../orientation/orientation';
 
 export interface ChessMove {
 	fen: string;
-	move: Move;
+	move: Move | string;
 	winner: Orientation | null;
 	gameOver?: boolean;
 }

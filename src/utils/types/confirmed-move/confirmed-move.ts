@@ -3,7 +3,7 @@ import Orientation from '../orientation/orientation';
 
 export interface ConfirmedMove {
 	fen: string;
-	move: Move;
+	move: Move | string;
 	id: string;
 	winner: Orientation | null;
 	gameOver?: boolean;

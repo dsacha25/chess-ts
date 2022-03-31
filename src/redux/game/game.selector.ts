@@ -1,5 +1,5 @@
 import { Move } from 'chess.js';
-import { chunk, create, map } from 'lodash';
+import { chunk, map } from 'lodash';
 import { createSelector } from 'reselect';
 import getSide from '../../utils/helpers/side/get-side';
 import { RootState } from '../root-reducer';
@@ -31,10 +31,7 @@ export const selectSide = createSelector(selectOrientation, (orientation) =>
 );
 
 export const selectTurns = createSelector(selectGame, (game) =>
-	chunk(
-		map(game.history, (move: Move) => move.san),
-		2
-	)
+	chunk(game.history, 2)
 );
 
 export const selectFen = createSelector(selectGame, (game) => game.fen);
