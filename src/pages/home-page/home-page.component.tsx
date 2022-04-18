@@ -8,12 +8,18 @@ import {
 import QueenIcon from '../../assets/logo-icon/queen_icon.png';
 import ImageContainer from '../../components/common/containers/image-container/image-container.component';
 import Title from '../../components/common/title/title.styles';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Paths from '../../utils/types/paths/paths';
+import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
+import { selectUserAuth } from '../../redux/user/user.selector';
 
 const HomePage = () => {
 	const navigate = useNavigate();
-	return (
+	const user = useSelector((state) => selectUserAuth(state));
+
+	return user ? (
+		<Navigate to="dashboard" />
+	) : (
 		<HomePageContainer>
 			<HomeIconWrapper>
 				<ImageContainer url={QueenIcon} />
