@@ -28,6 +28,8 @@ const DEFAULT_POSITION =
 interface ServerMove {
 	fen: string;
 	san: string;
+	turn: Orientation;
+	winner: Orientation | null;
 }
 
 class ChessGame {
@@ -37,6 +39,7 @@ class ChessGame {
 	public type: GameType = 'solo';
 	public boardConfig: BoardConfig = DEFAULT_POSITION;
 	public fen: string = DEFAULT_POSITION;
+	public previousFen: string = this.fen;
 
 	constructor(config?: BoardConfig) {
 		if (config) {
@@ -69,6 +72,7 @@ class ChessGame {
 	setGame(config: BoardConfig) {
 		this.game = new Game(config);
 		this.boardConfig = config;
+		this.fen = getFen(config);
 		return this.game;
 	}
 
@@ -77,28 +81,16 @@ class ChessGame {
 	}
 
 	getHistory(config: BoardConfig): History {
-		this.chess.load(this.setFen(config));
+		this.game.getHistory();
+		this.chess.load(this.setFen(status(config)));
 		this.chess.history({ verbose: true });
-		console.log('CHESS HISTORY: ', this.chess.history({ verbose: true }));
-		console.log('THIS HISTORY: ', this.game.getHistory());
+
+		this.setGame(status(config)).getHistory();
+
+		// console.log('CHESS HISTORY: ', this.history);
+		// console.log('CHESS STATUS: ', status(config).moves);
 
 		return this.setGame(config).getHistory();
-	}
-
-	undoMove(config: BoardConfig): BoardConfig {
-		// REMOVE LAST MOVE
-		const previous = initial(this.getHistory(config));
-		console.log('PREVIOUS: ', previous);
-		if (previous.length > 0) {
-			const previousConfig = previous[previous.length - 1].configuration;
-			// SET TO PREVIOUS MOVE
-			this.setGame(previousConfig);
-
-			this.setFen(getFen(previousConfig));
-			this.boardConfig = previousConfig;
-			return previousConfig;
-		}
-		return this.boardConfig;
 	}
 
 	getWinner(config: BoardConfig): Orientation | null {
@@ -120,16 +112,13 @@ class ChessGame {
 
 	resetGame(): string {
 		this.setGame(DEFAULT_POSITION);
+
+		// console.log('BOARD?: ', this.setGame(DEFAULT_POSITION).board);
+
 		return this.fen;
 	}
 
 	getMoves(config: BoardConfig, square: Position): Position[] | undefined {
-		const allMoves = moves(config);
-		const availableMoves = allMoves[square.toUpperCase()];
-
-		console.log('ALL MOVES: ', allMoves);
-		console.log('AVAILABLE MOVES: ', availableMoves);
-
 		return moves(config)[square.toUpperCase()];
 	}
 
@@ -146,23 +135,26 @@ class ChessGame {
 		from: Square,
 		to: Square
 	): ServerMove | null {
-		// console.log('CONFIG: ', config);
-		// console.log('FEN: ', getFen(config));
-		// console.log('FROM: ', from);
-		// console.log('TO: ', to);
-
+		this.previousFen = getFen(config);
 		this.chess.load(getFen(config));
+
 		const chessMove = this.chess.move({ from, to });
 		console.log('MOVE: ', chessMove);
+
 		if (!chessMove) return null;
 
-		const san = chessMove.san;
+		const fen = getFen(move(config, from, to));
 
-		this.chess.load(getFen(move(config, from, to)));
+		this.chess.load(fen);
+		this.getStatus(fen);
+
+		console.log('WINNER?: ', this.getWinner(fen));
 
 		return {
-			fen: getFen(move(config, from, to)),
-			san,
+			fen,
+			san: chessMove.san,
+			turn: this.getStatus(fen).turn,
+			winner: this.getWinner(fen),
 		};
 	}
 

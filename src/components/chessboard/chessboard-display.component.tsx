@@ -32,13 +32,13 @@ const ChessboardDisplay = () => {
 	const fen = useSelector((state) => selectFen(state));
 	const orientation = useSelector((state) => selectOrientation(state));
 	const {
-		movePiece,
-		resetGame,
+		clearActiveGame,
 		setGameType,
 		setFen,
 		setOrientation,
 		fetchEnemyInfoStart,
 		makePendingMove,
+		openActiveGameListener,
 	} = useActions();
 
 	const [squareStyles, setSquareStyles] = useState<{
@@ -50,8 +50,20 @@ const ChessboardDisplay = () => {
 	const [gameOver, setGameOver] = useState(game.isGameOver);
 
 	useEffect(() => {
+		if (activeGame) {
+			console.log('GAME EXISTS');
+			openActiveGameListener();
+		} else {
+			console.log('GAME NOT FOUND');
+		}
+
+		// eslint-disable-next-line
+	}, [activeGame]);
+
+	useEffect(() => {
 		return () => {
-			// clearActiveGame();
+			clearActiveGame();
+			// setFen(fen);
 		};
 		// eslint-disable-next-line
 	}, []);
@@ -77,16 +89,11 @@ const ChessboardDisplay = () => {
 			game.setGameType('solo');
 			setGameType('solo');
 		}
-
-		return () => {
-			setFen(game.resetGame());
-			resetGame();
-		};
 	}, []);
 
 	useEffect(() => {
 		setGameOver(game.isGameOver);
-		console.log('GAME OVER?: ', gameOver);
+		console.log('GAME OVER?: ', game.isGameOver);
 		if (game.isGameOver) {
 			console.log('WINNER: ', game.getWinner(fen));
 		}
@@ -126,11 +133,7 @@ const ChessboardDisplay = () => {
 
 	const onMouseOverSquare = (square: Square) => {
 		// get list of possible moves for this square
-		// console.log('GAME FUCK SHIT: ', game);
-		// console.log(game.squareStyling);
-
 		const movesToHighlight = game.getMovesToHighlight(fen, square);
-		console.log('HIGHLIGHT: ', movesToHighlight);
 
 		// return if no moves available
 		if (!movesToHighlight || movesToHighlight.length === 0) return;
@@ -150,9 +153,6 @@ const ChessboardDisplay = () => {
 	};
 
 	const makeMove = (from: Square, to: Square) => {
-		console.log('FEN: ', fen);
-		console.log('TYPE: ', gameType);
-
 		let chessMove = game.movePieceServer(fen, from, to);
 		console.log('CHESS MOVE:', chessMove);
 		if (chessMove === null) return;
@@ -160,20 +160,24 @@ const ChessboardDisplay = () => {
 		setSquareStyles(game.squareStyling(fen, selectedSquare));
 
 		if (gameType === 'online') {
-			console.log('MAKE PENDING MOVE: ', chessMove);
-			setFen(chessMove.fen);
-			makePendingMove({
-				fen: chessMove.fen,
-				move: chessMove.san,
-				winner: game.getWinner(game.fen),
-				gameOver: game.isGameOver,
-			});
+			if (game.turn === orientation) {
+				setFen(chessMove.fen);
+				makePendingMove({
+					fen: chessMove.fen,
+					previousFen: fen,
+					move: chessMove.san,
+					winner: game.getWinner(game.fen),
+					gameOver: game.isGameOver,
+				});
+			}
 		} else if (gameType === 'solo') {
-			setFen(game.fen);
-			// movePiece(move2);
+			setFen(chessMove.fen);
 			setTimeout(() => {
-				setOrientation(game.orientation);
+				if (chessMove === null) return;
+				setOrientation(chessMove.turn);
 			}, 500);
+
+			setGameOver(chessMove.winner !== null);
 		}
 	};
 

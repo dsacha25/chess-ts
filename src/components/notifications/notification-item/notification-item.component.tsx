@@ -29,7 +29,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ notification }) => {
 		const to = setTimeout(() => {
 			clearTimeout(to);
 			setTO(null);
-		}, 1000);
+		}, 500);
 
 		setTO(to);
 	};

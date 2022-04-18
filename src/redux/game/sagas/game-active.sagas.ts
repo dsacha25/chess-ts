@@ -27,7 +27,6 @@ import {
 	openActiveGameListener,
 	setFen,
 	setGameHistory,
-	setGameInstance,
 	setOrientation,
 } from '../game.actions';
 import { selectActiveGame, selectPendingMove } from '../game.selector';

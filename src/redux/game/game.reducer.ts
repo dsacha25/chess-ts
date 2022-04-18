@@ -13,6 +13,7 @@ import ChessGame from '../../utils/classes/chess-game/chess-game';
 export interface GameState {
 	game: ChessGame | null;
 	fen: string;
+	previousFen: string;
 	history: Move[];
 	gameType: GameType;
 	orientation: Orientation;
@@ -30,6 +31,7 @@ const DEFAULT_POSITION =
 const INITIAL_STATE: GameState = {
 	game: null,
 	fen: DEFAULT_POSITION,
+	previousFen: DEFAULT_POSITION,
 	history: [],
 	gameType: 'solo',
 	orientation: 'white',
@@ -50,6 +52,8 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.CLEAR_GAME_INSTANCE:
 				state.game = null;
+				state.activeGame = null;
+				state.pendingMove = null;
 				state.error = '';
 				return state;
 			case GameTypes.MOVE_PIECE:
@@ -73,6 +77,7 @@ const gameReducer = produce(
 				state.error = '';
 				return state;
 			case GameTypes.SET_FEN:
+				state.previousFen = state.fen;
 				state.fen = action.payload;
 				state.error = '';
 				return state;
@@ -100,25 +105,25 @@ const gameReducer = produce(
 				state.error = '';
 				return state;
 			case GameTypes.CLEAR_ACTIVE_GAME:
+				state.fen = DEFAULT_POSITION;
+				state.previousFen = DEFAULT_POSITION;
 				state.activeGame = null;
+				state.pendingMove = null;
+				state.history = [];
+				state.orientation = 'white';
 				state.error = '';
 				return state;
+
 			case GameTypes.MAKE_PENDING_MOVE:
 				state.pendingMove = action.payload;
+				state.previousFen = action.payload.previousFen;
 				return state;
 			case GameTypes.REJECT_PENDING_MOVE:
-				const chess = new ChessGame(state.fen);
-				chess.undoMove(state.fen);
-
-				if (state.history.length === 0) {
-					state.fen = DEFAULT_POSITION;
-				} else {
-					state.fen = chess.fen;
-				}
-
+				state.fen = state.previousFen;
 				state.pendingMove = null;
 				state.error = '';
 				return state;
+			case GameTypes.OPEN_ACTIVE_GAME_LISTENER:
 			case GameTypes.MAKE_CONFIRMED_MOVE_SUCCESS:
 				state.pendingMove = null;
 				state.error = '';

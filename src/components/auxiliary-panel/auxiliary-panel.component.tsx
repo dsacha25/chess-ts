@@ -23,8 +23,6 @@ const AuxiliaryPanel = () => {
 
 	const { makeConfirmedMoveStart, rejectPendingMove } = useActions();
 
-	console.log('HISTORY: ', history);
-
 	const handleConfirmMove = () => {
 		makeConfirmedMoveStart();
 	};

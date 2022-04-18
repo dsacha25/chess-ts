@@ -6,10 +6,11 @@ import useActions from '../../hooks/use-actions/use-actions.hook';
 import { AnalysisContainer } from './analysis-page.styles';
 
 const AnalysisPage = () => {
-	const { clearEnemyInfo } = useActions();
+	const { clearEnemyInfo, clearActiveGame } = useActions();
 
 	useEffect(() => {
 		clearEnemyInfo();
+		clearActiveGame();
 
 		// eslint-disable-next-line
 	}, []);
