@@ -32,6 +32,7 @@ const ChessboardDisplay = () => {
 	const fen = useSelector((state) => selectFen(state));
 	const orientation = useSelector((state) => selectOrientation(state));
 	const {
+		movePiece,
 		clearActiveGame,
 		setGameType,
 		setFen,
@@ -172,6 +173,7 @@ const ChessboardDisplay = () => {
 			}
 		} else if (gameType === 'solo') {
 			setFen(chessMove.fen);
+			movePiece(chessMove.san);
 			setTimeout(() => {
 				if (chessMove === null) return;
 				setOrientation(chessMove.turn);

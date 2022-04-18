@@ -5,7 +5,7 @@ import { Player } from '../player/player';
 export interface ChessGameType extends Enemyship {
 	id: string;
 	gameOver: boolean;
-	moves: Move[];
+	moves: string[];
 	turn: 'white' | 'black';
 	black: Player;
 	white: Player;

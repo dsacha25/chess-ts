@@ -11,7 +11,7 @@ import { GameTypes } from './game.types';
 // ==== GAME STATE
 export interface MovePieceAction {
 	type: GameTypes.MOVE_PIECE;
-	payload: Move;
+	payload: string;
 }
 
 export interface ResetGameHistoryAction {
@@ -35,7 +35,7 @@ export interface SetFenAction {
 
 export interface SetGameHistoryAction {
 	type: GameTypes.SET_GAME_HISTORY;
-	payload: Move[];
+	payload: string[];
 }
 
 // ==== CHALLENGES

@@ -14,7 +14,7 @@ export interface GameState {
 	game: ChessGame | null;
 	fen: string;
 	previousFen: string;
-	history: Move[];
+	history: string[];
 	gameType: GameType;
 	orientation: Orientation;
 	challengeRequests: NotifSender[];

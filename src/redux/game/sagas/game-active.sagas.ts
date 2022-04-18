@@ -69,7 +69,7 @@ export function* setActiveGame({
 }: SetActiveGameAction): Generator | SelectEffect {
 	const uid = yield select(selectUserUID);
 
-	yield console.log('GAME STATE FEN: ', game.fen);
+	yield console.log('GAME STATE MOVES: ', game.moves);
 
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));

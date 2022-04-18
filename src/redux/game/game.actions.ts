@@ -48,7 +48,7 @@ export const setOrientation = (
 	payload: orientation,
 });
 
-export const movePiece = (move: Move): MovePieceAction => ({
+export const movePiece = (move: string): MovePieceAction => ({
 	type: GameTypes.MOVE_PIECE,
 	payload: move,
 });
@@ -62,7 +62,7 @@ export const setFen = (fen: string): SetFenAction => ({
 	payload: fen,
 });
 
-export const setGameHistory = (history: Move[]): SetGameHistoryAction => ({
+export const setGameHistory = (history: string[]): SetGameHistoryAction => ({
 	type: GameTypes.SET_GAME_HISTORY,
 	payload: history,
 });
