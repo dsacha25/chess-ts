@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import CustomButton from '../common/buttons/custom-button/custom-button.component';
+import CustomButton from '../../../common/buttons/custom-button/custom-button.component';
 
 export const AuxiliaryPanelContainer = styled.div`
 	display: grid;
 	width: 100%;
-	height: 100%;
+	height: 90%;
 
 	place-items: flex-start;
+	align-self: center;
 
 	background-color: ${({ theme }) => theme.accentBright};
 
@@ -28,8 +29,9 @@ export const PanelInfoContainer = styled.div`
 	display: grid;
 	width: 100%;
 	height: 100%;
-
+	max-height: 460px;
 	border-radius: 20px;
+	overflow-y: auto;
 
 	border-top: 2px solid ${({ theme }) => theme.main};
 	border-bottom: 2px solid ${({ theme }) => theme.main};

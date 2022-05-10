@@ -7,3 +7,8 @@ export const selectDashboardIndex = createSelector(
 	selectIndexes,
 	(indexes) => indexes.dashboardIndex
 );
+
+export const selectAuxPanelIndex = createSelector(
+	selectIndexes,
+	(indexes) => indexes.auxPanelIndex
+);

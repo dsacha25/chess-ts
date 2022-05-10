@@ -3,12 +3,12 @@ import styled from 'styled-components';
 export const BoardContainer = styled.div`
 	display: grid;
 	place-items: center;
-	width: 700px;
-	height: 100%;
+	/* width: 700px; */
+	/* height: 100%; */
 	justify-self: center;
 	grid-gap: 5px;
 
-	grid-template-rows: auto 700px auto;
+	grid-template-rows: auto 600px auto;
 `;
 
 export const CustomButton = styled.button`

@@ -5,6 +5,13 @@ export interface SetUserDashboardIndexAction {
 	payload: number;
 }
 
-type IndexesActionTypes = SetUserDashboardIndexAction;
+export interface SetAuxiliaryPanelIndexAction {
+	type: IndexesTypes.SET_AUX_PANEL_INDEX;
+	payload: boolean;
+}
+
+type IndexesActionTypes =
+	| SetUserDashboardIndexAction
+	| SetAuxiliaryPanelIndexAction;
 
 export default IndexesActionTypes;
