@@ -1,5 +1,6 @@
 import { Move } from 'chess.js';
 import ChessGame from '../../utils/classes/chess-game/chess-game';
+import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
@@ -8,10 +9,13 @@ import Orientation from '../../utils/types/orientation/orientation';
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import {
 	AcceptGameChallengeAction,
+	ChatErrorAction,
 	ClearActiveGameAction,
 	ClearGameInstanceAction,
 	FetchActiveGamesStartAction,
 	FetchActiveGamesSuccessAction,
+	FetchChatStartAction,
+	FetchChatSuccessAction,
 	FetchGameChallengesStart,
 	FetchGameChallengesSuccess,
 	FetchPendingChallengesStartAction,
@@ -25,6 +29,8 @@ import {
 	RejectGameChallengeAction,
 	RejectPendngMoveAction,
 	ResetGameHistoryAction,
+	SendChatMessageStartAction,
+	SendChatMessageSuccessAction,
 	SendGameChallengeAction,
 	SetActiveGameAction,
 	SetFenAction,
@@ -165,6 +171,37 @@ export const setGameInstance = (game: ChessGame): SetGameInstanceAction => ({
 
 export const clearGameInstance = (): ClearGameInstanceAction => ({
 	type: GameTypes.CLEAR_GAME_INSTANCE,
+});
+
+// ==== CHAT
+export const sendChatMessageStart = (
+	message: string
+): SendChatMessageStartAction => ({
+	type: GameTypes.SEND_MESSAGE_START,
+	payload: message,
+});
+
+export const sendChatMessageSuccess = (
+	chatMessage: ChatMessage
+): SendChatMessageSuccessAction => ({
+	type: GameTypes.SEND_MESSAGE_SUCCESS,
+	payload: chatMessage,
+});
+
+export const fetchChatStart = (): FetchChatStartAction => ({
+	type: GameTypes.FETCH_CHAT_START,
+});
+
+export const fetchChatSuccess = (
+	chatMessages: ChatMessage[]
+): FetchChatSuccessAction => ({
+	type: GameTypes.FETCH_CHAT_SUCCESS,
+	payload: chatMessages,
+});
+
+export const chatError = (message: string): ChatErrorAction => ({
+	type: GameTypes.CHAT_FAILURE,
+	payload: message,
 });
 
 // GAME ERROR

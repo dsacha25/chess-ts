@@ -1,5 +1,6 @@
 import { Move } from 'chess.js';
 import ChessGame from '../../utils/classes/chess-game/chess-game';
+import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
@@ -125,6 +126,31 @@ export interface ClearGameInstanceAction {
 	type: GameTypes.CLEAR_GAME_INSTANCE;
 }
 
+// ==== CHAT
+export interface SendChatMessageStartAction {
+	type: GameTypes.SEND_MESSAGE_START;
+	payload: string;
+}
+
+export interface SendChatMessageSuccessAction {
+	type: GameTypes.SEND_MESSAGE_SUCCESS;
+	payload: ChatMessage;
+}
+
+export interface FetchChatStartAction {
+	type: GameTypes.FETCH_CHAT_START;
+}
+
+export interface FetchChatSuccessAction {
+	type: GameTypes.FETCH_CHAT_SUCCESS;
+	payload: ChatMessage[];
+}
+
+export interface ChatErrorAction {
+	type: GameTypes.CHAT_FAILURE;
+	payload: string;
+}
+
 // ==== GAME ERROR
 export interface GameErrorAction {
 	type: GameTypes.GAME_ERROR;
@@ -156,6 +182,11 @@ type GameActions =
 	| RejectPendngMoveAction
 	| SetGameInstanceAction
 	| ClearGameInstanceAction
+	| SendChatMessageStartAction
+	| SendChatMessageSuccessAction
+	| FetchChatStartAction
+	| FetchChatSuccessAction
+	| ChatErrorAction
 	| GameErrorAction;
 
 export default GameActions;

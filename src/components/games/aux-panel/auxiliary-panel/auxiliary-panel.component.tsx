@@ -19,7 +19,7 @@ import {
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import GameHistory from '../game-history/game-history.component';
 import { selectAuxPanelIndex } from '../../../../redux/indexes/indexes.selector';
-import GameChat from '../game-chat/game-chat.component';
+import GameChat from '../chat/game-chat/game-chat.component';
 import { FiCheck } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { FaChessBishop } from 'react-icons/fa';

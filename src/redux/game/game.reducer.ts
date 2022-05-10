@@ -9,12 +9,14 @@ import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import ChessGame from '../../utils/classes/chess-game/chess-game';
+import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 
 export interface GameState {
 	game: ChessGame | null;
 	fen: string;
 	previousFen: string;
 	history: string[];
+	chat: ChatMessage[];
 	gameType: GameType;
 	orientation: Orientation;
 	challengeRequests: NotifSender[];
@@ -33,6 +35,7 @@ const INITIAL_STATE: GameState = {
 	fen: DEFAULT_POSITION,
 	previousFen: DEFAULT_POSITION,
 	history: [],
+	chat: [],
 	gameType: 'solo',
 	orientation: 'white',
 	challengeRequests: [],
@@ -127,6 +130,12 @@ const gameReducer = produce(
 			case GameTypes.MAKE_CONFIRMED_MOVE_SUCCESS:
 				state.pendingMove = null;
 				state.error = '';
+				return state;
+			case GameTypes.SEND_MESSAGE_SUCCESS:
+				state.chat.push(action.payload);
+				return state;
+			case GameTypes.FETCH_CHAT_SUCCESS:
+				state.chat = action.payload;
 				return state;
 			case GameTypes.GAME_ERROR:
 				state.error = action.payload;
