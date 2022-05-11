@@ -127,24 +127,40 @@ export class FirestoreDatabase implements Database {
 		return doc(this.db, documentPath);
 	}
 
-	async create<T>(collectionPath: string, id: string, item: T): Promise<void> {
+	async create<T>(
+		collectionPath: string,
+		id: string,
+		item: T
+	): Promise<void | string> {
 		const collectionRef = this.getCollection<T>(collectionPath);
 		const docRef = doc(collectionRef, id);
-		await setDoc(docRef, item);
+		const error = await setDoc(docRef, item).catch((err) => {
+			console.error(err);
+			return err;
+		});
+
+		if (error) {
+			return error;
+		}
 	}
 
 	async update(
 		collectionName: string,
 		id: string,
 		item: UpdateData<any>
-	): Promise<void> {
+	): Promise<void | string> {
 		const collectionRef = this.getCollection(collectionName);
 		// TODO: is setting collection necessary?
 		this.setCollection(collectionName);
 		const docRef = doc(collectionRef, id);
-		await updateDoc(docRef, item).catch((err) => {
+		const error = await updateDoc(docRef, item).catch((err) => {
 			console.error(err);
+			return err;
 		});
+
+		if (error) {
+			return error;
+		}
 	}
 
 	async delete(collectionName: string, id: string): Promise<void> {

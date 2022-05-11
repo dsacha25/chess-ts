@@ -60,3 +60,5 @@ export const selectPendingMove = createSelector(
 	selectGame,
 	(game) => game.pendingMove
 );
+
+export const selectGameChat = createSelector(selectGame, (game) => game.chat);

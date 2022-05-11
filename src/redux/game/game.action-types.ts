@@ -138,11 +138,11 @@ export interface SendChatMessageSuccessAction {
 }
 
 export interface FetchChatStartAction {
-	type: GameTypes.FETCH_CHAT_START;
+	type: GameTypes.OPEN_CHAT_LISTENER_START;
 }
 
 export interface FetchChatSuccessAction {
-	type: GameTypes.FETCH_CHAT_SUCCESS;
+	type: GameTypes.OPEN_CHAT_LISTENER_SUCCESS;
 	payload: ChatMessage[];
 }
 

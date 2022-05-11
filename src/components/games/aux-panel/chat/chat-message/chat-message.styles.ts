@@ -13,9 +13,8 @@ export const MessageContainer = styled.div<Pick<ChatMessageProps, 'sender'>>`
 `;
 
 export const Messages = styled.div`
-	display: flex;
+	display: grid;
 	place-content: flex-end;
-	flex-direction: column;
 	gap: 5px;
 `;
 
@@ -27,10 +26,13 @@ export const Message = styled.p`
 	border-radius: 15px;
 	color: white;
 	align-items: center;
+	justify-content: flex-end;
 	background-color: ${({ theme }) => theme.main};
-
+	flex: 0;
 	margin: 0;
-	padding: 2px 10px;
+	padding: 5px 10px;
+
+	text-align: right;
 `;
 
 export const ChatAvatar = styled(ImageContainer)`

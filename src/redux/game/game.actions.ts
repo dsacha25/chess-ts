@@ -188,14 +188,14 @@ export const sendChatMessageSuccess = (
 	payload: chatMessage,
 });
 
-export const fetchChatStart = (): FetchChatStartAction => ({
-	type: GameTypes.FETCH_CHAT_START,
+export const openChatListenerStart = (): FetchChatStartAction => ({
+	type: GameTypes.OPEN_CHAT_LISTENER_START,
 });
 
-export const fetchChatSuccess = (
+export const openChatListenerSuccess = (
 	chatMessages: ChatMessage[]
 ): FetchChatSuccessAction => ({
-	type: GameTypes.FETCH_CHAT_SUCCESS,
+	type: GameTypes.OPEN_CHAT_LISTENER_SUCCESS,
 	payload: chatMessages,
 });
 
