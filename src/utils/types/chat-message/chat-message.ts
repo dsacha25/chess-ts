@@ -6,3 +6,10 @@ export interface ChatMessage {
 	photoURL: string;
 	createdAt: Date | Timestamp;
 }
+
+export interface ChatMessageServer {
+	uid: string;
+	message: string;
+	photoURL: string;
+	createdAt: Timestamp;
+}

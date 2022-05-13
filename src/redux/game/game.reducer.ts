@@ -131,9 +131,6 @@ const gameReducer = produce(
 				state.pendingMove = null;
 				state.error = '';
 				return state;
-			case GameTypes.SEND_MESSAGE_SUCCESS:
-				state.chat.push(action.payload);
-				return state;
 			case GameTypes.OPEN_CHAT_LISTENER_SUCCESS:
 				state.chat = action.payload;
 				return state;

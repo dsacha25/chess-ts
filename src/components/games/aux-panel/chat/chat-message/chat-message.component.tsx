@@ -1,6 +1,13 @@
-import { formatDistanceToNow, secondsToMilliseconds, toDate } from 'date-fns';
+import {
+	format,
+	formatDistanceToNow,
+	isToday,
+	secondsToMilliseconds,
+	toDate,
+} from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
 import React, { FC, useEffect, useState } from 'react';
+import formatTimestamp from '../../../../../utils/helpers/strings/format-timestamp/format-timestamp';
 import {
 	ChatAvatar,
 	Message,
@@ -11,27 +18,25 @@ import {
 import { ChatMessageProps } from './types';
 
 const ChatMessage: FC<ChatMessageProps> = (props) => {
-	const [time, setTime] = useState(new Date());
+	const [time, setTime] = useState(formatDistanceToNow(new Date()));
 
 	useEffect(() => {
-		if (props.createdAt instanceof Timestamp) {
-			setTime(new Date(secondsToMilliseconds(props.createdAt.seconds)));
-		} else {
-			setTime(new Date(props.createdAt));
-		}
+		setTime(formatTimestamp(props.createdAt, 'MM/dd/yy - HH:mmaaa'));
 
 		// eslint-disable-next-line
-	}, []);
+	}, [time]);
 
 	return (
 		<MessageContainer sender={props.sender}>
-			<Messages>
+			<Messages sender={props.sender}>
 				{props.messages.map((message, i) => (
-					<Message key={i}>{message}</Message>
+					<Message sender={props.sender} key={i}>
+						{message}
+					</Message>
 				))}
 			</Messages>
-			<ChatAvatar url={props.photoURL} />
-			<MessageTime>{formatDistanceToNow(time)}</MessageTime>
+			<ChatAvatar url={props.photoURL} sender={props.sender} />
+			<MessageTime sender={props.sender}>{time}</MessageTime>
 		</MessageContainer>
 	);
 };
