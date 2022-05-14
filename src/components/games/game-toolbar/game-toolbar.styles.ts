@@ -11,8 +11,8 @@ export const GameToolbarContainer = styled.div`
 
 export const AestheticBar = styled.div`
 	width: 50px;
-	height: 90%;
-	min-height: 430px;
+	height: 50%;
+	min-height: 200px;
 
 	top: 50px;
 	left: 10px;

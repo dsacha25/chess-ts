@@ -1,5 +1,5 @@
 import { arrayUnion, FieldValue, where } from 'firebase/firestore';
-import { find, orderBy, union, unionWith } from 'lodash';
+import { find, orderBy, reduce, union, unionWith } from 'lodash';
 import { EventChannel } from 'redux-saga';
 import {
 	all,
@@ -54,25 +54,33 @@ export function* getChatMessages(
 
 	console.log('ALL MESSAGES: ', allMessages);
 
-	let prevMessage;
-	let all = allMessages;
-	for (const message of allMessages) {
-		prevMessage = message;
-		let start = 0;
-		const index = allMessages.findIndex((msg) => msg.uid === message.uid);
-		console.log('INDEX OF LAST MESSAGE: ', index);
+	let prevUID: string | undefined;
+	let chatSorted: ChatMessageServer[] = [];
+	let storedIndex = 0;
 
-		if (index > 0) {
-			all = all.slice(0, index);
+	for (const message of allMessages) {
+		if (prevUID === undefined) {
+			chatSorted.push(message);
+			prevUID = message.uid;
+			continue;
 		}
 
-		console.log('All:  ', all);
+		if (prevUID === message.uid) {
+			chatSorted[storedIndex].message.push(message.message[0]);
+			continue;
+		}
 
-		if (prevMessage.uid === message.uid) {
+		if (prevUID !== message.uid) {
+			storedIndex += 1;
+			prevUID = message.uid;
+			chatSorted.push(message);
 		}
 	}
 
-	yield put(openChatListenerSuccess(allMessages));
+	console.log('SORTED CHAT: ', chatSorted);
+	console.log('ALL CHAT: ', allMessages);
+
+	yield put(openChatListenerSuccess(chatSorted));
 }
 
 export function* openChatListenerAsync(): Generator | SelectEffect {
@@ -106,7 +114,7 @@ export function* sendMessageAsync({
 		const chatMessage: ChatMessage = {
 			uid,
 			photoURL,
-			message,
+			message: [message],
 			createdAt: new Date(),
 		};
 

@@ -88,7 +88,7 @@ const GameChat = () => {
 					<ChatMessage
 						key={i}
 						sender={uid === chatMsg.uid}
-						messages={[chatMsg.message]}
+						messages={chatMsg.message}
 						createdAt={chatMsg.createdAt}
 						photoURL={chatMsg.photoURL}
 					/>
