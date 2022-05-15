@@ -8,11 +8,11 @@ import React, {
 	useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
-import useActions from '../../../../../hooks/use-actions/use-actions.hook';
-import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
-import { selectGameChat } from '../../../../../redux/game/game.selector';
-import { selectUserUID } from '../../../../../redux/user/user.selector';
-import CustomButton from '../../../../common/buttons/custom-button/custom-button.component';
+import useActions from '../../../../../../hooks/use-actions/use-actions.hook';
+import { useSelector } from '../../../../../../hooks/use-selector/use-typed-selector.hook';
+import { selectGameChat } from '../../../../../../redux/game/game.selector';
+import { selectUserUID } from '../../../../../../redux/user/user.selector';
+import CustomButton from '../../../../../common/buttons/custom-button/custom-button.component';
 import ChatMessage from '../chat-message/chat-message.component';
 import {
 	ChatForm,

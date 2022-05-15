@@ -98,6 +98,16 @@ export interface OpenActiveGameListenerAction {
 	type: GameTypes.OPEN_ACTIVE_GAME_LISTENER;
 }
 
+// ==== INACTIVE GAMES
+export interface FetchInactiveGamesStartAction {
+	type: GameTypes.FETCH_INACTIVE_GAMES_START;
+}
+
+export interface FetchInactiveGamesSuccessAction {
+	type: GameTypes.FETCH_INACTIVE_GAMES_SUCCESS;
+	payload: ChessGameType[];
+}
+
 // ==== MOVES
 export interface MakePendingMoveAction {
 	type: GameTypes.MAKE_PENDING_MOVE;
@@ -117,11 +127,6 @@ export interface RejectPendngMoveAction {
 }
 
 // ==== GAME INSTANCE
-export interface SetGameInstanceAction {
-	type: GameTypes.SET_GAME_INSTANCE;
-	payload: ChessGame;
-}
-
 export interface ClearGameInstanceAction {
 	type: GameTypes.CLEAR_GAME_INSTANCE;
 }
@@ -173,6 +178,8 @@ type GameActions =
 	| FetchPendingChallengesSuccessAction
 	| FetchActiveGamesStartAction
 	| FetchActiveGamesSuccessAction
+	| FetchInactiveGamesStartAction
+	| FetchInactiveGamesSuccessAction
 	| SetActiveGameAction
 	| ClearActiveGameAction
 	| OpenActiveGameListenerAction
@@ -180,7 +187,6 @@ type GameActions =
 	| MakeConfirmedMoveStartAction
 	| MakeConfirmedMoveSuccessAction
 	| RejectPendngMoveAction
-	| SetGameInstanceAction
 	| ClearGameInstanceAction
 	| SendChatMessageStartAction
 	| SendChatMessageSuccessAction

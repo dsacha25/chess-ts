@@ -1,4 +1,3 @@
-import { Move } from 'chess.js';
 import GameType from '../../utils/types/game-type/game-type';
 import Orientation from '../../utils/types/orientation/orientation';
 import GameActions from './game.action-types';
@@ -8,11 +7,9 @@ import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
-import ChessGame from '../../utils/classes/chess-game/chess-game';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 
 export interface GameState {
-	game: ChessGame | null;
 	fen: string;
 	previousFen: string;
 	history: string[];
@@ -23,6 +20,7 @@ export interface GameState {
 	pendingChallenges: PendingRequest[];
 	games: ChessGameType[];
 	activeGame: ChessGameType | null;
+	inactiveGames: ChessGameType[];
 	pendingMove: ChessMove | null;
 	error: string;
 }
@@ -31,7 +29,6 @@ const DEFAULT_POSITION =
 	'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
 const INITIAL_STATE: GameState = {
-	game: null,
 	fen: DEFAULT_POSITION,
 	previousFen: DEFAULT_POSITION,
 	history: [],
@@ -42,6 +39,7 @@ const INITIAL_STATE: GameState = {
 	pendingChallenges: [],
 	games: [],
 	activeGame: null,
+	inactiveGames: [],
 	pendingMove: null,
 	error: '',
 };
@@ -49,12 +47,7 @@ const INITIAL_STATE: GameState = {
 const gameReducer = produce(
 	(state: GameState = INITIAL_STATE, action: GameActions) => {
 		switch (action.type) {
-			case GameTypes.SET_GAME_INSTANCE:
-				state.game = action.payload;
-				state.error = '';
-				return state;
 			case GameTypes.CLEAR_GAME_INSTANCE:
-				state.game = null;
 				state.activeGame = null;
 				state.pendingMove = null;
 				state.error = '';
@@ -103,6 +96,9 @@ const gameReducer = produce(
 				state.games = action.payload;
 				state.error = '';
 				return state;
+			case GameTypes.FETCH_INACTIVE_GAMES_SUCCESS:
+				state.inactiveGames = action.payload;
+				return state;
 			case GameTypes.SET_ACTIVE_GAME:
 				state.activeGame = action.payload;
 				state.error = '';
@@ -116,7 +112,6 @@ const gameReducer = produce(
 				state.orientation = 'white';
 				state.error = '';
 				return state;
-
 			case GameTypes.MAKE_PENDING_MOVE:
 				state.pendingMove = action.payload;
 				state.previousFen = action.payload.previousFen;

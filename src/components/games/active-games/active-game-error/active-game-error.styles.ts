@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CustomButton from '../../common/buttons/custom-button/custom-button.component';
+import CustomButton from '../../../common/buttons/custom-button/custom-button.component';
 
 export const ActiveGameErrorContainer = styled.div`
 	display: grid;

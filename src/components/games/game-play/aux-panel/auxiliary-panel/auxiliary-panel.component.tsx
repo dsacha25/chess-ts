@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from '../../../common/title/title.styles';
+import Title from '../../../../common/title/title.styles';
 import {
 	AuxiliaryPanelContainer,
 	ConfirmMoveButton,
@@ -11,14 +11,14 @@ import {
 } from './auxiliary-panel.styles';
 
 import { BiMessage } from 'react-icons/bi';
-import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
+import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import {
 	selectPendingMove,
 	selectTurns,
-} from '../../../../redux/game/game.selector';
-import useActions from '../../../../hooks/use-actions/use-actions.hook';
+} from '../../../../../redux/game/game.selector';
+import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import GameHistory from '../game-history/game-history.component';
-import { selectAuxPanelIndex } from '../../../../redux/indexes/indexes.selector';
+import { selectAuxPanelIndex } from '../../../../../redux/indexes/indexes.selector';
 import GameChat from '../chat/game-chat/game-chat.component';
 import { FiCheck } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';

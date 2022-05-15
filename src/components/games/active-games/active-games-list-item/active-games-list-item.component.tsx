@@ -1,14 +1,15 @@
 import React, { FC, useEffect, useState } from 'react';
-import { ListItemText } from '../../common/lists/list-item-text/list-item-text.styles';
-import { ListItem } from '../../common/lists/list-item/list-item.styles';
+import { ListItemText } from '../../../common/lists/list-item-text/list-item-text.styles';
+import { ListItem } from '../../../common/lists/list-item/list-item.styles';
 import { JoinGameButton } from './active-games-list-item.styles';
 import { ActiveGamesListItemProps } from './types';
 import { FaChessKing } from 'react-icons/fa';
-import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
-import { selectUserUID } from '../../../redux/user/user.selector';
+import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
+import { selectUserUID } from '../../../../redux/user/user.selector';
 import { useNavigate } from 'react-router-dom';
-import Paths from '../../../utils/types/paths/paths';
-import useActions from '../../../hooks/use-actions/use-actions.hook';
+import Paths from '../../../../utils/types/paths/paths';
+import useActions from '../../../../hooks/use-actions/use-actions.hook';
+import getOpponentName from '../../../../utils/helpers/strings/get-opponent-name/get-opponent-name';
 
 const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 	const { setActiveGame } = useActions();
@@ -18,13 +19,16 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 	const [opponentName, setOpponentName] = useState('');
 
 	useEffect(() => {
-		if (game.black.uid !== uid) {
-			setOpponentName(game.black.displayName);
+		if (uid) {
+			setOpponentName(getOpponentName(uid, game));
 		}
+		// if (game.black.uid !== uid) {
+		// 	setOpponentName(game.black.displayName);
+		// }
 
-		if (game.white.uid !== uid) {
-			setOpponentName(game.white.displayName);
-		}
+		// if (game.white.uid !== uid) {
+		// 	setOpponentName(game.white.displayName);
+		// }
 
 		// eslint-disable-next-line
 	}, []);

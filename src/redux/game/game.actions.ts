@@ -18,6 +18,8 @@ import {
 	FetchChatSuccessAction,
 	FetchGameChallengesStart,
 	FetchGameChallengesSuccess,
+	FetchInactiveGamesStartAction,
+	FetchInactiveGamesSuccessAction,
 	FetchPendingChallengesStartAction,
 	FetchPendingChallengesSuccessAction,
 	GameErrorAction,
@@ -35,7 +37,6 @@ import {
 	SetActiveGameAction,
 	SetFenAction,
 	SetGameHistoryAction,
-	SetGameInstanceAction,
 	SetGameTypeAction,
 	SetOrientationAction,
 } from './game.action-types';
@@ -145,6 +146,18 @@ export const openActiveGameListener = (): OpenActiveGameListenerAction => ({
 	type: GameTypes.OPEN_ACTIVE_GAME_LISTENER,
 });
 
+// ==== INACTIVE GAMES
+export const fetchInactiveGamesStart = (): FetchInactiveGamesStartAction => ({
+	type: GameTypes.FETCH_INACTIVE_GAMES_START,
+});
+
+export const fetchInactiveGamesSuccess = (
+	inactiveGames: ChessGameType[]
+): FetchInactiveGamesSuccessAction => ({
+	type: GameTypes.FETCH_INACTIVE_GAMES_SUCCESS,
+	payload: inactiveGames,
+});
+
 // MAKE MOVE
 export const makePendingMove = (move: ChessMove): MakePendingMoveAction => ({
 	type: GameTypes.MAKE_PENDING_MOVE,
@@ -164,11 +177,6 @@ export const rejectPendingMove = (): RejectPendngMoveAction => ({
 });
 
 // ==== GAME INSTANCE
-export const setGameInstance = (game: ChessGame): SetGameInstanceAction => ({
-	type: GameTypes.SET_GAME_INSTANCE,
-	payload: game,
-});
-
 export const clearGameInstance = (): ClearGameInstanceAction => ({
 	type: GameTypes.CLEAR_GAME_INSTANCE,
 });

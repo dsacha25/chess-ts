@@ -6,19 +6,19 @@ import {
 } from './chessboard-display.styles';
 import Chessboard from 'chessboardjsx';
 import { Square } from 'chess.js';
-import OpponentChip from '../../chips/game-chips/opponent-chip/opponent-chip.component';
-import PlayerChip from '../../chips/game-chips/player-chip/player-chip.component';
-import ChessGame from '../../../utils/classes/chess-game/chess-game';
-import useActions from '../../../hooks/use-actions/use-actions.hook';
-import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
+import OpponentChip from '../../../chips/game-chips/opponent-chip/opponent-chip.component';
+import PlayerChip from '../../../chips/game-chips/player-chip/player-chip.component';
+import ChessGame from '../../../../utils/classes/chess-game/chess-game';
+import useActions from '../../../../hooks/use-actions/use-actions.hook';
+import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import {
 	selectActiveGame,
 	selectFen,
 	selectGameType,
 	selectOrientation,
-} from '../../../redux/game/game.selector';
+} from '../../../../redux/game/game.selector';
 import { useLocation } from 'react-router-dom';
-import { selectUserUID } from '../../../redux/user/user.selector';
+import { selectUserUID } from '../../../../redux/user/user.selector';
 import { find } from 'lodash';
 const game = new ChessGame();
 
@@ -157,12 +157,9 @@ const ChessboardDisplay = () => {
 
 	const makeMove = (from: Square, to: Square) => {
 		let chessMove = game.movePieceServer(fen, from, to);
-		console.log('CHESS MOVE:', chessMove);
 		if (chessMove === null) return;
 
 		setSquareStyles(game.squareStyling(fen, selectedSquare));
-
-		console.log('GO: ', game.isGameOver(chessMove.fen));
 
 		if (gameType === 'online') {
 			if (game.turn === orientation) {

@@ -9,15 +9,21 @@ import {
 import Paths from '../../../utils/types/paths/paths';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import ChallengesList from '../../challenges/challenges-list/challenges-list.component';
-import ActiveGamesList from '../../active-games/active-games-list/active-games-list.component';
+import ActiveGamesList from '../../games/active-games/active-games-list/active-games-list.component';
+import InactiveGamesList from '../../games/inactive-games/inactive-games-list/inactive-games-list.component';
 
 const ChallengeTab = () => {
 	const navigate = useNavigate();
-	const { fetchGameChallengesStart, fetchActiveGamesStart } = useActions();
+	const {
+		fetchGameChallengesStart,
+		fetchActiveGamesStart,
+		fetchInactiveGamesStart,
+	} = useActions();
 
 	useEffect(() => {
 		fetchGameChallengesStart();
 		fetchActiveGamesStart();
+		fetchInactiveGamesStart();
 
 		// eslint-disable-next-line
 	}, []);
@@ -42,6 +48,7 @@ const ChallengeTab = () => {
 			Challenge Someone to a Game
 			<ChallengesList />
 			<ActiveGamesList />
+			<InactiveGamesList />
 		</ChallengesContainer>
 	);
 };

@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
-import { selectActiveGames } from '../../../redux/game/game.selector';
-import { List } from '../../common/lists/list/list.styles';
-import Title from '../../common/title/title.styles';
+import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
+import { selectActiveGames } from '../../../../redux/game/game.selector';
+import { List } from '../../../common/lists/list/list.styles';
+import Title from '../../../common/title/title.styles';
 import ActiveGamesListItem from '../active-games-list-item/active-games-list-item.component';
 
 const ActiveGamesList = () => {

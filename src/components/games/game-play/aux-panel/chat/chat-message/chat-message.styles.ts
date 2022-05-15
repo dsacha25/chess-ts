@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ImageContainer from '../../../../common/containers/image-container/image-container.component';
+import ImageContainer from '../../../../../common/containers/image-container/image-container.component';
 import { ChatMessageProps } from './types';
 
 export const MessageContainer = styled.div<Pick<ChatMessageProps, 'sender'>>`

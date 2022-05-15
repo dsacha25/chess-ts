@@ -1,15 +1,9 @@
-import { Move } from 'chess.js';
-import { chunk, map } from 'lodash';
+import { chunk } from 'lodash';
 import { createSelector } from 'reselect';
 import getSide from '../../utils/helpers/side/get-side';
 import { RootState } from '../root-reducer';
 
 const selectGame = (state: RootState) => state.game;
-
-export const selectGameInstance = createSelector(
-	selectGame,
-	(game) => game.game
-);
 
 export const selectGameHistory = createSelector(
 	selectGame,
@@ -49,6 +43,11 @@ export const selectPendingChallenges = createSelector(
 export const selectActiveGames = createSelector(
 	selectGame,
 	(game) => game.games
+);
+
+export const selectInactiveGames = createSelector(
+	selectGame,
+	(game) => game.inactiveGames
 );
 
 export const selectActiveGame = createSelector(
