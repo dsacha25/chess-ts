@@ -40,6 +40,7 @@ export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
 		);
 
 		yield console.log('ACTIVE GAME: ', game);
+		yield console.log('PENDING MOVE GO?: ', gameOver);
 
 		if (!game) return;
 

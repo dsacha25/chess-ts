@@ -48,7 +48,7 @@ const ChessboardDisplay = () => {
 
 	const [selectedSquare, setSelectedSquare] = useState<Square>();
 
-	const [gameOver, setGameOver] = useState(game.isGameOver);
+	const [gameOver, setGameOver] = useState(game.isGameOver(fen));
 
 	useEffect(() => {
 		if (activeGame) {
@@ -93,10 +93,12 @@ const ChessboardDisplay = () => {
 	}, []);
 
 	useEffect(() => {
-		setGameOver(game.isGameOver);
-		console.log('GAME OVER?: ', game.isGameOver);
-		if (game.isGameOver) {
+		setGameOver(game.isGameOver(fen));
+		console.log('GAME OVER?: ', game.isGameOver(fen));
+		if (game.isGameOver(fen)) {
 			console.log('WINNER: ', game.getWinner(fen));
+
+			// UPDATE FIREBASE
 		}
 
 		// eslint-disable-next-line
@@ -160,6 +162,8 @@ const ChessboardDisplay = () => {
 
 		setSquareStyles(game.squareStyling(fen, selectedSquare));
 
+		console.log('GO: ', game.isGameOver(chessMove.fen));
+
 		if (gameType === 'online') {
 			if (game.turn === orientation) {
 				setFen(chessMove.fen);
@@ -167,8 +171,8 @@ const ChessboardDisplay = () => {
 					fen: chessMove.fen,
 					previousFen: fen,
 					move: chessMove.san,
-					winner: game.getWinner(game.fen),
-					gameOver: game.isGameOver,
+					winner: game.getWinner(chessMove.fen),
+					gameOver: game.isGameOver(chessMove.fen),
 				});
 			}
 		} else if (gameType === 'solo') {

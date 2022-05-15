@@ -63,10 +63,8 @@ class ChessGame {
 		return status(this.boardConfig).turn;
 	}
 
-	get isGameOver(): boolean {
-		return (
-			status(this.boardConfig).isFinished || status(this.boardConfig).checkMate
-		);
+	isGameOver(config: BoardConfig): boolean {
+		return status(config).isFinished || status(config).checkMate;
 	}
 
 	setGame(config: BoardConfig) {
