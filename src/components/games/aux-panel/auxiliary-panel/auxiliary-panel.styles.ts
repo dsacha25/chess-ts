@@ -33,10 +33,12 @@ export const PanelInfoContainer = styled.div`
 	border-radius: 20px;
 	overflow-y: auto;
 
-	border-top: 2px solid ${({ theme }) => theme.main};
-	border-bottom: 2px solid ${({ theme }) => theme.main};
-	border-left: 1px solid ${({ theme }) => theme.main}55;
-	border-right: 1px solid ${({ theme }) => theme.main}55;
+	border-top: 1px solid ${({ theme }) => theme.main};
+	border-bottom: 1px solid ${({ theme }) => theme.main};
+	/* border-left: 1px solid ${({ theme }) => theme.main}55;
+	border-right: 1px solid ${({ theme }) => theme.main}55; */
+
+	/* background-color: ${({ theme }) => theme.white}aa; */
 `;
 
 export const PanelControlsContainer = styled.div`

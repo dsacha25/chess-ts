@@ -20,6 +20,8 @@ export const HistoryMove = styled.li`
 	padding: 3px;
 	place-items: center;
 	place-content: center;
+
+	background-color: ${({ theme }) => theme.white}aa;
 `;
 
 export const MoveNumber = styled.p`
