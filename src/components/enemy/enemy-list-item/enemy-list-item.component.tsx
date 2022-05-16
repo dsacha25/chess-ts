@@ -9,10 +9,17 @@ import { EnemyListItemProps } from './types';
 import { GiBattleAxe } from 'react-icons/gi';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
-import { selectPendingChallenges } from '../../../redux/game/game.selector';
-import { find, includes } from 'lodash';
+import {
+	selectGameInviteReceiver,
+	selectGameLoadingState,
+	selectPendingChallenges,
+} from '../../../redux/game/game.selector';
+import { find } from 'lodash';
+import Spinner from '../../common/spinner/spinner.component';
 
 const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
+	const isLoading = useSelector((state) => selectGameLoadingState(state));
+	const receiver = useSelector((state) => selectGameInviteReceiver(state));
 	const pendingChallenges = useSelector((state) =>
 		selectPendingChallenges(state)
 	);
@@ -32,7 +39,11 @@ const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
 					find(pendingChallenges, ['enemyUID', enemy.uid]) !== undefined
 				}
 			>
-				<GiBattleAxe size="30px" />
+				{isLoading && receiver === enemy.uid ? (
+					<Spinner size="36px" />
+				) : (
+					<GiBattleAxe size="30px" />
+				)}
 			</ChallengeButton>
 		</EnemyContainer>
 	);

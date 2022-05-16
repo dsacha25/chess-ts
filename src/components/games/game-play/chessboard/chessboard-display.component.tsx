@@ -1,6 +1,7 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
 import {
 	BoardContainer,
+	GameOverDisplay,
 	OpponentContainer,
 	PlayerContainer,
 } from './chessboard-display.styles';
@@ -174,7 +175,7 @@ const ChessboardDisplay = () => {
 			}
 		} else if (gameType === 'solo') {
 			setFen(chessMove.fen);
-			movePiece(chessMove.san);
+			movePiece({ move: chessMove.san, fen: chessMove.fen });
 			setTimeout(() => {
 				if (chessMove === null) return;
 				setOrientation(chessMove.turn);
@@ -209,6 +210,7 @@ const ChessboardDisplay = () => {
 			<OpponentContainer>
 				<OpponentChip />
 			</OpponentContainer>
+
 			<Chessboard
 				draggable
 				position={fen}
@@ -220,6 +222,11 @@ const ChessboardDisplay = () => {
 				orientation={orientation}
 				width={600}
 			/>
+			{gameOver && (
+				<GameOverDisplay>
+					<h1>Game Over, Bitch</h1>
+				</GameOverDisplay>
+			)}
 			<PlayerContainer>
 				<PlayerChip />
 			</PlayerContainer>

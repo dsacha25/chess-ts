@@ -4,6 +4,7 @@ import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
+import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
@@ -12,7 +13,7 @@ import { GameTypes } from './game.types';
 // ==== GAME STATE
 export interface MovePieceAction {
 	type: GameTypes.MOVE_PIECE;
-	payload: string;
+	payload: HistoryMove;
 }
 
 export interface ResetGameHistoryAction {
@@ -36,7 +37,7 @@ export interface SetFenAction {
 
 export interface SetGameHistoryAction {
 	type: GameTypes.SET_GAME_HISTORY;
-	payload: string[];
+	payload: HistoryMove[];
 }
 
 // ==== CHALLENGES
@@ -45,9 +46,14 @@ export interface SendGameChallengeAction {
 	payload: string;
 }
 
-export interface AcceptGameChallengeAction {
-	type: GameTypes.ACCEPT_GAME_CHALLENGE;
+export interface AcceptGameChallengeStartAction {
+	type: GameTypes.ACCEPT_GAME_CHALLENGE_START;
 	payload: NotifSender;
+}
+
+export interface GameChallengeResponseSuccessAction {
+	type: GameTypes.GAME_CHALLENGE_RESPONSE_SUCCESS;
+	payload: string;
 }
 
 export interface RejectGameChallengeAction {
@@ -170,7 +176,8 @@ type GameActions =
 	| SetFenAction
 	| SetGameHistoryAction
 	| SendGameChallengeAction
-	| AcceptGameChallengeAction
+	| AcceptGameChallengeStartAction
+	| GameChallengeResponseSuccessAction
 	| RejectGameChallengeAction
 	| FetchGameChallengesStart
 	| FetchGameChallengesSuccess

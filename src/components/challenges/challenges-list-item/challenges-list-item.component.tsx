@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
 	AcceptChallengeButton,
 	ChallengeItem,
@@ -9,15 +9,23 @@ import { ChallengeItemProps } from './types';
 import { GiBattleAxe } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
+import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
+import { selectGameLoadingState } from '../../../redux/game/game.selector';
+import Spinner from '../../common/spinner/spinner.component';
 
 const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
-	const { acceptGameChallenge, rejectGameChallenge } = useActions();
+	const loading = useSelector((state) => selectGameLoadingState(state));
+	const { acceptGameChallengeStart, rejectGameChallenge } = useActions();
+	const [accepting, setAccepting] = useState(false);
+	const [rejecting, setRejecting] = useState(false);
 
 	const handleAcceptChallenge = () => {
-		acceptGameChallenge(enemy);
+		setAccepting(true);
+		acceptGameChallengeStart(enemy);
 	};
 
 	const handleRejectChallenge = () => {
+		setRejecting(true);
 		rejectGameChallenge(enemy.uid);
 	};
 
@@ -25,10 +33,18 @@ const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
 		<ChallengeItem>
 			<EnemyName>{enemy.displayName}</EnemyName>
 			<AcceptChallengeButton onClick={handleAcceptChallenge} color="main">
-				<GiBattleAxe size="30px" />
+				{loading && accepting ? (
+					<Spinner size="30px" />
+				) : (
+					<GiBattleAxe size="30px" />
+				)}
 			</AcceptChallengeButton>
 			<RejectChallengeButton onClick={handleRejectChallenge} color="secondary">
-				<IoClose size="34px" />
+				{loading && rejecting ? (
+					<Spinner size="30px" />
+				) : (
+					<IoClose size="34px" />
+				)}
 			</RejectChallengeButton>
 		</ChallengeItem>
 	);

@@ -1,14 +1,14 @@
-import { Move } from 'chess.js';
-import ChessGame from '../../utils/classes/chess-game/chess-game';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
+import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import {
-	AcceptGameChallengeAction,
+	AcceptGameChallengeStartAction,
+	GameChallengeResponseSuccessAction,
 	ChatErrorAction,
 	ClearActiveGameAction,
 	ClearGameInstanceAction,
@@ -55,7 +55,7 @@ export const setOrientation = (
 	payload: orientation,
 });
 
-export const movePiece = (move: string): MovePieceAction => ({
+export const movePiece = (move: HistoryMove): MovePieceAction => ({
 	type: GameTypes.MOVE_PIECE,
 	payload: move,
 });
@@ -69,7 +69,9 @@ export const setFen = (fen: string): SetFenAction => ({
 	payload: fen,
 });
 
-export const setGameHistory = (history: string[]): SetGameHistoryAction => ({
+export const setGameHistory = (
+	history: HistoryMove[]
+): SetGameHistoryAction => ({
 	type: GameTypes.SET_GAME_HISTORY,
 	payload: history,
 });
@@ -82,11 +84,18 @@ export const sendGameChallenge = (
 	payload: enemyUID,
 });
 
-export const acceptGameChallenge = (
+export const acceptGameChallengeStart = (
 	enemy: NotifSender
-): AcceptGameChallengeAction => ({
-	type: GameTypes.ACCEPT_GAME_CHALLENGE,
+): AcceptGameChallengeStartAction => ({
+	type: GameTypes.ACCEPT_GAME_CHALLENGE_START,
 	payload: enemy,
+});
+
+export const gameChallengeResponseSuccess = (
+	enemyUID: string
+): GameChallengeResponseSuccessAction => ({
+	type: GameTypes.GAME_CHALLENGE_RESPONSE_SUCCESS,
+	payload: enemyUID,
 });
 
 export const rejectGameChallenge = (

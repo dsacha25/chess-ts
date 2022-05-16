@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const BoardContainer = styled.div`
 	display: grid;
+	position: relative;
 	place-items: center;
 	/* width: 700px; */
 	/* height: 100%; */
@@ -31,4 +32,18 @@ export const PlayerContainer = styled.div`
 	width: 100%;
 	height: 60px;
 	place-items: flex-start flex-end;
+`;
+
+export const GameOverDisplay = styled.div`
+	display: grid;
+
+	width: 90%;
+	height: 250px;
+
+	background-color: ${({ theme }) => theme.white}ee;
+
+	place-content: center;
+	position: absolute;
+
+	border-radius: 30px;
 `;

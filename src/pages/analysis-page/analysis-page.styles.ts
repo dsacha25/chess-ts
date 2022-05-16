@@ -4,8 +4,8 @@ export const AnalysisContainer = styled.div`
 	display: grid;
 	width: 100vw;
 	height: 100vh;
-	padding: 80px;
-	grid-template-columns: 300px 1fr 500px;
+	padding: 40px 80px;
+	grid-template-columns: 100px 1fr 400px;
 	position: relative;
-	grid-gap: 100px;
+	grid-gap: 50px;
 `;

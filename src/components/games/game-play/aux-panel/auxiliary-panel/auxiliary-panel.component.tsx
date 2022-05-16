@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Title from '../../../../common/title/title.styles';
 import {
 	AuxiliaryPanelContainer,
@@ -13,6 +13,7 @@ import {
 import { BiMessage } from 'react-icons/bi';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import {
+	selectGameLoadingState,
 	selectPendingMove,
 	selectTurns,
 } from '../../../../../redux/game/game.selector';
@@ -23,11 +24,22 @@ import GameChat from '../chat/game-chat/game-chat.component';
 import { FiCheck } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { FaChessBishop } from 'react-icons/fa';
+import Spinner from '../../../../common/spinner/spinner.component';
 
 const AuxiliaryPanel = () => {
 	const history = useSelector((state) => selectTurns(state));
 	const pendingMove = useSelector((state) => selectPendingMove(state));
 	const index = useSelector((state) => selectAuxPanelIndex(state));
+	const loading = useSelector((state) => selectGameLoadingState(state));
+
+	const historyRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (historyRef.current) {
+			historyRef.current.scrollTop = historyRef.current.scrollHeight;
+			console.log('ref:', historyRef.current.scrollHeight);
+		}
+	}, [historyRef]);
 
 	const { makeConfirmedMoveStart, rejectPendingMove, setAuxPanelIndex } =
 		useActions();
@@ -52,7 +64,7 @@ const AuxiliaryPanel = () => {
 			<Title margin="0" fontSize="30px" color="light">
 				{!index ? 'Move List' : 'Chat'}
 			</Title>
-			<PanelInfoContainer>
+			<PanelInfoContainer ref={historyRef}>
 				{!index ? <GameHistory history={history} /> : <GameChat />}
 			</PanelInfoContainer>
 
@@ -69,9 +81,13 @@ const AuxiliaryPanel = () => {
 			</PanelControlsContainer>
 			{pendingMove && (
 				<ConfirmMoveContainer>
-					<ConfirmMoveButton onClick={handleConfirmMove} color="main">
-						<FiCheck size="30px" />
-					</ConfirmMoveButton>
+					{loading ? (
+						<Spinner size="30px" />
+					) : (
+						<ConfirmMoveButton onClick={handleConfirmMove} color="main">
+							<FiCheck size="30px" />
+						</ConfirmMoveButton>
+					)}
 					<RejectMoveButton onClick={handleRejectMove} color="secondary">
 						<IoClose size="30px" />
 					</RejectMoveButton>

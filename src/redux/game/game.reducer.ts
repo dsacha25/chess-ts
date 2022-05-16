@@ -8,11 +8,12 @@ import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
+import { HistoryMove } from '../../utils/types/history-move/history-move';
 
 export interface GameState {
 	fen: string;
 	previousFen: string;
-	history: string[];
+	history: HistoryMove[];
 	chat: ChatMessage[];
 	gameType: GameType;
 	orientation: Orientation;
@@ -22,6 +23,8 @@ export interface GameState {
 	activeGame: ChessGameType | null;
 	inactiveGames: ChessGameType[];
 	pendingMove: ChessMove | null;
+	receiver: string;
+	loading: boolean;
 	error: string;
 }
 
@@ -41,6 +44,8 @@ const INITIAL_STATE: GameState = {
 	activeGame: null,
 	inactiveGames: [],
 	pendingMove: null,
+	receiver: '',
+	loading: false,
 	error: '',
 };
 
@@ -77,16 +82,35 @@ const gameReducer = produce(
 				state.fen = action.payload;
 				state.error = '';
 				return state;
-			case GameTypes.ACCEPT_GAME_CHALLENGE:
-			case GameTypes.REJECT_GAME_CHALLENGE:
+			case GameTypes.SEND_GAME_CHALLENGE:
+				state.receiver = action.payload;
+				state.loading = true;
+				return state;
+			case GameTypes.ACCEPT_GAME_CHALLENGE_START:
+				state.loading = true;
+				state.receiver = action.payload.uid;
+				state.error = '';
+				return state;
+			case GameTypes.GAME_CHALLENGE_RESPONSE_SUCCESS:
+				state.loading = false;
+				state.receiver = '';
 				state.challengeRequests = state.challengeRequests.filter(
 					(sender) => sender.uid !== action.payload
 				);
+				return state;
+			case GameTypes.REJECT_GAME_CHALLENGE:
+				state.loading = true;
+				state.receiver = action.payload;
+
 				state.error = '';
 				return state;
 			case GameTypes.FETCH_GAME_CHALLENGES_SUCCESS:
 				state.challengeRequests = action.payload;
 				state.error = '';
+				return state;
+			case GameTypes.FETCH_PENDING_CHALLENGES_START:
+				state.receiver = '';
+				state.loading = false;
 				return state;
 			case GameTypes.FETCH_PENDING_CHALLENGES_SUCCESS:
 				state.pendingChallenges = action.payload;
@@ -121,9 +145,14 @@ const gameReducer = produce(
 				state.pendingMove = null;
 				state.error = '';
 				return state;
+			case GameTypes.MAKE_CONFIRMED_MOVE_START:
+				state.loading = true;
+				return state;
 			case GameTypes.OPEN_ACTIVE_GAME_LISTENER:
 			case GameTypes.MAKE_CONFIRMED_MOVE_SUCCESS:
 				state.pendingMove = null;
+				state.receiver = '';
+				state.loading = false;
 				state.error = '';
 				return state;
 			case GameTypes.OPEN_CHAT_LISTENER_SUCCESS:
@@ -131,6 +160,8 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.GAME_ERROR:
 				state.error = action.payload;
+				state.receiver = '';
+				state.loading = false;
 				return state;
 			default:
 				return state;

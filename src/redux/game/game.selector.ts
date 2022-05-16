@@ -61,3 +61,13 @@ export const selectPendingMove = createSelector(
 );
 
 export const selectGameChat = createSelector(selectGame, (game) => game.chat);
+
+export const selectGameLoadingState = createSelector(
+	selectGame,
+	(game) => game.loading
+);
+
+export const selectGameInviteReceiver = createSelector(
+	selectGame,
+	(game) => game.receiver
+);

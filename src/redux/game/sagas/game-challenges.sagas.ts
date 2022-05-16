@@ -13,11 +13,12 @@ import { NotifSender } from '../../../utils/types/notif-sender/notif-sender';
 import { PendingRequest } from '../../../utils/types/pending-request/pending-request';
 import { selectChessUser, selectUserUID } from '../../user/user.selector';
 import {
-	AcceptGameChallengeAction,
+	AcceptGameChallengeStartAction,
 	RejectGameChallengeAction,
 	SendGameChallengeAction,
 } from '../game.action-types';
 import {
+	gameChallengeResponseSuccess,
 	fetchGameChallengesSuccess,
 	fetchPendingChallengesStart,
 	fetchPendingChallengesSuccess,
@@ -80,6 +81,8 @@ export function* rejectGameChallengeAsync({
 			enemyUID,
 			displayName,
 		});
+
+		yield put(gameChallengeResponseSuccess(enemyUID));
 	} catch (err) {
 		yield put(gameError(getErrorMessage(err)));
 	}
@@ -91,7 +94,7 @@ export function* onRejectChallengeRequest() {
 
 export function* acceptGameChallengeAsync({
 	payload: enemy,
-}: AcceptGameChallengeAction) {
+}: AcceptGameChallengeStartAction) {
 	try {
 		const { displayName } = yield select(selectChessUser);
 		yield functions.callFirebaseFunction('acceptChallengeRequest', {
@@ -99,13 +102,18 @@ export function* acceptGameChallengeAsync({
 			enemyDisplayName: enemy.displayName,
 			displayName,
 		});
+
+		yield put(gameChallengeResponseSuccess(enemy.uid));
 	} catch (err) {
 		yield put(gameError(getErrorMessage(err)));
 	}
 }
 
 export function* onAcceptChallengeRequest() {
-	yield takeEvery(GameTypes.ACCEPT_GAME_CHALLENGE, acceptGameChallengeAsync);
+	yield takeEvery(
+		GameTypes.ACCEPT_GAME_CHALLENGE_START,
+		acceptGameChallengeAsync
+	);
 }
 
 export function* sendChallengeRequestAsync({

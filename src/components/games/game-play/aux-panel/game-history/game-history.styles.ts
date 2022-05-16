@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const GameHistoryList = styled.ul`
+export const GameHistoryList = styled.div`
 	width: 95%;
 	place-self: center;
 	margin: 0;

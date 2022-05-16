@@ -7,7 +7,7 @@ const globalStyles = {
 	grey: 'grey',
 	warn: '#c70035',
 	white: '#ebf3ff',
-	border: '#b6babd',
+	border: '#90919f',
 };
 
 export default globalStyles;
