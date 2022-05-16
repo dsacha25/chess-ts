@@ -40,6 +40,13 @@ const AuxiliaryPanel = () => {
 		rejectPendingMove();
 	};
 
+	//// TODO:
+	// * Handle Analysis Page layout
+	// * Seperate Components for
+	// * * ActiveGameControls & InactiveGameControls
+	// * * * *  Inactive controls - Arrows cycling through all moves.
+	// * * * *  Do I need to store each FEN string for every move?
+
 	return (
 		<AuxiliaryPanelContainer>
 			<Title margin="0" fontSize="30px" color="light">

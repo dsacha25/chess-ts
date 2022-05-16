@@ -10,11 +10,19 @@ import { InactiveGamesListItemProps } from './types';
 import { FaChessBoard } from 'react-icons/fa';
 import { GiAchievement } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import Paths from '../../../../utils/types/paths/paths';
 
 const InactiveGameListItem: FC<InactiveGamesListItemProps> = ({ game }) => {
+	const navigate = useNavigate();
+
 	const uid = useSelector((state) => selectUserUID(state));
 	const [oppName, setOppName] = useState('');
 	const [won, setWon] = useState(false);
+
+	const handleAnalyizeGame = () => {
+		navigate(`/${Paths.ANALYSIS}?game=${game.id}`);
+	};
 
 	useEffect(() => {
 		if (uid) {
@@ -54,7 +62,7 @@ const InactiveGameListItem: FC<InactiveGamesListItemProps> = ({ game }) => {
 			) : (
 				<IoClose size="30px" color="#6B001D" />
 			)}
-			<InactiveGameAnalysisButton color="main">
+			<InactiveGameAnalysisButton color="main" onClick={handleAnalyizeGame}>
 				<FaChessBoard size="30px" />
 			</InactiveGameAnalysisButton>
 		</ListItem>
