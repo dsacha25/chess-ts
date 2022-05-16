@@ -44,6 +44,8 @@ const InactiveGamesList = () => {
 			setWins(0);
 			setLosses(0);
 		};
+
+		// eslint-disable-next-line
 	}, []);
 
 	return (
