@@ -22,13 +22,6 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 		if (uid) {
 			setOpponentName(getOpponentName(uid, game));
 		}
-		// if (game.black.uid !== uid) {
-		// 	setOpponentName(game.black.displayName);
-		// }
-
-		// if (game.white.uid !== uid) {
-		// 	setOpponentName(game.white.displayName);
-		// }
 
 		// eslint-disable-next-line
 	}, []);
@@ -43,7 +36,7 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 	return (
 		<ListItem columns={1}>
 			<ListItemText>{opponentName}</ListItemText>
-			<JoinGameButton onClick={handleJoinGame} color="main">
+			<JoinGameButton onClick={handleJoinGame} color="secondary">
 				<FaChessKing size="30px" />
 			</JoinGameButton>
 		</ListItem>

@@ -30,7 +30,7 @@ const secondaryStyles = css`
 	:focus,
 	:hover {
 		color: ${({ theme }) => theme.secondary} !important;
-		background-color: ${({ theme }) => theme.light};
+		background-color: ${({ theme }) => theme.warn}77;
 		border: 2px solid !important;
 	}
 `;

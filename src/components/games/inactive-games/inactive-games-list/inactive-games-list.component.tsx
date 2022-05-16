@@ -5,6 +5,15 @@ import { selectUserUID } from '../../../../redux/user/user.selector';
 import { List } from '../../../common/lists/list/list.styles';
 import Title from '../../../common/title/title.styles';
 import InactiveGameListItem from '../inactive-game-list-item/inactive-game-list-item,component';
+import {
+	GameStats,
+	InactiveGamesStatsContainer,
+	Stat,
+} from './inactive-games-list.styles';
+
+import { FaChessBoard } from 'react-icons/fa';
+import { GiAchievement } from 'react-icons/gi';
+import { IoClose } from 'react-icons/io5';
 
 const InactiveGamesList = () => {
 	const uid = useSelector((state) => selectUserUID(state));
@@ -50,10 +59,20 @@ const InactiveGamesList = () => {
 
 	return (
 		<List>
-			<Title fontSize="30px">Inactive Games</Title>
-			<p>
-				#: {total} W: {wins} L: {losses}
-			</p>
+			<InactiveGamesStatsContainer>
+				<Title fontSize="30px">Inactive Games</Title>
+				<GameStats>
+					<Stat>
+						<FaChessBoard size="25px" /> {total}
+					</Stat>
+					<Stat>
+						<GiAchievement size="25px" /> {wins}
+					</Stat>
+					<Stat>
+						<IoClose size="30px" /> {losses}
+					</Stat>
+				</GameStats>
+			</InactiveGamesStatsContainer>
 			{inactiveGames.map((inactiveGame, i) => (
 				<InactiveGameListItem key={i} game={inactiveGame} />
 			))}
