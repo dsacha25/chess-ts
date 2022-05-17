@@ -1,4 +1,5 @@
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
+import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
@@ -39,6 +40,7 @@ import {
 	SetGameHistoryAction,
 	SetGameTypeAction,
 	SetOrientationAction,
+	SetChatUsersAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 
@@ -214,6 +216,11 @@ export const openChatListenerSuccess = (
 ): FetchChatSuccessAction => ({
 	type: GameTypes.OPEN_CHAT_LISTENER_SUCCESS,
 	payload: chatMessages,
+});
+
+export const setChatUsers = (chatUsers: ChatUsers): SetChatUsersAction => ({
+	type: GameTypes.SET_CHAT_USERS,
+	payload: chatUsers,
 });
 
 export const chatError = (message: string): ChatErrorAction => ({

@@ -1,6 +1,7 @@
 import { Move } from 'chess.js';
 import ChessGame from '../../utils/classes/chess-game/chess-game';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
+import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
@@ -157,6 +158,11 @@ export interface FetchChatSuccessAction {
 	payload: ChatMessage[];
 }
 
+export interface SetChatUsersAction {
+	type: GameTypes.SET_CHAT_USERS;
+	payload: ChatUsers;
+}
+
 export interface ChatErrorAction {
 	type: GameTypes.CHAT_FAILURE;
 	payload: string;
@@ -199,6 +205,7 @@ type GameActions =
 	| SendChatMessageSuccessAction
 	| FetchChatStartAction
 	| FetchChatSuccessAction
+	| SetChatUsersAction
 	| ChatErrorAction
 	| GameErrorAction;
 

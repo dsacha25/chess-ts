@@ -8,8 +8,12 @@ import React, {
 } from 'react';
 import useActions from '../../../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../../../hooks/use-selector/use-typed-selector.hook';
-import { selectGameChat } from '../../../../../../redux/game/game.selector';
+import {
+	selectChatUsers,
+	selectGameChat,
+} from '../../../../../../redux/game/game.selector';
 import { selectUserUID } from '../../../../../../redux/user/user.selector';
+import parseChatUserPhotoURL from '../../../../../../utils/helpers/parsers/parse-chat-user-photo-url/parse-chat-user-photo-url';
 import ChatMessage from '../chat-message/chat-message.component';
 import {
 	ChatForm,
@@ -22,6 +26,7 @@ import {
 const GameChat = () => {
 	const chat = useSelector((state) => selectGameChat(state));
 	const uid = useSelector((state) => selectUserUID(state));
+	const chatUsers = useSelector((state) => selectChatUsers(state));
 
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const messagesRef = useRef<HTMLDivElement>(null);
@@ -87,7 +92,7 @@ const GameChat = () => {
 						sender={uid === chatMsg.uid}
 						messages={chatMsg.message}
 						createdAt={chatMsg.createdAt}
-						photoURL={chatMsg.photoURL}
+						photoURL={parseChatUserPhotoURL(chatMsg, chatUsers)}
 					/>
 				))}
 			</ChatMessages>

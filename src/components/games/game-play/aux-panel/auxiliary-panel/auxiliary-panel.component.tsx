@@ -81,13 +81,9 @@ const AuxiliaryPanel = () => {
 			</PanelControlsContainer>
 			{pendingMove && (
 				<ConfirmMoveContainer>
-					{loading ? (
-						<Spinner size="30px" />
-					) : (
-						<ConfirmMoveButton onClick={handleConfirmMove} color="main">
-							<FiCheck size="30px" />
-						</ConfirmMoveButton>
-					)}
+					<ConfirmMoveButton onClick={handleConfirmMove} color="main">
+						{loading ? <Spinner size="40px" /> : <FiCheck size="30px" />}
+					</ConfirmMoveButton>
 					<RejectMoveButton onClick={handleRejectMove} color="secondary">
 						<IoClose size="30px" />
 					</RejectMoveButton>

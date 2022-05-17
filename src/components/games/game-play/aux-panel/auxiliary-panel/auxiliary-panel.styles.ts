@@ -29,16 +29,11 @@ export const PanelInfoContainer = styled.div`
 	display: grid;
 	width: 100%;
 	height: 100%;
-	max-height: 460px;
 	border-radius: 20px;
 	overflow-y: auto;
 
 	border-top: 1px solid ${({ theme }) => theme.main};
 	border-bottom: 1px solid ${({ theme }) => theme.main};
-	/* border-left: 1px solid ${({ theme }) => theme.main}55;
-	border-right: 1px solid ${({ theme }) => theme.main}55; */
-
-	/* background-color: ${({ theme }) => theme.white}aa; */
 `;
 
 export const PanelControlsContainer = styled.div`

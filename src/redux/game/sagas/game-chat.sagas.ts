@@ -17,6 +17,7 @@ import {
 	ChatMessageServer,
 } from '../../../utils/types/chat-message/chat-message';
 import { ChatMessages } from '../../../utils/types/chat-messages/chat-messages';
+import { ChatUsers } from '../../../utils/types/chat-users/chat-users';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { selectProfilePicture, selectUserUID } from '../../user/user.selector';
 import { SendChatMessageStartAction } from '../game.action-types';
@@ -24,6 +25,7 @@ import {
 	chatError,
 	openChatListenerSuccess,
 	sendChatMessageSuccess,
+	setChatUsers,
 } from '../game.actions';
 import { selectActiveGame } from '../game.selector';
 import { GameTypes } from '../game.types';
@@ -37,13 +39,17 @@ export function* getChatMessages(
 	let receiver: ChatMessages | undefined = find(chat, (msg) => msg.uid !== uid);
 	let senderMsgs: ChatMessageServer[] = [];
 	let receiverMsgs: ChatMessageServer[] = [];
+	let chatUsers: ChatUsers = {};
+
 	if (sender) {
 		// manage sender messages
 		senderMsgs = sender.messages;
+		chatUsers.sender = { photoURL: sender.photoURL, uid: sender.uid };
 	}
 	if (receiver) {
 		// manage receiver messages
 		receiverMsgs = receiver.messages;
+		chatUsers.receiver = { photoURL: receiver.photoURL, uid: receiver.uid };
 	}
 
 	const allMessages = orderBy(
@@ -80,6 +86,7 @@ export function* getChatMessages(
 	console.log('SORTED CHAT: ', chatSorted);
 	console.log('ALL CHAT: ', allMessages);
 
+	yield put(setChatUsers(chatUsers));
 	yield put(openChatListenerSuccess(chatSorted));
 }
 
@@ -132,6 +139,7 @@ export function* sendMessageAsync({
 				messages: [chatMessage],
 				photoURL,
 				uid,
+				unread: true,
 			});
 
 			if (err) {

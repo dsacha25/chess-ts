@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const GameHistoryList = styled.div`
+	height: 100%;
 	width: 95%;
 	place-self: center;
 	margin: 0;

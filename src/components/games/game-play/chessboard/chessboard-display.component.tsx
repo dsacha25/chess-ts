@@ -27,11 +27,11 @@ const ChessboardDisplay = () => {
 	const location = useLocation();
 
 	const activeGame = useSelector((state) => selectActiveGame(state));
-
 	const uid = useSelector((state) => selectUserUID(state));
 	const gameType = useSelector((state) => selectGameType(state));
 	const fen = useSelector((state) => selectFen(state));
 	const orientation = useSelector((state) => selectOrientation(state));
+
 	const {
 		movePiece,
 		clearActiveGame,
@@ -48,8 +48,8 @@ const ChessboardDisplay = () => {
 	}>({});
 
 	const [selectedSquare, setSelectedSquare] = useState<Square>();
-
 	const [gameOver, setGameOver] = useState(game.isGameOver(fen));
+	const boardSize = 700;
 
 	useEffect(() => {
 		if (activeGame) {
@@ -206,7 +206,7 @@ const ChessboardDisplay = () => {
 	};
 
 	return (
-		<BoardContainer>
+		<BoardContainer size={boardSize}>
 			<OpponentContainer>
 				<OpponentChip />
 			</OpponentContainer>
@@ -220,7 +220,7 @@ const ChessboardDisplay = () => {
 				onDrop={onDrop}
 				squareStyles={squareStyles}
 				orientation={orientation}
-				width={600}
+				width={boardSize}
 			/>
 			{gameOver && (
 				<GameOverDisplay>

@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export const BoardContainer = styled.div`
+interface BoardProps {
+	size: number;
+}
+
+export const BoardContainer = styled.div<BoardProps>`
 	display: grid;
 	position: relative;
 	place-items: center;
@@ -9,7 +13,7 @@ export const BoardContainer = styled.div`
 	justify-self: center;
 	grid-gap: 5px;
 
-	grid-template-rows: auto 600px auto;
+	grid-template-rows: auto ${({ size }) => size}px auto;
 `;
 
 export const CustomButton = styled.button`

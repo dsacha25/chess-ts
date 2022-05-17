@@ -71,3 +71,8 @@ export const selectGameInviteReceiver = createSelector(
 	selectGame,
 	(game) => game.receiver
 );
+
+export const selectChatUsers = createSelector(
+	selectGame,
+	(game) => game.chatUsers
+);
