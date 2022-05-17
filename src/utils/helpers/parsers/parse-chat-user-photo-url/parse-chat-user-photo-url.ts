@@ -5,10 +5,15 @@ const parseChatUserPhotoURL = (
 	chatMsg: ChatMessage,
 	chatUsers: ChatUsers
 ): string => {
-	if (!chatUsers || !chatUsers.receiver || !chatUsers.sender) return '';
-	return chatMsg.uid === chatUsers.receiver.uid
-		? chatUsers.receiver.photoURL
-		: chatUsers.sender.photoURL;
+	if (!chatUsers) return '';
+	console.log('chat users: ', chatUsers);
+	if (chatUsers.receiver && chatMsg.uid === chatUsers.receiver.uid) {
+		return chatUsers.receiver.photoURL;
+	} else if (chatUsers.sender && chatMsg.uid === chatUsers.sender.uid) {
+		return chatUsers.sender.photoURL;
+	} else {
+		return '';
+	}
 };
 
 export default parseChatUserPhotoURL;

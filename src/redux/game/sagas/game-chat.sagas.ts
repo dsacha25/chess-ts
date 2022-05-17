@@ -120,7 +120,6 @@ export function* sendMessageAsync({
 
 		const chatMessage: ChatMessage = {
 			uid,
-			photoURL,
 			message: [message],
 			createdAt: new Date(),
 		};
