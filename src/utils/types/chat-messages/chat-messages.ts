@@ -4,4 +4,5 @@ export interface ChatMessages {
 	messages: ChatMessageServer[];
 	photoURL: string;
 	uid: string;
+	unread: boolean;
 }

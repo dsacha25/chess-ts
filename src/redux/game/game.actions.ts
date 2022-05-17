@@ -41,6 +41,8 @@ import {
 	SetGameTypeAction,
 	SetOrientationAction,
 	SetChatUsersAction,
+	SetChatUnreadStateAction,
+	ReadChatMessaageAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 
@@ -221,6 +223,17 @@ export const openChatListenerSuccess = (
 export const setChatUsers = (chatUsers: ChatUsers): SetChatUsersAction => ({
 	type: GameTypes.SET_CHAT_USERS,
 	payload: chatUsers,
+});
+
+export const setChatUnreadState = (
+	unread: boolean
+): SetChatUnreadStateAction => ({
+	type: GameTypes.SET_CHAT_UNREAD_STATE,
+	payload: unread,
+});
+
+export const readChatMessage = (): ReadChatMessaageAction => ({
+	type: GameTypes.READ_CHAT_MESSAGE,
 });
 
 export const chatError = (message: string): ChatErrorAction => ({

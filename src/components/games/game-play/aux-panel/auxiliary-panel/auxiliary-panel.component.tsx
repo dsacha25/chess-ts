@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Title from '../../../../common/title/title.styles';
 import {
 	AuxiliaryPanelContainer,
@@ -13,6 +13,7 @@ import {
 import { BiMessage } from 'react-icons/bi';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import {
+	selectChatUnread,
 	selectGameLoadingState,
 	selectPendingMove,
 	selectTurns,
@@ -25,32 +26,70 @@ import { FiCheck } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { FaChessBishop } from 'react-icons/fa';
 import Spinner from '../../../../common/spinner/spinner.component';
+import { NotifButtonFlag } from '../../../../notifications/notification-flag/notification-flag.styles';
+import { AuxActions } from './types';
 
 const AuxiliaryPanel = () => {
 	const history = useSelector((state) => selectTurns(state));
 	const pendingMove = useSelector((state) => selectPendingMove(state));
 	const index = useSelector((state) => selectAuxPanelIndex(state));
 	const loading = useSelector((state) => selectGameLoadingState(state));
+	const chatUnread = useSelector((state) => selectChatUnread(state));
 
+	const [action, setAction] = useState<AuxActions>(AuxActions.MOVE);
 	const historyRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		if (historyRef.current) {
 			historyRef.current.scrollTop = historyRef.current.scrollHeight;
-			console.log('ref:', historyRef.current.scrollHeight);
 		}
 	}, [historyRef]);
 
-	const { makeConfirmedMoveStart, rejectPendingMove, setAuxPanelIndex } =
-		useActions();
+	const {
+		makeConfirmedMoveStart,
+		rejectPendingMove,
+		setAuxPanelIndex,
+		openChatListenerStart,
+		readChatMessage,
+	} = useActions();
 
-	const handleConfirmMove = () => {
-		makeConfirmedMoveStart();
+	const handleConfirmAction = () => {
+		switch (action) {
+			case AuxActions.MOVE:
+			default:
+				return makeConfirmedMoveStart();
+		}
 	};
 
-	const handleRejectMove = () => {
-		rejectPendingMove();
+	const handleRejectAction = () => {
+		switch (action) {
+			case AuxActions.MOVE:
+			default:
+				return rejectPendingMove();
+		}
 	};
+
+	const handlePanelToggle = () => {
+		setAuxPanelIndex(!index);
+
+		if (!index && chatUnread) {
+			readChatMessage();
+		}
+	};
+
+	useEffect(() => {
+		openChatListenerStart();
+
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		if (index && chatUnread) {
+			readChatMessage();
+		}
+
+		// eslint-disable-next-line
+	}, [index, chatUnread]);
 
 	//// TODO:
 	// * Handle Analysis Page layout
@@ -71,20 +110,17 @@ const AuxiliaryPanel = () => {
 			<PanelControlsContainer>
 				<PanelButton color="warn">Resign</PanelButton>
 				<PanelButton color="light">Draw</PanelButton>
-				<PanelButton
-					color="light"
-					onClick={() => setAuxPanelIndex(!index)}
-					inverted
-				>
+				<PanelButton color="light" onClick={handlePanelToggle} inverted>
+					{!index && chatUnread && <NotifButtonFlag unread={chatUnread} />}
 					{index ? <FaChessBishop size="55%" /> : <BiMessage size="60%" />}
 				</PanelButton>
 			</PanelControlsContainer>
 			{pendingMove && (
 				<ConfirmMoveContainer>
-					<ConfirmMoveButton onClick={handleConfirmMove} color="main">
+					<ConfirmMoveButton onClick={handleConfirmAction} color="main">
 						{loading ? <Spinner size="40px" /> : <FiCheck size="30px" />}
 					</ConfirmMoveButton>
-					<RejectMoveButton onClick={handleRejectMove} color="secondary">
+					<RejectMoveButton onClick={handleRejectAction} color="secondary">
 						<IoClose size="30px" />
 					</RejectMoveButton>
 				</ConfirmMoveContainer>

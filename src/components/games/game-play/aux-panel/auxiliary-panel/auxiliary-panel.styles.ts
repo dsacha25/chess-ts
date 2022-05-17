@@ -66,6 +66,7 @@ export const PanelButton = styled(CustomButton)`
 	svg {
 		margin-top: 2px;
 	}
+	position: relative;
 `;
 
 export const ConfirmMoveContainer = styled.div`

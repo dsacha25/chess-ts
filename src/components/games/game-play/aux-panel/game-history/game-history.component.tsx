@@ -9,8 +9,6 @@ import {
 import { GameHistoryProps } from './types';
 
 const GameHistory: FC<GameHistoryProps> = ({ history }) => {
-	console.log('HISTORY: ', history);
-
 	return (
 		<GameHistoryList>
 			{history.map((move, i) => (

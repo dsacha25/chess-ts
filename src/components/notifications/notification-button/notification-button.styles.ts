@@ -27,10 +27,3 @@ export const NotifButton = styled(CustomButton)`
 
 	margin: 0;
 `;
-
-export const NotifButtonFlag = styled(NotificationFlag)`
-	position: absolute;
-	top: -4px;
-	right: -4px;
-	z-index: 1;
-`;

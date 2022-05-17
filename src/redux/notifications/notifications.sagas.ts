@@ -58,12 +58,14 @@ export function* onReadNotification() {
 }
 
 export function* getNotifications(notifications: Notification[]) {
+	let fetchedGames = false;
 	for (const notification of notifications) {
 		if (notification.unread) {
 			yield put(addUnreadNotification(notification));
 
-			if (notification.type === 'players_turn') {
+			if (notification.type === 'players_turn' && !fetchedGames) {
 				yield put(fetchActiveGamesStart());
+				fetchedGames = true;
 			}
 		} else {
 			yield put(addReadNotification(notification));

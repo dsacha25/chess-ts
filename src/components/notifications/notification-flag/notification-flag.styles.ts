@@ -10,3 +10,10 @@ export const NotificationFlag = styled.div<NotifFlagProps>`
 
 	background-color: ${({ theme, unread }) => (unread ? theme.warn : 'none')};
 `;
+
+export const NotifButtonFlag = styled(NotificationFlag)`
+	position: absolute;
+	top: -4px;
+	right: -4px;
+	z-index: 1;
+`;

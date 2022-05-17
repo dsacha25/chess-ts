@@ -25,10 +25,31 @@ import {
 	chatError,
 	openChatListenerSuccess,
 	sendChatMessageSuccess,
+	setChatUnreadState,
 	setChatUsers,
 } from '../game.actions';
 import { selectActiveGame } from '../game.selector';
 import { GameTypes } from '../game.types';
+
+export function* readChatMessageAsync(): Generator | SelectEffect {
+	try {
+		const uid: string = yield select(selectUserUID);
+		const game: ChessGameType = yield select(selectActiveGame);
+		const enemyUID = game.black.uid === uid ? game.white.uid : game.black.uid;
+
+		yield db
+			.update(`games/${game.id}/chat`, enemyUID, { unread: false })
+			.catch((err) => console.log('Unable to read chat message', err));
+
+		yield put(setChatUnreadState(false));
+	} catch (err) {
+		yield put(chatError(getErrorMessage(err)));
+	}
+}
+
+export function* onReadChatMessage() {
+	yield takeEvery(GameTypes.READ_CHAT_MESSAGE, readChatMessageAsync);
+}
 
 export function* getChatMessages(
 	chat: ChatMessages[]
@@ -50,6 +71,9 @@ export function* getChatMessages(
 		// manage receiver messages
 		receiverMsgs = receiver.messages;
 		chatUsers.receiver = { photoURL: receiver.photoURL, uid: receiver.uid };
+		console.log('receiver: ', receiver);
+
+		yield put(setChatUnreadState(receiver.unread));
 	}
 
 	const allMessages = orderBy(
@@ -129,6 +153,7 @@ export function* sendMessageAsync({
 
 		const error = yield db.update(`games/${game.id}/chat`, uid, {
 			messages: arrayUnion(chatMessage),
+			unread: true,
 		});
 
 		console.log('error:', error);
@@ -157,5 +182,9 @@ export function* onSendChatMessage() {
 }
 
 export function* gameChatSagas() {
-	yield all([call(onSendChatMessage), call(onOpenChatListener)]);
+	yield all([
+		call(onSendChatMessage),
+		call(onOpenChatListener),
+		call(onReadChatMessage),
+	]);
 }

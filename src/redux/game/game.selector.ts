@@ -76,3 +76,8 @@ export const selectChatUsers = createSelector(
 	selectGame,
 	(game) => game.chatUsers
 );
+
+export const selectChatUnread = createSelector(
+	selectGame,
+	(game) => game.chatUnread
+);

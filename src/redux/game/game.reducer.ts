@@ -17,6 +17,7 @@ export interface GameState {
 	history: HistoryMove[];
 	chat: ChatMessage[];
 	chatUsers: ChatUsers;
+	chatUnread: boolean;
 	gameType: GameType;
 	orientation: Orientation;
 	challengeRequests: NotifSender[];
@@ -39,6 +40,7 @@ const INITIAL_STATE: GameState = {
 	history: [],
 	chat: [],
 	chatUsers: {},
+	chatUnread: false,
 	gameType: 'solo',
 	orientation: 'white',
 	challengeRequests: [],
@@ -163,6 +165,9 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.SET_CHAT_USERS:
 				state.chatUsers = action.payload;
+				return state;
+			case GameTypes.SET_CHAT_UNREAD_STATE:
+				state.chatUnread = action.payload;
 				return state;
 			case GameTypes.GAME_ERROR:
 				state.error = action.payload;

@@ -31,7 +31,7 @@ const GameChat = () => {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const messagesRef = useRef<HTMLDivElement>(null);
 
-	const { sendChatMessageStart, openChatListenerStart } = useActions();
+	const { sendChatMessageStart } = useActions();
 
 	const [message, setMessage] = useState('');
 	const [inputEnabled, setInputEnabled] = useState(true);
@@ -70,12 +70,6 @@ const GameChat = () => {
 
 		setMessage('');
 	};
-
-	useEffect(() => {
-		openChatListenerStart();
-
-		// eslint-disable-next-line
-	}, []);
 
 	useEffect(() => {
 		if (messagesRef.current) {

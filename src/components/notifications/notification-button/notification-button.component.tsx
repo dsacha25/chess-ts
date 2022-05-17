@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
 	NotifButton,
-	NotifButtonFlag,
 	NotificationButtonContainer,
 } from './notification-button.styles';
 
@@ -10,6 +9,7 @@ import NotificationsWindow from '../notifications-window/notifications-window.co
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectUnreadNotifications } from '../../../redux/notifications/notifications.selector';
 import { ClickAwayListener } from '@mui/material';
+import { NotifButtonFlag } from '../notification-flag/notification-flag.styles';
 
 const NotificationButton = () => {
 	const unreadNotifs = useSelector((state) => selectUnreadNotifications(state));

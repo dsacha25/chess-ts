@@ -163,6 +163,15 @@ export interface SetChatUsersAction {
 	payload: ChatUsers;
 }
 
+export interface SetChatUnreadStateAction {
+	type: GameTypes.SET_CHAT_UNREAD_STATE;
+	payload: boolean;
+}
+
+export interface ReadChatMessaageAction {
+	type: GameTypes.READ_CHAT_MESSAGE;
+}
+
 export interface ChatErrorAction {
 	type: GameTypes.CHAT_FAILURE;
 	payload: string;
@@ -206,6 +215,8 @@ type GameActions =
 	| FetchChatStartAction
 	| FetchChatSuccessAction
 	| SetChatUsersAction
+	| SetChatUnreadStateAction
+	| ReadChatMessaageAction
 	| ChatErrorAction
 	| GameErrorAction;
 
