@@ -6,7 +6,7 @@ import {
 	toDate,
 } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, memo, useEffect, useState } from 'react';
 import formatTimestamp from '../../../../../../utils/helpers/strings/format-timestamp/format-timestamp';
 import {
 	ChatAvatar,
@@ -41,4 +41,4 @@ const ChatMessage: FC<ChatMessageProps> = (props) => {
 	);
 };
 
-export default ChatMessage;
+export default memo(ChatMessage);

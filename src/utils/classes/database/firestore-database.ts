@@ -93,7 +93,10 @@ export class FirestoreDatabase implements Database {
 		this.setCollection(collectionName);
 		let pendingQuery = query<T>(this.collection, ...queryContstraints);
 
-		const snapshot = await getDocs(pendingQuery);
+		const snapshot = await getDocs(pendingQuery).catch((err) => {
+			console.log('Firebase Error: ', err, ' Name: ', collectionName);
+			return err;
+		});
 
 		return this.convertSnapshot<T>(snapshot, true);
 	}
@@ -105,7 +108,11 @@ export class FirestoreDatabase implements Database {
 		this.setCollection(collectionName);
 		let pendingQuery = query<T>(this.collection, ...queryContstraints);
 
-		const snapshot = await getDocs<T>(pendingQuery);
+		const snapshot = await getDocs<T>(pendingQuery).catch((err) => {
+			console.log('Firebase Error: ', err);
+			return err;
+		});
+
 		const docs = snapshot.docs;
 
 		const startRef = docs[0].ref;

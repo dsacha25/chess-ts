@@ -1,4 +1,5 @@
 import { orderBy, where } from 'firebase/firestore';
+import { differenceWith, isEqual } from 'lodash';
 import { EventChannel } from 'redux-saga';
 import {
 	all,
@@ -24,6 +25,7 @@ import {
 	addUnreadNotification,
 	notificationError,
 } from './notifications.actions';
+import { selectAllNotifications } from './notifications.selector';
 import { NotificationTypes } from './notifications.types';
 
 export function* deleteNotificationAsync({
@@ -57,13 +59,25 @@ export function* onReadNotification() {
 	yield takeEvery(NotificationTypes.READ_NOTIFICATION, markNotificationAsRead);
 }
 
-export function* getNotifications(notifications: Notification[]) {
+export function* getNotifications(
+	notifications: Notification[]
+): Generator | SelectEffect {
+	const allNotifications = yield select(selectAllNotifications);
+
+	const difference = differenceWith(notifications, allNotifications, isEqual);
+
+	console.log('DIFFERENCE: ', difference);
+
+	if (difference.length === 0) {
+		return;
+	}
+
 	let fetchedGames = false;
 	for (const notification of notifications) {
 		if (notification.unread) {
 			yield put(addUnreadNotification(notification));
 
-			if (notification.type === 'players_turn' && !fetchedGames) {
+			if (notification.type === 'opponent_moved' && !fetchedGames) {
 				yield put(fetchActiveGamesStart());
 				fetchedGames = true;
 			}
@@ -80,7 +94,7 @@ export function* openNotificationListener(): Generator | SelectEffect {
 		const notificationsChannel: EventChannel<unknown> =
 			yield listener.generateCollectionListener(
 				'notifications',
-				where('reciever', '==', uid),
+				where('receiver', '==', uid),
 				orderBy('createdAt')
 			);
 

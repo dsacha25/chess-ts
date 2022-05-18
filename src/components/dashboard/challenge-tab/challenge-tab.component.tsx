@@ -5,6 +5,7 @@ import {
 	ButtonsContainer,
 	ChallengeButton,
 	ChallengesContainer,
+	ListsContainer,
 } from './challenge-tab.styles';
 import Paths from '../../../utils/types/paths/paths';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
@@ -46,9 +47,11 @@ const ChallengeTab = () => {
 				</ChallengeButton>
 			</ButtonsContainer>
 			Challenge Someone to a Game
-			<ChallengesList />
-			<ActiveGamesList />
-			<InactiveGamesList />
+			<ListsContainer>
+				<ChallengesList />
+				<ActiveGamesList />
+				<InactiveGamesList />
+			</ListsContainer>
 		</ChallengesContainer>
 	);
 };

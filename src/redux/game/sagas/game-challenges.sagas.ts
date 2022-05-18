@@ -23,6 +23,7 @@ import {
 	fetchPendingChallengesStart,
 	fetchPendingChallengesSuccess,
 	gameError,
+	fetchActiveGamesStart,
 } from '../game.actions';
 import { GameTypes } from '../game.types';
 
@@ -104,6 +105,7 @@ export function* acceptGameChallengeAsync({
 		});
 
 		yield put(gameChallengeResponseSuccess(enemy.uid));
+		yield put(fetchActiveGamesStart());
 	} catch (err) {
 		yield put(gameError(getErrorMessage(err)));
 	}

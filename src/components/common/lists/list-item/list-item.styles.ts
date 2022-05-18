@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export interface ListItemProps {
 	columns?: number;
+	width?: string;
 }
 
 export const ListItem = styled.li<ListItemProps>`
@@ -12,7 +13,7 @@ export const ListItem = styled.li<ListItemProps>`
 
 	grid-template-columns: 1fr repeat(
 			${({ columns }) => (columns ? columns : 2)},
-			100px
+			${({ width }) => (width ? width : '100px')}
 		);
 
 	border: 1px solid ${({ theme }) => theme.border};
@@ -22,5 +23,5 @@ export const ListItem = styled.li<ListItemProps>`
 	place-items: center flex-start;
 
 	padding: 4px;
-	grid-gap: 10px;
+	grid-gap: 20px;
 `;

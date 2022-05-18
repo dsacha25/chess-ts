@@ -25,6 +25,7 @@ import {
 	gameError,
 	makeConfirmedMoveSuccess,
 	openActiveGameListener,
+	setActiveGame,
 	setFen,
 	setGameHistory,
 	setOrientation,
@@ -122,7 +123,7 @@ export function* onMakeConfirmedMove() {
 	yield takeEvery(GameTypes.MAKE_CONFIRMED_MOVE_START, makeConfirmedMoveAsync);
 }
 
-export function* setActiveGame({
+export function* setActiveGameAsync({
 	payload: game,
 }: SetActiveGameAction): Generator | SelectEffect {
 	const uid = yield select(selectUserUID);
@@ -137,7 +138,7 @@ export function* setActiveGame({
 }
 
 export function* onSetActiveGame() {
-	yield takeEvery(GameTypes.SET_ACTIVE_GAME, setActiveGame);
+	yield takeEvery(GameTypes.SET_ACTIVE_GAME, setActiveGameAsync);
 }
 
 export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
@@ -147,6 +148,9 @@ export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
+	// if (game.id) {
+	// 	yield put(setActiveGame(game));
+	// }
 }
 
 export function* openActiveGameListenerAsync(): Generator | SelectEffect {

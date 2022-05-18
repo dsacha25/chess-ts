@@ -7,12 +7,12 @@ export const NotificationsContainer = styled.div`
 	place-content: flex-start stretch;
 	border-radius: 25px;
 
+	padding: 5px;
+
 	color: black;
 
 	background-color: ${({ theme }) => theme.white};
 	border: 2px solid ${({ theme }) => theme.main};
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 4px;
 
 	position: absolute;
 

@@ -4,7 +4,10 @@ import { selectUserUID } from '../../../../redux/user/user.selector';
 import getOpponentName from '../../../../utils/helpers/strings/get-opponent-name/get-opponent-name';
 import { ListItemText } from '../../../common/lists/list-item-text/list-item-text.styles';
 import { ListItem } from '../../../common/lists/list-item/list-item.styles';
-import { InactiveGameAnalysisButton } from './inactive-game-list-item.styles';
+import {
+	GameDate,
+	InactiveGameAnalysisButton,
+} from './inactive-game-list-item.styles';
 import { InactiveGamesListItemProps } from './types';
 
 import { FaChessBoard } from 'react-icons/fa';
@@ -12,6 +15,7 @@ import { GiAchievement } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import Paths from '../../../../utils/types/paths/paths';
+import formatTimestamp from '../../../../utils/helpers/strings/format-timestamp/format-timestamp';
 
 const InactiveGameListItem: FC<InactiveGamesListItemProps> = ({ game }) => {
 	const navigate = useNavigate();
@@ -55,8 +59,11 @@ const InactiveGameListItem: FC<InactiveGamesListItemProps> = ({ game }) => {
 	// * Display screenshot of final board position
 
 	return (
-		<ListItem columns={2}>
+		<ListItem columns={3} width="auto">
 			<ListItemText>{oppName}</ListItemText>
+			<GameDate>
+				{formatTimestamp(game.createdAt, 'MM/dd/yy | hh:mmaaa')}
+			</GameDate>
 			{won ? (
 				<GiAchievement size="30px" color="#091e3b" />
 			) : (

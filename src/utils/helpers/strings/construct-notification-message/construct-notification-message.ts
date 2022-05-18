@@ -8,16 +8,17 @@ const constructNotifMessage = (
 	switch (notificationType) {
 		case 'enemy_request':
 			return `${sender.displayName} wants to be your enemy`;
-		case 'game_invite':
+		case 'challenge':
 			return `${sender.displayName} has challenged you to a game!`;
-		case 'players_turn':
+		case 'opponent_moved':
 			return `It's your turn against ${sender.displayName}`;
 		case 'request_accepted':
 			return `${sender.displayName} is now your enemy!`;
-		case 'game_invite_accepted':
+		case 'challenge_accepted':
 			return `${sender.displayName} has accepted your challenge. PREPARE FOR BATTLE!`;
+
 		default:
-			return 'New notification';
+			return `New notification from ${sender.displayName} - ${notificationType}`;
 	}
 };
 

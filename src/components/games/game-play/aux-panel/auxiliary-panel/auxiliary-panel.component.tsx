@@ -118,6 +118,14 @@ const AuxiliaryPanel = () => {
 		// eslint-disable-next-line
 	}, [index, chatUnread]);
 
+	useEffect(() => {
+		if (pendingMove) {
+			setOpen(true);
+		} else {
+			setOpen(false);
+		}
+	}, [pendingMove]);
+
 	//// TODO:
 	// * Handle Analysis Page layout
 	// * Seperate Components for
@@ -156,17 +164,17 @@ const AuxiliaryPanel = () => {
 					{index ? <FaChessBishop size="55%" /> : <BiMessage size="60%" />}
 				</PanelButton>
 			</PanelControlsContainer>
-			{pendingMove ||
-				(open && (
-					<ConfirmActionContainer>
-						<ConfirmActionButton onClick={handleConfirmAction} color="main">
-							{loading ? <Spinner size="40px" /> : <FiCheck size="30px" />}
-						</ConfirmActionButton>
-						<RejectActionButton onClick={handleRejectAction} color="secondary">
-							<IoClose size="30px" />
-						</RejectActionButton>
-					</ConfirmActionContainer>
-				))}
+
+			{open && (
+				<ConfirmActionContainer>
+					<ConfirmActionButton onClick={handleConfirmAction} color="main">
+						{loading ? <Spinner size="40px" /> : <FiCheck size="30px" />}
+					</ConfirmActionButton>
+					<RejectActionButton onClick={handleRejectAction} color="secondary">
+						<IoClose size="30px" />
+					</RejectActionButton>
+				</ConfirmActionContainer>
+			)}
 		</AuxiliaryPanelContainer>
 	);
 };

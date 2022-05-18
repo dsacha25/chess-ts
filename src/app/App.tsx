@@ -16,12 +16,14 @@ import PlayPage from '../pages/play-page/play-page.component';
 import AnalysisPage from '../pages/analysis-page/analysis-page.component';
 
 function App() {
-	const { checkUserSession, openNotificationListener } = useActions();
+	const { checkUserSession, openNotificationListener, getChessUserStart } =
+		useActions();
 	const auth = useSelector((state) => selectUserAuth(state));
 
 	useEffect(() => {
 		// if (!auth) {
 		checkUserSession();
+		getChessUserStart();
 
 		// eslint-disable-next-line
 	}, [auth]);

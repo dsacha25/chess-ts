@@ -8,3 +8,7 @@ export const InactiveGameAnalysisButton = styled(CustomButton)`
 	margin: 0;
 	place-content: center;
 `;
+
+export const GameDate = styled.p`
+	color: ${({ theme }) => theme.main};
+`;

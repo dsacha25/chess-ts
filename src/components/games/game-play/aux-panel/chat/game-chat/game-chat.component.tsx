@@ -65,7 +65,7 @@ const GameChat = () => {
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
+		if (message === '') return;
 		sendChatMessageStart(message);
 
 		setMessage('');

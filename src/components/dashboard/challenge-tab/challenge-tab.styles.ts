@@ -30,3 +30,13 @@ export const ChallengeButton = styled(CustomButton)`
 
 	border-radius: 30px;
 `;
+
+export const ListsContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	max-height: 63vh;
+
+	overflow-y: scroll;
+`;

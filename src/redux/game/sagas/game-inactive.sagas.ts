@@ -1,4 +1,4 @@
-import { where } from 'firebase/firestore';
+import { orderBy, where } from 'firebase/firestore';
 import {
 	all,
 	call,
@@ -23,8 +23,10 @@ export function* fetchInactiveGamesAsync(): Generator | SelectEffect {
 		>(
 			'games',
 			where('users', 'array-contains', uid),
-			where('gameOver', '==', true)
+			where('gameOver', '==', true),
+			orderBy('createdAt', 'desc')
 		);
+
 		console.log('Inactive Games: ', inactiveGames);
 
 		yield put(fetchInactiveGamesSuccess(inactiveGames));

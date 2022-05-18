@@ -33,10 +33,12 @@ export const WhiteMove = styled.p`
 	font-weight: 600;
 	border-left: 1px solid grey;
 	width: 100%;
+	padding-left: 5px;
 `;
 
 export const BlackMove = styled.p`
 	font-weight: 600;
 	border-left: 1px solid grey;
 	width: 100%;
+	padding-left: 5px;
 `;

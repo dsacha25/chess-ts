@@ -48,7 +48,7 @@ const ChessboardDisplay = () => {
 	}>({});
 
 	const [selectedSquare, setSelectedSquare] = useState<Square>();
-	const [gameOver, setGameOver] = useState(game.isGameOver(fen));
+	const [gameOver, setGameOver] = useState(game.isGameOver(fen) || activeGame?.gameOver);
 	const boardSize = 700;
 
 	useEffect(() => {
