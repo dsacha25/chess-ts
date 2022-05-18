@@ -115,6 +115,11 @@ export interface FetchInactiveGamesSuccessAction {
 	payload: ChessGameType[];
 }
 
+export interface SetInactiveGameByIDStartAction {
+	type: GameTypes.SET_INACTIVE_GAME_BY_ID_START;
+	payload: string;
+}
+
 // ==== MOVES
 export interface MakePendingMoveAction {
 	type: GameTypes.MAKE_PENDING_MOVE;
@@ -224,6 +229,7 @@ type GameActions =
 	| FetchInactiveGamesStartAction
 	| FetchInactiveGamesSuccessAction
 	| SetActiveGameAction
+	| SetInactiveGameByIDStartAction
 	| ClearActiveGameAction
 	| OpenActiveGameListenerAction
 	| MakePendingMoveAction

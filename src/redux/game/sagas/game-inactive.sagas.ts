@@ -11,8 +11,36 @@ import { db } from '../../../utils/classes/firestore/firestore-app';
 import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { selectUserUID } from '../../user/user.selector';
-import { fetchInactiveGamesSuccess, gameError } from '../game.actions';
+import { SetInactiveGameByIDStartAction } from '../game.action-types';
+import {
+	fetchInactiveGamesSuccess,
+	gameError,
+	setActiveGame,
+} from '../game.actions';
 import { GameTypes } from '../game.types';
+
+export function* setInactiveGameByIDAsync({
+	payload: gameUID,
+}: SetInactiveGameByIDStartAction):
+	| Generator
+	| Promise<ChessGameType | undefined> {
+	try {
+		const game: ChessGameType = yield db.get<ChessGameType>('games', gameUID);
+
+		yield console.log('GAME FOUND: ', game);
+
+		yield put(setActiveGame(game));
+	} catch (err) {
+		yield put(gameError(getErrorMessage(err)));
+	}
+}
+
+export function* onSetInactiveGameByID() {
+	yield takeEvery(
+		GameTypes.SET_INACTIVE_GAME_BY_ID_START,
+		setInactiveGameByIDAsync
+	);
+}
 
 export function* fetchInactiveGamesAsync(): Generator | SelectEffect {
 	try {
@@ -43,5 +71,5 @@ export function* onFetchInstactiveGames() {
 }
 
 export function* gamesInactiveSagas() {
-	yield all([call(onFetchInstactiveGames)]);
+	yield all([call(onFetchInstactiveGames), call(onSetInactiveGameByID)]);
 }

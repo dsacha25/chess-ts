@@ -44,10 +44,12 @@ export const GameOverDisplay = styled.div`
 	width: 90%;
 	height: 250px;
 
-	background-color: ${({ theme }) => theme.white}ee;
+	background-color: ${({ theme }) => theme.white}f9;
 
 	place-content: center;
 	position: absolute;
 
 	border-radius: 30px;
+
+	z-index: 5;
 `;

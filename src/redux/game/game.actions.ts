@@ -48,6 +48,7 @@ import {
 	RequestDrawAction,
 	AcceptDrawRequestAction,
 	RejectDrawRequestAction,
+	SetInactiveGameByIDStartAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 
@@ -174,6 +175,13 @@ export const fetchInactiveGamesSuccess = (
 ): FetchInactiveGamesSuccessAction => ({
 	type: GameTypes.FETCH_INACTIVE_GAMES_SUCCESS,
 	payload: inactiveGames,
+});
+
+export const setInactiveGameByID = (
+	gameUID: string
+): SetInactiveGameByIDStartAction => ({
+	type: GameTypes.SET_INACTIVE_GAME_BY_ID_START,
+	payload: gameUID,
 });
 
 // MAKE MOVE

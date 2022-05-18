@@ -1,12 +1,5 @@
-import {
-	format,
-	formatDistanceToNow,
-	isToday,
-	secondsToMilliseconds,
-	toDate,
-} from 'date-fns';
-import { Timestamp } from 'firebase/firestore';
 import React, { FC, memo, useEffect, useState } from 'react';
+import { formatDistanceToNow } from 'date-fns';
 import formatTimestamp from '../../../../../../utils/helpers/strings/format-timestamp/format-timestamp';
 import {
 	ChatAvatar,

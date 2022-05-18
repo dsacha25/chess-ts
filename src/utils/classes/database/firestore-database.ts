@@ -126,8 +126,9 @@ export class FirestoreDatabase implements Database {
 		const docRef = doc<T>(collectionRef, id);
 		const snapshot = await getDoc<T>(docRef).catch((err) => {
 			console.error(err);
+			return err;
 		});
-		if (snapshot) return this.convertDocSnapshot<T>(snapshot);
+		return this.convertDocSnapshot<T>(snapshot);
 	}
 
 	getDocumentReference(documentPath: string): DocumentReference {

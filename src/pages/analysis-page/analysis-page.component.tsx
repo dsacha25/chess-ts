@@ -8,11 +8,15 @@ import { AnalysisContainer } from './analysis-page.styles';
 
 const AnalysisPage = () => {
 	const game = useQuery('game');
-	const { clearEnemyInfo, clearActiveGame } = useActions();
+	const { clearEnemyInfo, clearActiveGame, setInactiveGameByID } = useActions();
 
 	useEffect(() => {
 		clearEnemyInfo();
 		clearActiveGame();
+
+		if (game) {
+			setInactiveGameByID(game);
+		}
 
 		console.log('GAME UID:  ', game);
 
