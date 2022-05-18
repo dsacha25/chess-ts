@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import Title from '../../../../common/title/title.styles';
 import {
 	AuxiliaryPanelContainer,
-	ConfirmMoveButton,
-	ConfirmMoveContainer,
+	ConfirmActionButton,
+	ConfirmActionContainer,
 	PanelButton,
 	PanelControlsContainer,
 	PanelInfoContainer,
-	RejectMoveButton,
+	RejectActionButton,
 } from './auxiliary-panel.styles';
 
 import { BiMessage } from 'react-icons/bi';
@@ -37,6 +37,7 @@ const AuxiliaryPanel = () => {
 	const chatUnread = useSelector((state) => selectChatUnread(state));
 
 	const [action, setAction] = useState<AuxActions>(AuxActions.MOVE);
+	const [open, setOpen] = useState(false);
 	const historyRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -51,10 +52,19 @@ const AuxiliaryPanel = () => {
 		setAuxPanelIndex,
 		openChatListenerStart,
 		readChatMessage,
+		resignGame,
+		requestDraw,
 	} = useActions();
 
 	const handleConfirmAction = () => {
+		setAction(AuxActions.MOVE);
 		switch (action) {
+			case AuxActions.RESIGN:
+				setOpen(false);
+				return resignGame();
+			case AuxActions.DRAW:
+				setOpen(false);
+				return requestDraw();
 			case AuxActions.MOVE:
 			default:
 				return makeConfirmedMoveStart();
@@ -62,7 +72,11 @@ const AuxiliaryPanel = () => {
 	};
 
 	const handleRejectAction = () => {
+		setAction(AuxActions.MOVE);
 		switch (action) {
+			case AuxActions.RESIGN:
+			case AuxActions.DRAW:
+				return setOpen(false);
 			case AuxActions.MOVE:
 			default:
 				return rejectPendingMove();
@@ -74,6 +88,19 @@ const AuxiliaryPanel = () => {
 
 		if (!index && chatUnread) {
 			readChatMessage();
+		}
+	};
+
+	const handleOpenActionConfirmation = (e: MouseEvent<HTMLButtonElement>) => {
+		const id = e.currentTarget.id;
+		setOpen(true);
+
+		if (id === 'resign') {
+			setAction(AuxActions.RESIGN);
+		}
+
+		if (id === 'draw') {
+			setAction(AuxActions.DRAW);
 		}
 	};
 
@@ -108,23 +135,38 @@ const AuxiliaryPanel = () => {
 			</PanelInfoContainer>
 
 			<PanelControlsContainer>
-				<PanelButton color="warn">Resign</PanelButton>
-				<PanelButton color="light">Draw</PanelButton>
+				<PanelButton
+					id="resign"
+					color="warn"
+					onClick={handleOpenActionConfirmation}
+					disabled={action === AuxActions.RESIGN}
+				>
+					Resign
+				</PanelButton>
+				<PanelButton
+					id="draw"
+					color="light"
+					onClick={handleOpenActionConfirmation}
+					disabled={action === AuxActions.DRAW}
+				>
+					Draw
+				</PanelButton>
 				<PanelButton color="light" onClick={handlePanelToggle} inverted>
 					{!index && chatUnread && <NotifButtonFlag unread={chatUnread} />}
 					{index ? <FaChessBishop size="55%" /> : <BiMessage size="60%" />}
 				</PanelButton>
 			</PanelControlsContainer>
-			{pendingMove && (
-				<ConfirmMoveContainer>
-					<ConfirmMoveButton onClick={handleConfirmAction} color="main">
-						{loading ? <Spinner size="40px" /> : <FiCheck size="30px" />}
-					</ConfirmMoveButton>
-					<RejectMoveButton onClick={handleRejectAction} color="secondary">
-						<IoClose size="30px" />
-					</RejectMoveButton>
-				</ConfirmMoveContainer>
-			)}
+			{pendingMove ||
+				(open && (
+					<ConfirmActionContainer>
+						<ConfirmActionButton onClick={handleConfirmAction} color="main">
+							{loading ? <Spinner size="40px" /> : <FiCheck size="30px" />}
+						</ConfirmActionButton>
+						<RejectActionButton onClick={handleRejectAction} color="secondary">
+							<IoClose size="30px" />
+						</RejectActionButton>
+					</ConfirmActionContainer>
+				))}
 		</AuxiliaryPanelContainer>
 	);
 };

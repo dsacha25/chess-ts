@@ -1,3 +1,4 @@
+import { Game } from 'js-chess-engine';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
@@ -43,6 +44,10 @@ import {
 	SetChatUsersAction,
 	SetChatUnreadStateAction,
 	ReadChatMessaageAction,
+	ResignGameAction,
+	RequestDrawAction,
+	AcceptDrawRequestAction,
+	RejectDrawRequestAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 
@@ -187,6 +192,23 @@ export const makeConfirmedMoveSuccess = (): MakeConfirmedMoveSuccessAction => ({
 
 export const rejectPendingMove = (): RejectPendngMoveAction => ({
 	type: GameTypes.REJECT_PENDING_MOVE,
+});
+
+// ==== RESIGN & DRAW
+export const resignGame = (): ResignGameAction => ({
+	type: GameTypes.RESIGN_GAME,
+});
+
+export const requestDraw = (): RequestDrawAction => ({
+	type: GameTypes.REQUEST_DRAW,
+});
+
+export const acceptDrawRequest = (): AcceptDrawRequestAction => ({
+	type: GameTypes.ACCEPT_DRAW_REQUEST,
+});
+
+export const rejectDrawRequest = (): RejectDrawRequestAction => ({
+	type: GameTypes.REJECT_DRAW_REQUEST,
 });
 
 // ==== GAME INSTANCE

@@ -69,7 +69,7 @@ export const PanelButton = styled(CustomButton)`
 	position: relative;
 `;
 
-export const ConfirmMoveContainer = styled.div`
+export const ConfirmActionContainer = styled.div`
 	display: grid;
 	width: 100%;
 	height: 60px;
@@ -77,7 +77,7 @@ export const ConfirmMoveContainer = styled.div`
 	place-items: center;
 `;
 
-export const ConfirmMoveButton = styled(CustomButton)`
+export const ConfirmActionButton = styled(CustomButton)`
 	width: 100%;
 	height: 60px;
 
@@ -89,7 +89,7 @@ export const ConfirmMoveButton = styled(CustomButton)`
 	place-content: center;
 `;
 
-export const RejectMoveButton = styled(CustomButton)`
+export const RejectActionButton = styled(CustomButton)`
 	width: 100%;
 	height: 60px;
 

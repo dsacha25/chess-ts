@@ -32,6 +32,63 @@ import {
 import { selectActiveGame, selectPendingMove } from '../game.selector';
 import { GameTypes } from '../game.types';
 
+// === GAME DRAW
+export function* rejectDrawRequestAsync(): Generator | SelectEffect {
+	try {
+		const game: ChessGameType = yield select(selectActiveGame);
+
+		yield functions.callFirebaseFunction('rejectDrawRequest', { id: game.id });
+	} catch (err) {
+		yield put(gameError(getErrorMessage(err)));
+	}
+}
+
+export function* onRejectDrawRequest() {
+	yield takeEvery(GameTypes.REJECT_DRAW_REQUEST, rejectDrawRequestAsync);
+}
+
+export function* acceptDrawRequestAsync(): Generator | SelectEffect {
+	try {
+		const game: ChessGameType = yield select(selectActiveGame);
+
+		yield functions.callFirebaseFunction('acceptDrawRequest', { id: game.id });
+	} catch (err) {
+		yield put(gameError(getErrorMessage(err)));
+	}
+}
+
+export function* onAcceptDrawRequest() {
+	yield takeEvery(GameTypes.ACCEPT_DRAW_REQUEST, acceptDrawRequestAsync);
+}
+
+export function* requestDrawAsync(): Generator | SelectEffect {
+	try {
+		const game: ChessGameType = yield select(selectActiveGame);
+
+		yield functions.callFirebaseFunction('requestDraw', { id: game.id });
+	} catch (err) {
+		yield put(gameError(getErrorMessage(err)));
+	}
+}
+
+export function* onRequestDraw() {
+	yield takeEvery(GameTypes.REQUEST_DRAW, requestDrawAsync);
+}
+
+export function* resignGameAsync(): Generator | SelectEffect {
+	try {
+		const game: ChessGameType = yield select(selectActiveGame);
+
+		yield functions.callFirebaseFunction('resignChessGame', { id: game.id });
+	} catch (err) {
+		yield put(gameError(getErrorMessage(err)));
+	}
+}
+
+export function* onResignGame() {
+	yield takeEvery(GameTypes.RESIGN_GAME, resignGameAsync);
+}
+
 export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
 	try {
 		const game: ChessGameType | null = yield select(selectActiveGame);
@@ -142,5 +199,9 @@ export function* gameActiveSagas() {
 		call(onSetActiveGame),
 		call(onMakeConfirmedMove),
 		call(onOpenActiveGameListener),
+		call(onResignGame),
+		call(onRequestDraw),
+		call(onAcceptDrawRequest),
+		call(onRejectDrawRequest),
 	]);
 }

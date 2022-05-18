@@ -133,6 +133,23 @@ export interface RejectPendngMoveAction {
 	type: GameTypes.REJECT_PENDING_MOVE;
 }
 
+// ==== RESIGN & DRAW
+export interface ResignGameAction {
+	type: GameTypes.RESIGN_GAME;
+}
+
+export interface RequestDrawAction {
+	type: GameTypes.REQUEST_DRAW;
+}
+
+export interface AcceptDrawRequestAction {
+	type: GameTypes.ACCEPT_DRAW_REQUEST;
+}
+
+export interface RejectDrawRequestAction {
+	type: GameTypes.REJECT_DRAW_REQUEST;
+}
+
 // ==== GAME INSTANCE
 export interface ClearGameInstanceAction {
 	type: GameTypes.CLEAR_GAME_INSTANCE;
@@ -194,6 +211,10 @@ type GameActions =
 	| AcceptGameChallengeStartAction
 	| GameChallengeResponseSuccessAction
 	| RejectGameChallengeAction
+	| ResignGameAction
+	| RequestDrawAction
+	| AcceptDrawRequestAction
+	| RejectDrawRequestAction
 	| FetchGameChallengesStart
 	| FetchGameChallengesSuccess
 	| FetchPendingChallengesStartAction
