@@ -1,0 +1,26 @@
+import styled from 'styled-components';
+import CustomButton from '../../../../../common/buttons/custom-button/custom-button.component';
+
+export const HistoryControllerContainer = styled.div`
+	display: grid;
+	width: 100%;
+	height: 50px;
+	place-items: center;
+
+	grid-template-columns: repeat(4, 1fr);
+
+	border-top: 1px solid grey;
+`;
+
+export const HistoryNavButton = styled(CustomButton)`
+	width: 100%;
+	height: 48px;
+	margin: 0;
+	place-content: center;
+
+	border-radius: unset;
+
+	:hover {
+		background-color: grey;
+	}
+`;

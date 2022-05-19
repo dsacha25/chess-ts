@@ -1,6 +1,17 @@
 import styled from 'styled-components';
 
-export const GameHistoryList = styled.div`
+export const GameHistoryContainer = styled.div`
+	display: grid;
+	grid-template-rows: 1fr 50px;
+	height: 100%;
+	width: 100%;
+	place-self: center;
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+`;
+
+export const HistoryMoveList = styled.div`
 	height: 100%;
 	width: 95%;
 	place-self: center;

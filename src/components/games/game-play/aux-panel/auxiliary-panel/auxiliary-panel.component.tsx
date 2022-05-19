@@ -19,7 +19,7 @@ import {
 	selectTurns,
 } from '../../../../../redux/game/game.selector';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
-import GameHistory from '../game-history/game-history.component';
+import GameHistory from '../history/game-history/game-history.component';
 import { selectAuxPanelIndex } from '../../../../../redux/indexes/indexes.selector';
 import GameChat from '../chat/game-chat/game-chat.component';
 import { FiCheck } from 'react-icons/fi';
