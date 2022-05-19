@@ -15,6 +15,7 @@ import { useSelector } from '../../../../../hooks/use-selector/use-typed-selecto
 import {
 	selectChatUnread,
 	selectGameLoadingState,
+	selectIsGameOver,
 	selectPendingMove,
 	selectTurns,
 } from '../../../../../redux/game/game.selector';
@@ -35,6 +36,7 @@ const AuxiliaryPanel = () => {
 	const index = useSelector((state) => selectAuxPanelIndex(state));
 	const loading = useSelector((state) => selectGameLoadingState(state));
 	const chatUnread = useSelector((state) => selectChatUnread(state));
+	const isGameOver = useSelector((state) => selectIsGameOver(state));
 
 	const [action, setAction] = useState<AuxActions>(AuxActions.MOVE);
 	const [open, setOpen] = useState(false);
@@ -147,7 +149,7 @@ const AuxiliaryPanel = () => {
 					id="resign"
 					color="warn"
 					onClick={handleOpenActionConfirmation}
-					disabled={action === AuxActions.RESIGN}
+					disabled={action === AuxActions.RESIGN || isGameOver}
 				>
 					Resign
 				</PanelButton>
@@ -155,7 +157,7 @@ const AuxiliaryPanel = () => {
 					id="draw"
 					color="light"
 					onClick={handleOpenActionConfirmation}
-					disabled={action === AuxActions.DRAW}
+					disabled={action === AuxActions.DRAW || isGameOver}
 				>
 					Draw
 				</PanelButton>

@@ -14,6 +14,7 @@ import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import {
 	selectActiveGame,
+	selectAiLevel,
 	selectFen,
 	selectGameType,
 	selectOrientation,
@@ -31,11 +32,11 @@ const ChessboardDisplay = () => {
 	const gameType = useSelector((state) => selectGameType(state));
 	const fen = useSelector((state) => selectFen(state));
 	const orientation = useSelector((state) => selectOrientation(state));
+	const aiLevel = useSelector((state) => selectAiLevel(state));
 
 	const {
 		movePiece,
 		clearActiveGame,
-		setGameType,
 		setFen,
 		setOrientation,
 		fetchEnemyInfoStart,
@@ -48,7 +49,9 @@ const ChessboardDisplay = () => {
 	}>({});
 
 	const [selectedSquare, setSelectedSquare] = useState<Square>();
-	const [gameOver, setGameOver] = useState(game.isGameOver(fen) || activeGame?.gameOver);
+	const [gameOver, setGameOver] = useState(
+		game.isGameOver(fen) || activeGame?.gameOver
+	);
 	const boardSize = 700;
 
 	useEffect(() => {
@@ -83,17 +86,6 @@ const ChessboardDisplay = () => {
 	}, [activeGame]);
 
 	useEffect(() => {
-		if (location.pathname === '/play') {
-			console.log('PLAY');
-			game.setGameType('online');
-			setGameType('online');
-		} else if (location.pathname === '/analysis') {
-			game.setGameType('solo');
-			setGameType('solo');
-		}
-	}, []);
-
-	useEffect(() => {
 		setGameOver(game.isGameOver(fen));
 		console.log('GAME OVER?: ', game.isGameOver(fen));
 		if (game.isGameOver(fen)) {
@@ -117,6 +109,23 @@ const ChessboardDisplay = () => {
 
 		// eslint-disable-next-line
 	}, [selectedSquare]);
+
+	useEffect(() => {
+		console.log('turn: ', game.turn, orientation);
+
+		if (
+			gameType === 'ai' &&
+			aiLevel &&
+			game.turn !== orientation &&
+			!gameOver
+		) {
+			const { from, to } = game.movePieceAi(aiLevel, fen);
+
+			makeMove(from, to);
+		}
+
+		// eslint-disable-next-line
+	}, [gameType, game.turn, orientation]);
 
 	const highlightSquare = (
 		sourceSquare: Square,
@@ -182,6 +191,14 @@ const ChessboardDisplay = () => {
 			}, 500);
 
 			setGameOver(chessMove.winner !== null);
+		} else if (gameType === 'ai') {
+			if (game.turn === orientation) {
+				setFen(chessMove.fen);
+				movePiece({ move: chessMove.san, fen: chessMove.fen });
+			} else {
+				setFen(chessMove.fen);
+				movePiece({ move: chessMove.san, fen: chessMove.fen });
+			}
 		}
 	};
 

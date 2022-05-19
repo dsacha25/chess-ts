@@ -10,10 +10,10 @@ import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
-import { Game } from 'js-chess-engine';
-import { stat } from 'fs';
+import { AiLevel, Game } from 'js-chess-engine';
 
 export interface GameState {
+	aiLevel: AiLevel | null;
 	fen: string;
 	previousFen: string;
 	history: HistoryMove[];
@@ -38,6 +38,7 @@ const DEFAULT_POSITION =
 	'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
 const INITIAL_STATE: GameState = {
+	aiLevel: null,
 	fen: DEFAULT_POSITION,
 	previousFen: DEFAULT_POSITION,
 	history: [],
@@ -61,6 +62,10 @@ const INITIAL_STATE: GameState = {
 const gameReducer = produce(
 	(state: GameState = INITIAL_STATE, action: GameActions) => {
 		switch (action.type) {
+			case GameTypes.SET_AI_LEVEL:
+				state.aiLevel = action.payload;
+				state.error = '';
+				return state;
 			case GameTypes.CLEAR_GAME_INSTANCE:
 				state.activeGame = null;
 				state.pendingMove = null;

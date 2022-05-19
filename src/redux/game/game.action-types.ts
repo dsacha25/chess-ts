@@ -1,4 +1,5 @@
 import { Move } from 'chess.js';
+import { AiLevel } from 'js-chess-engine';
 import ChessGame from '../../utils/classes/chess-game/chess-game';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
@@ -12,6 +13,11 @@ import { PendingRequest } from '../../utils/types/pending-request/pending-reques
 import { GameTypes } from './game.types';
 
 // ==== GAME STATE
+export interface SetAiLevelAction {
+	type: GameTypes.SET_AI_LEVEL;
+	payload: AiLevel | null;
+}
+
 export interface MovePieceAction {
 	type: GameTypes.MOVE_PIECE;
 	payload: HistoryMove;
@@ -222,6 +228,7 @@ export interface GameErrorAction {
 }
 
 type GameActions =
+	| SetAiLevelAction
 	| MovePieceAction
 	| ResetGameHistoryAction
 	| SetOrientationAction

@@ -1,4 +1,4 @@
-import { Game } from 'js-chess-engine';
+import { AiLevel, Game } from 'js-chess-engine';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
@@ -53,10 +53,16 @@ import {
 	GetNextMoveAction,
 	GetDefaultPositionAction,
 	GetLatestMoveAction,
+	SetAiLevelAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 
 // ==== GAME STATE
+export const setAiLevel = (level: AiLevel | null): SetAiLevelAction => ({
+	type: GameTypes.SET_AI_LEVEL,
+	payload: level,
+});
+
 export const setGameType = (gameType: GameType): SetGameTypeAction => ({
 	type: GameTypes.SET_GAME_TYPE,
 	payload: gameType,

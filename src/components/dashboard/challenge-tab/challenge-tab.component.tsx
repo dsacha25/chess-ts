@@ -39,6 +39,9 @@ const ChallengeTab = () => {
 				>
 					Enter Gulag
 				</ChallengeButton>
+				<ChallengeButton onClick={() => navigate(`/${Paths.AI}`)} color="light">
+					Practice Sucking
+				</ChallengeButton>
 				<ChallengeButton
 					onClick={() => navigate(`/${Paths.ANALYSIS}`)}
 					color="main"

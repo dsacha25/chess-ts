@@ -1,31 +1,34 @@
 import React, { useEffect } from 'react';
-import ActiveGameError from '../../components/games/active-games/active-game-error/active-game-error.component';
+import AiLevelSelect from '../../components/games/ai-level-select/ai-level-select.component';
 import AuxiliaryPanel from '../../components/games/game-play/aux-panel/auxiliary-panel/auxiliary-panel.component';
 import ChessboardDisplay from '../../components/games/game-play/chessboard/chessboard-display.component';
 import GameToolbar from '../../components/games/game-play/game-toolbar/game-toolbar.component';
 import useActions from '../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
-import { selectActiveGame } from '../../redux/game/game.selector';
-import { PlayContainer } from './play-page.styles';
+import { selectAiLevel } from '../../redux/game/game.selector';
+import { PlayAiContainer } from './play-ai-page.styles';
 
-const PlayPage = () => {
-	const activeGame = useSelector((state) => selectActiveGame(state));
-
-	const { setGameType } = useActions();
+const PlayAiPage = () => {
+	const aiLevel = useSelector((state) => selectAiLevel(state));
+	const { setGameType, setAiLevel } = useActions();
 
 	useEffect(() => {
-		setGameType('online');
+		setGameType('ai');
+
+		return () => {
+			setAiLevel(null);
+		};
 
 		// eslint-disable-next-line
 	}, []);
 
 	return (
-		<PlayContainer>
+		<PlayAiContainer>
 			<GameToolbar />
-			{activeGame ? <ChessboardDisplay /> : <ActiveGameError />}
+			{!aiLevel ? <AiLevelSelect /> : <ChessboardDisplay />}
 			<AuxiliaryPanel />
-		</PlayContainer>
+		</PlayAiContainer>
 	);
 };
 
-export default PlayPage;
+export default PlayAiPage;

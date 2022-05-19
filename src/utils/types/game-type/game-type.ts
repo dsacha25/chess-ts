@@ -1,3 +1,3 @@
-type GameType = 'solo' | 'online';
+type GameType = 'solo' | 'online' | 'ai';
 
 export default GameType;

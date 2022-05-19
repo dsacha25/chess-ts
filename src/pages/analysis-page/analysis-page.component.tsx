@@ -8,11 +8,13 @@ import { AnalysisContainer } from './analysis-page.styles';
 
 const AnalysisPage = () => {
 	const game = useQuery('game');
-	const { clearEnemyInfo, clearActiveGame, setInactiveGameByID } = useActions();
+	const { clearEnemyInfo, clearActiveGame, setInactiveGameByID, setGameType } =
+		useActions();
 
 	useEffect(() => {
 		clearEnemyInfo();
 		clearActiveGame();
+		setGameType('solo');
 
 		if (game) {
 			setInactiveGameByID(game);

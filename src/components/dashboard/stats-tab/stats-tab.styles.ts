@@ -8,7 +8,6 @@ export const StatsContainer = styled.div`
 	place-items: center;
 
 	p {
-		color: white;
 		text-align: center;
 		font-size: 20px;
 	}

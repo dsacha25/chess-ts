@@ -14,6 +14,7 @@ import { selectUserAuth } from '../redux/user/user.selector';
 import useActions from '../hooks/use-actions/use-actions.hook';
 import PlayPage from '../pages/play-page/play-page.component';
 import AnalysisPage from '../pages/analysis-page/analysis-page.component';
+import PlayAiPage from '../pages/play-ai-page/play-ai-page.component';
 
 function App() {
 	const { checkUserSession, openNotificationListener, getChessUserStart } =
@@ -54,6 +55,10 @@ function App() {
 
 					<Route path={Paths.ANALYSIS} element={<PrivateRoute />}>
 						<Route index element={<AnalysisPage />} />
+					</Route>
+
+					<Route path={Paths.AI} element={<PrivateRoute />}>
+						<Route index element={<PlayAiPage />} />
 					</Route>
 				</Routes>
 			</SiteContainer>

@@ -5,6 +5,8 @@ import { RootState } from '../root-reducer';
 
 const selectGame = (state: RootState) => state.game;
 
+export const selectAiLevel = createSelector(selectGame, (game) => game.aiLevel);
+
 export const selectGameHistory = createSelector(
 	selectGame,
 	(game) => game.history
@@ -90,4 +92,9 @@ export const selectMoveIndex = createSelector(
 export const selectIndexedMove = createSelector(
 	selectGame,
 	(game) => game.history[game.moveIndex]
+);
+
+export const selectIsGameOver = createSelector(
+	selectActiveGame,
+	(game) => game?.gameOver
 );

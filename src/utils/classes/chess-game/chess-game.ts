@@ -18,8 +18,9 @@ import {
 	Position,
 	Move,
 	Moves,
+	AiLevel,
 } from 'js-chess-engine';
-import { initial } from 'lodash';
+import { initial, keys, values } from 'lodash';
 const Chess = require('chess.js');
 
 const DEFAULT_POSITION =
@@ -36,7 +37,6 @@ class ChessGame {
 	public game: Game = new Game();
 	public chess: ChessInstance = new Chess();
 	public squareStyles: { [square in Square]?: CSSProperties } = {};
-	public type: GameType = 'solo';
 	public boardConfig: BoardConfig = DEFAULT_POSITION;
 	public fen: string = DEFAULT_POSITION;
 	public previousFen: string = this.fen;
@@ -104,10 +104,6 @@ class ChessGame {
 		return null;
 	}
 
-	setGameType(gameType: GameType): GameType {
-		return (this.type = gameType);
-	}
-
 	resetGame(): string {
 		this.setGame(DEFAULT_POSITION);
 
@@ -136,6 +132,9 @@ class ChessGame {
 		this.previousFen = getFen(config);
 		this.chess.load(getFen(config));
 
+		console.log('FROM: ', from);
+		console.log('TO:', to);
+
 		const chessMove = this.chess.move({ from, to });
 		console.log('MOVE: ', chessMove);
 
@@ -154,6 +153,15 @@ class ChessGame {
 			turn: this.getStatus(fen).turn,
 			winner: this.getWinner(fen),
 		};
+	}
+
+	movePieceAi(level: AiLevel, fen: BoardConfig) {
+		const chessMove = aiMove(fen, level);
+		console.log('AI MOVE:', chessMove);
+		const from = keys(chessMove)[0].toLowerCase() as Square;
+		const to = values<string>(chessMove)[0].toLowerCase() as Square;
+
+		return { from, to };
 	}
 
 	squareStyling(

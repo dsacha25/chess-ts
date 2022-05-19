@@ -16,7 +16,7 @@ export const ChallengesContainer = styled.div`
 
 export const ButtonsContainer = styled.div`
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
 	place-items: center;
 
 	grid-gap: 40px;

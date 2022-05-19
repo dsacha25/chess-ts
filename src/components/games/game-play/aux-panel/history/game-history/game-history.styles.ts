@@ -9,15 +9,21 @@ export const GameHistoryContainer = styled.div`
 	margin: 0;
 	padding: 0;
 	font-size: 12px;
+
+	place-items: center;
+	overflow: hidden;
 `;
 
 export const HistoryMoveList = styled.div`
 	height: 100%;
+	max-height: 60vh;
 	width: 95%;
-	place-self: center;
+	place-self: flex-start center;
 	margin: 0;
 	padding: 0;
 	font-size: 12px;
+
+	overflow-y: auto;
 `;
 
 export const HistoryMove = styled.li`

@@ -5,6 +5,7 @@ enum Paths {
 	PROFILE = 'profile',
 	PLAY = 'play',
 	ANALYSIS = 'analysis',
+	AI = 'ai',
 	FAQ = 'faq',
 }
 
