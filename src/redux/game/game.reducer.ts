@@ -10,11 +10,14 @@ import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
+import { Game } from 'js-chess-engine';
+import { stat } from 'fs';
 
 export interface GameState {
 	fen: string;
 	previousFen: string;
 	history: HistoryMove[];
+	moveIndex: number;
 	chat: ChatMessage[];
 	chatUsers: ChatUsers;
 	chatUnread: boolean;
@@ -38,6 +41,7 @@ const INITIAL_STATE: GameState = {
 	fen: DEFAULT_POSITION,
 	previousFen: DEFAULT_POSITION,
 	history: [],
+	moveIndex: 0,
 	chat: [],
 	chatUsers: {},
 	chatUnread: false,
@@ -64,14 +68,17 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.MOVE_PIECE:
 				state.history.push(action.payload);
+				state.moveIndex = state.history.length - 1;
 				state.error = '';
 				return state;
 			case GameTypes.SET_GAME_HISTORY:
 				state.history = action.payload;
+				state.moveIndex = action.payload.length - 1;
 				state.error = '';
 				return state;
 			case GameTypes.RESET_GAME_HISTORY:
 				state.history = [];
+				state.moveIndex = 0;
 				state.error = '';
 				return state;
 			case GameTypes.SET_GAME_TYPE:
@@ -106,7 +113,6 @@ const gameReducer = produce(
 			case GameTypes.REJECT_GAME_CHALLENGE:
 				state.loading = true;
 				state.receiver = action.payload;
-
 				state.error = '';
 				return state;
 			case GameTypes.FETCH_GAME_CHALLENGES_SUCCESS:
@@ -168,6 +174,32 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.SET_CHAT_UNREAD_STATE:
 				state.chatUnread = action.payload;
+				return state;
+			case GameTypes.GET_DEFAULT_POSITION:
+				state.fen = DEFAULT_POSITION;
+				state.moveIndex = -1;
+				state.error = '';
+				return state;
+			case GameTypes.GET_PREVIOUS_MOVE:
+				let move = state.history[state.moveIndex - 1];
+				if (move) {
+					state.fen = move.fen;
+				} else {
+					state.fen = DEFAULT_POSITION;
+				}
+				state.moveIndex = state.moveIndex - 1;
+				state.error = '';
+				return state;
+			case GameTypes.GET_NEXT_MOVE:
+				const index = state.moveIndex + 1;
+				state.moveIndex = index;
+				state.fen = state.history[index].fen;
+				state.error = '';
+				return state;
+			case GameTypes.GET_LATEST_MOVE:
+				state.fen = state.history[state.history.length - 1].fen;
+				state.moveIndex = state.history.length - 1;
+				state.error = '';
 				return state;
 			case GameTypes.GAME_ERROR:
 				state.error = action.payload;

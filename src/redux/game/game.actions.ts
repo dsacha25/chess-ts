@@ -49,6 +49,10 @@ import {
 	AcceptDrawRequestAction,
 	RejectDrawRequestAction,
 	SetInactiveGameByIDStartAction,
+	GetPreviousMoveAction,
+	GetNextMoveAction,
+	GetDefaultPositionAction,
+	GetLatestMoveAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 
@@ -200,6 +204,22 @@ export const makeConfirmedMoveSuccess = (): MakeConfirmedMoveSuccessAction => ({
 
 export const rejectPendingMove = (): RejectPendngMoveAction => ({
 	type: GameTypes.REJECT_PENDING_MOVE,
+});
+
+export const getDefaultPosition = (): GetDefaultPositionAction => ({
+	type: GameTypes.GET_DEFAULT_POSITION,
+});
+
+export const getPreviousMove = (): GetPreviousMoveAction => ({
+	type: GameTypes.GET_PREVIOUS_MOVE,
+});
+
+export const getNextMove = (): GetNextMoveAction => ({
+	type: GameTypes.GET_NEXT_MOVE,
+});
+
+export const getLatestMove = (): GetLatestMoveAction => ({
+	type: GameTypes.GET_LATEST_MOVE,
 });
 
 // ==== RESIGN & DRAW

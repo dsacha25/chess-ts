@@ -81,3 +81,13 @@ export const selectChatUnread = createSelector(
 	selectGame,
 	(game) => game.chatUnread
 );
+
+export const selectMoveIndex = createSelector(
+	selectGame,
+	(game) => game.moveIndex
+);
+
+export const selectIndexedMove = createSelector(
+	selectGame,
+	(game) => game.history[game.moveIndex]
+);

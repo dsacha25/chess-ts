@@ -138,6 +138,22 @@ export interface RejectPendngMoveAction {
 	type: GameTypes.REJECT_PENDING_MOVE;
 }
 
+export interface GetDefaultPositionAction {
+	type: GameTypes.GET_DEFAULT_POSITION;
+}
+
+export interface GetPreviousMoveAction {
+	type: GameTypes.GET_PREVIOUS_MOVE;
+}
+
+export interface GetNextMoveAction {
+	type: GameTypes.GET_NEXT_MOVE;
+}
+
+export interface GetLatestMoveAction {
+	type: GameTypes.GET_LATEST_MOVE;
+}
+
 // ==== RESIGN & DRAW
 export interface ResignGameAction {
 	type: GameTypes.RESIGN_GAME;
@@ -236,6 +252,10 @@ type GameActions =
 	| MakeConfirmedMoveStartAction
 	| MakeConfirmedMoveSuccessAction
 	| RejectPendngMoveAction
+	| GetDefaultPositionAction
+	| GetPreviousMoveAction
+	| GetNextMoveAction
+	| GetLatestMoveAction
 	| ClearGameInstanceAction
 	| SendChatMessageStartAction
 	| SendChatMessageSuccessAction
