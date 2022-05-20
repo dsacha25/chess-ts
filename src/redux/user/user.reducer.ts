@@ -11,6 +11,7 @@ export interface UserState {
 	user: ChessUser | null;
 	newCredentials: NewCredentials | null;
 	enemyRequests: NotifSender[];
+	loading: boolean;
 	error: string;
 }
 
@@ -19,6 +20,7 @@ export const INITIAL_STATE = {
 	user: null,
 	newCredentials: null,
 	enemyRequests: [],
+	loading: false,
 	error: '',
 };
 
@@ -48,12 +50,21 @@ const userReducer = produce(
 				return state;
 			case UserTypes.USER_ERROR:
 				state.error = action.payload;
+				state.loading = false;
 				return state;
 			case UserTypes.LOG_OUT_SUCCESS:
 				state.auth = null;
 				state.user = null;
 				state.newCredentials = null;
 				state.error = '';
+				return state;
+
+			case UserTypes.REAUTHENTICATE_START:
+				state.loading = true;
+				return state;
+
+			case UserTypes.REAUTHENTICATE_SUCCESS:
+				state.loading = false;
 				return state;
 			default:
 				return state;

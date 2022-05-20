@@ -21,6 +21,8 @@ import {
 	FetchEnemyRequestsSuccessAction,
 	AcceptEnemyRequestAction,
 	RejectEnemyRequestAction,
+	ReauthenticateStartActon,
+	ReauthenticateSuccessAction,
 } from './user.action-types';
 import UserTypes from './user.types';
 
@@ -67,6 +69,18 @@ export const createAccountSuccess = (
 ): CreateAccountSuccessAction => ({
 	type: UserTypes.CREATE_ACCOUNT_SUCCESS,
 	payload: user,
+});
+
+// ==== REAUTHENTICATE
+export const reauthenticateStart = (
+	credentials: Credentials
+): ReauthenticateStartActon => ({
+	type: UserTypes.REAUTHENTICATE_START,
+	payload: credentials,
+});
+
+export const reauthenticateSuccess = (): ReauthenticateSuccessAction => ({
+	type: UserTypes.REAUTHENTICATE_SUCCESS,
 });
 
 /// ==== GET CHESS USER

@@ -42,3 +42,11 @@ export const SubmitUpdateButton = styled(CustomButton)`
 	width: 400px;
 	grid-column: 1 / span 2;
 `;
+
+export const ReauthContainer = styled.div`
+	display: grid;
+	width: 250px;
+	/* height: 60px; */
+
+	position: relative;
+`;

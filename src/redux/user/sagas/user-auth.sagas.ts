@@ -25,6 +25,8 @@ import {
 	userError,
 	getChessUserSuccess,
 	getChessUserStart,
+	reauthenticateSuccess,
+	deleteUserAccount,
 } from '../user.actions';
 import {
 	DeleteUserAccountAction,
@@ -32,6 +34,7 @@ import {
 	LogOutStartAction,
 	CreateAccountStartAction,
 	UpdateProfileInfoAction,
+	ReauthenticateStartActon,
 } from '../user.action-types';
 import UserTypes from '../user.types';
 import { UploadResult } from 'firebase/storage';
@@ -44,6 +47,25 @@ import { NewCredentials } from '../../../utils/types/new-credentials/new-credent
 import { EventChannel } from 'redux-saga';
 import { ChessUser } from '../../../utils/types/chess-user/chess-user';
 import { BaseImage } from '../../../utils/types/image-types/base-image/base-image';
+
+export function* reauthenticateUser({
+	payload: credentials,
+}: ReauthenticateStartActon) {
+	try {
+		yield auth.reauthenticate(credentials);
+
+		yield put(reauthenticateSuccess());
+
+		yield put(deleteUserAccount(credentials));
+	} catch (err) {
+		yield put(userError(getErrorMessage(err)));
+	}
+}
+
+// ==== REAUTHENTICATE
+export function* onReauthenticateStart() {
+	yield takeEvery(UserTypes.REAUTHENTICATE_START, reauthenticateUser);
+}
 
 // ==== UPDATE PROFILE
 export function* updateProfilePicture(

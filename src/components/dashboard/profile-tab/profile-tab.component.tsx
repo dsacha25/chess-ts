@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectChessUser } from '../../../redux/user/user.selector';
 import { UpdateCredentials } from '../../../utils/types/update-credentials/update-credentials';
+import LoginModule from '../../auth/login-module/login-module.component';
 import CustomButton from '../../common/buttons/custom-button/custom-button.component';
 import FormInput from '../../common/inputs/form-input/form-input.component';
 import PhotoUploader from '../../common/inputs/photo-uploader/photo-uploader.component';
@@ -12,6 +13,7 @@ import {
 	DeleteAccountButton,
 	ProfileContainer,
 	ProfileDataContainer,
+	ReauthContainer,
 	SubmitUpdateButton,
 	UpdateProfileForm,
 } from './profile-tab.styles';
@@ -20,6 +22,7 @@ const ProfileTab = () => {
 	const user = useSelector((state) => selectChessUser(state));
 
 	const { deleteUserAccount, updateProfileInfo } = useActions();
+	const [open, setOpen] = useState(false);
 
 	const { register, watch, setValue, handleSubmit } =
 		useForm<UpdateCredentials>();
@@ -81,14 +84,16 @@ const ProfileTab = () => {
 			</UpdateProfileForm>
 
 			<p>Good ridence. You sucked anyways. Bitch.</p>
-			<DeleteAccountButton
-				onClick={() =>
-					deleteUserAccount({ email: 'scooty@nooty.com', password: 'asdqwe' })
-				}
-				color="warn"
-			>
-				Delete Account
-			</DeleteAccountButton>
+
+			<ReauthContainer>
+				{open ? (
+					<LoginModule callback={() => setOpen(false)} />
+				) : (
+					<DeleteAccountButton onClick={() => setOpen(true)} color="warn">
+						Delete Account
+					</DeleteAccountButton>
+				)}
+			</ReauthContainer>
 		</ProfileContainer>
 	);
 };

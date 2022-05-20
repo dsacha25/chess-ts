@@ -32,6 +32,16 @@ export interface CreateAccountSuccessAction {
 	payload: User;
 }
 
+// ==== REAUTHENTICATE
+export interface ReauthenticateStartActon {
+	type: UserTypes.REAUTHENTICATE_START;
+	payload: Credentials;
+}
+
+export interface ReauthenticateSuccessAction {
+	type: UserTypes.REAUTHENTICATE_SUCCESS;
+}
+
 // GET CHESS USER
 export interface GetChessUserStartAction {
 	type: UserTypes.GET_CHESS_USER_START;
@@ -95,6 +105,8 @@ type UserActions =
 	| LogInSuccessAction
 	| CreateAccountStartAction
 	| CreateAccountSuccessAction
+	| ReauthenticateStartActon
+	| ReauthenticateSuccessAction
 	| GetChessUserStartAction
 	| GetChessUserSuccessAction
 	| LogOutStartAction

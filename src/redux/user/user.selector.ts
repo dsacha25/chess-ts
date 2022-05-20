@@ -28,3 +28,8 @@ export const selectEnemyRequests = createSelector(
 );
 
 export const selectAuthError = createSelector(selectUser, (user) => user.error);
+
+export const selectIsUserLoading = createSelector(
+	selectUser,
+	(user) => user.loading
+);
