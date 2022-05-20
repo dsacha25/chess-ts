@@ -3,7 +3,7 @@ import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import { Credentials } from '../../utils/types/credentials/credentials';
 import { NewCredentials } from '../../utils/types/new-credentials/new-credentials';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
-import { UpdateProfileData } from '../../utils/types/profile-info/profile-info-types';
+import { UpdateCredentials } from '../../utils/types/update-credentials/update-credentials';
 import UserTypes from './user.types';
 
 export interface CheckUserSessionAction {
@@ -59,7 +59,7 @@ export interface DeleteUserAccountAction {
 // ==== UPDATE PHOTO ACTION
 export interface UpdateProfileInfoAction {
 	type: UserTypes.UPDATE_PROFILE_INFO;
-	payload: UpdateProfileData;
+	payload: UpdateCredentials;
 }
 
 // ==== FETCH REQUESTS

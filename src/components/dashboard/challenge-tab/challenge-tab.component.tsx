@@ -36,6 +36,7 @@ const ChallengeTab = () => {
 				<ChallengeButton
 					onClick={() => navigate(`/${Paths.PLAY}`)}
 					color="secondary"
+					disabled
 				>
 					Enter Gulag
 				</ChallengeButton>

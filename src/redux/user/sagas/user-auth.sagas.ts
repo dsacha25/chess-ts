@@ -31,6 +31,7 @@ import {
 	LogInStartAction,
 	LogOutStartAction,
 	CreateAccountStartAction,
+	UpdateProfileInfoAction,
 } from '../user.action-types';
 import UserTypes from '../user.types';
 import { UploadResult } from 'firebase/storage';
@@ -42,6 +43,71 @@ import {
 import { NewCredentials } from '../../../utils/types/new-credentials/new-credentials';
 import { EventChannel } from 'redux-saga';
 import { ChessUser } from '../../../utils/types/chess-user/chess-user';
+import { BaseImage } from '../../../utils/types/image-types/base-image/base-image';
+
+// ==== UPDATE PROFILE
+export function* updateProfilePicture(
+	photoURL: BaseImage
+): Generator | SelectEffect {
+	try {
+		const uid = yield select(selectUserUID);
+
+		yield console.log('PHOTO URL: ', photoURL);
+
+		const url: Blob = yield fetch(photoURL.image).then((res) => res.blob());
+
+		if (url instanceof Blob) {
+			const photo: string = yield call(uploadProfilePictureToStorage, url, uid);
+
+			console.log('RESULT: ', photo);
+
+			if (!photo) {
+				console.log('NO PHOTO');
+				return;
+			}
+
+			/// UPDATE AUTH OBJECT
+			yield auth.updateUserProfile({ photoURL: photo });
+
+			/// UPDATE CHESS-USER OBJECT
+			yield db
+				.update('users', uid, {
+					photoURL: photo,
+				})
+				.catch((err) => {
+					console.log('UPLOAD ERROR: ', err);
+				});
+		}
+	} catch (err) {
+		yield put(userError(getErrorMessage(err)));
+	}
+}
+
+export function* updateProfileAsync({
+	payload: updateCredentials,
+}: UpdateProfileInfoAction) {
+	try {
+		const { displayName, email, photoURL } = updateCredentials;
+
+		if (photoURL) {
+			yield updateProfilePicture(photoURL);
+		}
+
+		if (displayName) {
+			yield auth.updateUserProfile({ displayName });
+		}
+
+		if (email) {
+			yield auth.updateEmailAddress(email);
+		}
+	} catch (err) {
+		yield put(userError(getErrorMessage(err)));
+	}
+}
+
+export function* onUpdateProfileInfo() {
+	yield takeEvery(UserTypes.UPDATE_PROFILE_INFO, updateProfileAsync);
+}
 
 // ==== UPLOAD PHOTO TO STORAGE
 export function* uploadProfilePictureToStorage(
@@ -261,5 +327,6 @@ export function* userAuthSagas() {
 		call(onDeleteUserAccount),
 		call(onOpenAuthListener),
 		call(onGetChessUserStart),
+		call(onUpdateProfileInfo),
 	]);
 }

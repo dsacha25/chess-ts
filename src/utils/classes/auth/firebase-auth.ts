@@ -18,6 +18,7 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 	updateProfile,
+	updateEmail,
 } from 'firebase/auth';
 import { ChessUser } from '../../types/chess-user/chess-user';
 import { Credentials } from '../../types/credentials/credentials';
@@ -88,10 +89,23 @@ export class FirebaseAuth implements Authentication<User> {
 		}
 	}
 
+	async updateEmailAddress(email: string) {
+		const user = this.auth.currentUser;
+		if (user) {
+			await updateEmail(user, email);
+		}
+	}
+
 	async updateUserProfile(credentials: ProfileTypes): Promise<void> {
 		const user = this.auth.currentUser;
 		if (user) {
 			await updateProfile(user, credentials);
+
+			if (credentials.displayName) {
+				await db.update('users', user.uid, {
+					displayName: credentials.displayName,
+				});
+			}
 		}
 	}
 

@@ -3,7 +3,7 @@ import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import { Credentials } from '../../utils/types/credentials/credentials';
 import { NewCredentials } from '../../utils/types/new-credentials/new-credentials';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
-import { UpdateProfileData } from '../../utils/types/profile-info/profile-info-types';
+import { UpdateCredentials } from '../../utils/types/update-credentials/update-credentials';
 import {
 	LogInStartAction,
 	LogInSuccessAction,
@@ -91,7 +91,7 @@ export const deleteUserAccount = (
 
 // ==== UPDATE PROFILE PICTURE
 export const updateProfileInfo = (
-	profileData: UpdateProfileData
+	profileData: UpdateCredentials
 ): UpdateProfileInfoAction => ({
 	type: UserTypes.UPDATE_PROFILE_INFO,
 	payload: profileData,

@@ -16,9 +16,29 @@ export const ProfileContainer = styled.div`
 	}
 `;
 
+export const UpdateProfileForm = styled.form`
+	display: grid;
+
+	grid-template-columns: auto 1fr;
+
+	gap: 20px;
+`;
+
+export const ProfileDataContainer = styled.div`
+	display: grid;
+
+	place-items: center;
+`;
+
 export const DeleteAccountButton = styled(CustomButton)`
 	width: 250px;
 	height: 60px;
 	font-size: 15px;
 	border-radius: 30px;
+`;
+
+export const SubmitUpdateButton = styled(CustomButton)`
+	place-self: center;
+	width: 400px;
+	grid-column: 1 / span 2;
 `;

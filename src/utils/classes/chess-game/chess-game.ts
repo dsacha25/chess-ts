@@ -157,7 +157,6 @@ class ChessGame {
 
 	movePieceAi(level: AiLevel, fen: BoardConfig) {
 		const chessMove = aiMove(fen, level);
-		console.log('AI MOVE:', chessMove);
 		const from = keys(chessMove)[0].toLowerCase() as Square;
 		const to = values<string>(chessMove)[0].toLowerCase() as Square;
 
