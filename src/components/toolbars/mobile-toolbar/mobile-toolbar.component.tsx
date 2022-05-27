@@ -8,11 +8,9 @@ import { FaHandMiddleFinger } from 'react-icons/fa';
 import { GiEvilLove } from 'react-icons/gi';
 import { IoStatsChart } from 'react-icons/io5';
 import { CgProfile } from 'react-icons/cg';
-import IconButton from '../../common/buttons/icon-button/icon-button.component';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectDashboardIndex } from '../../../redux/indexes/indexes.selector';
-import CustomButton from '../../common/buttons/custom-button/custom-button.component';
 
 const MobileToolbar = () => {
 	const { setDashboardIndex } = useActions();
