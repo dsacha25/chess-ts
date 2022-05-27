@@ -20,10 +20,10 @@ const LoginModule: FC<LogInModuleProps> = (props) => {
 		formState: { errors },
 	} = useForm<Credentials>();
 
-	const { reauthenticateStart } = useActions();
+	const { deleteUserAccount } = useActions();
 
 	const onSubmit: SubmitHandler<Credentials> = (data) => {
-		reauthenticateStart(data);
+		deleteUserAccount(data);
 
 		props.callback();
 	};

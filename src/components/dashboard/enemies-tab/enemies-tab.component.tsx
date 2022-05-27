@@ -48,7 +48,6 @@ const EnemiesTab = () => {
 					</Fragment>
 				)}
 			</EnemySearchContainer>
-
 			<EnemyRequestsList />
 			<EnemyList />
 		</EnemiesContainer>

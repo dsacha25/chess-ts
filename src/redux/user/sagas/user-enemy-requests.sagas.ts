@@ -56,7 +56,7 @@ export function* fetchEnemyRequestsAsync(): Generator | SelectEffect {
 
 		const enemyRequests = yield db.getAll(
 			`users/${uid}/requests`,
-			where('type', '==', 'enmity')
+			where('type', '==', 'enemy_request')
 		);
 
 		yield console.log('ENEMY REQUESTS:', enemyRequests);
