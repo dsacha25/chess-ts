@@ -9,13 +9,13 @@ export const HomePageContainer = styled.div`
 
 	place-items: center;
 	place-content: center;
-	place-self: flex-start;
 	grid-template-rows: 600px auto auto;
 	grid-gap: 20px;
 
 	@media screen and (max-width: 980px) {
 		grid-template-rows: repeat(3, auto);
 		padding-top: 40px;
+		place-self: flex-start;
 
 		height: unset;
 

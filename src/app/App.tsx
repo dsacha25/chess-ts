@@ -15,6 +15,7 @@ import useActions from '../hooks/use-actions/use-actions.hook';
 import PlayPage from '../pages/play-page/play-page.component';
 import AnalysisPage from '../pages/analysis-page/analysis-page.component';
 import PlayAiPage from '../pages/play-ai-page/play-ai-page.component';
+import Head from '../components/head/head.component';
 
 function App() {
 	const { checkUserSession, openNotificationListener, getChessUserStart } =
@@ -40,6 +41,7 @@ function App() {
 	return (
 		<div className="App">
 			<SiteContainer>
+				<Head />
 				<Header />
 				<Routes>
 					<Route index element={<HomePage />} />
