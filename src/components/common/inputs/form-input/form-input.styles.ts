@@ -32,7 +32,7 @@ export const FormInputWrapper = styled.div<FormInputProps>`
 		font-size: 36px;
 
 		@media screen and (max-width: 980px) {
-			font-size: 10px;
+			font-size: 16px;
 			letter-spacing: 0.1rem;
 		}
 	}
@@ -88,7 +88,7 @@ export const FormInputComponent = styled.input<FormInputProps>`
 	}
 
 	@media screen and (max-width: 980px) {
-		font-size: 10px;
+		font-size: 16px;
 		letter-spacing: 0.1rem;
 	}
 `;
@@ -113,7 +113,7 @@ export const InputLabel = styled.label`
 	}
 
 	@media screen and (max-width: 980px) {
-		font-size: 12px;
+		font-size: 16px;
 		letter-spacing: unset;
 		font-weight: 300;
 	}

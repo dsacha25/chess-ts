@@ -36,6 +36,7 @@ const LogInPage = () => {
 				{...register('email', { required: true })}
 				label="Email"
 				hasData={!!watch('email')}
+				autoFocus
 				error={errors.email}
 			/>
 			<FormInput

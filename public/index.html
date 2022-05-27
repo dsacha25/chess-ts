@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" >
-    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   
     <meta
       name="description"
@@ -29,6 +29,15 @@
   }
 </style>
 
+  
+<script>
+  window.addEventListener("load", afterLoaded, false);
+  function afterLoaded() {
+      document.getElementById("viewport").setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes");
+  }
+</script>
+
+
     <title>Fuck Chess</title>
   </head>
   <body>
@@ -47,4 +56,5 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+
 </html>
