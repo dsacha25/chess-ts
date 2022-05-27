@@ -20,8 +20,6 @@ const AnalysisPage = () => {
 			setInactiveGameByID(game);
 		}
 
-		console.log('GAME UID:  ', game);
-
 		// eslint-disable-next-line
 	}, []);
 
