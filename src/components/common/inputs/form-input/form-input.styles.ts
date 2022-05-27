@@ -30,6 +30,11 @@ export const FormInputWrapper = styled.div<FormInputProps>`
 	input[type='password'] {
 		letter-spacing: 0.3rem;
 		font-size: 36px;
+
+		@media screen and (max-width: 980px) {
+			font-size: 10px;
+			letter-spacing: 0.1rem;
+		}
 	}
 `;
 
@@ -81,6 +86,11 @@ export const FormInputComponent = styled.input<FormInputProps>`
 	::-webkit-calendar-picker-indicator {
 		cursor: pointer;
 	}
+
+	@media screen and (max-width: 980px) {
+		font-size: 10px;
+		letter-spacing: 0.1rem;
+	}
 `;
 
 export const InputLabel = styled.label`
@@ -100,5 +110,11 @@ export const InputLabel = styled.label`
 
 	&.shrink {
 		${labelStyles}
+	}
+
+	@media screen and (max-width: 980px) {
+		font-size: 12px;
+		letter-spacing: unset;
+		font-weight: 300;
 	}
 `;

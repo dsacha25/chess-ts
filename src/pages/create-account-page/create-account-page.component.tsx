@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ColumnsContainer } from '../../components/common/containers/grids/grids.styles';
 import {
 	CreateAccountContainer,
 	CreateAccountTitle,
+	ErrorText,
 	NewCredentialsContainer,
 	SubmitButton,
 } from './create-account-page.styles';
@@ -14,10 +15,13 @@ import useActions from '../../hooks/use-actions/use-actions.hook';
 import Spinner from '../../components/common/spinner/spinner.component';
 import { useNavigate } from 'react-router-dom';
 import Paths from '../../utils/types/paths/paths';
+import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
+import { selectAuthError } from '../../redux/user/user.selector';
 
 const CreateAccountPage = () => {
 	const navigate = useNavigate();
-	const { createAccountStart } = useActions();
+	const authError = useSelector((state) => selectAuthError(state));
+	const { createAccountStart, clearUserError } = useActions();
 	const [loading, setLoading] = useState(false);
 	const {
 		register,
@@ -39,6 +43,24 @@ const CreateAccountPage = () => {
 		setLoading(true);
 		createAccountStart(data, createAccountCallback);
 	};
+
+	useEffect(() => {
+		clearUserError();
+
+		return () => {
+			clearUserError();
+		};
+
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		if (loading && authError) {
+			setLoading(false);
+		}
+
+		// eslint-disable-next-line
+	}, [authError]);
 
 	return (
 		<CreateAccountContainer onSubmit={handleSubmit(onSubmit)}>
@@ -66,7 +88,7 @@ const CreateAccountPage = () => {
 						label="Password"
 						type="password"
 						hasData={!!watch('password')}
-						error={errors.password}
+						error={errors.password || authError}
 						autoComplete="new-password"
 					/>
 					<FormInput
@@ -84,7 +106,10 @@ const CreateAccountPage = () => {
 						autoComplete="new-password"
 					/>
 				</ColumnsContainer>
+
+				{authError && <ErrorText>{authError}</ErrorText>}
 			</NewCredentialsContainer>
+
 			<PhotoUploader
 				setValue={setValue}
 				name="photoURL"

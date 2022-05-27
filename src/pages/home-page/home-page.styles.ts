@@ -9,11 +9,17 @@ export const HomePageContainer = styled.div`
 
 	place-items: center;
 	place-content: center;
+	place-self: flex-start;
 	grid-template-rows: 600px auto auto;
 	grid-gap: 20px;
 
 	@media screen and (max-width: 980px) {
 		grid-template-rows: repeat(3, auto);
+		padding-top: 40px;
+
+		height: unset;
+
+		overflow: hidden;
 
 		h2 {
 			font-size: 40px;
@@ -41,7 +47,6 @@ export const HomeIconWrapper = styled.div`
 		width: 60vw;
 		max-width: unset;
 		height: 60vw;
-
 		border-width: 7px;
 	}
 
@@ -57,15 +62,17 @@ export const ButtonsContainer = styled(ColumnsContainer)`
 	max-width: 80vw;
 
 	@media screen and (max-width: 980px) {
-		grid-template: 1fr 1fr / 1fr;
+		grid-template: auto auto / 1fr;
 		max-width: unset;
 	} ;
 `;
 
 export const HomeActionButton = styled(CustomButton)`
-	width: 350px;
+	width: 90%;
 	height: 60px;
 
 	font-size: 22px;
 	border-radius: 30px;
+
+	margin: 10px 0;
 `;

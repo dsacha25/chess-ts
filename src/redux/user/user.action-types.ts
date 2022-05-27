@@ -99,6 +99,10 @@ export interface UserErrorAction {
 	payload: string;
 }
 
+export interface ClearUserErrorAction {
+	type: UserTypes.CLEAR_USER_ERROR;
+}
+
 type UserActions =
 	| CheckUserSessionAction
 	| LogInStartAction
@@ -117,6 +121,7 @@ type UserActions =
 	| FetchEnemyRequestsSuccessAction
 	| AcceptEnemyRequestAction
 	| RejectEnemyRequestAction
-	| UserErrorAction;
+	| UserErrorAction
+	| ClearUserErrorAction;
 
 export default UserActions;

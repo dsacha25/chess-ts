@@ -23,6 +23,7 @@ import {
 	RejectEnemyRequestAction,
 	ReauthenticateStartActon,
 	ReauthenticateSuccessAction,
+	ClearUserErrorAction,
 } from './user.action-types';
 import UserTypes from './user.types';
 
@@ -142,4 +143,8 @@ export const rejectEnemyRequest = (
 export const userError = (error: string): UserErrorAction => ({
 	type: UserTypes.USER_ERROR,
 	payload: error,
+});
+
+export const clearUserError = (): ClearUserErrorAction => ({
+	type: UserTypes.CLEAR_USER_ERROR,
 });
