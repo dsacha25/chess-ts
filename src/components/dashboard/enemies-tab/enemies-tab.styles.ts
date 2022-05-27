@@ -7,12 +7,6 @@ export const EnemiesContainer = styled.div`
 
 	place-items: center;
 
-	p {
-		color: white;
-		font-size: 20px;
-		text-align: center;
-	}
-
 	grid-template-rows: auto auto auto 1fr;
 `;
 

@@ -4,6 +4,7 @@ import {
 	ChallengeButton,
 	EnemyContainer,
 	EnemyName,
+	EnemyRating,
 } from './enemy-list-item.styles';
 import { EnemyListItemProps } from './types';
 import { GiBattleAxe } from 'react-icons/gi';
@@ -29,9 +30,12 @@ const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
 		sendGameChallenge(enemy.uid);
 	};
 
+	if (!enemy) return null;
+
 	return (
 		<EnemyContainer>
 			<EnemyName>{enemy.displayName}</EnemyName>
+			<EnemyRating>({enemy.rating})</EnemyRating>
 			<ChallengeButton
 				onClick={handleChallengeEnemy}
 				color="secondary"

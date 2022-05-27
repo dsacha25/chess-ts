@@ -1,9 +1,9 @@
 import React from 'react';
-import useActions from '../../hooks/use-actions/use-actions.hook';
-import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
-import { selectDashboardIndex } from '../../redux/indexes/indexes.selector';
-import ToolbarChip from '../chips/toolbar-chip/toolbar-chip.component';
-import ExpandingButton from '../common/buttons/expanding-button/expanding-button.component';
+import useActions from '../../../hooks/use-actions/use-actions.hook';
+import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
+import { selectDashboardIndex } from '../../../redux/indexes/indexes.selector';
+import ToolbarChip from '../../chips/toolbar-chip/toolbar-chip.component';
+import ExpandingButton from '../../common/buttons/expanding-button/expanding-button.component';
 import { AestheticBar, ToolbarContainer } from './toolbar.styles';
 
 import { FaHandMiddleFinger } from 'react-icons/fa';

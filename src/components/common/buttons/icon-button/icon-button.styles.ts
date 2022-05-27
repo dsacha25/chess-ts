@@ -15,15 +15,15 @@ const primary = '#818A99';
 const secondary = '#C4CBD2';
 
 const activeIconStyles = css`
-	border: 3px solid ${({ theme }) => theme.color.main};
+	border: 3px solid ${({ theme }) => theme.main};
 
 	.react-icons {
-		color: ${({ theme }) => theme.color.main} !important;
+		color: ${({ theme }) => theme.main} !important;
 	}
 `;
 const invertedActiveIconStyles = css`
-	border: 3px solid ${({ theme }) => theme.color.main};
-	background-color: ${({ theme }) => theme.color.main};
+	border: 3px solid ${({ theme }) => theme.main};
+	background-color: ${({ theme }) => theme.main};
 `;
 
 const isIconButtonActive = ({ active }: BaseButtonProps) => {
@@ -38,7 +38,7 @@ const iconStyles = css`
 
 	&:hover {
 		.react-icons {
-			color: ${({ theme }) => theme.color.main};
+			color: ${({ theme }) => theme.main};
 		}
 	}
 
@@ -52,7 +52,7 @@ const invertedStyles = css`
 	${isInvertIconButtonActive};
 
 	&:hover {
-		background-color: ${({ theme }) => theme.color.main};
+		background-color: ${({ theme }) => theme.main};
 	}
 
 	.react-icons {
@@ -82,7 +82,7 @@ export const IconButtonMain = styled(BaseButton)<BaseButtonProps>`
 	border: 3px solid ${primary};
 
 	:hover {
-		border: 3px solid ${({ theme }) => theme.color.main};
+		border: 3px solid ${({ theme }) => theme.main};
 	}
 
 	:focus {

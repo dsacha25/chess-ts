@@ -14,6 +14,7 @@ import { db } from '../../utils/classes/firestore/firestore-app';
 import { listener } from '../../utils/classes/sagas/saga-listener';
 import getErrorMessage from '../../utils/helpers/errors/get-error-message';
 import { Notification } from '../../utils/types/notification/notification';
+import { fetchEnemiesStart } from '../enemies/enemies.actions';
 import {
 	fetchActiveGamesStart,
 	fetchGameChallengesStart,
@@ -75,22 +76,51 @@ export function* getNotifications(
 		return;
 	}
 
-	let fetchedGames = false;
+	let notificationFetches = {
+		enemyRequest: false,
+		enemyRequestAccepted: false,
+		challenge: false,
+		challengeAccepted: false,
+		opponentMoved: false,
+		gameOver: false,
+		opponentResigned: false,
+		drawRequested: false,
+		drawAccepted: false,
+		drawRejected: false,
+	};
+
 	for (const notification of notifications) {
 		if (notification.unread) {
 			yield put(addUnreadNotification(notification));
 
-			if (notification.type === 'challenge') {
+			if (notification.type === 'challenge' && !notificationFetches.challenge) {
 				yield put(fetchGameChallengesStart());
+				notificationFetches.challenge = true;
 			}
 
-			if (notification.type === 'challenge_accepted') {
+			if (
+				notification.type === 'challenge_accepted' &&
+				!notificationFetches.challengeAccepted
+			) {
 				yield put(fetchActiveGamesStart());
+				notificationFetches.challengeAccepted = true;
 			}
 
-			if (notification.type === 'opponent_moved' && !fetchedGames) {
+			if (
+				notification.type === 'opponent_moved' &&
+				!notificationFetches.opponentMoved
+			) {
 				yield put(fetchActiveGamesStart());
-				fetchedGames = true;
+				notificationFetches.opponentMoved = true;
+			}
+
+			if (
+				notification.type === 'request_accepted' &&
+				!notificationFetches.enemyRequestAccepted
+			) {
+				yield put(fetchEnemiesStart());
+
+				notificationFetches.enemyRequestAccepted = true;
 			}
 		} else {
 			yield put(addReadNotification(notification));

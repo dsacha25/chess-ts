@@ -7,7 +7,7 @@ export const EnemyContainer = styled.div`
 	width: 100%;
 	height: 60px;
 
-	grid-template-columns: 1fr 100px;
+	grid-template-columns: auto 1fr 100px;
 
 	border: 1px solid ${({ theme }) => theme.border};
 	border-radius: 30px;
@@ -22,6 +22,12 @@ export const EnemyName = styled.p`
 	font-weight: 800;
 	color: ${({ theme }) => theme.main} !important;
 	margin-left: 25px;
+`;
+
+export const EnemyRating = styled.p`
+	font-size: 18px;
+	font-weight: 200;
+	color: ${({ theme }) => theme.grey};
 `;
 
 export const ChallengeButton = styled(CustomButton)`
