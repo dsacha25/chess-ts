@@ -19,7 +19,7 @@ const Head = () => {
 			setColor(colors.default);
 		}
 
-		if (pathname === '/create-account') {
+		if (pathname === '/create-account' || pathname === '/login') {
 			setColor(colors.createAccount);
 		}
 
