@@ -12,6 +12,16 @@ export const ChallengesContainer = styled.div`
 	place-items: center;
 
 	color: white;
+
+	@media screen and (max-width: 980px) {
+		/* height: 100vh; */
+		width: 100vw;
+		overflow-y: auto;
+		place-content: center;
+		h2 {
+			font-size: 20px;
+		}
+	}
 `;
 
 export const ButtonsContainer = styled.div`
@@ -20,6 +30,11 @@ export const ButtonsContainer = styled.div`
 	place-items: center;
 
 	grid-gap: 40px;
+
+	@media screen and (max-width: 980px) {
+		grid-template: repeat(3, 1fr) / 1fr;
+		grid-gap: unset;
+	}
 `;
 
 export const ChallengeButton = styled(CustomButton)`
@@ -39,4 +54,8 @@ export const ListsContainer = styled.div`
 	max-height: 63vh;
 
 	overflow-y: scroll;
+
+	@media screen and (max-width: 980px) {
+		height: calc(100% - 60px);
+	}
 `;

@@ -2,6 +2,8 @@ import React, { FC, useState } from 'react';
 import {
 	AcceptChallengeButton,
 	ChallengeItem,
+	ChallengeResponses,
+	EnemyInfo,
 	EnemyName,
 	RejectChallengeButton,
 } from './challenges-list-item.styles';
@@ -31,21 +33,28 @@ const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
 
 	return (
 		<ChallengeItem>
-			<EnemyName>{enemy.displayName}</EnemyName>
-			<AcceptChallengeButton onClick={handleAcceptChallenge} color="main">
-				{loading && accepting ? (
-					<Spinner size="30px" />
-				) : (
-					<GiBattleAxe size="30px" />
-				)}
-			</AcceptChallengeButton>
-			<RejectChallengeButton onClick={handleRejectChallenge} color="secondary">
-				{loading && rejecting ? (
-					<Spinner size="30px" />
-				) : (
-					<IoClose size="34px" />
-				)}
-			</RejectChallengeButton>
+			<EnemyInfo>
+				<EnemyName>{enemy.displayName}</EnemyName>
+			</EnemyInfo>
+			<ChallengeResponses>
+				<AcceptChallengeButton onClick={handleAcceptChallenge} color="main">
+					{loading && accepting ? (
+						<Spinner size="30px" />
+					) : (
+						<GiBattleAxe size="30px" />
+					)}
+				</AcceptChallengeButton>
+				<RejectChallengeButton
+					onClick={handleRejectChallenge}
+					color="secondary"
+				>
+					{loading && rejecting ? (
+						<Spinner size="30px" />
+					) : (
+						<IoClose size="34px" />
+					)}
+				</RejectChallengeButton>
+			</ChallengeResponses>
 		</ChallengeItem>
 	);
 };
