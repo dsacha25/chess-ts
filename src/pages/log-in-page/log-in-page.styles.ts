@@ -12,12 +12,26 @@ export const LogInContainer = styled.form`
 	position: relative;
 	background-color: ${({ theme }) => theme.light};
 	padding: 50px;
+
+	@media screen and (max-width: 980px) {
+		width: 100vw;
+		height: 100vh;
+
+		grid-template-rows: auto 100px auto auto 1fr;
+
+		gap: 20px;
+
+		border-radius: 0px;
+		padding: 15px;
+		margin: unset;
+
+		box-shadow: unset;
+	}
 `;
 
 export const LoginTitle = styled(Title)`
 	font-weight: 200;
 	justify-self: flex-start;
-	/* font-size: 30px; */
 `;
 
 export const LogInButton = styled(CustomButton)`
@@ -27,4 +41,12 @@ export const LogInButton = styled(CustomButton)`
 	justify-self: right;
 	width: 25%;
 	border-radius: 30px;
+
+	@media screen and (max-width: 980px) {
+		width: auto;
+		justify-self: center;
+		position: unset;
+		right: unset;
+		bottom: unset;
+	}
 `;
