@@ -11,10 +11,14 @@ import { selectProfilePicture } from '../../redux/user/user.selector';
 import UsersOnly from '../../HOCs/with-user/with-user.hoc';
 import useActions from '../../hooks/use-actions/use-actions.hook';
 import NotificationButton from '../notifications/notification-button/notification-button.component';
+import useWindowSize from '../../hooks/use-window-size/use-window-size.hook';
 
 const Header = () => {
 	const photoURL = useSelector((state) => selectProfilePicture(state));
 	const { logOutStart } = useActions();
+	const { width } = useWindowSize();
+
+	if (width <= 980) return null;
 
 	return createPortal(
 		<UsersOnly>

@@ -14,6 +14,6 @@ export const NotificationFlag = styled.div<NotifFlagProps>`
 export const NotifButtonFlag = styled(NotificationFlag)`
 	position: absolute;
 	top: -4px;
-	right: -4px;
+	left: -4px;
 	z-index: 1;
 `;

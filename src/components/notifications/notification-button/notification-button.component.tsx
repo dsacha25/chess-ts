@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import {
 	NotifButton,
 	NotificationButtonContainer,
@@ -10,15 +10,20 @@ import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook
 import { selectUnreadNotifications } from '../../../redux/notifications/notifications.selector';
 import { ClickAwayListener } from '@mui/material';
 import { NotifButtonFlag } from '../notification-flag/notification-flag.styles';
+import { NotificationButtonProps } from './types';
 
-const NotificationButton = () => {
+const NotificationButton: FC<NotificationButtonProps> = ({ mobile }) => {
 	const unreadNotifs = useSelector((state) => selectUnreadNotifications(state));
 	const [open, setOpen] = useState(false);
 
 	return (
 		<ClickAwayListener onClickAway={() => setOpen(false)}>
-			<NotificationButtonContainer>
-				<NotifButton onClick={() => setOpen(!open)} color="main">
+			<NotificationButtonContainer mobile={mobile}>
+				<NotifButton
+					mobile={mobile}
+					onClick={() => setOpen(!open)}
+					color={mobile ? 'light' : 'main'}
+				>
 					<NotifButtonFlag unread={unreadNotifs.length > 0} />
 					<RiNotificationFill size="28px" />
 				</NotifButton>

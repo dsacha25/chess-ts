@@ -1,3 +1,3 @@
 export interface NotificationButtonProps {
-	hasUnreadNotifs: boolean;
+	mobile?: boolean;
 }
