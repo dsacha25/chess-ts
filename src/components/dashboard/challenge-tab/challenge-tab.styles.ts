@@ -15,12 +15,19 @@ export const ChallengesContainer = styled.div`
 
 	@media screen and (max-width: 980px) {
 		/* height: 100vh; */
-		width: 100vw;
+		/* width: 100vw;
 		overflow-y: auto;
-		place-content: center;
+		place-content: center; */
 		h2 {
 			font-size: 20px;
 		}
+
+		display: flex;
+		width: 100vw;
+		overflow-y: auto;
+		flex-direction: column;
+		height: calc(100vh - 70px);
+		justify-content: space-between;
 	}
 `;
 
@@ -32,30 +39,34 @@ export const ButtonsContainer = styled.div`
 	grid-gap: 40px;
 
 	@media screen and (max-width: 980px) {
-		grid-template: repeat(3, 1fr) / 1fr;
 		grid-gap: unset;
 	}
 `;
 
 export const ChallengeButton = styled(CustomButton)`
-	width: 92%;
+	display: flex;
+	width: auto;
 	height: 60px;
+
+	gap: 20px;
 
 	font-size: 18px;
 
 	border-radius: 30px;
+
+	justify-content: space-between;
 `;
 
 export const ListsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 
-	width: 100%;
+	width: inherit;
 	max-height: 63vh;
 
 	overflow-y: scroll;
 
 	@media screen and (max-width: 980px) {
-		height: calc(100% - 60px);
+		height: calc(100% - 70px);
 	}
 `;

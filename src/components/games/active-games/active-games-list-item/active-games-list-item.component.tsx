@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ListItemText } from '../../../common/lists/list-item-text/list-item-text.styles';
 import { ListItem } from '../../../common/lists/list-item/list-item.styles';
-import { JoinGameButton } from './active-games-list-item.styles';
+import {
+	ActiveListItem,
+	JoinGameButton,
+} from './active-games-list-item.styles';
 import { ActiveGamesListItemProps } from './types';
 import { FaChessKing } from 'react-icons/fa';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
@@ -37,12 +40,12 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 	// * Display screenshot of current board position
 
 	return (
-		<ListItem columns={1}>
+		<ActiveListItem columns={1}>
 			<ListItemText>{opponentName}</ListItemText>
 			<JoinGameButton onClick={handleJoinGame} color="secondary">
 				<FaChessKing size="30px" />
 			</JoinGameButton>
-		</ListItem>
+		</ActiveListItem>
 	);
 };
 

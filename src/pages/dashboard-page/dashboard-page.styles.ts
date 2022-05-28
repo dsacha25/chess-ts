@@ -10,9 +10,10 @@ export const DashboardContainer = styled.div`
 	position: relative;
 
 	@media screen and (max-width: 980px) {
+		grid-template-columns: unset;
 		padding: 0;
 		max-width: 100vw;
-		/* overflow-x: hidden; */
+		height: 100%;
 		overflow: hidden;
 	}
 `;

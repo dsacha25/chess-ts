@@ -3,6 +3,13 @@ import styled from 'styled-components';
 export const InactiveGamesStatsContainer = styled.div`
 	display: grid;
 	grid-template-columns: 1fr auto;
+	max-width: 100vw;
+
+	@media screen and (max-width: 980px) {
+		grid-template: 30px 30px / 1fr;
+
+		margin-bottom: 20px;
+	}
 `;
 
 export const GameStats = styled.div`

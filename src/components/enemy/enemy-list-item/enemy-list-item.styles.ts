@@ -22,12 +22,22 @@ export const EnemyName = styled.p`
 	font-weight: 800;
 	color: ${({ theme }) => theme.main} !important;
 	margin-left: 25px;
+
+	@media screen and (max-width: 980px) {
+		font-size: 1rem;
+		white-space: nowrap;
+		overflow: auto;
+	}
 `;
 
 export const EnemyRating = styled.p`
 	font-size: 18px;
 	font-weight: 200;
 	color: ${({ theme }) => theme.grey};
+
+	@media screen and (max-width: 980px) {
+		font-size: 0.8rem;
+	}
 `;
 
 export const ChallengeButton = styled(CustomButton)`

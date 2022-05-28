@@ -12,4 +12,9 @@ export const List = styled.ul`
 
 	margin: 10px;
 	padding: 0;
+
+	@media screen and (max-width: 980px) {
+		width: 95%;
+		max-width: unset;
+	}
 `;

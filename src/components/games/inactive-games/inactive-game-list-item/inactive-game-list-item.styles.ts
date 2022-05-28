@@ -11,4 +11,8 @@ export const InactiveGameAnalysisButton = styled(CustomButton)`
 
 export const GameDate = styled.p`
 	color: ${({ theme }) => theme.main};
+
+	@media screen and (max-width: 980px) {
+		display: none;
+	}
 `;

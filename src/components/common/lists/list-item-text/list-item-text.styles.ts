@@ -5,4 +5,10 @@ export const ListItemText = styled.p`
 	font-weight: 800;
 	color: ${({ theme }) => theme.main} !important;
 	margin-left: 25px;
+
+	@media screen and (max-width: 980px) {
+		white-space: nowrap;
+		font-size: 16px;
+		overflow-x: auto;
+	}
 `;

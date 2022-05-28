@@ -5,10 +5,10 @@ export const MobileToolbarContainer = styled.div`
 	display: grid;
 
 	width: 100vw;
-	height: 60px;
+	height: 70px;
 	overflow: hidden;
 
-	position: absolute;
+	position: fixed;
 
 	bottom: 0;
 	place-items: center;
@@ -20,7 +20,7 @@ export const MobileToolbarContainer = styled.div`
 
 export const MobileToolbarButton = styled(CustomButton)`
 	width: 100%;
-	height: 60px;
+	height: 70px;
 
 	border-radius: 0;
 	margin: 0;
@@ -45,7 +45,8 @@ export const MobileLogoutContainer = styled.div`
 	position: fixed;
 
 	top: 20%;
-
+	left: auto;
+	right: auto;
 	z-index: 10;
 `;
 

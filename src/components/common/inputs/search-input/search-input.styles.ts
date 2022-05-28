@@ -10,6 +10,10 @@ export const SearchInputContainer = styled.form`
 	place-items: center;
 
 	position: relative;
+
+	@media screen and (max-width: 980px) {
+		min-width: 370px;
+	}
 `;
 
 export const SearchButton = styled(CustomButton)`
@@ -23,4 +27,9 @@ export const SearchButton = styled(CustomButton)`
 	z-index: 1;
 
 	right: 3px;
+
+	@media screen and (max-width: 980px) {
+		height: 38px;
+		width: 38px;
+	}
 `;

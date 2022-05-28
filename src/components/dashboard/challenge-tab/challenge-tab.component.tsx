@@ -13,8 +13,14 @@ import ChallengesList from '../../challenges/challenges-list/challenges-list.com
 import ActiveGamesList from '../../games/active-games/active-games-list/active-games-list.component';
 import InactiveGamesList from '../../games/inactive-games/inactive-games-list/inactive-games-list.component';
 
+import { GiBattleAxe } from 'react-icons/gi';
+import { ImSad2 } from 'react-icons/im';
+import { MdComputer } from 'react-icons/md';
+import useWindowSize from '../../../hooks/use-window-size/use-window-size.hook';
+
 const ChallengeTab = () => {
 	const navigate = useNavigate();
+	const { width } = useWindowSize();
 	const {
 		fetchGameChallengesStart,
 		fetchActiveGamesStart,
@@ -38,19 +44,21 @@ const ChallengeTab = () => {
 					color="secondary"
 					disabled
 				>
-					Enter Gulag
+					{width > 980 && 'Gulag'}
+					<GiBattleAxe size="30px" />
 				</ChallengeButton>
 				<ChallengeButton onClick={() => navigate(`/${Paths.AI}`)} color="light">
-					Practice Sucking
+					{width > 980 && 'AI'}
+					<MdComputer size="30px" />
 				</ChallengeButton>
 				<ChallengeButton
 					onClick={() => navigate(`/${Paths.ANALYSIS}`)}
 					color="main"
 				>
-					Play With Yourself
+					{width > 980 && 'Solo'}
+					<ImSad2 size="30px" />
 				</ChallengeButton>
 			</ButtonsContainer>
-			Challenge Someone to a Game
 			<ListsContainer>
 				<ChallengesList />
 				<ActiveGamesList />
