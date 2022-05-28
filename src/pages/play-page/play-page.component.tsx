@@ -28,8 +28,6 @@ const PlayPage = () => {
 		<PlayContainer>
 			{width <= 980 ? <MobileGameToolbar /> : <GameToolbar />}
 			{width <= 980 ? <MobileGameLayout /> : <DesktopGameLayout />}
-			{/* {activeGame ? <ChessboardDisplay /> : <ActiveGameError />}
-			<AuxiliaryPanel /> */}
 		</PlayContainer>
 	);
 };

@@ -8,17 +8,15 @@ export const BoardContainer = styled.div<BoardProps>`
 	display: grid;
 	position: relative;
 	place-items: center;
-	/* width: 700px; */
-	/* height: 100%; */
 	justify-self: center;
 	grid-gap: 5px;
 
 	grid-template-rows: auto ${({ size }) => size}px auto;
 
 	@media screen and (max-width: 980px) {
-		height: 80vh;
 		justify-self: flex-start;
 		margin-top: 20px;
+		overflow: hidden;
 	}
 `;
 

@@ -10,7 +10,6 @@ import {
 	RejectActionButton,
 } from './auxiliary-panel.styles';
 
-import { BiMessage } from 'react-icons/bi';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import {
 	selectChatUnread,
@@ -23,9 +22,12 @@ import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import GameHistory from '../history/game-history/game-history.component';
 import { selectAuxPanelIndex } from '../../../../../redux/indexes/indexes.selector';
 import GameChat from '../chat/game-chat/game-chat.component';
+
+import { BiMessage } from 'react-icons/bi';
 import { FiCheck } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { FaChessBishop } from 'react-icons/fa';
+
 import Spinner from '../../../../common/spinner/spinner.component';
 import { NotifButtonFlag } from '../../../../notifications/notification-flag/notification-flag.styles';
 import { AuxActions } from './types';

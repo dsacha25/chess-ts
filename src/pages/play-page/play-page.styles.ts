@@ -12,5 +12,7 @@ export const PlayContainer = styled.div`
 	@media screen and (max-width: 980px) {
 		grid-template-columns: 1fr;
 		padding: 0;
+		max-height: calc(100vh - 70px);
+		overflow: hidden;
 	}
 `;
