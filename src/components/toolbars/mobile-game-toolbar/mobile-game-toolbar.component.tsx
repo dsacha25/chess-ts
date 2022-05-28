@@ -27,6 +27,26 @@ const MobileGameToolbar = () => {
 	const index = useSelector((state) => selectMobileGameIndex(state));
 
 	const [open, setOpen] = useState(false);
+	const [clickedAway, setClickedAway] = useState(false);
+
+	const toggleLogout = (source: string) => {
+		if (source === 'clickAway') {
+			setClickedAway(true);
+		}
+
+		if (!open && clickedAway) {
+			setOpen(true);
+			setClickedAway(false);
+		}
+		if (open && clickedAway) {
+			setOpen(false);
+			setClickedAway(false);
+		}
+
+		if (!clickedAway && !open) {
+			setOpen(true);
+		}
+	};
 
 	return (
 		<MobileGameToolbarContainer>
@@ -47,12 +67,12 @@ const MobileGameToolbar = () => {
 				)}
 			</MobileToolbarButton>
 
-			<MobileToolbarButton onClick={() => setOpen(!open)} color="light">
+			<MobileToolbarButton onClick={() => toggleLogout('button')} color="light">
 				<RiLogoutCircleRLine color="black" size="30px" />
 			</MobileToolbarButton>
 
 			{open && (
-				<ClickAwayListener onClickAway={() => setOpen(false)}>
+				<ClickAwayListener onClickAway={() => toggleLogout('clickAway')}>
 					<MobileLogoutContainer>
 						<Title fontSize="30px">Log Out?</Title>
 						<MobileLogoutResponses>

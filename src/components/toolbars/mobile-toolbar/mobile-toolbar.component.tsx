@@ -28,6 +28,17 @@ const MobileToolbar = () => {
 
 	const index = useSelector((state) => selectDashboardIndex(state));
 
+	const toggleLogout = (isOpen: boolean, source: string) => {
+		console.log('SOURCE: ', source);
+
+		if (!open && isOpen) {
+			setOpen(true);
+		}
+		if (open && !isOpen) {
+			setOpen(false);
+		}
+	};
+
 	return (
 		<MobileToolbarContainer>
 			<MobileToolbarButton
@@ -59,12 +70,15 @@ const MobileToolbar = () => {
 				<CgProfile color="black" size="32px" />
 			</MobileToolbarButton>
 			<NotificationButton mobile />
-			<MobileToolbarButton onClick={() => setOpen(!open)} color="light">
+			<MobileToolbarButton
+				onClick={() => toggleLogout(!open, 'button')}
+				color="light"
+			>
 				<RiLogoutCircleRLine color="black" size="30px" />
 			</MobileToolbarButton>
 
 			{open && (
-				<ClickAwayListener onClickAway={() => setOpen(false)}>
+				<ClickAwayListener onClickAway={() => toggleLogout(!open, 'callback')}>
 					<MobileLogoutContainer>
 						<Title fontSize="30px">Log Out?</Title>
 						<MobileLogoutResponses>

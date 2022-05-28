@@ -15,7 +15,7 @@ export const BoardContainer = styled.div<BoardProps>`
 
 	@media screen and (max-width: 980px) {
 		justify-self: flex-start;
-		margin-top: 20px;
+		/* margin-top: 20px; */
 		overflow: hidden;
 	}
 `;

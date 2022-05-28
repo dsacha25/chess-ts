@@ -15,4 +15,5 @@ export const MobileGameToolbarContainer = styled.div`
 	grid-template-columns: repeat(3, 1fr);
 
 	background-color: ${({ theme }) => theme.light};
+	z-index: 3;
 `;

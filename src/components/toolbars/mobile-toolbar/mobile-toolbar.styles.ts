@@ -16,6 +16,7 @@ export const MobileToolbarContainer = styled.div`
 	grid-template-columns: repeat(6, 1fr);
 
 	background-color: ${({ theme }) => theme.light};
+	z-index: 3;
 `;
 
 export const MobileToolbarButton = styled(CustomButton)`
@@ -31,8 +32,10 @@ export const MobileToolbarButton = styled(CustomButton)`
 
 export const MobileLogoutContainer = styled.div`
 	display: grid;
-	width: 90vw;
-	height: 25vh;
+	width: 100vw;
+	height: 40vh;
+
+	padding: 30px 0;
 
 	place-content: center;
 
@@ -40,14 +43,13 @@ export const MobileLogoutContainer = styled.div`
 	place-items: center;
 
 	background-color: ${({ theme }) => theme.light};
-	border-radius: 30px;
 
 	position: fixed;
 
 	top: 20%;
 	left: auto;
 	right: auto;
-	z-index: 10;
+	z-index: 20;
 `;
 
 export const MobileLogoutText = styled.p`
