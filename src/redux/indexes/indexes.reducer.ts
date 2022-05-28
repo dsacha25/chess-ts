@@ -5,11 +5,13 @@ import { produce } from 'immer';
 export interface IndexesState {
 	dashboardIndex: number;
 	auxPanelIndex: boolean;
+	mobileGameIndex: boolean;
 }
 
 const INITIAL_STATE: IndexesState = {
 	dashboardIndex: 0,
 	auxPanelIndex: false,
+	mobileGameIndex: false,
 };
 
 const indexesReducer = produce(
@@ -20,6 +22,9 @@ const indexesReducer = produce(
 				return state;
 			case IndexesTypes.SET_AUX_PANEL_INDEX:
 				state.auxPanelIndex = action.payload;
+				return state;
+			case IndexesTypes.SET_MOBILE_GAME_INDEX:
+				state.mobileGameIndex = action.payload;
 				return state;
 			default:
 				return state;

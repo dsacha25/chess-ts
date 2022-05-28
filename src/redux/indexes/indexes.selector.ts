@@ -12,3 +12,8 @@ export const selectAuxPanelIndex = createSelector(
 	selectIndexes,
 	(indexes) => indexes.auxPanelIndex
 );
+
+export const selectMobileGameIndex = createSelector(
+	selectIndexes,
+	(index) => index.mobileGameIndex
+);

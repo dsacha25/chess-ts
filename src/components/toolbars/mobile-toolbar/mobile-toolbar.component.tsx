@@ -11,6 +11,7 @@ import { FaHandMiddleFinger } from 'react-icons/fa';
 import { GiEvilLove } from 'react-icons/gi';
 import { IoStatsChart } from 'react-icons/io5';
 import { CgProfile } from 'react-icons/cg';
+import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { FiCheck } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 
@@ -18,7 +19,6 @@ import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectDashboardIndex } from '../../../redux/indexes/indexes.selector';
 import NotificationButton from '../../notifications/notification-button/notification-button.component';
-import { RiLogoutCircleRLine } from 'react-icons/ri';
 import Title from '../../common/title/title.styles';
 import { ClickAwayListener } from '@mui/material';
 

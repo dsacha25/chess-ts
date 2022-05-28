@@ -14,7 +14,7 @@ export const List = styled.ul`
 	padding: 0;
 
 	@media screen and (max-width: 980px) {
-		width: 95%;
+		width: 94%;
 		max-width: unset;
 	}
 `;

@@ -10,8 +10,14 @@ export interface SetAuxiliaryPanelIndexAction {
 	payload: boolean;
 }
 
+export interface SetMobileGameIndexAction {
+	type: IndexesTypes.SET_MOBILE_GAME_INDEX;
+	payload: boolean;
+}
+
 type IndexesActionTypes =
 	| SetUserDashboardIndexAction
-	| SetAuxiliaryPanelIndexAction;
+	| SetAuxiliaryPanelIndexAction
+	| SetMobileGameIndexAction;
 
 export default IndexesActionTypes;

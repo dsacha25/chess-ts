@@ -27,7 +27,7 @@ export const ChallengesContainer = styled.div`
 		overflow-y: auto;
 		flex-direction: column;
 		height: calc(100vh - 70px);
-		justify-content: space-between;
+		justify-content: flex-start;
 	}
 `;
 
@@ -68,5 +68,6 @@ export const ListsContainer = styled.div`
 
 	@media screen and (max-width: 980px) {
 		height: calc(100% - 70px);
+		max-height: unset;
 	}
 `;

@@ -22,10 +22,12 @@ import {
 import { useLocation } from 'react-router-dom';
 import { selectUserUID } from '../../../../redux/user/user.selector';
 import { find } from 'lodash';
+import useWindowSize from '../../../../hooks/use-window-size/use-window-size.hook';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
 	const location = useLocation();
+	const { width } = useWindowSize();
 
 	const activeGame = useSelector((state) => selectActiveGame(state));
 	const uid = useSelector((state) => selectUserUID(state));
@@ -52,7 +54,13 @@ const ChessboardDisplay = () => {
 	const [gameOver, setGameOver] = useState(
 		game.isGameOver(fen) || activeGame?.gameOver
 	);
-	const boardSize = 700;
+	const [boardSize, setBoardSize] = useState(700);
+
+	useEffect(() => {
+		if (width <= 980) {
+			setBoardSize(width - 20);
+		}
+	}, [width]);
 
 	useEffect(() => {
 		if (activeGame) {
@@ -64,14 +72,6 @@ const ChessboardDisplay = () => {
 
 		// eslint-disable-next-line
 	}, [activeGame]);
-
-	useEffect(() => {
-		return () => {
-			clearActiveGame();
-			// setFen(fen);
-		};
-		// eslint-disable-next-line
-	}, []);
 
 	useEffect(() => {
 		if (location.pathname === '/play' && activeGame) {

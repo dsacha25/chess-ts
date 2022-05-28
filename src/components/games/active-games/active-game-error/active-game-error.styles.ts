@@ -17,6 +17,11 @@ export const ActiveGameErrorContainer = styled.div`
 	background-color: ${({ theme }) => theme.warn};
 
 	border-radius: 60px;
+
+	@media screen and (max-width: 980px) {
+		width: 94vw;
+		height: 400px;
+	}
 `;
 
 export const GameErrorMessage = styled.p`

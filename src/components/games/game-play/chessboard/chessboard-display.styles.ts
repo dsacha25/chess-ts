@@ -14,6 +14,12 @@ export const BoardContainer = styled.div<BoardProps>`
 	grid-gap: 5px;
 
 	grid-template-rows: auto ${({ size }) => size}px auto;
+
+	@media screen and (max-width: 980px) {
+		height: 80vh;
+		justify-self: flex-start;
+		margin-top: 20px;
+	}
 `;
 
 export const CustomButton = styled.button`
