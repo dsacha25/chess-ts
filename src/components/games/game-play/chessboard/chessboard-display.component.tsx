@@ -38,7 +38,6 @@ const ChessboardDisplay = () => {
 
 	const {
 		movePiece,
-		clearActiveGame,
 		setFen,
 		setOrientation,
 		fetchEnemyInfoStart,
