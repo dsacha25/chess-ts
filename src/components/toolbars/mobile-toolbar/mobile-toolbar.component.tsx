@@ -56,7 +56,6 @@ const MobileToolbar = () => {
 				color="light"
 				active={index === 3}
 			>
-				{/* <CgProfile color="black" size="32px" /> */}
 				<AvatarChip size="30px" url={photoURL} />
 			</MobileToolbarButton>
 			<NotificationButton mobile />

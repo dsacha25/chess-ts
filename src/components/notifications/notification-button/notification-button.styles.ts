@@ -23,7 +23,7 @@ const mobileContainerStyles = css`
 		left: 0;
 
 		width: 100vw;
-		height: calc(100vh - 60px);
+		height: calc(100% - 70px);
 		border-radius: 0;
 		border: none;
 		z-index: 10;

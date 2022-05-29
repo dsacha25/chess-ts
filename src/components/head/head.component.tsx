@@ -8,6 +8,7 @@ const Head = () => {
 	const colors: WebsiteColors = {
 		default: '#E9E4F0',
 		createAccount: '#bccbf2',
+		dashboard: '#b1b7d2',
 	};
 
 	const [color, setColor] = useState(colors.default);
@@ -21,6 +22,10 @@ const Head = () => {
 
 		if (pathname === '/create-account' || pathname === '/login') {
 			setColor(colors.createAccount);
+		}
+
+		if (pathname === '/dashboard') {
+			setColor(colors.dashboard);
 		}
 
 		// eslint-disable-next-line
