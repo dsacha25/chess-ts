@@ -9,14 +9,7 @@ export const AiLevelSelectContainer = styled.div`
 	place-self: center;
 	place-items: center;
 
-	@media screen and (max-width: 980px) {
-		grid-template-rows: 60px 1fr;
-		width: 100vw;
-		height: calc(100vh - 70px);
-		gap: 40px;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
+5r
 `;
 
 export const AiLevelSelectOptions = styled.div`

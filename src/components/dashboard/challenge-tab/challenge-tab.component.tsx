@@ -41,9 +41,8 @@ const ChallengeTab = () => {
 			<TabTitle>Challenge Area</TabTitle>
 			<ButtonsContainer>
 				<ChallengeButton
-					onClick={() => navigate(`/${Paths.PLAY}`)}
+					onClick={() => navigate(`/${Paths.GULAG}`)}
 					color="secondary"
-					disabled
 				>
 					{width > 980 && 'Gulag'}
 					<GiBattleAxe size="30px" />

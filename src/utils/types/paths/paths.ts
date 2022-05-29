@@ -4,6 +4,7 @@ enum Paths {
 	DASHBOARD = 'dashboard',
 	PROFILE = 'profile',
 	PLAY = 'play',
+	GULAG = 'gulag',
 	ANALYSIS = 'analysis',
 	AI = 'ai',
 	FAQ = 'faq',

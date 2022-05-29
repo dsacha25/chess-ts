@@ -16,6 +16,8 @@ import PlayPage from '../pages/play-page/play-page.component';
 import AnalysisPage from '../pages/analysis-page/analysis-page.component';
 import PlayAiPage from '../pages/play-ai-page/play-ai-page.component';
 import Head from '../components/head/head.component';
+import GulagWaitingArea from '../components/games/pre-game-interfaces/gulag-waiting-area/gulag-waiting-area.component';
+import GulagPage from '../pages/gulag-page/gulag-page.component';
 
 function App() {
 	const { checkUserSession, openNotificationListener, getChessUserStart } =
@@ -52,6 +54,10 @@ function App() {
 
 				<Route path={Paths.PLAY} element={<PrivateRoute />}>
 					<Route index element={<PlayPage />} />
+				</Route>
+
+				<Route path={Paths.GULAG} element={<PrivateRoute />}>
+					<Route index element={<GulagPage />} />
 				</Route>
 
 				<Route path={Paths.ANALYSIS} element={<PrivateRoute />}>

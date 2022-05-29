@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { SpinnerProps } from './types';
 
 export const SpinnerOverlay = styled.div<SpinnerProps>`
-	display: flex;
+	display: grid;
 	width: ${({ width }) => (width ? width : '100%')};
-	height: ${({ height }) => (height ? height : '60vh')};
+	height: ${({ height }) => (height ? height : '100%')};
 	place-items: center;
 `;
 

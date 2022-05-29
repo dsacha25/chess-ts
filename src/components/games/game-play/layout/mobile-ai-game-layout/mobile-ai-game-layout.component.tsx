@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectAiLevel } from '../../../../../redux/game/game.selector';
 import { selectMobileGameIndex } from '../../../../../redux/indexes/indexes.selector';
