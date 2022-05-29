@@ -79,6 +79,10 @@ export const DeleteAccountButton = styled(CustomButton)`
 	height: 60px;
 	font-size: 15px;
 	border-radius: 30px;
+
+	@media screen and (max-width: 980px) {
+		width: 90vw;
+	}
 `;
 
 export const SubmitUpdateButton = styled(CustomButton)`
