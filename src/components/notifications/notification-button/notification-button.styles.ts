@@ -26,7 +26,7 @@ const mobileContainerStyles = css`
 		height: calc(100% - 70px);
 		border-radius: 0;
 		border: none;
-		z-index: 10;
+		z-index: 20;
 	}
 `;
 

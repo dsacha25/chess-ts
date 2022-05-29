@@ -16,7 +16,7 @@ export const MobileToolbarContainer = styled.div`
 	grid-template-columns: repeat(6, 1fr);
 
 	background-color: ${({ theme }) => theme.light};
-	z-index: 3;
+	z-index: 6;
 `;
 
 export const MobileToolbarButton = styled(CustomButton)`
