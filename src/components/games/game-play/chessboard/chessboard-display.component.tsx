@@ -56,7 +56,9 @@ const ChessboardDisplay = () => {
 	const [boardSize, setBoardSize] = useState(700);
 
 	useEffect(() => {
-		if (width <= 980) {
+		// IF MOBILE VIEW
+		//// SET SIZE TO WINDOW WIDTH - PADDING
+		if (width <= 980 && width > 300) {
 			setBoardSize(width - 20);
 		}
 	}, [width]);

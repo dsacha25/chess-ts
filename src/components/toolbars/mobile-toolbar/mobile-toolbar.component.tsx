@@ -21,12 +21,15 @@ import { selectDashboardIndex } from '../../../redux/indexes/indexes.selector';
 import NotificationButton from '../../notifications/notification-button/notification-button.component';
 import Title from '../../common/title/title.styles';
 import { ClickAwayListener } from '@mui/material';
+import { AvatarChip } from '../../chips/avatar-chip/avatar-chip.styles';
+import { selectProfilePicture } from '../../../redux/user/user.selector';
 
 const MobileToolbar = () => {
 	const { setDashboardIndex, logOutStart } = useActions();
 	const [open, setOpen] = useState(false);
 
 	const index = useSelector((state) => selectDashboardIndex(state));
+	const photoURL = useSelector((state) => selectProfilePicture(state));
 
 	const toggleLogout = (isOpen: boolean, source: string) => {
 		console.log('SOURCE: ', source);
@@ -67,7 +70,8 @@ const MobileToolbar = () => {
 				color="light"
 				active={index === 3}
 			>
-				<CgProfile color="black" size="32px" />
+				{/* <CgProfile color="black" size="32px" /> */}
+				<AvatarChip size="30px" url={photoURL} />
 			</MobileToolbarButton>
 			<NotificationButton mobile />
 			<MobileToolbarButton

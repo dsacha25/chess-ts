@@ -14,14 +14,30 @@ export const ProfileContainer = styled.div`
 	p {
 		color: white;
 	}
+
+	@media screen and (max-width: 980px) {
+		display: flex;
+		flex-direction: column;
+		max-height: 100vh;
+	}
+`;
+
+export const ProfileTabContents = styled.div`
+	display: flex;
+	flex-direction: column;
 `;
 
 export const UpdateProfileForm = styled.form`
 	display: grid;
 
-	grid-template-columns: auto 1fr;
+	place-items: stretch center;
 
-	gap: 20px;
+	grid-template: auto auto auto / auto 1fr;
+
+	h2 {
+		justify-self: flex-start;
+		grid-column: 1 / span 2;
+	}
 `;
 
 export const ProfileDataContainer = styled.div`
@@ -40,13 +56,19 @@ export const DeleteAccountButton = styled(CustomButton)`
 export const SubmitUpdateButton = styled(CustomButton)`
 	place-self: center;
 	width: 400px;
+	border-radius: 30px;
 	grid-column: 1 / span 2;
 `;
 
 export const ReauthContainer = styled.div`
 	display: grid;
-	width: 250px;
+	width: 100%;
 	/* height: 60px; */
+	place-items: center;
 
 	position: relative;
+
+	h2 {
+		justify-self: flex-start;
+	}
 `;

@@ -34,9 +34,12 @@ export const LoginModuleContainer = styled.form`
 `;
 
 export const LoginTitle = styled(Title)`
+	display: flex;
 	font-weight: 200;
 	justify-self: flex-start;
-	/* font-size: 30px; */
+	font-size: 40px;
+
+	gap: 40px;
 `;
 
 export const LogInButton = styled(CustomButton)`
@@ -46,4 +49,12 @@ export const LogInButton = styled(CustomButton)`
 	justify-self: right;
 	width: 25%;
 	border-radius: 30px;
+`;
+
+export const CloseButton = styled(CustomButton)`
+	width: 40px;
+	height: 40px;
+	place-items: center;
+	border-radius: 20px;
+	padding: 0;
 `;

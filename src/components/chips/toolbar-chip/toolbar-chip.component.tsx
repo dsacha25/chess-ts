@@ -4,8 +4,8 @@ import {
 	selectChessUser,
 	selectProfilePicture,
 } from '../../../redux/user/user.selector';
+import { AvatarChip } from '../avatar-chip/avatar-chip.styles';
 import {
-	ChipAvatar,
 	ChipInfoContianer,
 	Rating,
 	ToolbarChipContainer,
@@ -17,7 +17,7 @@ const ToolbarChip = () => {
 	const chessUser = useSelector((state) => selectChessUser(state));
 	return (
 		<ToolbarChipContainer>
-			<ChipAvatar url={photoURL} />
+			<AvatarChip url={photoURL} />
 			<ChipInfoContianer>
 				<UserName>
 					{chessUser ? chessUser.displayName : 'Noot McScooter'}

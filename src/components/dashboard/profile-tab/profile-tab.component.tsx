@@ -1,3 +1,4 @@
+import { isMatch } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
@@ -21,10 +22,10 @@ import {
 const ProfileTab = () => {
 	const user = useSelector((state) => selectChessUser(state));
 
-	const { deleteUserAccount, updateProfileInfo } = useActions();
+	const { updateProfileInfo } = useActions();
 	const [open, setOpen] = useState(false);
 
-	const { register, watch, setValue, handleSubmit } =
+	const { register, watch, getValues, setValue, handleSubmit } =
 		useForm<UpdateCredentials>();
 
 	const onSubmit: SubmitHandler<UpdateCredentials> = (data) => {
@@ -58,9 +59,8 @@ const ProfileTab = () => {
 		<ProfileContainer>
 			<Title fontWeight={200}>Profile Page</Title>
 
-			<Title fontSize="20px">Update Profile</Title>
-
 			<UpdateProfileForm onSubmit={handleSubmit(onSubmit)}>
+				<Title fontSize="20px">Update Profile</Title>
 				<ProfileDataContainer>
 					<FormInput
 						{...register('displayName')}
@@ -79,13 +79,16 @@ const ProfileTab = () => {
 					name="photoURL"
 					label="Profile Picture"
 				/>
-
-				<SubmitUpdateButton color="main">Submit</SubmitUpdateButton>
+				<SubmitUpdateButton
+					disabled={isMatch(user || {}, getValues())}
+					color="main"
+				>
+					Update
+				</SubmitUpdateButton>
 			</UpdateProfileForm>
 
-			<p>Good ridence. You sucked anyways. Bitch.</p>
-
 			<ReauthContainer>
+				<Title fontSize="20px">Remove Profile</Title>
 				{open ? (
 					<LoginModule callback={() => setOpen(false)} />
 				) : (

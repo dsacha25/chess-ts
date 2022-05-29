@@ -4,6 +4,7 @@ import { Credentials } from '../../../utils/types/credentials/credentials';
 import FormInput from '../../common/inputs/form-input/form-input.component';
 import {
 	BackdropContainer,
+	CloseButton,
 	LogInButton,
 	LoginModuleContainer,
 	LoginTitle,
@@ -11,6 +12,7 @@ import {
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { createPortal } from 'react-dom';
 import { LogInModuleProps } from './types';
+import { IoClose } from 'react-icons/io5';
 
 const LoginModule: FC<LogInModuleProps> = (props) => {
 	const {
@@ -33,6 +35,9 @@ const LoginModule: FC<LogInModuleProps> = (props) => {
 			<LoginModuleContainer onSubmit={handleSubmit(onSubmit)}>
 				<LoginTitle color="secondary" margin="0">
 					Reauthenticate
+					<CloseButton color="light" type="button" onClick={props.callback}>
+						<IoClose size="30px" />
+					</CloseButton>
 				</LoginTitle>
 				<FormInput
 					{...register('email', { required: true })}
@@ -47,6 +52,8 @@ const LoginModule: FC<LogInModuleProps> = (props) => {
 					hasData={!!watch('password')}
 					error={errors.password}
 				/>
+				<p>Good ridence. You sucked anyways. Bitch.</p>
+
 				<LogInButton color="warn">Confirm</LogInButton>
 			</LoginModuleContainer>
 		</BackdropContainer>,

@@ -41,7 +41,7 @@ const PhotoUploader: FC<PhotoUploaderProps> = (props) => {
 
 	useEffect(() => {
 		if (props.defaultPhoto) {
-			props.setValue('url', props.defaultPhoto);
+			props.setValue(props.name, props.defaultPhoto);
 			setURL(props.defaultPhoto);
 		}
 

@@ -7,5 +7,5 @@ export const MobileGameLayoutContainer = styled.div`
 	overflow: hidden;
 	position: fixed;
 	top: 0;
-	max-height: calc(100vh - 140px);
+	max-height: calc(100vh - 70px);
 `;
