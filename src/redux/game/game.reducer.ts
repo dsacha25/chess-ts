@@ -10,7 +10,7 @@ import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
-import { AiLevel, Game } from 'js-chess-engine';
+import { AiLevel } from 'js-chess-engine';
 
 export interface GameState {
 	aiLevel: AiLevel | null;

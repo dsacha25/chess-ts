@@ -1,6 +1,7 @@
 import { AiLevel, Game } from 'js-chess-engine';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
+import { ChessGameAiType } from '../../utils/types/chess-game-ai-type/chess-game-ai-type';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameType from '../../utils/types/game-type/game-type';
@@ -54,6 +55,7 @@ import {
 	GetDefaultPositionAction,
 	GetLatestMoveAction,
 	SetAiLevelAction,
+	SetActiveGameAiAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 
@@ -165,6 +167,13 @@ export const fetchActiveGamesSuccess = (
 export const setActiveGame = (game: ChessGameType): SetActiveGameAction => ({
 	type: GameTypes.SET_ACTIVE_GAME,
 	payload: game,
+});
+
+export const setActiveAIGame = (
+	aiGame: ChessGameAiType
+): SetActiveGameAiAction => ({
+	type: GameTypes.SET_ACTIVE_GAME_AI,
+	payload: aiGame,
 });
 
 export const clearActiveGame = (): ClearActiveGameAction => ({

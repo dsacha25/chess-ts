@@ -16,7 +16,7 @@ import InactiveGamesList from '../../games/inactive-games/inactive-games-list/in
 
 import { GiBattleAxe } from 'react-icons/gi';
 import { ImSad2 } from 'react-icons/im';
-import { MdComputer } from 'react-icons/md';
+import { BsCpuFill } from 'react-icons/bs';
 import useWindowSize from '../../../hooks/use-window-size/use-window-size.hook';
 
 const ChallengeTab = () => {
@@ -50,7 +50,7 @@ const ChallengeTab = () => {
 				</ChallengeButton>
 				<ChallengeButton onClick={() => navigate(`/${Paths.AI}`)} color="light">
 					{width > 980 && 'AI'}
-					<MdComputer size="30px" />
+					<BsCpuFill color="black" size="30px" />
 				</ChallengeButton>
 				<ChallengeButton
 					onClick={() => navigate(`/${Paths.ANALYSIS}`)}

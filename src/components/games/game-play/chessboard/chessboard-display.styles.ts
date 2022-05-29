@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Spinner from '../../../common/spinner/spinner.component';
 
 interface BoardProps {
 	size: number;
@@ -56,4 +57,12 @@ export const GameOverDisplay = styled.div`
 	border-radius: 30px;
 
 	z-index: 5;
+`;
+
+export const LoadSpinner = styled(Spinner)`
+	position: absolute;
+	z-index: 5;
+	left: 0;
+	right: 0;
+	margin: auto;
 `;

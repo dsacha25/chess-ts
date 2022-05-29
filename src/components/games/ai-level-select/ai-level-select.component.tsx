@@ -1,6 +1,6 @@
 import React from 'react';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
-import Title from '../../common/title/title.styles';
+import { TabTitle } from '../../dashboard/challenge-tab/challenge-tab.styles';
 import {
 	AiLevelSelectContainer,
 	AiLevelSelectOptions,
@@ -12,7 +12,7 @@ const AiLevelSelect = () => {
 
 	return (
 		<AiLevelSelectContainer>
-			<Title fontSize="40px">Choose AI Difficulty</Title>
+			<TabTitle>Choose AI Difficulty</TabTitle>
 			<AiLevelSelectOptions>
 				<SelectAiLevelButton onClick={() => setAiLevel(0)} color="main">
 					1

@@ -1,17 +1,14 @@
-import { Move } from 'chess.js';
-import { Enemyship } from '../enemyship/enemyship';
+import { AiLevel } from 'js-chess-engine';
 import { HistoryMove } from '../history-move/history-move';
 import Orientation from '../orientation/orientation';
-import { Player } from '../player/player';
 
-export interface ChessGameType extends Enemyship {
-	id: string;
+export interface ChessGameAiType {
 	gameOver: boolean;
 	moves: HistoryMove[];
 	turn: Orientation;
-	black: Player;
-	white: Player;
+	aiLevel: AiLevel | null;
 	latestMove: string;
 	fen: string;
 	winner: Orientation | null;
+	playerColor: Orientation;
 }

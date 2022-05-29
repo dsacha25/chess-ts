@@ -146,6 +146,9 @@ class ChessGame {
 		this.getStatus(fen);
 
 		console.log('WINNER?: ', this.getWinner(fen));
+		this.boardConfig = fen;
+		const status = this.getStatus(fen);
+		console.log('STATUS: ', status);
 
 		return {
 			fen,

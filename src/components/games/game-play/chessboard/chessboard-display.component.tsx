@@ -4,6 +4,7 @@ import {
 	GameOverDisplay,
 	OpponentContainer,
 	PlayerContainer,
+	LoadSpinner,
 } from './chessboard-display.styles';
 import Chessboard from 'chessboardjsx';
 import { Square } from 'chess.js';
@@ -23,10 +24,14 @@ import { useLocation } from 'react-router-dom';
 import { selectUserUID } from '../../../../redux/user/user.selector';
 import { find } from 'lodash';
 import useWindowSize from '../../../../hooks/use-window-size/use-window-size.hook';
+import Orientation from '../../../../utils/types/orientation/orientation';
+import logMessage from '../../../../utils/helpers/strings/log-message/log-message';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
-	const location = useLocation();
+	//// TODO: REFACTOR INTO SOLO - ONLINE - AI CHESSBOARDS ////
+	//
+	const { pathname } = useLocation();
 	const { width } = useWindowSize();
 
 	const activeGame = useSelector((state) => selectActiveGame(state));
@@ -54,6 +59,13 @@ const ChessboardDisplay = () => {
 		game.isGameOver(fen) || activeGame?.gameOver
 	);
 	const [boardSize, setBoardSize] = useState(700);
+	const [fenLocal, setFenLocal] = useState(fen);
+	const [turn, setTurn] = useState<Orientation>('white');
+	const [aiMoving, setAiMoving] = useState(false);
+
+	useEffect(() => {
+		console.log('NEW FEN: ', fen);
+	}, [fen, fenLocal]);
 
 	useEffect(() => {
 		// IF MOBILE VIEW
@@ -75,7 +87,8 @@ const ChessboardDisplay = () => {
 	}, [activeGame]);
 
 	useEffect(() => {
-		if (location.pathname === '/play' && activeGame) {
+		//// ONLINE GAME
+		if (pathname === '/play' && activeGame) {
 			const enemyUID = find(activeGame.users, (player) => player !== uid);
 			console.log('ENEMY UID: ', enemyUID);
 			if (enemyUID) {
@@ -113,20 +126,51 @@ const ChessboardDisplay = () => {
 
 	useEffect(() => {
 		console.log('turn: ', game.turn, orientation);
+		console.log('AI turn: ', game.turn !== orientation);
+		console.log('FEN: ', fen);
+
+		let to: NodeJS.Timeout;
 
 		if (
 			gameType === 'ai' &&
-			aiLevel &&
-			game.turn !== orientation &&
+			aiLevel !== null &&
+			turn !== orientation &&
 			!gameOver
 		) {
-			const { from, to } = game.movePieceAi(aiLevel, fen);
-
-			makeMove(from, to);
+			setAiMoving(true);
+			to = setTimeout(() => {
+				aiMove();
+			}, 250);
 		}
 
+		return () => {
+			if (to) {
+				clearTimeout(to);
+			}
+		};
+
 		// eslint-disable-next-line
-	}, [gameType, game.turn, orientation]);
+	}, [fen, gameType, turn, orientation, aiLevel, fenLocal]);
+
+	const aiMove = () => {
+		logMessage('AI MOVE START', 'red');
+		logMessage(aiMoving, 'yellow');
+		if (!aiLevel) return;
+
+		setAiMoving(true);
+		console.log('ai level : ', aiLevel);
+		const { from, to } = game.movePieceAi(aiLevel, fen);
+		let chessMove = game.movePieceServer(fen, from, to);
+
+		if (chessMove) {
+			setFen(chessMove.fen);
+			setFenLocal(chessMove.fen);
+			setTurn(chessMove.turn);
+			movePiece({ move: chessMove.san, fen: chessMove.fen });
+			logMessage('AI MOVE SUCCESS', 'blue');
+		}
+		setAiMoving(false);
+	};
 
 	const highlightSquare = (
 		sourceSquare: Square,
@@ -168,6 +212,8 @@ const ChessboardDisplay = () => {
 
 	const makeMove = (from: Square, to: Square) => {
 		let chessMove = game.movePieceServer(fen, from, to);
+		console.log('CHESSS MOVE', chessMove);
+
 		if (chessMove === null) return;
 
 		setSquareStyles(game.squareStyling(fen, selectedSquare));
@@ -193,10 +239,17 @@ const ChessboardDisplay = () => {
 
 			setGameOver(chessMove.winner !== null);
 		} else if (gameType === 'ai') {
+			// setFen(chessMove.fen);
+			// movePiece({ move: chessMove.san, fen: chessMove.fen });
 			if (game.turn === orientation) {
+				console.log('USER MOVE');
 				setFen(chessMove.fen);
+				setFenLocal(chessMove.fen);
+				setTurn(chessMove.turn);
 				movePiece({ move: chessMove.san, fen: chessMove.fen });
 			} else {
+				console.log('AI MOVE');
+
 				setFen(chessMove.fen);
 				movePiece({ move: chessMove.san, fen: chessMove.fen });
 			}
@@ -240,6 +293,8 @@ const ChessboardDisplay = () => {
 				orientation={orientation}
 				width={boardSize}
 			/>
+
+			{aiMoving && <LoadSpinner />}
 			{gameOver && (
 				<GameOverDisplay>
 					<h1>Game Over, Bitch</h1>
