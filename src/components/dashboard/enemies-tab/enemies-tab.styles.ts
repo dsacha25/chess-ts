@@ -17,6 +17,8 @@ export const EnemiesContainer = styled.div`
 		height: calc(100vh - 70px);
 		justify-content: space-between;
 
+		gap: 20px;
+
 		/* h2 {
 			font-size: 30px;
 			margin: 10px;
