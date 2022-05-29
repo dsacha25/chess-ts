@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
 	MobileLogoutContainer,
 	MobileLogoutResponses,
-	MobileLogoutText,
 	MobileToolbarButton,
 	MobileToolbarContainer,
 } from './mobile-toolbar.styles';
@@ -10,7 +9,6 @@ import {
 import { FaHandMiddleFinger } from 'react-icons/fa';
 import { GiEvilLove } from 'react-icons/gi';
 import { IoStatsChart } from 'react-icons/io5';
-import { CgProfile } from 'react-icons/cg';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { FiCheck } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
@@ -20,7 +18,6 @@ import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook
 import { selectDashboardIndex } from '../../../redux/indexes/indexes.selector';
 import NotificationButton from '../../notifications/notification-button/notification-button.component';
 import Title from '../../common/title/title.styles';
-import { ClickAwayListener } from '@mui/material';
 import { AvatarChip } from '../../chips/avatar-chip/avatar-chip.styles';
 import { selectProfilePicture } from '../../../redux/user/user.selector';
 
@@ -30,17 +27,6 @@ const MobileToolbar = () => {
 
 	const index = useSelector((state) => selectDashboardIndex(state));
 	const photoURL = useSelector((state) => selectProfilePicture(state));
-
-	const toggleLogout = (isOpen: boolean, source: string) => {
-		console.log('SOURCE: ', source);
-
-		if (!open && isOpen) {
-			setOpen(true);
-		}
-		if (open && !isOpen) {
-			setOpen(false);
-		}
-	};
 
 	return (
 		<MobileToolbarContainer>
@@ -74,27 +60,22 @@ const MobileToolbar = () => {
 				<AvatarChip size="30px" url={photoURL} />
 			</MobileToolbarButton>
 			<NotificationButton mobile />
-			<MobileToolbarButton
-				onClick={() => toggleLogout(!open, 'button')}
-				color="light"
-			>
+			<MobileToolbarButton onClick={() => setOpen(!open)} color="light">
 				<RiLogoutCircleRLine color="black" size="30px" />
 			</MobileToolbarButton>
 
 			{open && (
-				<ClickAwayListener onClickAway={() => toggleLogout(!open, 'callback')}>
-					<MobileLogoutContainer>
-						<Title fontSize="30px">Log Out?</Title>
-						<MobileLogoutResponses>
-							<MobileToolbarButton onClick={() => logOutStart()} color="warn">
-								<FiCheck size="34px" />
-							</MobileToolbarButton>
-							<MobileToolbarButton onClick={() => setOpen(false)} color="main">
-								<IoClose size="34px" />
-							</MobileToolbarButton>
-						</MobileLogoutResponses>
-					</MobileLogoutContainer>
-				</ClickAwayListener>
+				<MobileLogoutContainer>
+					<Title fontSize="30px">Log Out?</Title>
+					<MobileLogoutResponses>
+						<MobileToolbarButton onClick={() => logOutStart()} color="warn">
+							<FiCheck size="34px" />
+						</MobileToolbarButton>
+						<MobileToolbarButton onClick={() => setOpen(false)} color="main">
+							<IoClose size="34px" />
+						</MobileToolbarButton>
+					</MobileLogoutResponses>
+				</MobileLogoutContainer>
 			)}
 		</MobileToolbarContainer>
 	);
