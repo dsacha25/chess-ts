@@ -70,6 +70,7 @@ export const ProfileDataContainer = styled.div`
 	place-items: center;
 
 	@media screen and (max-width: 980px) {
+		width: 90vw;
 		height: 150px;
 	}
 `;

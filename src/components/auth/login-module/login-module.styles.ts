@@ -21,7 +21,7 @@ export const LoginModuleContainer = styled.form`
 	width: 55vw;
 	height: 44vh;
 	place-items: center;
-	grid-template-rows: auto 1fr 1fr;
+	grid-template-rows: auto 1fr 1fr auto;
 	border-radius: 60px;
 
 	background-color: ${({ theme }) => theme.light};
@@ -31,6 +31,22 @@ export const LoginModuleContainer = styled.form`
 	z-index: 10;
 
 	backdrop-filter: blur(20px);
+
+	p {
+		font-size: 12px;
+		font-weight: 300;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	@media screen and (max-width: 980px) {
+		grid-template-rows: 40px repeat(3, auto);
+		width: 100vw;
+		border-radius: 0;
+		padding: 20px;
+		margin-top: 60px;
+		place-self: flex-start;
+	}
 `;
 
 export const LoginTitle = styled(Title)`
@@ -40,6 +56,12 @@ export const LoginTitle = styled(Title)`
 	font-size: 40px;
 
 	gap: 40px;
+
+	@media screen and (max-width: 980px) {
+		font-size: 20px;
+
+		gap: unset;
+	}
 `;
 
 export const LogInButton = styled(CustomButton)`
@@ -49,6 +71,10 @@ export const LogInButton = styled(CustomButton)`
 	justify-self: right;
 	width: 25%;
 	border-radius: 30px;
+
+	@media screen and (max-width: 980px) {
+		width: 50%;
+	}
 `;
 
 export const CloseButton = styled(CustomButton)`

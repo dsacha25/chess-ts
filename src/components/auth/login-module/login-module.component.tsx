@@ -52,8 +52,10 @@ const LoginModule: FC<LogInModuleProps> = (props) => {
 					hasData={!!watch('password')}
 					error={errors.password}
 				/>
-				<p>Good ridence. You sucked anyways. Bitch.</p>
 
+				<p>
+					Good ridence. <br /> You sucked anyways you dumb bitch.
+				</p>
 				<LogInButton color="warn">Confirm</LogInButton>
 			</LoginModuleContainer>
 		</BackdropContainer>,

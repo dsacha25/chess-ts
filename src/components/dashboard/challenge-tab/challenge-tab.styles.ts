@@ -14,10 +14,6 @@ export const ChallengesContainer = styled.div`
 	color: white;
 
 	@media screen and (max-width: 980px) {
-		/* height: 100vh; */
-		/* width: 100vw;
-		overflow-y: auto;
-		place-content: center; */
 		h2 {
 			font-size: 20px;
 		}
