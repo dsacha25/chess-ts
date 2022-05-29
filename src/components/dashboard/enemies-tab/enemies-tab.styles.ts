@@ -16,6 +16,11 @@ export const EnemiesContainer = styled.div`
 		flex-direction: column;
 		height: calc(100vh - 70px);
 		justify-content: space-between;
+
+		/* h2 {
+			font-size: 30px;
+			margin: 10px;
+		} */
 	}
 `;
 

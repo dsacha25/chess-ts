@@ -8,6 +8,7 @@ import Title from '../../common/title/title.styles';
 import EnemyList from '../../enemy/enemy-list/enemy-list.component';
 import EnemyRequestsList from '../../enemy/enemy-requests-list/enemy-requests-list.component';
 import EnemySearchResult from '../../enemy/enemy-search-result/enemy-search-result.component';
+import { TabTitle } from '../challenge-tab/challenge-tab.styles';
 import { EnemiesContainer, EnemySearchContainer } from './enemies-tab.styles';
 
 const EnemiesTab = () => {
@@ -30,7 +31,7 @@ const EnemiesTab = () => {
 
 	return (
 		<EnemiesContainer>
-			<Title>Enemies</Title>
+			<TabTitle>Enemies</TabTitle>
 			<EnemySearchContainer>
 				<SearchInput
 					register={register}

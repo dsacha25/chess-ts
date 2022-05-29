@@ -6,6 +6,7 @@ import {
 	ChallengeButton,
 	ChallengesContainer,
 	ListsContainer,
+	TabTitle,
 } from './challenge-tab.styles';
 import Paths from '../../../utils/types/paths/paths';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
@@ -37,7 +38,7 @@ const ChallengeTab = () => {
 
 	return (
 		<ChallengesContainer>
-			<Title>Challenge Area</Title>
+			<TabTitle>Challenge Area</TabTitle>
 			<ButtonsContainer>
 				<ChallengeButton
 					onClick={() => navigate(`/${Paths.PLAY}`)}

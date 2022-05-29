@@ -3,6 +3,7 @@ import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook
 import { selectInactiveGames } from '../../../redux/game/game.selector';
 import { selectUserUID } from '../../../redux/user/user.selector';
 import Title from '../../common/title/title.styles';
+import { TabTitle } from '../challenge-tab/challenge-tab.styles';
 import { StatsContainer } from './stats-tab.styles';
 
 const StatsTab = () => {
@@ -49,7 +50,7 @@ const StatsTab = () => {
 
 	return (
 		<StatsContainer>
-			<Title>Stats Page</Title>
+			<TabTitle>Stats Page</TabTitle>
 			<p>A comprehensive analysis of how shitty you are.</p>
 			<p>Spoiler alert, its a lot.</p>
 			<p>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './App.css';
+
 import { SiteContainer } from './app.styles';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/home-page/home-page.component';
@@ -39,32 +39,30 @@ function App() {
 	}, [auth]);
 
 	return (
-		<div className="App">
-			<SiteContainer>
-				<Head />
-				<Header />
-				<Routes>
-					<Route index element={<HomePage />} />
-					<Route path={Paths.CREATE_ACCOUNT} element={<CreateAccountPage />} />
-					<Route path={Paths.LOGIN} element={<LogInPage />} />
-					<Route path={Paths.DASHBOARD} element={<PrivateRoute />}>
-						<Route index element={<DashboardPage />} />
-					</Route>
+		<SiteContainer>
+			<Head />
+			<Header />
+			<Routes>
+				<Route index element={<HomePage />} />
+				<Route path={Paths.CREATE_ACCOUNT} element={<CreateAccountPage />} />
+				<Route path={Paths.LOGIN} element={<LogInPage />} />
+				<Route path={Paths.DASHBOARD} element={<PrivateRoute />}>
+					<Route index element={<DashboardPage />} />
+				</Route>
 
-					<Route path={Paths.PLAY} element={<PrivateRoute />}>
-						<Route index element={<PlayPage />} />
-					</Route>
+				<Route path={Paths.PLAY} element={<PrivateRoute />}>
+					<Route index element={<PlayPage />} />
+				</Route>
 
-					<Route path={Paths.ANALYSIS} element={<PrivateRoute />}>
-						<Route index element={<AnalysisPage />} />
-					</Route>
+				<Route path={Paths.ANALYSIS} element={<PrivateRoute />}>
+					<Route index element={<AnalysisPage />} />
+				</Route>
 
-					<Route path={Paths.AI} element={<PrivateRoute />}>
-						<Route index element={<PlayAiPage />} />
-					</Route>
-				</Routes>
-			</SiteContainer>
-		</div>
+				<Route path={Paths.AI} element={<PrivateRoute />}>
+					<Route index element={<PlayAiPage />} />
+				</Route>
+			</Routes>
+		</SiteContainer>
 	);
 }
 

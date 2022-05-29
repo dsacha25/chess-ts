@@ -6,7 +6,7 @@ export const BackdropContainer = styled.div`
 	display: grid;
 	place-items: center;
 	width: 100vw;
-	height: 100vh;
+	height: calc(100vh - 70px);
 	position: absolute;
 
 	top: 0;
@@ -14,6 +14,8 @@ export const BackdropContainer = styled.div`
 	backdrop-filter: blur(5px);
 	background-color: #33333344;
 	z-index: 10;
+
+	overflow: hidden;
 `;
 
 export const LoginModuleContainer = styled.form`
@@ -40,11 +42,12 @@ export const LoginModuleContainer = styled.form`
 	}
 
 	@media screen and (max-width: 980px) {
-		grid-template-rows: 40px repeat(3, auto);
 		width: 100vw;
+		height: 50vh;
+		grid-template-rows: 40px repeat(4, auto);
 		border-radius: 0;
 		padding: 20px;
-		margin-top: 60px;
+		margin-top: 10vh;
 		place-self: flex-start;
 	}
 `;
@@ -73,7 +76,11 @@ export const LogInButton = styled(CustomButton)`
 	border-radius: 30px;
 
 	@media screen and (max-width: 980px) {
-		width: 50%;
+		position: unset;
+		width: 100%;
+		right: unset;
+		bottom: unset;
+		margin: 0;
 	}
 `;
 

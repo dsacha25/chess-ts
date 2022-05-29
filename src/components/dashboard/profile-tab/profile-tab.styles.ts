@@ -16,17 +16,14 @@ export const ProfileContainer = styled.div`
 	}
 
 	@media screen and (max-width: 980px) {
-		display: flex;
 		width: 100vw;
-		overflow-y: auto;
-		flex-direction: column;
 		height: calc(100vh - 70px);
+		overflow-y: auto;
+		overflow-x: hidden;
 		justify-content: flex-start;
 
-		h2 {
-			font-size: 30px;
-			margin: 10px;
-		}
+		grid-template-rows: 1fr auto auto auto;
+		place-items: unset;
 	}
 `;
 
@@ -51,7 +48,7 @@ export const UpdateProfileForm = styled.form`
 		display: flex;
 		flex-direction: column;
 		width: 100vw;
-		height: 100vh;
+		height: 100%;
 		grid-template: repeat(3, auto) / 1fr;
 		place-items: center;
 
@@ -100,16 +97,14 @@ export const SubmitUpdateButton = styled(CustomButton)`
 `;
 
 export const ReauthContainer = styled.div`
-	display: grid;
+	display: flex;
+	flex-direction: column;
 	width: 100%;
-	/* height: 60px; */
+	height: 100%;
 	place-items: center;
 
 	position: relative;
-
-	h2 {
-		justify-self: flex-start;
-	}
+	margin-bottom: 100px;
 
 	@media screen and (max-width: 980px) {
 		h2 {

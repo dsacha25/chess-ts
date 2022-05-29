@@ -1,5 +1,5 @@
 import { isMatch } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
@@ -10,6 +10,7 @@ import CustomButton from '../../common/buttons/custom-button/custom-button.compo
 import FormInput from '../../common/inputs/form-input/form-input.component';
 import PhotoUploader from '../../common/inputs/photo-uploader/photo-uploader.component';
 import Title from '../../common/title/title.styles';
+import { TabTitle } from '../challenge-tab/challenge-tab.styles';
 import {
 	DeleteAccountButton,
 	ProfileContainer,
@@ -24,6 +25,7 @@ const ProfileTab = () => {
 
 	const { updateProfileInfo } = useActions();
 	const [open, setOpen] = useState(false);
+	const docRef = useRef<HTMLDivElement>(null);
 
 	const { register, watch, getValues, setValue, handleSubmit } =
 		useForm<UpdateCredentials>();
@@ -43,6 +45,14 @@ const ProfileTab = () => {
 		updateProfileInfo(data);
 	};
 
+	const handleOpenReauthModule = () => {
+		setOpen(!open);
+
+		if (docRef.current) {
+			docRef.current.scrollTop = 0;
+		}
+	};
+
 	useEffect(() => {
 		if (user && user.displayName) {
 			setValue('displayName', user.displayName);
@@ -56,8 +66,8 @@ const ProfileTab = () => {
 	}, []);
 
 	return (
-		<ProfileContainer>
-			<Title fontWeight={200}>Profile Page</Title>
+		<ProfileContainer ref={docRef}>
+			<TabTitle>Profile Page</TabTitle>
 
 			<UpdateProfileForm onSubmit={handleSubmit(onSubmit)}>
 				<Title fontSize="20px">Update Profile</Title>
@@ -89,13 +99,14 @@ const ProfileTab = () => {
 
 			<ReauthContainer>
 				<Title fontSize="20px">Remove Profile</Title>
-				{open ? (
-					<LoginModule callback={() => setOpen(false)} />
-				) : (
-					<DeleteAccountButton onClick={() => setOpen(true)} color="warn">
-						Delete Account
-					</DeleteAccountButton>
-				)}
+				{open && <LoginModule callback={() => setOpen(false)} />}
+				<DeleteAccountButton
+					disabled={open}
+					onClick={handleOpenReauthModule}
+					color="warn"
+				>
+					Delete Account
+				</DeleteAccountButton>
 			</ReauthContainer>
 		</ProfileContainer>
 	);

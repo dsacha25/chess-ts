@@ -33,3 +33,7 @@ code {
 	background: #555;
 }
 
+
+* {
+	box-sizing: border-box;
+}

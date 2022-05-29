@@ -13,4 +13,16 @@ export const StatsContainer = styled.div`
 	}
 
 	grid-template-rows: 1fr auto auto 1fr;
+
+	@media screen and (max-width: 980px) {
+		display: flex;
+		flex-direction: column;
+		width: 100vw;
+		height: 100vh;
+		padding: 0 20px 20px 20px;
+
+		p {
+			font-size: unset;
+		}
+	}
 `;

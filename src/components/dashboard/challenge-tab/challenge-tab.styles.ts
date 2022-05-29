@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import CustomButton from '../../common/buttons/custom-button/custom-button.component';
+import Title from '../../common/title/title.styles';
 
 export const ChallengesContainer = styled.div`
 	display: grid;
@@ -14,16 +15,28 @@ export const ChallengesContainer = styled.div`
 	color: white;
 
 	@media screen and (max-width: 980px) {
-		h2 {
-			font-size: 20px;
-		}
-
-		display: flex;
 		width: 100vw;
-		overflow-y: auto;
-		flex-direction: column;
 		height: calc(100vh - 70px);
-		justify-content: flex-start;
+		overflow-y: auto;
+		/* justify-content: flex-start; */
+
+		h2 {
+			font-size: 25px;
+			margin: 10px;
+		}
+	}
+`;
+
+export const TabTitle = styled(Title)`
+	@media screen and (max-width: 980px) {
+		font-size: 25px !important;
+		margin: 0 !important;
+
+		width: 100vw;
+		height: 60px !important;
+
+		text-align: center;
+		background-color: ${({ theme }) => theme.accentBright};
 	}
 `;
 
@@ -63,7 +76,7 @@ export const ListsContainer = styled.div`
 	overflow-y: scroll;
 
 	@media screen and (max-width: 980px) {
-		height: calc(100% - 70px);
+		height: 100%;
 		max-height: unset;
 	}
 `;
