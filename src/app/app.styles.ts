@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import BackgroundPattern from '../assets/patterns/background_pattern.png';
+import BackgroundPatternRot from '../assets/patterns/background_pattern_rot.png';
 
 /* background: #2980b9;  /* fallback for old browsers 
 background: -webkit-linear-gradient(to right, #2c3e50, #2980b9);   Chrome 10-25, Safari 5.1-6 
@@ -97,22 +98,29 @@ export const SiteContainer = styled.div`
 	height: 100vh;
 	max-height: 100vh;
 	overflow: auto;
-	background: rgba(235, 243, 255, 1);
+	background: ${gradientColor2};
 	background: ${gradient};
 	background: -webkit-${gradient};
+	background: -moz-${gradient};
+
+	/* background: url(${BackgroundPattern});
+	background-size: 140px;
+	background-attachment: fixed;
+	-o-background-size: fill;
+	-moz-background-size: fill;
+	-webkit-background-size: fill; */
 
 	position: relative;
 `;
 
 export const SiteBackground = styled.div`
-	width: 4000px;
-	height: 4000px;
+	width: 100vw;
+	height: 100vh;
 	position: fixed;
 
-	background-image: url(${BackgroundPattern});
-	background-size: 140px;
-	opacity: 0.25;
-	z-index: -1;
+	background: url(${BackgroundPatternRot});
+	background-size: 100px;
 
-	transform: rotate(45deg);
+	opacity: 0.2;
+	z-index: -1;
 `;

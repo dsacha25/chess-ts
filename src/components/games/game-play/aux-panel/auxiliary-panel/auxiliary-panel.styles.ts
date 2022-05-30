@@ -28,7 +28,7 @@ export const AuxiliaryPanelContainer = styled.div`
 	grid-gap: 20px;
 
 	@media screen and (max-width: 980px) {
-		height: 100%;
+		height: calc(100% - 70px);
 
 		border-radius: 0;
 	}

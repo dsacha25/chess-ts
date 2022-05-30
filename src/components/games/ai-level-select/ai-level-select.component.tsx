@@ -6,6 +6,7 @@ import {
 	AiLevelSelectOptions,
 	SelectAiLevelButton,
 } from './ai-level-select.styles';
+import { BsCpuFill } from 'react-icons/bs';
 
 const AiLevelSelect = () => {
 	const { setAiLevel } = useActions();
@@ -15,19 +16,19 @@ const AiLevelSelect = () => {
 			<TabTitle>Choose AI Difficulty</TabTitle>
 			<AiLevelSelectOptions>
 				<SelectAiLevelButton onClick={() => setAiLevel(0)} color="main">
-					1
+					<BsCpuFill size="30px" /> 1
 				</SelectAiLevelButton>
 				<SelectAiLevelButton onClick={() => setAiLevel(1)} color="main">
-					2
+					<BsCpuFill size="30px" /> 2
 				</SelectAiLevelButton>
 				<SelectAiLevelButton onClick={() => setAiLevel(2)} color="main">
-					3
+					<BsCpuFill size="30px" /> 3
 				</SelectAiLevelButton>
 				<SelectAiLevelButton onClick={() => setAiLevel(3)} color="secondary">
-					4
+					<BsCpuFill size="30px" /> 4
 				</SelectAiLevelButton>
 				<SelectAiLevelButton onClick={() => setAiLevel(4)} color="secondary">
-					5
+					<BsCpuFill size="30px" /> 5
 				</SelectAiLevelButton>
 			</AiLevelSelectOptions>
 		</AiLevelSelectContainer>

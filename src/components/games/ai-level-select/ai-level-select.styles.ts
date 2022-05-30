@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StarBorderFilled } from '../../common/border-styles/border-styles';
 import CustomButton from '../../common/buttons/custom-button/custom-button.component';
 
 export const AiLevelSelectContainer = styled.div`
@@ -32,13 +33,15 @@ export const AiLevelSelectOptions = styled.div`
 	place-items: center;
 	place-self: center;
 
-	background-color: ${({ theme }) => theme.light};
+	${StarBorderFilled};
+
+	/* background-color: ${({ theme }) => theme.light}; */
 
 	border-radius: 40px;
 
 	gap: 20px;
 
-	padding: 20px;
+	padding: 30px;
 
 	@media screen and (max-width: 980px) {
 		place-content: space-between;
@@ -50,6 +53,8 @@ export const AiLevelSelectOptions = styled.div`
 `;
 
 export const SelectAiLevelButton = styled(CustomButton)`
+	display: flex;
+	justify-content: space-evenly;
 	width: 100%;
 	height: 80px;
 	font-size: 30px;

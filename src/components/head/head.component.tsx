@@ -6,7 +6,7 @@ import { WebsiteColors } from './types';
 const Head = () => {
 	const { pathname } = useLocation();
 	const colors: WebsiteColors = {
-		default: '#E9E4F0',
+		default: '#f1f7ff',
 		createAccount: '#bccbf2',
 		dashboard: '#b1b7d2',
 	};

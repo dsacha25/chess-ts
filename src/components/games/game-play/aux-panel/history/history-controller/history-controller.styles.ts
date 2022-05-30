@@ -9,7 +9,6 @@ export const HistoryControllerContainer = styled.div`
 	grid-template-columns: repeat(4, 1fr);
 
 	border-top: 1px solid ${({ theme }) => theme.main}40;
-	/* border-bottom: 1px solid ${({ theme }) => theme.main}; */
 `;
 
 export const HistoryNavButton = styled(CustomButton)`
