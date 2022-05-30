@@ -27,6 +27,7 @@ import useWindowSize from '../../../../hooks/use-window-size/use-window-size.hoo
 import Orientation from '../../../../utils/types/orientation/orientation';
 import logMessage from '../../../../utils/helpers/strings/log-message/log-message';
 import globalStyles from '../../../../global-styles/global-styles';
+import { StarBorder } from '../../../common/border-styles/border-styles';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
@@ -60,7 +61,7 @@ const ChessboardDisplay = () => {
 	const [gameOver, setGameOver] = useState(
 		game.isGameOver(fen) || activeGame?.gameOver
 	);
-	const [boardSize, setBoardSize] = useState(700);
+	const [boardSize, setBoardSize] = useState(800);
 	const [fenLocal, setFenLocal] = useState(fen);
 	const [turn, setTurn] = useState<Orientation>('white');
 	const [aiMoving, setAiMoving] = useState(false);
@@ -72,6 +73,15 @@ const ChessboardDisplay = () => {
 	useEffect(() => {
 		// IF MOBILE VIEW
 		//// SET SIZE TO WINDOW WIDTH - PADDING
+		if (width > 1500) {
+			setBoardSize(800);
+		}
+		if (width <= 1500 && width > 1300) {
+			setBoardSize(700);
+		}
+		if (width <= 1300 && width > 980) {
+			setBoardSize(500);
+		}
 		if (width <= 980 && width > 300) {
 			setBoardSize(width - 20);
 		}

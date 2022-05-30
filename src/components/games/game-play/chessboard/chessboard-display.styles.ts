@@ -34,6 +34,7 @@ export const OpponentContainer = styled.div`
 	width: 100%;
 	height: 60px;
 	place-items: flex-end flex-start;
+	place-self: flex-end;
 `;
 
 export const PlayerContainer = styled.div`
@@ -41,6 +42,7 @@ export const PlayerContainer = styled.div`
 	width: 100%;
 	height: 60px;
 	place-items: flex-start flex-end;
+	place-self: flex-start;
 `;
 
 export const GameOverDisplay = styled.div`
