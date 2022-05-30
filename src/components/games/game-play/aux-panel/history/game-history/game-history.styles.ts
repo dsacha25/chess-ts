@@ -19,11 +19,13 @@ export const HistoryMoveList = styled.div`
 	max-height: 60vh;
 	width: 95%;
 	place-self: flex-start center;
-	margin: 0;
+	margin: 5px;
 	padding: 0;
 	font-size: 12px;
 
 	overflow-y: auto;
+
+	/* background-color: ${({ theme }) => theme.accentBright}; */
 `;
 
 export const HistoryMove = styled.li`

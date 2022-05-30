@@ -37,7 +37,7 @@ export const PlayerChipInfo = styled.div`
 
 	color: ${({ theme }) => theme.light};
 	background-color: ${({ theme }) => theme.accent};
-	border: 2px solid ${({ theme }) => theme.main};
+	border: 1px solid ${({ theme }) => theme.main};
 
 	border-top-left-radius: 20px;
 	border-bottom-left-radius: 20px;

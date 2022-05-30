@@ -149,7 +149,7 @@ const AuxiliaryPanel = () => {
 			<PanelControlsContainer>
 				<PanelButton
 					id="resign"
-					color="warn"
+					color="secondary"
 					onClick={handleOpenActionConfirmation}
 					disabled={action === AuxActions.RESIGN || isGameOver}
 				>
@@ -157,7 +157,7 @@ const AuxiliaryPanel = () => {
 				</PanelButton>
 				<PanelButton
 					id="draw"
-					color="light"
+					color="main"
 					onClick={handleOpenActionConfirmation}
 					disabled={action === AuxActions.DRAW || isGameOver}
 				>

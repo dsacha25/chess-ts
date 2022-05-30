@@ -36,7 +36,7 @@ export const OpponentChipInfo = styled.div`
 
 	color: ${({ theme }) => theme.light};
 	background-color: ${({ theme }) => theme.secondary};
-	border: 2px solid ${({ theme }) => theme.main};
+	border: 1px solid ${({ theme }) => theme.main};
 
 	border-top-right-radius: 20px;
 	border-bottom-right-radius: 20px;

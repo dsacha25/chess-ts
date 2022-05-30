@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import BackgroundPattern from '../assets/patterns/background_pattern.png';
 
 /* background: #2980b9;  /* fallback for old browsers 
 background: -webkit-linear-gradient(to right, #2c3e50, #2980b9);   Chrome 10-25, Safari 5.1-6 
@@ -84,7 +85,10 @@ const gradients: Gradient[] = [
 	},
 ];
 
-const index: number = 5;
+const gradientColor = 'rgba(235, 243, 255, 1)';
+const gradientColor2 = '#f1f7ff';
+
+const gradient = `radial-gradient(circle, rgba(0, 0, 0, 0) 0%, ${gradientColor2} 100%);`;
 
 export const SiteContainer = styled.div`
 	display: grid;
@@ -93,7 +97,22 @@ export const SiteContainer = styled.div`
 	height: 100vh;
 	max-height: 100vh;
 	overflow: auto;
-	background: ${gradients[index].fallback};
-	background: linear-gradient(${gradients[index].gradient});
-	background: -webkit-linear-gradient(${gradients[index].gradient});
+	background: rgba(235, 243, 255, 1);
+	background: ${gradient};
+	background: -webkit-${gradient};
+
+	position: relative;
+`;
+
+export const SiteBackground = styled.div`
+	width: 4000px;
+	height: 4000px;
+	position: fixed;
+
+	background-image: url(${BackgroundPattern});
+	background-size: 140px;
+	opacity: 0.25;
+	z-index: -1;
+
+	transform: rotate(45deg);
 `;

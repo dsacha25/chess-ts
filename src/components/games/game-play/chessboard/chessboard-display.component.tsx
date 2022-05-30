@@ -26,11 +26,13 @@ import { find } from 'lodash';
 import useWindowSize from '../../../../hooks/use-window-size/use-window-size.hook';
 import Orientation from '../../../../utils/types/orientation/orientation';
 import logMessage from '../../../../utils/helpers/strings/log-message/log-message';
+import globalStyles from '../../../../global-styles/global-styles';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
 	//// TODO: REFACTOR INTO SOLO - ONLINE - AI CHESSBOARDS ////
 	//
+
 	const { pathname } = useLocation();
 	const { width } = useWindowSize();
 
@@ -154,8 +156,8 @@ const ChessboardDisplay = () => {
 
 	const aiMove = () => {
 		logMessage('AI MOVE START', 'red');
-		logMessage(aiMoving, 'yellow');
-		if (!aiLevel) return;
+
+		if (aiLevel === null) return;
 
 		setAiMoving(true);
 		console.log('ai level : ', aiLevel);
@@ -163,6 +165,7 @@ const ChessboardDisplay = () => {
 		let chessMove = game.movePieceServer(fen, from, to);
 
 		if (chessMove) {
+			logMessage('CHESS MOVE FOUND', 'green');
 			setFen(chessMove.fen);
 			setFenLocal(chessMove.fen);
 			setTurn(chessMove.turn);
@@ -292,9 +295,11 @@ const ChessboardDisplay = () => {
 				squareStyles={squareStyles}
 				orientation={orientation}
 				width={boardSize}
+				lightSquareStyle={{ backgroundColor: globalStyles.white }}
+				darkSquareStyle={{ backgroundColor: globalStyles.accent }}
 			/>
 
-			{aiMoving && <LoadSpinner />}
+			{aiMoving && <LoadSpinner size="80px" />}
 			{gameOver && (
 				<GameOverDisplay>
 					<h1>Game Over, Bitch</h1>

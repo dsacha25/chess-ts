@@ -40,6 +40,8 @@ class ChessGame {
 	public boardConfig: BoardConfig = DEFAULT_POSITION;
 	public fen: string = DEFAULT_POSITION;
 	public previousFen: string = this.fen;
+	public hoverColor: string = '#091e3b';
+	public moveColor: string = '#bccbf2';
 
 	constructor(config?: BoardConfig) {
 		if (config) {
@@ -160,6 +162,7 @@ class ChessGame {
 
 	movePieceAi(level: AiLevel, fen: BoardConfig) {
 		const chessMove = aiMove(fen, level);
+
 		const from = keys(chessMove)[0].toLowerCase() as Square;
 		const to = values<string>(chessMove)[0].toLowerCase() as Square;
 
@@ -176,7 +179,7 @@ class ChessGame {
 
 		const sourceSquare = history.length && history[history.length - 1].from;
 		const targetSquare = history.length && history[history.length - 1].to;
-		const backgroundColor = 'rgba(255, 0, 0, 0.4)';
+		const backgroundColor = this.hoverColor;
 		return (this.squareStyles = {
 			[pieceSquare ? pieceSquare : '']: { backgroundColor },
 			...(history.length && {
@@ -207,7 +210,7 @@ class ChessGame {
 				...a,
 				...{
 					[c]: {
-						background: 'radial-gradient(circle, #fffc00 36%, transparent 40%)',
+						background: `radial-gradient(circle, ${this.moveColor} 36%, transparent 40%)`,
 						borderRadius: '50%',
 					},
 				},

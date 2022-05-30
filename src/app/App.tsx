@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { SiteContainer } from './app.styles';
+import { SiteBackground, SiteContainer } from './app.styles';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/home-page/home-page.component';
 import Paths from '../utils/types/paths/paths';
@@ -68,6 +68,8 @@ function App() {
 					<Route index element={<PlayAiPage />} />
 				</Route>
 			</Routes>
+
+			<SiteBackground />
 		</SiteContainer>
 	);
 }

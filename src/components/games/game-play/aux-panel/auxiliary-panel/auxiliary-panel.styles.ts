@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 import CustomButton from '../../../../common/buttons/custom-button/custom-button.component';
+import {
+	StarBorder,
+	StarBorderFilled,
+} from '../../../../common/border-styles/border-styles';
 
 export const AuxiliaryPanelContainer = styled.div`
 	display: grid;
@@ -9,10 +13,9 @@ export const AuxiliaryPanelContainer = styled.div`
 	place-items: flex-start;
 	align-self: center;
 
-	background-color: ${({ theme }) => theme.accentBright};
+	${StarBorder};
 
 	padding: 30px;
-	border-radius: 40px;
 
 	grid-template-rows: auto 1fr auto;
 
@@ -26,6 +29,8 @@ export const AuxiliaryPanelContainer = styled.div`
 
 	@media screen and (max-width: 980px) {
 		height: 100%;
+
+		border-radius: 0;
 	}
 `;
 
@@ -35,6 +40,9 @@ export const PanelInfoContainer = styled.div`
 	height: 100%;
 	border-radius: 20px;
 	overflow-y: auto;
+
+	${StarBorderFilled};
+	padding: 2px;
 
 	border-top: 1px solid ${({ theme }) => theme.main};
 	border-bottom: 1px solid ${({ theme }) => theme.main};
@@ -64,8 +72,9 @@ export const PanelButton = styled(CustomButton)`
 	height: 50px;
 	font-size: 15px;
 	margin: 0;
+	font-weight: 200;
 
-	border-radius: 25px;
+	border-radius: 6px;
 
 	svg {
 		margin-top: 2px;

@@ -27,7 +27,7 @@ const HistoryController = () => {
 		<HistoryControllerContainer>
 			<HistoryNavButton
 				onClick={() => getDefaultPosition()}
-				color="light"
+				color="main"
 				disabled={moveIndex === -1}
 			>
 				<MdOutlineSkipPrevious size="30px" />
@@ -35,21 +35,21 @@ const HistoryController = () => {
 			<HistoryNavButton
 				onClick={() => getPreviousMove()}
 				disabled={moveIndex === -1}
-				color="light"
+				color="main"
 			>
 				<MdChevronLeft size="30px" />
 			</HistoryNavButton>
 			<HistoryNavButton
 				onClick={() => getNextMove()}
 				disabled={moveIndex === history.length - 1}
-				color="light"
+				color="main"
 			>
 				<MdChevronRight size="30px" />
 			</HistoryNavButton>
 			<HistoryNavButton
 				onClick={() => getLatestMove()}
 				disabled={moveIndex === history.length - 1}
-				color="light"
+				color="main"
 			>
 				<MdOutlineSkipNext size="30px" />
 			</HistoryNavButton>

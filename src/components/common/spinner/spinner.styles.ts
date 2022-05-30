@@ -15,19 +15,24 @@ export const SpinnerContainer = styled.div<SpinnerProps>`
 
 	border: 3px solid rgba(195, 195, 195, 0.6);
 	border-radius: 50%;
-	border-top-color: #474a4b;
+	border-top-color: #373a3b;
+
+	will-change: transform;
 
 	@keyframes spin {
 		to {
+			transform: rotate(360deg);
 			-webkit-transform: rotate(360deg);
 		}
 	}
 
 	@-webkit-keyframes spin {
 		to {
+			transform: rotate(360deg);
 			-webkit-transform: rotate(360deg);
 		}
 	}
 
 	animation: spin 1s ease-in-out infinite;
+	-webkit-animation: spin 1s ease-in-out infinite;
 `;
