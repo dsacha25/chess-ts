@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StarBorderFilled } from '../../../common/border-styles/border-styles';
 
 export const GulagWaitingAreaContainer = styled.div`
 	display: grid;
@@ -36,8 +37,7 @@ export const SearchingMessageContainer = styled.div`
 
 	grid-template-rows: auto 1fr;
 
-	background-color: ${({ theme }) => theme.white};
-	border-radius: 60px;
+	${StarBorderFilled};
 
 	@media screen and (max-width: 980px) {
 		width: 100vw;
@@ -53,7 +53,7 @@ export const SearchingMsg = styled.p`
 	font-size: 1.4rem;
 	font-weight: 300;
 	font-style: italic;
-	margin: 20px 5px;
+	margin: 40px 5px;
 	color: ${({ theme }) => theme.main};
 
 	text-transform: uppercase;
