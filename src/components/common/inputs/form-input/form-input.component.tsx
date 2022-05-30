@@ -8,7 +8,7 @@ import { FormInputProps } from './types';
 
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>((props, ref) => {
 	return (
-		<FormInputWrapper margin={props.margin}>
+		<FormInputWrapper className={props.className} margin={props.margin}>
 			<FormInputComponent ref={ref} {...props} />
 			{props.label && (
 				<InputLabel className={props.hasData ? 'shrink' : ''}>

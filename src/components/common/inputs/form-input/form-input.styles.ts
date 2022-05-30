@@ -13,11 +13,12 @@ const errorStyles = css`
 const labelStyles = css`
 	display: unset;
 	align-items: unset;
-	top: -20px;
-	font-size: 16px;
-	font-weight: 600;
+	top: -22px;
+	font-size: 14px;
+	font-weight: 800;
 	color: ${({ theme }) => theme.secondary};
-	font-family: 'Lexend Peta', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: -0.05rem;
 `;
 
 export const FormInputWrapper = styled.div<FormInputProps>`
@@ -29,7 +30,6 @@ export const FormInputWrapper = styled.div<FormInputProps>`
 
 	input[type='password'] {
 		letter-spacing: 0.3rem;
-		font-size: 36px;
 
 		@media screen and (max-width: 980px) {
 			font-size: 16px;
@@ -42,9 +42,11 @@ export const FormInputComponent = styled.input<FormInputProps>`
 	display: block;
 	width: 100%;
 	height: 100%;
+
 	border-radius: 2rem;
 	border: 1px solid ${secondary};
-	background: ${({ theme }) => theme.white};
+
+	/* background: ${({ theme }) => theme.accentBright}; */
 	color: ${({ theme }) => theme.main};
 	padding: 10px 25px;
 	max-width: -webkit-fill-available;
@@ -62,7 +64,7 @@ export const FormInputComponent = styled.input<FormInputProps>`
 	${({ error }) => error && errorStyles}
 
 	::placeholder {
-		color: ${secondary};
+		color: ${({ theme }) => theme.main};
 		font-size: 1.25rem;
 	}
 
@@ -96,8 +98,8 @@ export const FormInputComponent = styled.input<FormInputProps>`
 export const InputLabel = styled.label`
 	display: flex;
 	align-items: center;
-	color: ${secondary};
-	font-size: 22px;
+	color: ${({ theme }) => theme.main};
+	font-size: 1.2rem;
 	font-weight: 200;
 	position: absolute;
 	top: 0;
@@ -107,9 +109,14 @@ export const InputLabel = styled.label`
 	letter-spacing: 0.15rem;
 	pointer-events: none;
 	transition: 300ms ease all;
+	font-family: 'Lexend Peta', sans-serif;
 
 	&.shrink {
 		${labelStyles}
+	}
+
+	@media screen and (max-width: 1200px) {
+		font-size: 1rem;
 	}
 
 	@media screen and (max-width: 980px) {

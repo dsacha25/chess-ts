@@ -89,6 +89,7 @@ const CreateAccountPage = () => {
 					hasData={!!watch('password')}
 					error={errors.password || authError}
 					autoComplete="new-password"
+					className="password"
 				/>
 				<FormInput
 					{...register('confirmPassword', {
@@ -103,6 +104,7 @@ const CreateAccountPage = () => {
 					hasData={!!watch('confirmPassword')}
 					error={errors.confirmPassword}
 					autoComplete="new-password"
+					className="password"
 				/>
 
 				{authError && <ErrorText>{authError}</ErrorText>}
