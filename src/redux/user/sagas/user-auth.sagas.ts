@@ -226,9 +226,13 @@ export function* onOpenAuthListener() {
 }
 
 export function* checkUserSessionAsync(): Generator<PutEffect> | User | null {
-	const user: User = yield auth.getCurrentUser();
-	if (user) {
-		yield put(logInSuccess(user));
+	try {
+		const user: User = yield auth.getCurrentUser();
+		if (user) {
+			yield put(logInSuccess(user));
+		}
+	} catch (err) {
+		yield put(userError(getErrorMessage(err)));
 	}
 }
 

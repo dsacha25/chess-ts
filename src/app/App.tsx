@@ -16,7 +16,6 @@ import PlayPage from '../pages/play-page/play-page.component';
 import AnalysisPage from '../pages/analysis-page/analysis-page.component';
 import PlayAiPage from '../pages/play-ai-page/play-ai-page.component';
 import Head from '../components/head/head.component';
-import GulagWaitingArea from '../components/games/pre-game-interfaces/gulag-waiting-area/gulag-waiting-area.component';
 import GulagPage from '../pages/gulag-page/gulag-page.component';
 
 function App() {
@@ -25,9 +24,11 @@ function App() {
 	const auth = useSelector((state) => selectUserAuth(state));
 
 	useEffect(() => {
-		// if (!auth) {
 		checkUserSession();
-		getChessUserStart();
+
+		if (auth) {
+			getChessUserStart();
+		}
 
 		// eslint-disable-next-line
 	}, [auth]);

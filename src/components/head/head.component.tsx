@@ -14,15 +14,7 @@ const Head = () => {
 	const [color, setColor] = useState(colors.default);
 
 	useEffect(() => {
-		console.log('LOCATION: ', pathname);
-
-		if (pathname !== '/create-account' && pathname !== '/login') {
-			setColor(colors.default);
-		}
-
-		if (pathname === '/create-account' || pathname === '/login') {
-			setColor(colors.createAccount);
-		}
+		setColor(colors.default);
 
 		if (pathname === '/dashboard') {
 			setColor(colors.dashboard);
@@ -30,6 +22,7 @@ const Head = () => {
 
 		// eslint-disable-next-line
 	}, [pathname]);
+
 	return (
 		<Helmet>
 			<meta name="theme-color" content={color} />

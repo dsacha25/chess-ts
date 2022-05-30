@@ -1,16 +1,20 @@
 import styled from 'styled-components';
+import { StarBorderFilled } from '../../components/common/border-styles/border-styles';
 import CustomButton from '../../components/common/buttons/custom-button/custom-button.component';
 import Title from '../../components/common/title/title.styles';
 
 export const LogInContainer = styled.form`
 	display: grid;
-	width: 50vw;
-	height: 44vh;
+	width: 55vw;
+	min-height: 450px;
 	place-items: center;
 	grid-template-rows: auto 1fr 1fr;
 	border-radius: 60px;
 	position: relative;
-	background-color: ${({ theme }) => theme.light};
+	margin: 0 10%;
+
+	${StarBorderFilled};
+
 	padding: 50px;
 
 	@media screen and (max-width: 980px) {
@@ -30,8 +34,16 @@ export const LogInContainer = styled.form`
 `;
 
 export const LoginTitle = styled(Title)`
-	font-weight: 200;
-	justify-self: flex-start;
+	font-size: 40px;
+	grid-row: 1 / 2;
+	margin: 0;
+
+	@media screen and (max-width: 980px) {
+		margin: 50px 0;
+
+		font-size: 30px;
+		place-self: unset;
+	}
 `;
 
 export const LogInButton = styled(CustomButton)`
@@ -40,7 +52,7 @@ export const LogInButton = styled(CustomButton)`
 	bottom: -3.5rem;
 	justify-self: right;
 	width: 25%;
-	border-radius: 30px;
+	border-radius: 6px;
 
 	@media screen and (max-width: 980px) {
 		width: auto;
