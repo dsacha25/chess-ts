@@ -31,7 +31,6 @@ const Cropper: FC<CropperProps> = (props) => {
 				crop={crop}
 				zoom={1}
 				aspect={1}
-				style={{ containerStyle: { borderRadius: '26px' } }}
 			/>
 			<CropButton
 				type="button"

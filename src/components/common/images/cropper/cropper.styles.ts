@@ -11,8 +11,8 @@ export const CropButton = styled(CustomButton)`
 	width: 80%;
 	height: 40px;
 	color: white;
-	border-color: white;
-	border-width: 4px;
+	/* border-color: white;
+	border-width: 4px; */
 	margin: 0;
 	margin-top: 75%;
 	z-index: 3;

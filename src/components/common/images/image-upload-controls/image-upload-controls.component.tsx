@@ -23,7 +23,7 @@ const ImageUploadControls: FC<ImageUploadControlsProps> = (props) => {
 		<UploadControlsContainer hover={props.hover && !props.inputImage}>
 			{props.cropped && (
 				<ImageControlsButton type="button" onClick={handleUpdateCrop} inverted>
-					Crop
+					Re-Crop
 				</ImageControlsButton>
 			)}
 			<HiddenInput

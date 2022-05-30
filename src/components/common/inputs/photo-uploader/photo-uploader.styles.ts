@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StarBorderFilled } from '../../border-styles/border-styles';
 
 export const PhotoUploadContainer = styled.div`
 	display: grid;
@@ -7,12 +8,14 @@ export const PhotoUploadContainer = styled.div`
 	width: 220px;
 	height: 220px;
 
-	padding: 0;
+	padding: 10px;
 	margin: 20px 0;
 
-	border: 3px solid ${({ theme }) => theme.grey};
-	border-radius: 30px;
-	background-color: ${({ theme }) => theme.grey}e2;
+	${StarBorderFilled};
+
+	/* border: 3px solid ${({ theme }) => theme.grey}; */
+	/* border-radius: 30px; */
+	/* background-color: ${({ theme }) => theme.grey}e2; */
 
 	/* overflow: hidden; */
 
@@ -32,8 +35,8 @@ export const PhotoDisplay = styled.div<PhotoDisplayProps>`
 
 	z-index: 1;
 
-	border-radius: 26px;
-	overflow: hidden;
+	/* border-radius: 26px; */
+	/* overflow: hidden; */
 
 	background-image: ${({ url }) => `url(${url})`};
 	background-size: cover;

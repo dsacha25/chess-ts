@@ -67,7 +67,7 @@ const CreateAccountPage = () => {
 			<CreateAccountTitle margin="0" color="main">
 				Create Account
 			</CreateAccountTitle>
-			<NewCredentialsContainer rows={3}>
+			<NewCredentialsContainer>
 				<FormInput
 					{...register('displayName', { required: true })}
 					label="Display Name"
@@ -82,30 +82,28 @@ const CreateAccountPage = () => {
 					hasData={!!watch('email')}
 					error={errors.email}
 				/>
-				<ColumnsContainer gridGap="30px">
-					<FormInput
-						{...register('password', { required: true })}
-						label="Password"
-						type="password"
-						hasData={!!watch('password')}
-						error={errors.password || authError}
-						autoComplete="new-password"
-					/>
-					<FormInput
-						{...register('confirmPassword', {
-							required: true,
-							validate: {
-								passwordsMatch: (value) =>
-									value === getValues('password') || 'Passwords must match.',
-							},
-						})}
-						label="Confirm Password"
-						type="password"
-						hasData={!!watch('confirmPassword')}
-						error={errors.confirmPassword}
-						autoComplete="new-password"
-					/>
-				</ColumnsContainer>
+				<FormInput
+					{...register('password', { required: true })}
+					label="Password"
+					type="password"
+					hasData={!!watch('password')}
+					error={errors.password || authError}
+					autoComplete="new-password"
+				/>
+				<FormInput
+					{...register('confirmPassword', {
+						required: true,
+						validate: {
+							passwordsMatch: (value) =>
+								value === getValues('password') || 'Passwords must match.',
+						},
+					})}
+					label="Confirm Password"
+					type="password"
+					hasData={!!watch('confirmPassword')}
+					error={errors.confirmPassword}
+					autoComplete="new-password"
+				/>
 
 				{authError && <ErrorText>{authError}</ErrorText>}
 			</NewCredentialsContainer>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StarBorderFilled } from '../../components/common/border-styles/border-styles';
 import CustomButton from '../../components/common/buttons/custom-button/custom-button.component';
 import { RowsContainer } from '../../components/common/containers/grids/grids.styles';
 import Title from '../../components/common/title/title.styles';
@@ -13,18 +14,21 @@ export const CreateAccountContainer = styled.form`
 	place-items: center;
 	place-content: center;
 	place-self: flex-start center;
-	border-radius: 60px;
+
+	/* border-radius: 60px; */
 
 	margin-top: 40px;
 	padding: 50px;
-
-	background-color: ${({ theme }) => theme.light};
 
 	grid-column-gap: 60px;
 
 	position: relative;
 
-	box-shadow: 0 10px 10px ${({ theme }) => theme.main};
+	${StarBorderFilled};
+	filter: drop-shadow(0 5px 5px ${({ theme }) => theme.main}80);
+
+	/* background-color: ${({ theme }) => theme.light}; */
+	/* box-shadow: 0px 20px 10px ${({ theme }) => theme.main}; */
 
 	@media screen and (max-width: 980px) {
 		width: 100vw;
@@ -44,30 +48,28 @@ export const CreateAccountContainer = styled.form`
 
 export const CreateAccountTitle = styled(Title)`
 	grid-row: 1 / 2;
-	justify-self: flex-start;
 
 	@media screen and (max-width: 980px) {
-		font-size: 24px;
+		font-size: 25px;
+		margin-bottom: 50px;
 	}
 `;
 
 export const NewCredentialsContainer = styled(RowsContainer)`
 	grid-column: 1 / 2;
 	max-width: 90vw;
+	grid-template-rows: repeat(4, auto);
 
 	@media screen and (max-width: 980px) {
-		grid-template-rows: repeat(${({ rows }) => (rows ? rows : 2)}, auto);
+		grid-template-rows: unset;
 
-		gap: 30px;
-
-		div {
-			grid-template-columns: unset;
-			grid-template-rows: repeat(
-				${({ columns }) => (columns ? columns : 2)},
-				auto
-			);
-		}
+		gap: 10px;
+		place-items: flex-end;
 	}
+`;
+
+export const PasswordContainer = styled.div`
+	grid-template-columns: repeat(3, 1fr);
 `;
 
 export const SubmitButton = styled(CustomButton)`
@@ -75,8 +77,8 @@ export const SubmitButton = styled(CustomButton)`
 	right: 2%;
 	bottom: -3.5rem;
 	justify-self: right;
-	width: 30%;
-	border-radius: 30px;
+	width: 25%;
+	border-radius: 5px;
 
 	@media screen and (max-width: 980px) {
 		position: unset;

@@ -7,16 +7,15 @@ export const UploadControlsContainer = styled.div<
 >`
 	display: ${({ hover }) => (hover ? 'grid' : 'none')};
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: 95%;
+	height: 95%;
 	padding: 30px 0;
 
 	place-items: center;
 
-	background-color: ${({ theme }) => theme.light}e2;
+	background-color: ${({ theme }) => theme.light}80;
 
 	z-index: 2;
-	border-radius: 26px;
 `;
 
 export const HiddenInput = styled.input`
@@ -34,8 +33,8 @@ export const ImageControlsButton = styled(
 	width: 80%;
 	height: 40px;
 	color: white;
-	border-color: white;
-	border-width: 4px;
+	// border-color: white;
+	// border-width: 4px;
 	margin: 0;
 	z-index: 3;
 `;

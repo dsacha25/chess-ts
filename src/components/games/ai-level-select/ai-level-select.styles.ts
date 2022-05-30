@@ -35,10 +35,6 @@ export const AiLevelSelectOptions = styled.div`
 
 	${StarBorderFilled};
 
-	/* background-color: ${({ theme }) => theme.light}; */
-
-	border-radius: 40px;
-
 	gap: 20px;
 
 	padding: 30px;
@@ -59,4 +55,6 @@ export const SelectAiLevelButton = styled(CustomButton)`
 	height: 80px;
 	font-size: 30px;
 	margin: 0;
+
+	border-radius: 6px;
 `;
