@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectAiLevel } from '../../../../../redux/game/game.selector';
 import { selectMobileGameIndex } from '../../../../../redux/indexes/indexes.selector';
-import AiLevelSelect from '../../../ai-level-select/ai-level-select.component';
+import AiLevelSelect from '../../../pre-game-interfaces/ai-level-select/ai-level-select.component';
 import AuxiliaryPanel from '../../aux-panel/auxiliary-panel/auxiliary-panel.component';
 import ChessboardDisplay from '../../chessboard/chessboard-display.component';
 import { MobileGameLayoutContainer } from '../mobile-game-layout/mobile-game-layout.styles';

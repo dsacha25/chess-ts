@@ -2,8 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectAiLevel } from '../../../../../redux/game/game.selector';
-import GameToolbar from '../../../../toolbars/game-toolbar/game-toolbar.component';
-import AiLevelSelect from '../../../ai-level-select/ai-level-select.component';
+import AiLevelSelect from '../../../pre-game-interfaces/ai-level-select/ai-level-select.component';
 import AuxiliaryPanel from '../../aux-panel/auxiliary-panel/auxiliary-panel.component';
 import ChessboardDisplay from '../../chessboard/chessboard-display.component';
 

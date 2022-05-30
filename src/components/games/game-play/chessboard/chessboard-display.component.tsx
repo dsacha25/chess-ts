@@ -28,6 +28,7 @@ import Orientation from '../../../../utils/types/orientation/orientation';
 import logMessage from '../../../../utils/helpers/strings/log-message/log-message';
 import globalStyles from '../../../../global-styles/global-styles';
 import { StarBorder } from '../../../common/border-styles/border-styles';
+import PromotionSelector from '../promotion-selector/promotion-selector.component';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
@@ -309,6 +310,7 @@ const ChessboardDisplay = () => {
 				darkSquareStyle={{ backgroundColor: globalStyles.accent }}
 			/>
 
+			<PromotionSelector />
 			{aiMoving && <LoadSpinner size="80px" />}
 			{gameOver && (
 				<GameOverDisplay>

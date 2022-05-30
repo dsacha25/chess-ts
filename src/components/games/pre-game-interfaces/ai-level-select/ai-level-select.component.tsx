@@ -1,6 +1,6 @@
 import React from 'react';
-import useActions from '../../../hooks/use-actions/use-actions.hook';
-import { TabTitle } from '../../dashboard/challenge-tab/challenge-tab.styles';
+import useActions from '../../../../hooks/use-actions/use-actions.hook';
+import { TabTitle } from '../../../dashboard/challenge-tab/challenge-tab.styles';
 import {
 	AiLevelSelectContainer,
 	AiLevelSelectOptions,

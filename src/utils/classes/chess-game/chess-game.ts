@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react';
 import { ChessInstance, Square } from 'chess.js';
-import getOrientation from '../../helpers/orientation/get-orientation';
+
 import Orientation from '../../types/orientation/orientation';
 import Side from '../../types/side/side';
-import GameType from '../../types/game-type/game-type';
+
 import {
 	Game,
 	move,
@@ -20,7 +20,7 @@ import {
 	Moves,
 	AiLevel,
 } from 'js-chess-engine';
-import { initial, keys, values } from 'lodash';
+import { keys, values } from 'lodash';
 const Chess = require('chess.js');
 
 const DEFAULT_POSITION =
@@ -137,12 +137,13 @@ class ChessGame {
 		console.log('FROM: ', from);
 		console.log('TO:', to);
 
-		const chessMove = this.chess.move({ from, to });
+		const chessMove = this.chess.move({ from, to, promotion: 'q' });
+		const fen = getFen(move(config, from, to));
 		console.log('MOVE: ', chessMove);
+		console.log('MOVE REAL: ', move(config, from, to));
+		console.log('fen: ', fen);
 
 		if (!chessMove) return null;
-
-		const fen = getFen(move(config, from, to));
 
 		this.chess.load(fen);
 		this.getStatus(fen);
