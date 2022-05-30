@@ -36,7 +36,7 @@ const HomePage = () => {
 				</HomeActionButton>
 				<HomeActionButton
 					onClick={() => navigate(`/${Paths.LOGIN}`)}
-					color="warn"
+					color="light"
 				>
 					Log In
 				</HomeActionButton>

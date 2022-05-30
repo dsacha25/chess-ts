@@ -12,7 +12,7 @@ export const buttonFontBase = css<BaseButtonProps>`
 	text-transform: uppercase;
 
 	font-size: ${({ fontSize }) => (fontSize ? fontSize : '20px')};
-	font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 600)};
+	font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 800)};
 	letter-spacing: ${({ letterSpacing }) =>
 		letterSpacing ? letterSpacing : '0.1rem'};
 

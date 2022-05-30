@@ -8,7 +8,7 @@ export const CreateAccountContainer = styled.form`
 	display: grid;
 	height: 50vh;
 	min-height: 450px;
-	margin: 0 20%;
+	margin: 0 15%;
 
 	grid-template-columns: 1fr 250px;
 	grid-template-rows: auto 1fr;
@@ -18,7 +18,7 @@ export const CreateAccountContainer = styled.form`
 
 	padding: 50px;
 
-	grid-column-gap: 60px;
+	column-gap: 30px;
 
 	position: relative;
 
@@ -94,7 +94,8 @@ export const SubmitButton = styled(CustomButton)`
 	right: 2%;
 	bottom: -3.5rem;
 	justify-self: right;
-	width: 25%;
+	width: 30%;
+	min-width: 325px;
 	border-radius: 5px;
 
 	@media screen and (max-width: 980px) {

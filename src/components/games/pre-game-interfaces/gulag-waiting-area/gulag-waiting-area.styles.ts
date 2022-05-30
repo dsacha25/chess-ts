@@ -31,6 +31,7 @@ export const SearchingMessageContainer = styled.div`
 	width: 60%;
 	height: 40%;
 	place-content: center;
+	place-items: center;
 	place-self: flex-start;
 
 	grid-template-rows: auto 1fr;

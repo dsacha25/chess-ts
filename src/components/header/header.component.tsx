@@ -25,7 +25,7 @@ const Header = () => {
 			<HeaderContainer>
 				<NotificationButton />
 				<LogOutContainer>
-					<LogOutButton onClick={() => logOutStart()} color="light">
+					<LogOutButton onClick={() => logOutStart()} color="secondary">
 						Log Out
 					</LogOutButton>
 					<Avatar url={photoURL} />

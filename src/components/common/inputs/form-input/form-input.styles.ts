@@ -43,7 +43,7 @@ export const FormInputComponent = styled.input<FormInputProps>`
 	width: 100%;
 	height: 100%;
 
-	border-radius: 2rem;
+	border-radius: 0.5rem;
 	border: 1px solid ${secondary};
 
 	/* background: ${({ theme }) => theme.accentBright}; */
@@ -106,7 +106,7 @@ export const InputLabel = styled.label`
 	bottom: 0;
 	left: 20px;
 	font-style: italic;
-	letter-spacing: 0.15rem;
+	letter-spacing: 0.1rem;
 	pointer-events: none;
 	transition: 300ms ease all;
 	font-family: 'Lexend Peta', sans-serif;
@@ -115,8 +115,9 @@ export const InputLabel = styled.label`
 		${labelStyles}
 	}
 
-	@media screen and (max-width: 1200px) {
+	@media screen and (max-width: 1400px) {
 		font-size: 1rem;
+		letter-spacing: unset;
 	}
 
 	@media screen and (max-width: 980px) {

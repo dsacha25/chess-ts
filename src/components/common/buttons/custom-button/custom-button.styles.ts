@@ -14,6 +14,7 @@ const primaryStyles = css`
 `;
 
 const lightStyles = css`
+	color: ${({ theme }) => theme.main};
 	background-color: ${({ theme }) => theme.light};
 
 	:focus,

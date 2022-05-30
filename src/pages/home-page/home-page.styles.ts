@@ -72,7 +72,9 @@ export const HomeActionButton = styled(CustomButton)`
 	height: 60px;
 
 	font-size: 22px;
-	border-radius: 56px;
+	border-radius: 0.5rem;
 
 	margin: 10px 0;
+
+	box-shadow: 0 4px 4px #777777;
 `;
