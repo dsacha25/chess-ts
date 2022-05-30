@@ -103,13 +103,6 @@ export const SiteContainer = styled.div`
 	background: -webkit-${gradient};
 	background: -moz-${gradient};
 
-	/* background: url(${BackgroundPattern});
-	background-size: 140px;
-	background-attachment: fixed;
-	-o-background-size: fill;
-	-moz-background-size: fill;
-	-webkit-background-size: fill; */
-
 	position: relative;
 `;
 

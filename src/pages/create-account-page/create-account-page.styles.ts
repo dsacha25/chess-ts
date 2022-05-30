@@ -25,9 +25,6 @@ export const CreateAccountContainer = styled.form`
 	${StarBorderFilled};
 	filter: drop-shadow(0 5px 5px ${({ theme }) => theme.main}80);
 
-	/* background-color: ${({ theme }) => theme.light}; */
-	/* box-shadow: 0px 20px 10px ${({ theme }) => theme.main}; */
-
 	@media screen and (max-width: 980px) {
 		width: 100vw;
 		height: 100vh;
