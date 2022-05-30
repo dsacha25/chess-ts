@@ -9,6 +9,7 @@ import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
+import { PromotionPieces } from '../../utils/types/promotion-pieces/promotion-pieces';
 import {
 	AcceptGameChallengeStartAction,
 	GameChallengeResponseSuccessAction,
@@ -56,6 +57,8 @@ import {
 	GetLatestMoveAction,
 	SetAiLevelAction,
 	SetActiveGameAiAction,
+	SetPromotionPieceTypeAction,
+	ClearPromotionPieceTypeAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 
@@ -231,6 +234,18 @@ export const getPreviousMove = (): GetPreviousMoveAction => ({
 
 export const getNextMove = (): GetNextMoveAction => ({
 	type: GameTypes.GET_NEXT_MOVE,
+});
+
+// ==== PROMOTION PIECES
+export const setPromotionPieceType = (
+	piece: PromotionPieces
+): SetPromotionPieceTypeAction => ({
+	type: GameTypes.SET_PROMOTION_PIECE_TYPE,
+	payload: piece,
+});
+
+export const clearPromotionPieceType = (): ClearPromotionPieceTypeAction => ({
+	type: GameTypes.CLEAR_PROMOTION_PIECE_TYPE,
 });
 
 export const getLatestMove = (): GetLatestMoveAction => ({

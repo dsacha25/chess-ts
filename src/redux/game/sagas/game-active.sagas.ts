@@ -30,7 +30,11 @@ import {
 	setGameHistory,
 	setOrientation,
 } from '../game.actions';
-import { selectActiveGame, selectPendingMove } from '../game.selector';
+import {
+	selectActiveGame,
+	selectGameType,
+	selectPendingMove,
+} from '../game.selector';
 import { GameTypes } from '../game.types';
 
 // === GAME DRAW
@@ -127,6 +131,9 @@ export function* setActiveGameAsync({
 	payload: game,
 }: SetActiveGameAction): Generator | SelectEffect {
 	const uid = yield select(selectUserUID);
+	const gameType = yield select(selectGameType);
+
+	if (gameType !== 'online') return;
 
 	yield console.log('GAME STATE MOVES: ', game.moves);
 
@@ -144,6 +151,9 @@ export function* onSetActiveGame() {
 export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
 	yield console.log('CHESS GAME LISTENER: ', game);
 	const uid = yield select(selectUserUID);
+	const gameType = yield select(selectGameType);
+
+	if (gameType !== 'online') return;
 
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));

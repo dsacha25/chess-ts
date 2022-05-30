@@ -9,6 +9,7 @@ import { PendingRequest } from '../../utils/types/pending-request/pending-reques
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { HistoryMove } from '../../utils/types/history-move/history-move';
+import { PromotionPieces } from '../../utils/types/promotion-pieces/promotion-pieces';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { AiLevel } from 'js-chess-engine';
 
@@ -29,6 +30,7 @@ export interface GameState {
 	activeGame: ChessGameType | null;
 	inactiveGames: ChessGameType[];
 	pendingMove: ChessMove | null;
+	promotionPieceType: PromotionPieces | null;
 	receiver: string;
 	loading: boolean;
 	error: string;
@@ -54,6 +56,7 @@ const INITIAL_STATE: GameState = {
 	activeGame: null,
 	inactiveGames: [],
 	pendingMove: null,
+	promotionPieceType: null,
 	receiver: '',
 	loading: false,
 	error: '',
@@ -205,6 +208,12 @@ const gameReducer = produce(
 				state.fen = state.history[state.history.length - 1].fen;
 				state.moveIndex = state.history.length - 1;
 				state.error = '';
+				return state;
+			case GameTypes.SET_PROMOTION_PIECE_TYPE:
+				state.promotionPieceType = action.payload;
+				return state;
+			case GameTypes.CLEAR_PROMOTION_PIECE_TYPE:
+				state.promotionPieceType = null;
 				return state;
 			case GameTypes.GAME_ERROR:
 				state.error = action.payload;

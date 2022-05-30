@@ -11,6 +11,7 @@ import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
 import { PendingRequest } from '../../utils/types/pending-request/pending-request';
+import { PromotionPieces } from '../../utils/types/promotion-pieces/promotion-pieces';
 import { GameTypes } from './game.types';
 
 // ==== GAME STATE
@@ -166,6 +167,16 @@ export interface GetLatestMoveAction {
 	type: GameTypes.GET_LATEST_MOVE;
 }
 
+// ==== PIECE PROMOTION
+export interface SetPromotionPieceTypeAction {
+	type: GameTypes.SET_PROMOTION_PIECE_TYPE;
+	payload: PromotionPieces;
+}
+
+export interface ClearPromotionPieceTypeAction {
+	type: GameTypes.CLEAR_PROMOTION_PIECE_TYPE;
+}
+
 // ==== RESIGN & DRAW
 export interface ResignGameAction {
 	type: GameTypes.RESIGN_GAME;
@@ -270,6 +281,8 @@ type GameActions =
 	| GetPreviousMoveAction
 	| GetNextMoveAction
 	| GetLatestMoveAction
+	| SetPromotionPieceTypeAction
+	| ClearPromotionPieceTypeAction
 	| ClearGameInstanceAction
 	| SendChatMessageStartAction
 	| SendChatMessageSuccessAction

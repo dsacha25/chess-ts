@@ -6,7 +6,7 @@ import {
 	PlayerContainer,
 	LoadSpinner,
 } from './chessboard-display.styles';
-import Chessboard from 'chessboardjsx';
+import Chessboard, { Piece } from 'chessboardjsx';
 import { Square } from 'chess.js';
 import OpponentChip from '../../../chips/game-chips/opponent-chip/opponent-chip.component';
 import PlayerChip from '../../../chips/game-chips/player-chip/player-chip.component';
@@ -27,8 +27,8 @@ import useWindowSize from '../../../../hooks/use-window-size/use-window-size.hoo
 import Orientation from '../../../../utils/types/orientation/orientation';
 import logMessage from '../../../../utils/helpers/strings/log-message/log-message';
 import globalStyles from '../../../../global-styles/global-styles';
-import { StarBorder } from '../../../common/border-styles/border-styles';
 import PromotionSelector from '../promotion-selector/promotion-selector.component';
+import isPromoting from '../../../../utils/helpers/is-promoting/is-promoting';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
@@ -66,6 +66,7 @@ const ChessboardDisplay = () => {
 	const [fenLocal, setFenLocal] = useState(fen);
 	const [turn, setTurn] = useState<Orientation>('white');
 	const [aiMoving, setAiMoving] = useState(false);
+	const [promoting, setPromoting] = useState(false);
 
 	useEffect(() => {
 		console.log('NEW FEN: ', fen);
@@ -204,12 +205,12 @@ const ChessboardDisplay = () => {
 	};
 
 	const onMouseOverSquare = (square: Square) => {
+		// if (selectedSquare) return;
 		// get list of possible moves for this square
 		const movesToHighlight = game.getMovesToHighlight(fen, square);
 
 		// return if no moves available
 		if (!movesToHighlight || movesToHighlight.length === 0) return;
-		// console.log('GAME TURN: ', game.turn);
 
 		if (gameType === 'online') {
 			if (game.turn === orientation) {
@@ -225,6 +226,8 @@ const ChessboardDisplay = () => {
 	};
 
 	const makeMove = (from: Square, to: Square) => {
+		console.log('FROM - TO: ', from, to);
+		if (from === to) return;
 		let chessMove = game.movePieceServer(fen, from, to);
 		console.log('CHESSS MOVE', chessMove);
 
@@ -270,12 +273,29 @@ const ChessboardDisplay = () => {
 		}
 	};
 
-	const onDrop = (props: { sourceSquare: Square; targetSquare: Square }) => {
-		const { sourceSquare, targetSquare } = props;
+	const onDrop = (props: {
+		sourceSquare: Square;
+		targetSquare: Square;
+		piece: Piece;
+	}) => {
+		console.log('props: ', props);
 
-		makeMove(sourceSquare, targetSquare);
+		const { sourceSquare, targetSquare, piece } = props;
+		console.log('PIECE: ', piece);
+		console.log('ROW: ', targetSquare[1]);
 
-		setSelectedSquare(undefined);
+		const piecePromoting = isPromoting(targetSquare[1], piece);
+		console.log('IS PROMOTING: ', piecePromoting);
+
+		if (piecePromoting) {
+			setPromoting(true);
+		}
+
+		if (!piecePromoting) {
+			makeMove(sourceSquare, targetSquare);
+
+			setSelectedSquare(undefined);
+		}
 	};
 
 	const onSquareClick = (square: Square) => {
@@ -310,7 +330,7 @@ const ChessboardDisplay = () => {
 				darkSquareStyle={{ backgroundColor: globalStyles.accent }}
 			/>
 
-			<PromotionSelector />
+			{promoting && <PromotionSelector />}
 			{aiMoving && <LoadSpinner size="80px" />}
 			{gameOver && (
 				<GameOverDisplay>

@@ -98,3 +98,8 @@ export const selectIsGameOver = createSelector(
 	selectActiveGame,
 	(game) => game?.gameOver
 );
+
+export const selectPromotionPieceType = createSelector(
+	selectGame,
+	(game) => game.promotionPieceType
+);

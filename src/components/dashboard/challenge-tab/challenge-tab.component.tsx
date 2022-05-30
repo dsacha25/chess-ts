@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { MouseEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../common/title/title.styles';
 import {
@@ -26,7 +26,13 @@ const ChallengeTab = () => {
 		fetchGameChallengesStart,
 		fetchActiveGamesStart,
 		fetchInactiveGamesStart,
+		setGameType,
 	} = useActions();
+
+	const handleGameSelection = (e: MouseEvent<HTMLButtonElement>) => {
+		setGameType('solo');
+		navigate(`/${Paths.ANALYSIS}`);
+	};
 
 	useEffect(() => {
 		fetchGameChallengesStart();
@@ -41,20 +47,22 @@ const ChallengeTab = () => {
 			<TabTitle>Challenge Area</TabTitle>
 			<ButtonsContainer>
 				<ChallengeButton
+					id="gulag"
 					onClick={() => navigate(`/${Paths.GULAG}`)}
 					color="secondary"
 				>
 					{width > 980 && 'Gulag'}
 					<GiBattleAxe size="30px" />
 				</ChallengeButton>
-				<ChallengeButton onClick={() => navigate(`/${Paths.AI}`)} color="light">
+				<ChallengeButton
+					id="ai"
+					onClick={() => navigate(`/${Paths.AI}`)}
+					color="light"
+				>
 					{width > 980 && 'AI'}
 					<BsCpuFill color="black" size="30px" />
 				</ChallengeButton>
-				<ChallengeButton
-					onClick={() => navigate(`/${Paths.ANALYSIS}`)}
-					color="main"
-				>
+				<ChallengeButton id="solo" onClick={handleGameSelection} color="main">
 					{width > 980 && 'Solo'}
 					<ImSad2 size="30px" />
 				</ChallengeButton>

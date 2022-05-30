@@ -138,12 +138,10 @@ class ChessGame {
 		console.log('TO:', to);
 
 		const chessMove = this.chess.move({ from, to, promotion: 'q' });
-		const fen = getFen(move(config, from, to));
 		console.log('MOVE: ', chessMove);
-		console.log('MOVE REAL: ', move(config, from, to));
-		console.log('fen: ', fen);
 
 		if (!chessMove) return null;
+		const fen = getFen(move(config, from, to));
 
 		this.chess.load(fen);
 		this.getStatus(fen);
