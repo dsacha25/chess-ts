@@ -27,7 +27,7 @@ const AnalysisPage = () => {
 		<AnalysisContainer>
 			<GameToolbar />
 			<ChessboardDisplay />
-			{/* <AuxiliaryPanel /> */}
+			<AuxiliaryPanel />
 		</AnalysisContainer>
 	);
 };

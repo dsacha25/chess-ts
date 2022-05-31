@@ -1,1 +1,1 @@
-export type PromotionPieces = 'q' | 'r' | 'b' | 'k';
+export type PromotionPieces = 'q' | 'r' | 'b' | 'n';

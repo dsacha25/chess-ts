@@ -19,6 +19,7 @@ import {
 	selectFen,
 	selectGameType,
 	selectOrientation,
+	selectPromotionPieceType,
 } from '../../../../redux/game/game.selector';
 import { useLocation } from 'react-router-dom';
 import { selectUserUID } from '../../../../redux/user/user.selector';
@@ -44,6 +45,7 @@ const ChessboardDisplay = () => {
 	const fen = useSelector((state) => selectFen(state));
 	const orientation = useSelector((state) => selectOrientation(state));
 	const aiLevel = useSelector((state) => selectAiLevel(state));
+	const promotionType = useSelector((state) => selectPromotionPieceType(state));
 
 	const {
 		movePiece,
@@ -52,6 +54,7 @@ const ChessboardDisplay = () => {
 		fetchEnemyInfoStart,
 		makePendingMove,
 		openActiveGameListener,
+		clearPromotionPieceType,
 	} = useActions();
 
 	const [squareStyles, setSquareStyles] = useState<{
@@ -67,6 +70,10 @@ const ChessboardDisplay = () => {
 	const [turn, setTurn] = useState<Orientation>('white');
 	const [aiMoving, setAiMoving] = useState(false);
 	const [promoting, setPromoting] = useState(false);
+	const [storedMove, setStoredMove] = useState<{
+		from: Square;
+		to: Square;
+	} | null>(null);
 
 	useEffect(() => {
 		console.log('NEW FEN: ', fen);
@@ -139,9 +146,9 @@ const ChessboardDisplay = () => {
 	}, [selectedSquare]);
 
 	useEffect(() => {
-		console.log('turn: ', game.turn, orientation);
-		console.log('AI turn: ', game.turn !== orientation);
-		console.log('FEN: ', fen);
+		// console.log('turn: ', game.turn, orientation);
+		// console.log('AI turn: ', game.turn !== orientation);
+		// console.log('FEN: ', fen);
 
 		let to: NodeJS.Timeout;
 
@@ -165,6 +172,36 @@ const ChessboardDisplay = () => {
 
 		// eslint-disable-next-line
 	}, [fen, gameType, turn, orientation, aiLevel, fenLocal]);
+
+	/// PIECE PROMOTION
+	useEffect(() => {
+		if (promoting && promotionType && storedMove) {
+			// make move
+			const chessMove = game.promoteAndMove(
+				fen,
+				storedMove.from,
+				storedMove.to,
+				promotionType
+			);
+
+			if (chessMove) {
+				logMessage('PR0MOTING PIECE', 'green');
+				logMessage(chessMove);
+				setFen(chessMove.fen);
+				setFenLocal(chessMove.fen);
+				setTurn(chessMove.turn);
+				movePiece({ move: chessMove.san, fen: chessMove.fen });
+				logMessage('PROMOTION SUCCESS', 'blue');
+			}
+			setStoredMove(null);
+			clearPromotionPieceType();
+			setPromoting(false);
+
+			// clear promotion selection
+		}
+
+		// eslint-disable-next-line
+	}, [promoting, promotionType, storedMove]);
 
 	const aiMove = () => {
 		logMessage('AI MOVE START', 'red');
@@ -289,6 +326,7 @@ const ChessboardDisplay = () => {
 
 		if (piecePromoting) {
 			setPromoting(true);
+			setStoredMove({ from: sourceSquare, to: targetSquare });
 		}
 
 		if (!piecePromoting) {

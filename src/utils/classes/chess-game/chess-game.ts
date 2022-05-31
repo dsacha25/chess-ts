@@ -21,6 +21,7 @@ import {
 	AiLevel,
 } from 'js-chess-engine';
 import { keys, values } from 'lodash';
+import { PromotionPieces } from '../../types/promotion-pieces/promotion-pieces';
 const Chess = require('chess.js');
 
 const DEFAULT_POSITION =
@@ -134,11 +135,7 @@ class ChessGame {
 		this.previousFen = getFen(config);
 		this.chess.load(getFen(config));
 
-		console.log('FROM: ', from);
-		console.log('TO:', to);
-
-		const chessMove = this.chess.move({ from, to, promotion: 'q' });
-		console.log('MOVE: ', chessMove);
+		const chessMove = this.chess.move({ from, to, promotion: 'n' });
 
 		if (!chessMove) return null;
 		const fen = getFen(move(config, from, to));
@@ -146,10 +143,30 @@ class ChessGame {
 		this.chess.load(fen);
 		this.getStatus(fen);
 
-		console.log('WINNER?: ', this.getWinner(fen));
-		this.boardConfig = fen;
-		const status = this.getStatus(fen);
-		console.log('STATUS: ', status);
+		return {
+			fen,
+			san: chessMove.san,
+			turn: this.getStatus(fen).turn,
+			winner: this.getWinner(fen),
+		};
+	}
+
+	promoteAndMove(
+		config: BoardConfig,
+		from: Square,
+		to: Square,
+		promotion: PromotionPieces
+	): ServerMove | null {
+		this.previousFen = getFen(config);
+		this.chess.load(getFen(config));
+
+		const chessMove = this.chess.move({ from, to, promotion });
+
+		if (!chessMove) return null;
+		const fen = this.chess.fen();
+
+		this.chess.load(fen);
+		this.getStatus(fen);
 
 		return {
 			fen,
