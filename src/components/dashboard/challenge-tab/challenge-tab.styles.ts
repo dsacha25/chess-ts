@@ -36,7 +36,6 @@ export const TabTitle = styled(Title)`
 		height: 60px !important;
 
 		text-align: center;
-		background-color: ${({ theme }) => theme.accentBright};
 	}
 `;
 
@@ -61,7 +60,7 @@ export const ChallengeButton = styled(CustomButton)`
 
 	font-size: 18px;
 
-	border-radius: 30px;
+	border-radius: 0.5rem;
 
 	justify-content: space-between;
 `;
@@ -69,6 +68,8 @@ export const ChallengeButton = styled(CustomButton)`
 export const ListsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+
+	align-items: center;
 
 	width: inherit;
 	max-height: 63vh;

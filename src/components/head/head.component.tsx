@@ -16,10 +16,6 @@ const Head = () => {
 	useEffect(() => {
 		setColor(colors.default);
 
-		if (pathname === '/dashboard') {
-			setColor(colors.dashboard);
-		}
-
 		// eslint-disable-next-line
 	}, [pathname]);
 
