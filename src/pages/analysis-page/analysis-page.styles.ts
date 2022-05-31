@@ -8,4 +8,11 @@ export const AnalysisContainer = styled.div`
 	grid-template-columns: 100px 1fr 400px;
 	position: relative;
 	grid-gap: 50px;
+
+	@media screen and (max-width: 980px) {
+		grid-template-columns: 1fr;
+		padding: 0;
+		max-height: calc(100vh - 70px);
+		overflow: hidden;
+	}
 `;

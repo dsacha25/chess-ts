@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
-import AuxiliaryPanel from '../../components/games/game-play/aux-panel/auxiliary-panel/auxiliary-panel.component';
-import ChessboardDisplay from '../../components/games/game-play/chessboard/chessboard-display.component';
+import DesktopSoloGameLayout from '../../components/games/game-play/layout/desktop-solo-game-layout/desktop-solo-game-layout.component';
+import MobileSoloGameLayout from '../../components/games/game-play/layout/mobile-solo-game-layout/mobile-solo-game-layout.components';
 import GameToolbar from '../../components/toolbars/game-toolbar/game-toolbar.component';
+import MobileGameToolbar from '../../components/toolbars/mobile-game-toolbar/mobile-game-toolbar.component';
 import useActions from '../../hooks/use-actions/use-actions.hook';
 import useQuery from '../../hooks/use-query/use-query.hook';
+import useWindowSize from '../../hooks/use-window-size/use-window-size.hook';
 import { AnalysisContainer } from './analysis-page.styles';
 
 const AnalysisPage = () => {
 	const game = useQuery('game');
 	const { clearEnemyInfo, clearActiveGame, setInactiveGameByID, setGameType } =
 		useActions();
+	const { width } = useWindowSize();
 
 	useEffect(() => {
 		clearEnemyInfo();
@@ -25,9 +28,8 @@ const AnalysisPage = () => {
 
 	return (
 		<AnalysisContainer>
-			<GameToolbar />
-			<ChessboardDisplay />
-			<AuxiliaryPanel />
+			{width <= 980 ? <MobileGameToolbar /> : <GameToolbar />}
+			{width <= 980 ? <MobileSoloGameLayout /> : <DesktopSoloGameLayout />}
 		</AnalysisContainer>
 	);
 };

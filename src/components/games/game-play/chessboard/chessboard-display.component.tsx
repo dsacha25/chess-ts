@@ -185,13 +185,11 @@ const ChessboardDisplay = () => {
 			);
 
 			if (chessMove) {
-				logMessage('PR0MOTING PIECE', 'green');
 				logMessage(chessMove);
 				setFen(chessMove.fen);
 				setFenLocal(chessMove.fen);
 				setTurn(chessMove.turn);
 				movePiece({ move: chessMove.san, fen: chessMove.fen });
-				logMessage('PROMOTION SUCCESS', 'blue');
 			}
 			setStoredMove(null);
 			clearPromotionPieceType();

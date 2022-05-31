@@ -8,6 +8,7 @@ export const OpponentChipContainer = styled.div`
 
 	position: relative;
 	place-items: flex-end center;
+	margin-left: 10px;
 `;
 
 export const OpponentChipAvatar = styled(ImageContainer)`

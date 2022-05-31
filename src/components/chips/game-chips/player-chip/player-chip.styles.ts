@@ -9,6 +9,8 @@ export const PlayerChipContainer = styled.div`
 	position: relative;
 
 	place-items: flex-start center;
+
+	margin-right: 10px;
 `;
 
 export const PlayerChipAvatar = styled(ImageContainer)`
