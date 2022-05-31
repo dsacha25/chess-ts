@@ -17,9 +17,9 @@ export const GameHistoryContainer = styled.div`
 export const HistoryMoveList = styled.div`
 	height: 100%;
 	max-height: 60vh;
-	width: 95%;
+	width: 90%;
 	place-self: flex-start center;
-	margin: 5px;
+	margin: 10px;
 	padding: 0;
 	font-size: 12px;
 
@@ -41,7 +41,7 @@ export const HistoryMove = styled.li`
 	place-items: center;
 	place-content: center;
 
-	background-color: ${({ theme }) => theme.white}aa;
+	background-color: white;
 `;
 
 export const MoveNumber = styled.p`

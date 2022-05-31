@@ -42,7 +42,6 @@ export const PanelInfoContainer = styled.div`
 	overflow-y: auto;
 
 	${StarBorderFilled};
-	padding: 2px;
 
 	border-top: 1px solid ${({ theme }) => theme.main};
 	border-bottom: 1px solid ${({ theme }) => theme.main};
