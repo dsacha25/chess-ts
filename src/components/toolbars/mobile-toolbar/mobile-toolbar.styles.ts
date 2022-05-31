@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StarBorderFilled } from '../../common/border-styles/border-styles';
 import CustomButton from '../../common/buttons/custom-button/custom-button.component';
 
 export const MobileToolbarContainer = styled.div`
@@ -42,7 +43,7 @@ export const MobileLogoutContainer = styled.div`
 	grid-template: 50% 1fr / 1fr;
 	place-items: center;
 
-	background-color: ${({ theme }) => theme.light};
+	${StarBorderFilled};
 
 	position: fixed;
 
@@ -63,12 +64,12 @@ export const MobileLogoutResponses = styled.div`
 	grid-template-columns: 1fr 1fr;
 
 	button:first-of-type {
-		border-top-left-radius: 20px;
-		border-bottom-left-radius: 20px;
+		border-top-left-radius: 0.5rem;
+		border-bottom-left-radius: 0.5rem;
 	}
 
 	button:last-of-type {
-		border-top-right-radius: 20px;
-		border-bottom-right-radius: 20px;
+		border-top-right-radius: 0.5rem;
+		border-bottom-right-radius: 0.5rem;
 	}
 `;
