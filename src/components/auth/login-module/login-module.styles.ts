@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StarBorderFilled } from '../../common/border-styles/border-styles';
 import CustomButton from '../../common/buttons/custom-button/custom-button.component';
 import Title from '../../common/title/title.styles';
 
@@ -24,9 +25,9 @@ export const LoginModuleContainer = styled.form`
 	height: 44vh;
 	place-items: center;
 	grid-template-rows: auto 1fr 1fr auto;
-	border-radius: 60px;
 
-	background-color: ${({ theme }) => theme.light};
+	${StarBorderFilled};
+
 	padding: 50px;
 	place-self: center;
 
@@ -73,7 +74,7 @@ export const LogInButton = styled(CustomButton)`
 	bottom: -3.5rem;
 	justify-self: right;
 	width: 25%;
-	border-radius: 30px;
+	border-radius: 0.5rem;
 
 	@media screen and (max-width: 980px) {
 		position: unset;

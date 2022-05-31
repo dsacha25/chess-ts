@@ -56,7 +56,7 @@ export const BaseButtonMain = styled.button<BaseButtonProps>`
 	margin: ${({ margin }) => (margin ? margin : '0px')};
 	padding: ${({ padding }) => (padding ? padding : 'auto')};
 	border: ${({ borderless }) => (borderless ? 'none !important' : 'none')};
-	border-radius: 1rem;
+	border-radius: 0.5rem;
 	background: none;
 	outline: none;
 

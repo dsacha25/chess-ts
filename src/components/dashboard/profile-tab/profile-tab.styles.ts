@@ -73,10 +73,10 @@ export const ProfileDataContainer = styled.div`
 `;
 
 export const DeleteAccountButton = styled(CustomButton)`
-	width: 250px;
+	width: 400px;
 	height: 60px;
 	font-size: 15px;
-	border-radius: 30px;
+	border-radius: 0.5rem;
 
 	@media screen and (max-width: 980px) {
 		width: 90vw;
@@ -86,7 +86,7 @@ export const DeleteAccountButton = styled(CustomButton)`
 export const SubmitUpdateButton = styled(CustomButton)`
 	place-self: center;
 	width: 400px;
-	border-radius: 30px;
+	border-radius: 0.5rem;
 	grid-column: 1 / span 2;
 
 	@media screen and (max-width: 980px) {
@@ -104,9 +104,9 @@ export const ReauthContainer = styled.div`
 	place-items: center;
 
 	position: relative;
-	margin-bottom: 100px;
 
 	@media screen and (max-width: 980px) {
+		margin-bottom: 100px;
 		h2 {
 			font-size: 16px;
 			margin: 10px;

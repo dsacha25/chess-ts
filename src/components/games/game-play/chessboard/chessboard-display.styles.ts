@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StarBorderFilled } from '../../../common/border-styles/border-styles';
 import Spinner from '../../../common/spinner/spinner.component';
 
 interface BoardProps {
@@ -51,14 +52,17 @@ export const GameOverDisplay = styled.div`
 	width: 90%;
 	height: 250px;
 
-	background-color: ${({ theme }) => theme.white}f9;
+	${StarBorderFilled};
 
+	text-align: center;
 	place-content: center;
 	position: absolute;
 
-	border-radius: 30px;
-
 	z-index: 5;
+
+	h2 {
+		font-size: 2.5rem;
+	}
 `;
 
 export const LoadSpinner = styled(Spinner)`

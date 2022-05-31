@@ -21,7 +21,7 @@ import {
 	selectOrientation,
 	selectPromotionPieceType,
 } from '../../../../redux/game/game.selector';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { selectUserUID } from '../../../../redux/user/user.selector';
 import { find } from 'lodash';
 import useWindowSize from '../../../../hooks/use-window-size/use-window-size.hook';
@@ -30,12 +30,15 @@ import logMessage from '../../../../utils/helpers/strings/log-message/log-messag
 import globalStyles from '../../../../global-styles/global-styles';
 import PromotionSelector from '../promotion-selector/promotion-selector.component';
 import isPromoting from '../../../../utils/helpers/is-promoting/is-promoting';
+import Title from '../../../common/title/title.styles';
+import CustomButton from '../../../common/buttons/custom-button/custom-button.component';
+import Paths from '../../../../utils/types/paths/paths';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
 	//// TODO: REFACTOR INTO SOLO - ONLINE - AI CHESSBOARDS ////
 	//
-
+	const navigate = useNavigate();
 	const { pathname } = useLocation();
 	const { width } = useWindowSize();
 
@@ -370,7 +373,13 @@ const ChessboardDisplay = () => {
 			{aiMoving && <LoadSpinner size="80px" />}
 			{gameOver && (
 				<GameOverDisplay>
-					<h1>Game Over, Bitch</h1>
+					<Title>Game Over, Bitch</Title>
+					<CustomButton
+						onClick={() => navigate(`/${Paths.DASHBOARD}`)}
+						color="main"
+					>
+						Play Again?
+					</CustomButton>
 				</GameOverDisplay>
 			)}
 			<PlayerContainer>
