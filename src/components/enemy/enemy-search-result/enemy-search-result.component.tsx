@@ -17,7 +17,9 @@ const EnemySearchResult: FC<EnemySearchResultProps> = ({ enemy }) => {
 	};
 	return (
 		<SearchResultContainer>
-			<EnemyName>{enemy.displayName}</EnemyName>
+			<EnemyName>
+				<strong>{enemy.displayName}</strong> ({enemy.rating})
+			</EnemyName>
 			<AddEnemyButton onClick={handleSendEnemyRequest} color="light">
 				<IoAdd size="30px" />
 			</AddEnemyButton>

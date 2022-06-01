@@ -36,3 +36,5 @@ export const EnemySearchContainer = styled.div`
 		place-content: center;
 	}
 `;
+
+export const EnenySearchResults = styled.div``;
