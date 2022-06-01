@@ -4,7 +4,7 @@ import BorderPatternFilled from '../../../assets/patterns/border-pattern_filled.
 
 export const StarBorder = css`
 	border-image: url(${BorderPattern});
-	border-image-slice: 100;
+	border-image-slice: 100 fill;
 	border-image-width: 10px;
 `;
 

@@ -14,6 +14,7 @@ import { useSelector } from '../../../../../hooks/use-selector/use-typed-selecto
 import {
 	selectChatUnread,
 	selectGameLoadingState,
+	selectGameType,
 	selectIsGameOver,
 	selectPendingMove,
 	selectTurns,
@@ -39,6 +40,7 @@ const AuxiliaryPanel = () => {
 	const loading = useSelector((state) => selectGameLoadingState(state));
 	const chatUnread = useSelector((state) => selectChatUnread(state));
 	const isGameOver = useSelector((state) => selectIsGameOver(state));
+	const gameType = useSelector((state) => selectGameType(state));
 
 	const [action, setAction] = useState<AuxActions>(AuxActions.MOVE);
 	const [open, setOpen] = useState(false);
@@ -163,10 +165,12 @@ const AuxiliaryPanel = () => {
 				>
 					Draw
 				</PanelButton>
-				<PanelButton color="light" onClick={handlePanelToggle} inverted>
-					{!index && chatUnread && <NotifButtonFlag unread={chatUnread} />}
-					{index ? <FaChessBishop size="55%" /> : <BiMessage size="60%" />}
-				</PanelButton>
+				{gameType === 'online' && (
+					<PanelButton color="light" onClick={handlePanelToggle} inverted>
+						{!index && chatUnread && <NotifButtonFlag unread={chatUnread} />}
+						{index ? <FaChessBishop size="55%" /> : <BiMessage size="60%" />}
+					</PanelButton>
+				)}
 			</PanelControlsContainer>
 
 			{open && (
