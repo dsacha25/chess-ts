@@ -19,7 +19,7 @@ export const SearchInputContainer = styled.form`
 export const SearchButton = styled(CustomButton)`
 	width: 50px;
 	height: 50px;
-	border-radius: 30px;
+	border-radius: 0.4rem;
 	margin: 0;
 	place-content: center;
 

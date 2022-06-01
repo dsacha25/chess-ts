@@ -148,30 +148,30 @@ const AuxiliaryPanel = () => {
 				{!index ? <GameHistory history={history} /> : <GameChat />}
 			</PanelInfoContainer>
 
-			<PanelControlsContainer>
-				<PanelButton
-					id="resign"
-					color="secondary"
-					onClick={handleOpenActionConfirmation}
-					disabled={action === AuxActions.RESIGN || isGameOver}
-				>
-					Resign
-				</PanelButton>
-				<PanelButton
-					id="draw"
-					color="main"
-					onClick={handleOpenActionConfirmation}
-					disabled={action === AuxActions.DRAW || isGameOver}
-				>
-					Draw
-				</PanelButton>
-				{gameType === 'online' && (
+			{gameType === 'online' && (
+				<PanelControlsContainer>
+					<PanelButton
+						id="resign"
+						color="secondary"
+						onClick={handleOpenActionConfirmation}
+						disabled={action === AuxActions.RESIGN || isGameOver}
+					>
+						Resign
+					</PanelButton>
+					<PanelButton
+						id="draw"
+						color="main"
+						onClick={handleOpenActionConfirmation}
+						disabled={action === AuxActions.DRAW || isGameOver}
+					>
+						Draw
+					</PanelButton>
 					<PanelButton color="light" onClick={handlePanelToggle} inverted>
 						{!index && chatUnread && <NotifButtonFlag unread={chatUnread} />}
 						{index ? <FaChessBishop size="55%" /> : <BiMessage size="60%" />}
 					</PanelButton>
-				)}
-			</PanelControlsContainer>
+				</PanelControlsContainer>
+			)}
 
 			{open && (
 				<ConfirmActionContainer>

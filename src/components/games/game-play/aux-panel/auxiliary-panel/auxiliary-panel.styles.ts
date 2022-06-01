@@ -19,6 +19,7 @@ export const AuxiliaryPanelContainer = styled.div`
 
 	grid-template-rows: auto 1fr auto;
 
+	background-color: ${({ theme }) => theme.secondary};
 	color: ${({ theme }) => theme.main};
 
 	h2 {
@@ -38,7 +39,6 @@ export const PanelInfoContainer = styled.div`
 	display: grid;
 	width: 100%;
 	height: 100%;
-	border-radius: 20px;
 	overflow-y: auto;
 
 	${StarBorderFilled};
