@@ -6,20 +6,12 @@ import {
 	selectPendingMove,
 } from '../../../../../redux/game/game.selector';
 import { selectMobileGameIndex } from '../../../../../redux/indexes/indexes.selector';
-import Spinner from '../../../../common/spinner/spinner.component';
 import ActiveGameError from '../../../active-games/active-game-error/active-game-error.component';
 import AuxiliaryPanel from '../../aux-panel/auxiliary-panel/auxiliary-panel.component';
-import {
-	ConfirmActionButton,
-	ConfirmActionContainer,
-	RejectActionButton,
-} from '../../aux-panel/auxiliary-panel/auxiliary-panel.styles';
 import ChessboardDisplay from '../../chessboard/chessboard-display.component';
 import { MobileGameLayoutContainer } from './mobile-game-layout.styles';
-
-import { FiCheck } from 'react-icons/fi';
-import { IoClose } from 'react-icons/io5';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
+import ConfirmActionPrompt from '../../aux-panel/confirm-action-prompt/confirm-action-prompt.component';
 
 const MobileGameLayout = () => {
 	const { makeConfirmedMoveStart, rejectPendingMove } = useActions();
@@ -47,14 +39,11 @@ const MobileGameLayout = () => {
 				</Fragment>
 			)}
 			{open && (
-				<ConfirmActionContainer>
-					<ConfirmActionButton onClick={makeConfirmedMoveStart} color="main">
-						{loading ? <Spinner size="40px" /> : <FiCheck size="30px" />}
-					</ConfirmActionButton>
-					<RejectActionButton onClick={rejectPendingMove} color="secondary">
-						<IoClose size="30px" />
-					</RejectActionButton>
-				</ConfirmActionContainer>
+				<ConfirmActionPrompt
+					handleConfirm={makeConfirmedMoveStart}
+					handleReject={rejectPendingMove}
+					loading={loading}
+				/>
 			)}
 		</MobileGameLayoutContainer>
 	);

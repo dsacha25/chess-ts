@@ -40,7 +40,7 @@ class ChessGame {
 	public squareStyles: { [square in Square]?: CSSProperties } = {};
 	public boardConfig: BoardConfig = DEFAULT_POSITION;
 	public fen: string = DEFAULT_POSITION;
-	public previousFen: string = this.fen;
+
 	public hoverColor: string = '#091e3b';
 	public moveColor: string = '#bccbf2';
 
@@ -75,6 +75,10 @@ class ChessGame {
 		this.boardConfig = config;
 		this.fen = getFen(config);
 		return this.game;
+	}
+
+	getTurn(config: BoardConfig): Turn {
+		return status(config).turn;
 	}
 
 	getStatus(config: BoardConfig): ConfigObject {
@@ -130,41 +134,24 @@ class ChessGame {
 	movePieceServer(
 		config: BoardConfig,
 		from: Square,
-		to: Square
-	): ServerMove | null {
-		this.previousFen = getFen(config);
-		this.chess.load(getFen(config));
-
-		const chessMove = this.chess.move({ from, to, promotion: 'n' });
-
-		if (!chessMove) return null;
-		const fen = getFen(move(config, from, to));
-
-		this.chess.load(fen);
-		this.getStatus(fen);
-
-		return {
-			fen,
-			san: chessMove.san,
-			turn: this.getStatus(fen).turn,
-			winner: this.getWinner(fen),
-		};
-	}
-
-	promoteAndMove(
-		config: BoardConfig,
-		from: Square,
 		to: Square,
-		promotion: PromotionPieces
+		promotion?: PromotionPieces
 	): ServerMove | null {
-		this.previousFen = getFen(config);
 		this.chess.load(getFen(config));
 
-		const chessMove = this.chess.move({ from, to, promotion });
+		const chessMove = this.chess.move({
+			from,
+			to,
+			promotion: promotion || 'q',
+		});
 
 		if (!chessMove) return null;
+
+		// MAKE MOVE
+		// const fen = getFen(move(config, from, to));
 		const fen = this.chess.fen();
 
+		// UPDATE BOARD STATE
 		this.chess.load(fen);
 		this.getStatus(fen);
 
@@ -182,7 +169,7 @@ class ChessGame {
 		const from = keys(chessMove)[0].toLowerCase() as Square;
 		const to = values<string>(chessMove)[0].toLowerCase() as Square;
 
-		return { from, to };
+		return this.movePieceServer(fen, from, to);
 	}
 
 	squareStyling(

@@ -32,6 +32,7 @@ import { FaChessBishop } from 'react-icons/fa';
 import Spinner from '../../../../common/spinner/spinner.component';
 import { NotifButtonFlag } from '../../../../notifications/notification-flag/notification-flag.styles';
 import { AuxActions } from './types';
+import ConfirmActionPrompt from '../confirm-action-prompt/confirm-action-prompt.component';
 
 const AuxiliaryPanel = () => {
 	const history = useSelector((state) => selectTurns(state));
@@ -174,14 +175,11 @@ const AuxiliaryPanel = () => {
 			)}
 
 			{open && (
-				<ConfirmActionContainer>
-					<ConfirmActionButton onClick={handleConfirmAction} color="main">
-						{loading ? <Spinner size="40px" /> : <FiCheck size="30px" />}
-					</ConfirmActionButton>
-					<RejectActionButton onClick={handleRejectAction} color="secondary">
-						<IoClose size="30px" />
-					</RejectActionButton>
-				</ConfirmActionContainer>
+				<ConfirmActionPrompt
+					handleConfirm={handleConfirmAction}
+					handleReject={handleRejectAction}
+					loading={loading}
+				/>
 			)}
 		</AuxiliaryPanelContainer>
 	);

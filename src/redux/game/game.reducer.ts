@@ -12,11 +12,11 @@ import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { PromotionPieces } from '../../utils/types/promotion-pieces/promotion-pieces';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { AiLevel } from 'js-chess-engine';
+import getPreviousMove from '../../utils/helpers/strings/get-previous-move/get-previous-move';
 
 export interface GameState {
 	aiLevel: AiLevel | null;
 	fen: string;
-	previousFen: string;
 	history: HistoryMove[];
 	moveIndex: number;
 	chat: ChatMessage[];
@@ -42,7 +42,6 @@ const DEFAULT_POSITION =
 const INITIAL_STATE: GameState = {
 	aiLevel: null,
 	fen: DEFAULT_POSITION,
-	previousFen: DEFAULT_POSITION,
 	history: [],
 	moveIndex: 0,
 	chat: [],
@@ -98,7 +97,6 @@ const gameReducer = produce(
 				state.error = '';
 				return state;
 			case GameTypes.SET_FEN:
-				state.previousFen = state.fen;
 				state.fen = action.payload;
 				state.error = '';
 				return state;
@@ -148,7 +146,6 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.CLEAR_ACTIVE_GAME:
 				state.fen = DEFAULT_POSITION;
-				state.previousFen = DEFAULT_POSITION;
 				state.activeGame = null;
 				state.pendingMove = null;
 				state.history = [];
@@ -157,10 +154,9 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.MAKE_PENDING_MOVE:
 				state.pendingMove = action.payload;
-				state.previousFen = action.payload.previousFen;
 				return state;
 			case GameTypes.REJECT_PENDING_MOVE:
-				state.fen = state.previousFen;
+				state.fen = getPreviousMove(state.history);
 				state.pendingMove = null;
 				state.error = '';
 				return state;

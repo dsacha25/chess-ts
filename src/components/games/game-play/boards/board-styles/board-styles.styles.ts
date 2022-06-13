@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { StarBorderFilled } from '../../../common/border-styles/border-styles';
-import Spinner from '../../../common/spinner/spinner.component';
+import Spinner from '../../../../common/spinner/spinner.component';
 
 interface BoardProps {
 	size: number;
@@ -17,7 +16,6 @@ export const BoardContainer = styled.div<BoardProps>`
 
 	@media screen and (max-width: 980px) {
 		justify-self: flex-start;
-		/* margin-top: 20px; */
 		overflow: hidden;
 	}
 `;

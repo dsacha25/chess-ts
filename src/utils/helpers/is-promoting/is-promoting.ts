@@ -4,9 +4,6 @@ const isPromoting = (row: string, piece: Piece): boolean => {
 	const side = piece[0];
 	const pieceType = piece[1];
 
-	console.log('SIDE: ', side);
-	console.log('PIECE TYPE: ', pieceType);
-
 	if (side === 'b' && pieceType === 'P' && row === '1') {
 		return true;
 	}

@@ -19,7 +19,7 @@ export const AuxiliaryPanelContainer = styled.div`
 
 	grid-template-rows: auto 1fr auto;
 
-	background-color: ${({ theme }) => theme.secondary};
+	/* background-color: ${({ theme }) => theme.secondary}; */
 	color: ${({ theme }) => theme.main};
 
 	h2 {
@@ -87,18 +87,25 @@ export const ConfirmActionContainer = styled.div`
 	height: 60px;
 	grid-template-columns: 1fr 1fr;
 	place-items: center;
+
+	@media screen and (max-width: 980px) {
+		margin: 20px;
+		width: unset;
+	}
 `;
 
 export const ConfirmActionButton = styled(CustomButton)`
 	width: 100%;
 	height: 60px;
 
-	border-top-left-radius: 30px;
-	border-bottom-left-radius: 30px;
+	border-top-left-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
 
 	place-content: center;
+
+	margin: 0;
 `;
 
 export const RejectActionButton = styled(CustomButton)`
@@ -107,8 +114,10 @@ export const RejectActionButton = styled(CustomButton)`
 
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
-	border-top-right-radius: 30px;
-	border-bottom-right-radius: 30px;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
 
 	place-content: center;
+
+	margin: 0;
 `;

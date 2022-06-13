@@ -15,6 +15,7 @@ const EnemySearchResult: FC<EnemySearchResultProps> = ({ enemy }) => {
 		sendEnemyRequest(enemy.uid);
 		clearSearchResult();
 	};
+
 	return (
 		<SearchResultContainer>
 			<EnemyName>
