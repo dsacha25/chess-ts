@@ -37,8 +37,8 @@ export const ChipInfoContianer = styled.div`
 	color: ${({ theme }) => theme.light};
 	background-color: ${({ theme }) => theme.main};
 
-	border-top-right-radius: 50px;
-	border-bottom-right-radius: 50px;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
 
 	z-index: 0;
 `;

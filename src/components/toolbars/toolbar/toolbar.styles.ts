@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StarBorderLeft } from '../../common/border-styles/border-styles';
 import CustomButton from '../../common/buttons/custom-button/custom-button.component';
 
 export const ToolbarContainer = styled.div`
@@ -25,12 +26,12 @@ export const AestheticBar = styled.div`
 	min-height: 430px;
 
 	top: 50px;
-	left: 10px;
+	left: 0px;
 
 	border-radius: 25px;
 	z-index: 0;
 
 	position: absolute;
 
-	background-color: ${({ theme }) => theme.main}aa;
+	${StarBorderLeft};
 `;

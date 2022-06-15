@@ -10,7 +10,7 @@ export const EnemyRequestContainer = styled.div`
 	grid-template-columns: 1fr 50px 50px;
 
 	border: 1px solid ${({ theme }) => theme.border};
-	border-radius: 30px;
+	border-radius: 0.5rem;
 	place-content: center;
 	place-items: center flex-start;
 	padding: 4px;
@@ -27,7 +27,7 @@ export const EnemyName = styled.p`
 export const RequestResponseButton = styled(CustomButton)`
 	width: 50px;
 	height: 50px;
-	border-radius: 25px;
+	border-radius: 0.4rem;
 	margin: 0;
 	place-content: center;
 `;

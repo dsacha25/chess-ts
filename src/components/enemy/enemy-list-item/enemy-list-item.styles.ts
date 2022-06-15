@@ -10,7 +10,7 @@ export const EnemyContainer = styled.div`
 	grid-template-columns: auto 1fr 100px;
 
 	border: 1px solid ${({ theme }) => theme.border};
-	border-radius: 30px;
+	border-radius: 0.5rem;
 	place-content: center;
 	place-items: center flex-start;
 	padding: 4px;
@@ -43,7 +43,7 @@ export const EnemyRating = styled.p`
 export const ChallengeButton = styled(CustomButton)`
 	width: 100%;
 	height: 50px;
-	border-radius: 25px !important;
+	border-radius: 0.4rem !important;
 	margin: 0;
 	place-content: center;
 `;

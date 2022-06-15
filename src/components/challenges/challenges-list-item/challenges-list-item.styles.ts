@@ -10,7 +10,7 @@ export const ChallengeItem = styled.div`
 	grid-template-columns: 1fr 1fr;
 
 	border: 1px solid ${({ theme }) => theme.border};
-	border-radius: 30px;
+	border-radius: 0.5rem;
 	place-content: center;
 	place-items: center flex-start;
 	padding: 4px;
@@ -58,8 +58,8 @@ export const ChallengeResponses = styled.div`
 export const AcceptChallengeButton = styled(CustomButton)`
 	width: 100px;
 	height: 50px;
-	border-top-left-radius: 25px;
-	border-bottom-left-radius: 25px;
+	border-top-left-radius: 0.4rem;
+	border-bottom-left-radius: 0.4rem;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 	margin: 0;
@@ -80,8 +80,8 @@ export const RejectChallengeButton = styled(CustomButton)`
 
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
-	border-top-right-radius: 25px;
-	border-bottom-right-radius: 25px;
+	border-top-right-radius: 0.4rem;
+	border-bottom-right-radius: 0.4rem;
 
 	@media screen and (max-width: 980px) {
 		width: 100%;

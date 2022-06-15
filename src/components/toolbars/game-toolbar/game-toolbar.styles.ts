@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StarBorderLeft } from '../../common/border-styles/border-styles';
 
 export const GameToolbarContainer = styled.div`
 	display: grid;
@@ -11,16 +12,16 @@ export const GameToolbarContainer = styled.div`
 
 export const AestheticBar = styled.div`
 	width: 50px;
-	height: 50%;
+	height: 32%;
 	min-height: 200px;
 
 	top: 50px;
-	left: 10px;
+	left: 0px;
 
 	border-radius: 0.5rem;
 	z-index: 0;
 
 	position: absolute;
 
-	background-color: ${({ theme }) => theme.main}aa;
+	${StarBorderLeft};
 `;

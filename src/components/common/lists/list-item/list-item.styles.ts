@@ -17,7 +17,7 @@ export const ListItem = styled.li<ListItemProps>`
 		);
 
 	border: 1px solid ${({ theme }) => theme.border};
-	border-radius: 30px;
+	border-radius: 0.5rem;
 
 	place-content: center;
 	place-items: center flex-start;

@@ -49,7 +49,7 @@ export const NotificationButtonContainer = styled.div<NotificationButtonProps>`
 const desktopButtonStyles = css`
 	width: 50px;
 	height: 50px;
-	border-radius: 25px;
+	border-radius: 0.5rem;
 `;
 
 const mobileButtonStyles = css`

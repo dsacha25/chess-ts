@@ -11,7 +11,7 @@ export const ActiveListItem = styled(ListItem)`
 export const JoinGameButton = styled(CustomButton)`
 	width: 100%;
 	height: 50px;
-	border-radius: 25px;
+	border-radius: 0.5rem;
 	margin: 0;
 	place-content: center;
 `;

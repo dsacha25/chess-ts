@@ -5,7 +5,7 @@ import { AvatarChipProps } from './types';
 export const AvatarChip = styled(ImageContainer)<AvatarChipProps>`
 	width: ${({ size }) => (size ? size : '100px')};
 	height: ${({ size }) => (size ? size : '100px')};
-	border-radius: ${({ size }) => (size ? `${parseInt(size) / 2}px` : '50px')};
+	border-radius: 0.5rem;
 	z-index: 1;
 	border: 2px solid ${({ theme }) => theme.main};
 	background-color: ${({ theme }) => theme.main};

@@ -4,7 +4,7 @@ import CustomButton from '../../../common/buttons/custom-button/custom-button.co
 export const InactiveGameAnalysisButton = styled(CustomButton)`
 	width: 100%;
 	height: 50px;
-	border-radius: 25px;
+	border-radius: 0.4rem;
 	margin: 0;
 	place-content: center;
 `;

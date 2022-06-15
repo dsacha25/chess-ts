@@ -26,7 +26,7 @@ export const LogOutContainer = styled.div`
 
 	grid-template-columns: 1fr auto;
 
-	border-radius: 40px;
+	border-radius: 0.5rem;
 	flex: 1;
 
 	place-items: center;
@@ -39,7 +39,7 @@ export const LogOutContainer = styled.div`
 export const Avatar = styled(ImageContainer)`
 	width: 44px;
 	height: 44px;
-	border-radius: 25px;
+	border-radius: 0.4rem;
 
 	grid-column: 2 / 3;
 
@@ -54,8 +54,8 @@ export const LogOutButton = styled(CustomButton)`
 
 	background-color: ${({ theme }) => theme.secondary};
 
-	border-top-left-radius: 22px;
-	border-bottom-left-radius: 22px;
+	border-top-left-radius: 0.2rem;
+	border-bottom-left-radius: 0.2rem;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
 
