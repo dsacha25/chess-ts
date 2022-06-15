@@ -65,6 +65,13 @@ export const ChallengeButton = styled(CustomButton)`
 	justify-content: space-between;
 `;
 
+export const ChallengeLabel = styled.label`
+	display: initial;
+	@media screen and (max-width: 980px) {
+		display: none;
+	}
+`;
+
 export const ListsContainer = styled.div`
 	display: flex;
 	flex-direction: column;

@@ -4,6 +4,7 @@ import Title from '../../common/title/title.styles';
 import {
 	ButtonsContainer,
 	ChallengeButton,
+	ChallengeLabel,
 	ChallengesContainer,
 	ListsContainer,
 	TabTitle,
@@ -17,11 +18,9 @@ import InactiveGamesList from '../../games/inactive-games/inactive-games-list/in
 import { GiBattleAxe } from 'react-icons/gi';
 import { ImSad2 } from 'react-icons/im';
 import { BsCpuFill } from 'react-icons/bs';
-import useWindowSize from '../../../hooks/use-window-size/use-window-size.hook';
 
 const ChallengeTab = () => {
 	const navigate = useNavigate();
-	const { width } = useWindowSize();
 	const {
 		fetchGameChallengesStart,
 		fetchActiveGamesStart,
@@ -51,7 +50,7 @@ const ChallengeTab = () => {
 					onClick={() => navigate(`/${Paths.GULAG}`)}
 					color="secondary"
 				>
-					{width > 980 && 'Gulag'}
+					<ChallengeLabel>Gulag</ChallengeLabel>
 					<GiBattleAxe size="30px" />
 				</ChallengeButton>
 				<ChallengeButton
@@ -59,11 +58,11 @@ const ChallengeTab = () => {
 					onClick={() => navigate(`/${Paths.AI}`)}
 					color="light"
 				>
-					{width > 980 && 'AI'}
+					<ChallengeLabel>AI</ChallengeLabel>
 					<BsCpuFill color="black" size="30px" />
 				</ChallengeButton>
 				<ChallengeButton id="solo" onClick={handleGameSelection} color="main">
-					{width > 980 && 'Solo'}
+					<ChallengeLabel>Solo</ChallengeLabel>
 					<ImSad2 size="30px" />
 				</ChallengeButton>
 			</ButtonsContainer>
