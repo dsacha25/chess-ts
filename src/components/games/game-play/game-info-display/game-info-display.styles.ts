@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {
 	StarBorder,
+	StarBorderBottom,
 	StarBorderFilled,
 } from '../../../common/border-styles/border-styles';
 
@@ -12,7 +13,7 @@ export const GameInfoDisplayContainer = styled.div`
 	place-self: center;
 	place-items: center;
 
-	${StarBorder};
+	${StarBorderBottom};
 `;
 
 export const TimerContainer = styled.div`
