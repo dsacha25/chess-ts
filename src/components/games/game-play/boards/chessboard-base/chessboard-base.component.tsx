@@ -13,6 +13,7 @@ import {
 } from '../../../../../redux/game/game.selector';
 import ChessGame from '../../../../../utils/classes/chess-game/chess-game';
 import isPromoting from '../../../../../utils/helpers/is-promoting/is-promoting';
+import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
 import { GameOverDisplay } from '../../game-over-display/game-over-display.component';
 import PromotionSelector from '../../promotion-selector/promotion-selector.component';
 import { ChessboardBaseProps } from './types';
@@ -23,18 +24,17 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 	fen,
 	playersTurn,
 	orientation,
-	gameOver,
 }) => {
 	// ==== HOOK
 	const { width } = useWindowSize();
 	const { clearPromotionPieceType, setFen, movePiece, makePendingMove } =
 		useActions();
 
-	// ==== REDUX
+	// ==== REDUX STATE
 	const promotionType = useSelector((state) => selectPromotionPieceType(state));
 	const gameType = useSelector((state) => selectGameType(state));
 
-	// ==== LOCAL
+	// ==== LOCAL STATE
 	const [boardSize, setBoardSize] = useState(800);
 	const [storedMove, setStoredMove] = useState<{
 		from: Square;
@@ -47,23 +47,12 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 	const [startSquare, setStartSquare] = useState<Square>();
 	const [promoting, setPromoting] = useState(false);
 	const [storedPiece, setStoredPiece] = useState<Piece>('wP');
+	const [gameOver, setGameOver] = useState(false);
 
 	// ==== BOARD SIZE
 	useEffect(() => {
-		// IF MOBILE VIEW
-		//// SET SIZE TO WINDOW WIDTH - PADDING
-		if (width > 1500) {
-			setBoardSize(800);
-		}
-		if (width <= 1500 && width > 1300) {
-			setBoardSize(700);
-		}
-		if (width <= 1300 && width > 980) {
-			setBoardSize(500);
-		}
-		if (width <= 980 && width > 300) {
-			setBoardSize(width - 20);
-		}
+		// USE WINDOW SIZE TO DEFINE BOARD SIZE
+		setBoardSize(queryBoardSize(width));
 	}, [width]);
 
 	// ==== PIECE PROMOTION
@@ -98,7 +87,7 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 		// eslint-disable-next-line
 	}, [promoting, promotionType, storedMove]);
 
-	// ====
+	// ==== STYLING
 	useEffect(() => {
 		if (startSquare && playersTurn) {
 			const moves = game.getMovesToHighlight(fen, startSquare);
@@ -112,6 +101,19 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 
 		// eslint-disable-next-line
 	}, [startSquare]);
+
+	// ==== GAME OVER STATE
+	useEffect(() => {
+		setGameOver(game.isGameOver(fen));
+
+		if (game.isGameOver(fen)) {
+			console.log('WINNER: ', game.getWinner(fen));
+
+			// UPDATE FIREBASE
+		}
+
+		// eslint-disable-next-line
+	}, [fen]);
 
 	const handleMouseOverSquare = (square: Square) => {
 		// IF NOT PLAYERS TURN DO NOTHING

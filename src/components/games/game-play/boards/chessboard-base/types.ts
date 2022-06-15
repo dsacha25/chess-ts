@@ -6,5 +6,4 @@ export interface ChessboardBaseProps {
 	fen: string;
 	playersTurn: boolean;
 	orientation: Orientation;
-	gameOver: boolean;
 }

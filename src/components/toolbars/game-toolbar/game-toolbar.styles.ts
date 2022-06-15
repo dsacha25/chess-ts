@@ -17,7 +17,7 @@ export const AestheticBar = styled.div`
 	top: 50px;
 	left: 10px;
 
-	border-radius: 25px;
+	border-radius: 0.5rem;
 	z-index: 0;
 
 	position: absolute;

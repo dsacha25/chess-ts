@@ -26,6 +26,8 @@ import Orientation from '../../../../utils/types/orientation/orientation';
 import logMessage from '../../../../utils/helpers/strings/log-message/log-message';
 
 import ChessboardBase from '../boards/chessboard-base/chessboard-base.component';
+import queryBoardSize from '../../../../utils/helpers/screen/query-board-size';
+import GameInfoDisplay from '../game-info-display/game-info-display.component';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
@@ -51,7 +53,6 @@ const ChessboardDisplay = () => {
 		openActiveGameListener,
 	} = useActions();
 
-	const [gameOver, setGameOver] = useState(game.isGameOver(fen));
 	const [boardSize, setBoardSize] = useState(800);
 	const [fenLocal, setFenLocal] = useState(fen);
 	const [turn, setTurn] = useState<Orientation>('white');
@@ -59,20 +60,8 @@ const ChessboardDisplay = () => {
 
 	// ==== BOARD SIZE
 	useEffect(() => {
-		// IF MOBILE VIEW
-		//// SET SIZE TO WINDOW WIDTH - PADDING
-		if (width > 1500) {
-			setBoardSize(800);
-		}
-		if (width <= 1500 && width > 1300) {
-			setBoardSize(700);
-		}
-		if (width <= 1300 && width > 980) {
-			setBoardSize(500);
-		}
-		if (width <= 980 && width > 300) {
-			setBoardSize(width - 20);
-		}
+		// USE WINDOW SIZE TO DEFINE BOARD SIZE
+		setBoardSize(queryBoardSize(width));
 	}, [width]);
 
 	useEffect(() => {
@@ -100,25 +89,13 @@ const ChessboardDisplay = () => {
 	}, [activeGame]);
 
 	useEffect(() => {
-		setGameOver(game.isGameOver(fen));
-		console.log('GAME OVER?: ', game.isGameOver(fen));
-		if (game.isGameOver(fen)) {
-			console.log('WINNER: ', game.getWinner(fen));
-
-			// UPDATE FIREBASE
-		}
-
-		// eslint-disable-next-line
-	}, [fen]);
-
-	useEffect(() => {
 		let to: NodeJS.Timeout;
 
 		if (
 			gameType === 'ai' &&
 			aiLevel !== null &&
 			turn !== orientation &&
-			!gameOver
+			!game.isGameOver(fen)
 		) {
 			setAiMoving(true);
 			to = setTimeout(() => {
@@ -180,8 +157,6 @@ const ChessboardDisplay = () => {
 				if (chessMove === null) return;
 				setOrientation(chessMove.turn);
 			}, 500);
-
-			setGameOver(chessMove.winner !== null);
 		} else if (gameType === 'ai') {
 			if (game.getTurn(fen) === orientation) {
 				console.log('USER MOVE');
@@ -200,6 +175,7 @@ const ChessboardDisplay = () => {
 
 	return (
 		<BoardContainer size={boardSize}>
+			<GameInfoDisplay />
 			<OpponentContainer>
 				<OpponentChip />
 			</OpponentContainer>
@@ -209,7 +185,6 @@ const ChessboardDisplay = () => {
 				fen={fen}
 				playersTurn={game.getTurn(fen) === orientation}
 				orientation={orientation}
-				gameOver={gameOver}
 			/>
 
 			{aiMoving && <LoadSpinner size="80px" />}

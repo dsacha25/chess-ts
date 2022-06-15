@@ -12,7 +12,7 @@ export const ToolbarChipContainer = styled.div`
 export const ChipAvatar = styled(ImageContainer)`
 	width: 100px;
 	height: 100px;
-	border-radius: 50px;
+	border-radius: 0.5rem;
 	justify-self: flex-start;
 	z-index: 1;
 	border: 2px solid ${({ theme }) => theme.main};

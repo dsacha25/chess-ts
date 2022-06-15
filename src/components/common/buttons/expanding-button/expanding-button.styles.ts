@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import BaseButtonProps from '../base-button/types';
 import CustomButton from '../custom-button/custom-button.component';
 
 export interface ExpandingButtonStyleProps {
@@ -24,7 +23,7 @@ export const ExpandingButtonContainer = styled.div<ExpandingButtonStyleProps>`
 	background-color: ${({ theme }) => theme.light};
 	transition: all 0.2s ease-out;
 
-	border-radius: 25px;
+	border-radius: 0.5rem;
 
 	${({ hover }) => (hover ? expandedStyles : colapsedStyles)};
 	z-index: 1;
@@ -34,7 +33,7 @@ export const ExpandingButtonContainer = styled.div<ExpandingButtonStyleProps>`
 export const ExpandableButton = styled(CustomButton)`
 	display: grid;
 
-	border-radius: 30px;
+	border-radius: 0.5rem;
 	margin: 0;
 	place-content: center;
 

@@ -20,7 +20,7 @@ const GameToolbar = () => {
 			>
 				Home
 			</ExpandingButton>
-			<AestheticBar />
+			{/* <AestheticBar /> */}
 		</GameToolbarContainer>
 	);
 };

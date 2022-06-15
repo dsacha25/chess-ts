@@ -13,7 +13,7 @@ export const BoardContainer = styled.div<BoardProps>`
 	justify-self: center;
 	grid-gap: 5px;
 
-	grid-template-rows: auto ${({ size }) => size}px auto;
+	grid-template-rows: auto auto ${({ size }) => size}px auto;
 
 	@media screen and (max-width: 980px) {
 		justify-self: flex-start;
