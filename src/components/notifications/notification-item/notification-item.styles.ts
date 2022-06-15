@@ -5,12 +5,13 @@ export const NotificationElement = styled.div`
 	display: grid;
 	width: 100%;
 	place-items: center;
+	border-radius: 0.4rem;
 
 	grid-template-columns: 50px 1fr 50px;
+	padding: 5px;
 
 	:hover {
 		background-color: ${({ theme }) => theme.main}33;
-		border-radius: 20px;
 	}
 
 	:active {
@@ -30,7 +31,7 @@ export const DeleteNotifButton = styled(CustomButton)`
 	width: 50px;
 	height: 50px;
 
-	border-radius: 25px;
+	border-radius: 0.4rem;
 	place-content: center;
 	margin: 0;
 `;

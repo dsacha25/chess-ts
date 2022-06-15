@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const NotificationsContainer = styled.div`
 	display: grid;
-	width: 400px;
-	height: 400px;
+	width: 500px;
+	height: 600px;
 	place-content: flex-start stretch;
-	border-radius: 25px;
+	border-radius: 0.5rem;
 
 	padding: 5px;
 
