@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import {
-	StarBorder,
 	StarBorderBottom,
 	StarBorderFilled,
 } from '../../../common/border-styles/border-styles';
