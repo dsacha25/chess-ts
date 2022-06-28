@@ -34,7 +34,7 @@ const GameModeSelector: FC<GameModeSelectorProps> = ({
 					Untimed
 				</ChallengeButton>
 				<ChallengeButton
-					value="five_minutes"
+					value="five_minute"
 					onClick={handleChallengeRequest}
 					color="light"
 				>
@@ -48,7 +48,7 @@ const GameModeSelector: FC<GameModeSelectorProps> = ({
 					5 | 5
 				</ChallengeButton>
 				<ChallengeButton
-					value="ten_minutes"
+					value="ten_minute"
 					onClick={handleChallengeRequest}
 					color="main"
 				>

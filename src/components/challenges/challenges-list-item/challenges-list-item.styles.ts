@@ -28,8 +28,9 @@ export const ChallengeItem = styled.div`
 export const EnemyInfo = styled.div`
 	display: grid;
 	width: 100%;
+	grid-template-columns: repeat(2, 1fr);
 
-	place-items: center;
+	place-items: center flex-start;
 `;
 
 export const EnemyName = styled.p`
@@ -43,12 +44,22 @@ export const EnemyName = styled.p`
 	}
 `;
 
+export const GameMode = styled.p`
+	font-size: 20px;
+	font-weight: 200;
+	color: ${({ theme }) => theme.main} !important;
+	margin-left: 25px;
+
+	@media screen and (max-width: 980px) {
+		margin: 12px;
+	}
+`;
+
 export const ChallengeResponses = styled.div`
 	display: grid;
 	width: 100%;
 	grid-template-columns: repeat(2, 100px);
-	place-content: center;
-	place-items: center flex-start;
+	place-content: center flex-end;
 
 	@media screen and (max-width: 980px) {
 		grid-template-columns: repeat(2, 1fr);

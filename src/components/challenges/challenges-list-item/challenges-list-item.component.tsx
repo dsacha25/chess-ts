@@ -5,6 +5,7 @@ import {
 	ChallengeResponses,
 	EnemyInfo,
 	EnemyName,
+	GameMode,
 	RejectChallengeButton,
 } from './challenges-list-item.styles';
 import { ChallengeItemProps } from './types';
@@ -14,6 +15,7 @@ import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectGameLoadingState } from '../../../redux/game/game.selector';
 import Spinner from '../../common/spinner/spinner.component';
+import parseGameMode from '../../../utils/helpers/parsers/parse-game-mode/parse-game-mode';
 
 const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
 	const loading = useSelector((state) => selectGameLoadingState(state));
@@ -35,9 +37,14 @@ const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
 		<ChallengeItem>
 			<EnemyInfo>
 				<EnemyName>{enemy.displayName}</EnemyName>
+				<GameMode>{parseGameMode(enemy.gameMode)}</GameMode>
 			</EnemyInfo>
 			<ChallengeResponses>
-				<AcceptChallengeButton onClick={handleAcceptChallenge} color="main">
+				<AcceptChallengeButton
+					onClick={handleAcceptChallenge}
+					color="main"
+					disabled={rejecting}
+				>
 					{loading && accepting ? (
 						<Spinner size="30px" />
 					) : (
@@ -47,6 +54,7 @@ const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
 				<RejectChallengeButton
 					onClick={handleRejectChallenge}
 					color="secondary"
+					disabled={accepting}
 				>
 					{loading && rejecting ? (
 						<Spinner size="30px" />
