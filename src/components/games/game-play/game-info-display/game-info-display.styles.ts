@@ -7,7 +7,7 @@ import {
 export const GameInfoDisplayContainer = styled.div`
 	display: grid;
 	width: 100%;
-	height: 100px;
+	height: 80px;
 
 	place-self: center;
 	place-items: center;
@@ -24,7 +24,7 @@ export const TimerContainer = styled.div`
 `;
 
 export const GameTime = styled.p`
-	font-size: 30px;
+	font-size: 24px;
 	font-weight: 800;
 	margin: 10px;
 	padding: 0;

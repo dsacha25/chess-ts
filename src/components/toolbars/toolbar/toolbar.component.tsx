@@ -6,8 +6,7 @@ import ToolbarChip from '../../chips/toolbar-chip/toolbar-chip.component';
 import ExpandingButton from '../../common/buttons/expanding-button/expanding-button.component';
 import { AestheticBar, ToolbarContainer } from './toolbar.styles';
 
-import { FaHandMiddleFinger } from 'react-icons/fa';
-import { GiEvilLove } from 'react-icons/gi';
+import { GiEvilLove, GiTabletopPlayers } from 'react-icons/gi';
 import { IoStatsChart } from 'react-icons/io5';
 import { CgProfile } from 'react-icons/cg';
 
@@ -23,9 +22,9 @@ const Toolbar = () => {
 				onClick={() => setDashboardIndex(0)}
 				color="light"
 				active={index === 0}
-				icon={<FaHandMiddleFinger color="black" size="24px" />}
+				icon={<GiTabletopPlayers color="black" size="30px" />}
 			>
-				Fuck You
+				Play
 			</ExpandingButton>
 			<ExpandingButton
 				onClick={() => setDashboardIndex(1)}

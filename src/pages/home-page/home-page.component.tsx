@@ -25,7 +25,7 @@ const HomePage = () => {
 				<ImageContainer url={QueenIcon} />
 			</HomeIconWrapper>
 			<Title margin="0" fontWeight="800" fontSize="80px" letterSpacing="0.5rem">
-				Fuck Chess
+				Blunder City
 			</Title>
 			<ButtonsContainer>
 				<HomeActionButton

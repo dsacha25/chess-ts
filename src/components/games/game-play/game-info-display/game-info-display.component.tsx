@@ -10,16 +10,12 @@ import CustomButton from '../../../common/buttons/custom-button/custom-button.co
 
 const GameInfoDisplay = () => {
 	const [time, setTime] = useState('00:00');
-	const [end, setEnd] = useState(add(new Date(), { minutes: 3 }));
+	const [end, setEnd] = useState(add(new Date(), { minutes: 2 }));
 	const [difference, setDifference] = useState(0);
 	const [paused, setPaused] = useState(false);
 
 	useEffect(() => {
-		console.log('TIME: ', intervalToDuration({ start: new Date(), end }));
-
-		// setTime(
-		// 	durationToTime(intervalToDuration({ start: startTime, end: endTime }))
-		// );
+		// console.log('TIME: ', intervalToDuration({ start: new Date(), end }));
 
 		let timeOut = setTimeout(() => {
 			if (paused) return;
@@ -63,7 +59,9 @@ const GameInfoDisplay = () => {
 			<TimerContainer>
 				<GameTime>{time}</GameTime>
 
-				<CustomButton onClick={handlePause}>Pause</CustomButton>
+				{/* <CustomButton onClick={handlePause}>
+					{paused ? 'Start' : 'Pause'}
+				</CustomButton> */}
 			</TimerContainer>
 		</GameInfoDisplayContainer>
 	);
