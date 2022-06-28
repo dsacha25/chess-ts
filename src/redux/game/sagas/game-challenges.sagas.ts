@@ -119,7 +119,7 @@ export function* onAcceptChallengeRequest() {
 }
 
 export function* sendChallengeRequestAsync({
-	payload: enemyUID,
+	payload: { enemyUID, gameMode },
 }: SendGameChallengeAction) {
 	try {
 		const { displayName } = yield select(selectChessUser);
@@ -127,6 +127,7 @@ export function* sendChallengeRequestAsync({
 		yield functions.callFirebaseFunction('sendChallengeRequest', {
 			enemyUID,
 			displayName,
+			gameMode,
 		});
 
 		yield put(fetchPendingChallengesStart());

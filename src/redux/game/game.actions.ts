@@ -4,7 +4,8 @@ import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { ChessGameAiType } from '../../utils/types/chess-game-ai-type/chess-game-ai-type';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
-import GameType from '../../utils/types/game-type/game-type';
+import GamePlayType from '../../utils/types/game-play-type/game-play-type';
+import GameModeType from '../../utils/types/game-mode-type/game-mode-type';
 import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
@@ -68,7 +69,7 @@ export const setAiLevel = (level: AiLevel | null): SetAiLevelAction => ({
 	payload: level,
 });
 
-export const setGameType = (gameType: GameType): SetGameTypeAction => ({
+export const setGameType = (gameType: GamePlayType): SetGameTypeAction => ({
 	type: GameTypes.SET_GAME_TYPE,
 	payload: gameType,
 });
@@ -103,10 +104,11 @@ export const setGameHistory = (
 
 // ==== GAME CHALLENGES
 export const sendGameChallenge = (
-	enemyUID: string
+	enemyUID: string,
+	gameMode: GameModeType
 ): SendGameChallengeAction => ({
 	type: GameTypes.SEND_GAME_CHALLENGE,
-	payload: enemyUID,
+	payload: { enemyUID, gameMode },
 });
 
 export const acceptGameChallengeStart = (

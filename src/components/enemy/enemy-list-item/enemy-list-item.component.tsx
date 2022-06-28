@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { FC } from 'react';
 import {
 	ChallengeButton,
@@ -8,7 +8,6 @@ import {
 } from './enemy-list-item.styles';
 import { EnemyListItemProps } from './types';
 import { GiBattleAxe } from 'react-icons/gi';
-import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import {
 	selectGameInviteReceiver,
@@ -17,18 +16,15 @@ import {
 } from '../../../redux/game/game.selector';
 import { find } from 'lodash';
 import Spinner from '../../common/spinner/spinner.component';
+import GameModeSelector from '../../games/pre-game-interfaces/game-mode-selector/game-mode-selector.component';
 
 const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
+	const [open, setOpen] = useState(false);
 	const isLoading = useSelector((state) => selectGameLoadingState(state));
 	const receiver = useSelector((state) => selectGameInviteReceiver(state));
 	const pendingChallenges = useSelector((state) =>
 		selectPendingChallenges(state)
 	);
-
-	const { sendGameChallenge } = useActions();
-	const handleChallengeEnemy = () => {
-		sendGameChallenge(enemy.uid);
-	};
 
 	if (!enemy) return null;
 
@@ -37,10 +33,10 @@ const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
 			<EnemyName>{enemy.displayName}</EnemyName>
 			<EnemyRating>({enemy.rating})</EnemyRating>
 			<ChallengeButton
-				onClick={handleChallengeEnemy}
+				onClick={() => setOpen(true)}
 				color="secondary"
 				disabled={
-					find(pendingChallenges, ['enemyUID', enemy.uid]) !== undefined
+					find(pendingChallenges, ['enemyUID', enemy.uid]) !== undefined || open
 				}
 			>
 				{isLoading && receiver === enemy.uid ? (
@@ -49,6 +45,12 @@ const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
 					<GiBattleAxe size="30px" />
 				)}
 			</ChallengeButton>
+			{open && (
+				<GameModeSelector
+					enemyUID={enemy.uid}
+					handleClose={() => setOpen(false)}
+				/>
+			)}
 		</EnemyContainer>
 	);
 };

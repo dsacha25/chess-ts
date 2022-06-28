@@ -1,4 +1,4 @@
-import GameType from '../../utils/types/game-type/game-type';
+import GamePlayType from '../../utils/types/game-play-type/game-play-type';
 import Orientation from '../../utils/types/orientation/orientation';
 import GameActions from './game.action-types';
 import { GameTypes } from './game.types';
@@ -13,6 +13,7 @@ import { PromotionPieces } from '../../utils/types/promotion-pieces/promotion-pi
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { AiLevel } from 'js-chess-engine';
 import getPreviousMove from '../../utils/helpers/strings/get-previous-move/get-previous-move';
+import GameModeTypes from '../../utils/types/game-mode-type/game-mode-type';
 
 export interface GameState {
 	aiLevel: AiLevel | null;
@@ -22,7 +23,7 @@ export interface GameState {
 	chat: ChatMessage[];
 	chatUsers: ChatUsers;
 	chatUnread: boolean;
-	gameType: GameType;
+	gameType: GamePlayType;
 	orientation: Orientation;
 	challengeRequests: NotifSender[];
 	pendingChallenges: PendingRequest[];
@@ -32,6 +33,7 @@ export interface GameState {
 	pendingMove: ChessMove | null;
 	promotionPieceType: PromotionPieces | null;
 	receiver: string;
+	gameMode: GameModeTypes;
 	loading: boolean;
 	error: string;
 }
@@ -57,6 +59,7 @@ const INITIAL_STATE: GameState = {
 	pendingMove: null,
 	promotionPieceType: null,
 	receiver: '',
+	gameMode: 'untimed',
 	loading: false,
 	error: '',
 };
@@ -101,7 +104,8 @@ const gameReducer = produce(
 				state.error = '';
 				return state;
 			case GameTypes.SEND_GAME_CHALLENGE:
-				state.receiver = action.payload;
+				state.receiver = action.payload.enemyUID;
+				state.gameMode = action.payload.gameMode;
 				state.loading = true;
 				return state;
 			case GameTypes.ACCEPT_GAME_CHALLENGE_START:
@@ -119,6 +123,7 @@ const gameReducer = produce(
 			case GameTypes.REJECT_GAME_CHALLENGE:
 				state.loading = true;
 				state.receiver = action.payload;
+				state.gameMode = 'untimed';
 				state.error = '';
 				return state;
 			case GameTypes.FETCH_GAME_CHALLENGES_SUCCESS:
@@ -214,6 +219,7 @@ const gameReducer = produce(
 			case GameTypes.GAME_ERROR:
 				state.error = action.payload;
 				state.receiver = '';
+				state.gameMode = 'untimed';
 				state.loading = false;
 				return state;
 			default:

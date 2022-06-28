@@ -1,9 +1,10 @@
+import ChessGame from "../../classes/chess-game/chess-game"
+
+const game = new ChessGame();
+
+
 var PAWN = 'p'
-var KNIGHT = 'n'
-var BISHOP = 'b'
-var ROOK = 'r'
-var QUEEN = 'q'
-var KING = 'k'
+
 
 var BITS = {
     NORMAL: 1,
@@ -14,6 +15,9 @@ var BITS = {
     KSIDE_CASTLE: 32,
     QSIDE_CASTLE: 64,
   }
+
+
+var  castling = { w: 0, b: 0 }
 
 
 /*****************************************************************************
@@ -32,7 +36,6 @@ var BITS = {
       r = rank(i)
     return 'abcdefgh'.substring(f, f + 1) + '87654321'.substring(r, r + 1)
   }
-
 
   
   /* this function is used to uniquely identify ambiguous moves */
@@ -87,105 +90,24 @@ var BITS = {
   }
 
 
-  
-  function make_move(move) {
-    var us = turn
-    var them = swap_color(us)
-    push(move)
+export function moveToSan(fen, move, moves) {
 
-    board[move.to] = board[move.from]
-    board[move.from] = null
 
-    /* if ep capture, remove the captured pawn */
-    if (move.flags & BITS.EP_CAPTURE) {
-      if (turn === BLACK) {
-        board[move.to - 16] = null
-      } else {
-        board[move.to + 16] = null
+    var tokens = fen.split(/\s+/)
+
+    if (tokens[2].indexOf('K') > -1) {
+        castling.w |= BITS.KSIDE_CASTLE
       }
-    }
-
-    /* if pawn promotion, replace with new piece */
-    if (move.flags & BITS.PROMOTION) {
-      board[move.to] = { type: move.promotion, color: us }
-    }
-
-    /* if we moved the king */
-    if (board[move.to].type === KING) {
-      kings[board[move.to].color] = move.to
-
-      /* if we castled, move the rook next to the king */
-      if (move.flags & BITS.KSIDE_CASTLE) {
-        var castling_to = move.to - 1
-        var castling_from = move.to + 1
-        board[castling_to] = board[castling_from]
-        board[castling_from] = null
-      } else if (move.flags & BITS.QSIDE_CASTLE) {
-        var castling_to = move.to + 1
-        var castling_from = move.to - 2
-        board[castling_to] = board[castling_from]
-        board[castling_from] = null
+      if (tokens[2].indexOf('Q') > -1) {
+        castling.w |= BITS.QSIDE_CASTLE
+      }
+      if (tokens[2].indexOf('k') > -1) {
+        castling.b |= BITS.KSIDE_CASTLE
+      }
+      if (tokens[2].indexOf('q') > -1) {
+        castling.b |= BITS.QSIDE_CASTLE
       }
 
-      /* turn off castling */
-      castling[us] = ''
-    }
-
-    /* turn off castling if we move a rook */
-    if (castling[us]) {
-      for (var i = 0, len = ROOKS[us].length; i < len; i++) {
-        if (
-          move.from === ROOKS[us][i].square &&
-          castling[us] & ROOKS[us][i].flag
-        ) {
-          castling[us] ^= ROOKS[us][i].flag
-          break
-        }
-      }
-    }
-
-    /* turn off castling if we capture a rook */
-    if (castling[them]) {
-      for (var i = 0, len = ROOKS[them].length; i < len; i++) {
-        if (
-          move.to === ROOKS[them][i].square &&
-          castling[them] & ROOKS[them][i].flag
-        ) {
-          castling[them] ^= ROOKS[them][i].flag
-          break
-        }
-      }
-    }
-
-    /* if big pawn move, update the en passant square */
-    if (move.flags & BITS.BIG_PAWN) {
-      if (turn === 'b') {
-        ep_square = move.to - 16
-      } else {
-        ep_square = move.to + 16
-      }
-    } else {
-      ep_square = EMPTY
-    }
-
-    /* reset the 50 move counter if a pawn is moved or a piece is captured */
-    if (move.piece === PAWN) {
-      half_moves = 0
-    } else if (move.flags & (BITS.CAPTURE | BITS.EP_CAPTURE)) {
-      half_moves = 0
-    } else {
-      half_moves++
-    }
-
-    if (turn === BLACK) {
-      move_number++
-    }
-    turn = swap_color(turn)
-  }
-
-
-
- function moveToSan(move, moves) {
     var output = ''
 
     if (move.flags & BITS.KSIDE_CASTLE) {
@@ -212,9 +134,9 @@ var BITS = {
       }
     }
 
-    make_move(move)
-    if (in_check()) {
-      if (in_checkmate()) {
+
+    if (game.inCheck(fen)) {
+      if (game.inCheckMate(fen)) {
         output += '#'
       } else {
         output += '+'
@@ -223,5 +145,4 @@ var BITS = {
 
     return output
   }
-
-export default moveToSan
+}

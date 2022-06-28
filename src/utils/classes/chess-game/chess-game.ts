@@ -2,7 +2,6 @@ import { CSSProperties } from 'react';
 import { ChessInstance, Square } from 'chess.js';
 
 import Orientation from '../../types/orientation/orientation';
-import Side from '../../types/side/side';
 
 import {
 	Game,
@@ -68,6 +67,14 @@ class ChessGame {
 
 	isGameOver(config: BoardConfig): boolean {
 		return status(config).isFinished || status(config).checkMate;
+	}
+
+	inCheck(fen: BoardConfig): boolean {
+		return status(fen).check;
+	}
+
+	inCheckMate(fen: BoardConfig): boolean {
+		return status(fen).checkMate;
 	}
 
 	setGame(config: BoardConfig) {
@@ -148,7 +155,6 @@ class ChessGame {
 		if (!chessMove) return null;
 
 		// MAKE MOVE
-		// const fen = getFen(move(config, from, to));
 		const fen = this.chess.fen();
 
 		// UPDATE BOARD STATE

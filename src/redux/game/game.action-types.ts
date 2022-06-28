@@ -6,7 +6,8 @@ import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { ChessGameAiType } from '../../utils/types/chess-game-ai-type/chess-game-ai-type';
 import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
-import GameType from '../../utils/types/game-type/game-type';
+import GameModeTypes from '../../utils/types/game-mode-type/game-mode-type';
+import GamePlayType from '../../utils/types/game-play-type/game-play-type';
 import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
@@ -36,7 +37,7 @@ export interface SetOrientationAction {
 
 export interface SetGameTypeAction {
 	type: GameTypes.SET_GAME_TYPE;
-	payload: GameType;
+	payload: GamePlayType;
 }
 
 export interface SetFenAction {
@@ -52,7 +53,7 @@ export interface SetGameHistoryAction {
 // ==== CHALLENGES
 export interface SendGameChallengeAction {
 	type: GameTypes.SEND_GAME_CHALLENGE;
-	payload: string;
+	payload: { enemyUID: string; gameMode: GameModeTypes };
 }
 
 export interface AcceptGameChallengeStartAction {
