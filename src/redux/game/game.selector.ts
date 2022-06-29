@@ -57,6 +57,11 @@ export const selectActiveGame = createSelector(
 	(game) => game.activeGame
 );
 
+export const selectActiveGameMode = createSelector(
+	selectActiveGame,
+	(activeGame) => activeGame?.gameMode
+);
+
 export const selectPendingMove = createSelector(
 	selectGame,
 	(game) => game.pendingMove

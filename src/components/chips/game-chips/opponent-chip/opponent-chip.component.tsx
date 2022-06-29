@@ -1,5 +1,5 @@
 import { add, intervalToDuration } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectEnemyInfo } from '../../../../redux/enemies/enemies.selector';
@@ -19,7 +19,7 @@ const OpponentChip = () => {
 	const { setActiveGameTime } = useActions();
 	const enemy = useSelector((state) => selectEnemyInfo(state));
 	const game = useSelector((state) => selectActiveGame(state));
-	const [time, setTime] = useState('00:00');
+	const [time, setTime] = useState('00');
 	const [end, setEnd] = useState(
 		add(new Date(), { days: 0, minutes: 0, seconds: 0 })
 	);
@@ -44,22 +44,25 @@ const OpponentChip = () => {
 	}, []);
 
 	useEffect(() => {
+		console.log('TURN: ', game?.turn);
+		console.log('OPP SIDE: ', side);
+
 		// console.log('TIME: ', intervalToDuration({ start: new Date(), end }));
 
 		let timeOut = setTimeout(() => {
-			if (!enemy || !game || side !== game.turn) return;
+			if (!enemy || !game || side !== game.turn || time === '00:00') return;
 
 			let newStart = new Date().getMilliseconds() + 1000;
 
-			const time = intervalToDuration({
+			const newTime = intervalToDuration({
 				start: new Date().setMilliseconds(newStart),
 				end,
 			});
-			setTime(durationToTime(time));
+			setTime(durationToTime(newTime));
 
 			return enemy.uid === game.black.uid
-				? setActiveGameTime(time, 'black')
-				: setActiveGameTime(time, 'white');
+				? setActiveGameTime(newTime, 'black')
+				: setActiveGameTime(newTime, 'white');
 		}, 1000);
 
 		return () => {
@@ -82,4 +85,4 @@ const OpponentChip = () => {
 	);
 };
 
-export default OpponentChip;
+export default memo(OpponentChip);

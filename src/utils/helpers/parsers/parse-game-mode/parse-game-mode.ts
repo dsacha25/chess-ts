@@ -16,7 +16,7 @@ const parseGameMode = (gameMode: GameModeTypes): string => {
 			return '3 Day';
 		case 'untimed':
 		default:
-			return 'untimed';
+			return 'Untimed';
 	}
 };
 

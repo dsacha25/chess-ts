@@ -26,7 +26,7 @@ const GameInfoDisplay = () => {
 
 	useEffect(() => {
 		if (activeGame) {
-			setEnd(add(new Date(), activeGame.gameTime));
+			// setEnd(add(new Date(), activeGame.gameTime));
 		}
 	}, []);
 

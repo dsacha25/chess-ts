@@ -12,46 +12,32 @@ import ChessGame from '../../../../utils/classes/chess-game/chess-game';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import {
-	selectActiveGame,
 	selectAiLevel,
 	selectFen,
 	selectGameType,
 	selectOrientation,
 } from '../../../../redux/game/game.selector';
-import { useLocation } from 'react-router-dom';
-import { selectUserUID } from '../../../../redux/user/user.selector';
-import { find } from 'lodash';
+
 import useWindowSize from '../../../../hooks/use-window-size/use-window-size.hook';
 import Orientation from '../../../../utils/types/orientation/orientation';
 import logMessage from '../../../../utils/helpers/strings/log-message/log-message';
 
 import ChessboardBase from '../boards/chessboard-base/chessboard-base.component';
 import queryBoardSize from '../../../../utils/helpers/screen/query-board-size';
-import GameInfoDisplay from '../game-info-display/game-info-display.component';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
 	//// TODO: REFACTOR INTO SOLO - ONLINE - AI CHESSBOARDS ////
 	//
 
-	const { pathname } = useLocation();
 	const { width } = useWindowSize();
 
-	const activeGame = useSelector((state) => selectActiveGame(state));
-	const uid = useSelector((state) => selectUserUID(state));
 	const gameType = useSelector((state) => selectGameType(state));
 	const fen = useSelector((state) => selectFen(state));
 	const orientation = useSelector((state) => selectOrientation(state));
 	const aiLevel = useSelector((state) => selectAiLevel(state));
 
-	const {
-		movePiece,
-		setFen,
-		setOrientation,
-		fetchEnemyInfoStart,
-		makePendingMove,
-		openActiveGameListener,
-	} = useActions();
+	const { movePiece, setFen, setOrientation, makePendingMove } = useActions();
 
 	const [boardSize, setBoardSize] = useState(800);
 	const [fenLocal, setFenLocal] = useState(fen);
@@ -63,30 +49,6 @@ const ChessboardDisplay = () => {
 		// USE WINDOW SIZE TO DEFINE BOARD SIZE
 		setBoardSize(queryBoardSize(width));
 	}, [width]);
-
-	useEffect(() => {
-		if (activeGame) {
-			console.log('GAME EXISTS');
-			openActiveGameListener();
-		} else {
-			console.log('GAME NOT FOUND');
-		}
-
-		// eslint-disable-next-line
-	}, [activeGame]);
-
-	useEffect(() => {
-		//// ONLINE GAME
-		if (pathname === '/play' && activeGame) {
-			const enemyUID = find(activeGame.users, (player) => player !== uid);
-			console.log('ENEMY UID: ', enemyUID);
-			if (enemyUID) {
-				fetchEnemyInfoStart(enemyUID);
-			}
-		}
-
-		// eslint-disable-next-line
-	}, [activeGame]);
 
 	useEffect(() => {
 		let to: NodeJS.Timeout;

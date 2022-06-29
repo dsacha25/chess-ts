@@ -1,11 +1,12 @@
 import { add, intervalToDuration } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectActiveGame } from '../../../../redux/game/game.selector';
 import { selectChessUser } from '../../../../redux/user/user.selector';
 import parseGameTime from '../../../../utils/helpers/parsers/parse-game-time/parse-game-time';
 import durationToTime from '../../../../utils/helpers/strings/duration-to-time/duration-to-time';
+import { OnlineStatusIndicator } from '../../../common/online-status-indicator/online-status-indicator.styles';
 import {
 	PlayerChipAvatar,
 	PlayerChipContainer,
@@ -19,7 +20,7 @@ const PlayerChip = () => {
 	const { setActiveGameTime } = useActions();
 	const chessUser = useSelector((state) => selectChessUser(state));
 	const game = useSelector((state) => selectActiveGame(state));
-	const [time, setTime] = useState('00:00');
+	const [time, setTime] = useState('00');
 	const [end, setEnd] = useState(
 		add(new Date(), { days: 0, minutes: 0, seconds: 0 })
 	);
@@ -44,22 +45,25 @@ const PlayerChip = () => {
 	}, []);
 
 	useEffect(() => {
-		// console.log('TIME: ', intervalToDuration({ start: new Date(), end }));
+		console.log('TURN: ', game?.turn);
+		console.log('UID: ', chessUser?.uid);
+		console.log('BLACK: ', game?.black.uid);
+		console.log('PLAYER SIDE: ', side);
 
 		let timeOut = setTimeout(() => {
-			if (!chessUser || !game || side !== game.turn) return;
+			if (!chessUser || !game || side !== game.turn || time === '00:00') return;
 
 			let newStart = new Date().getMilliseconds() + 1000;
 
-			const time = intervalToDuration({
+			const newTime = intervalToDuration({
 				start: new Date().setMilliseconds(newStart),
 				end,
 			});
-			setTime(durationToTime(time));
+			setTime(durationToTime(newTime));
 
 			return chessUser.uid === game.black.uid
-				? setActiveGameTime(time, 'black')
-				: setActiveGameTime(time, 'white');
+				? setActiveGameTime(newTime, 'black')
+				: setActiveGameTime(newTime, 'white');
 		}, 1000);
 
 		return () => {
@@ -71,15 +75,16 @@ const PlayerChip = () => {
 
 	return (
 		<PlayerChipContainer>
-			<PlayerChipAvatar url={chessUser?.photoURL} />
+			<PlayerChipAvatar url={chessUser?.photoURL}>
+				<OnlineStatusIndicator online />
+			</PlayerChipAvatar>
 			<PlayerChipInfo>
 				<GameTimeLeft>{time}</GameTimeLeft>
 				<ChipRating>{chessUser?.rating}</ChipRating>
-
 				<ChipUserName>{chessUser?.displayName}</ChipUserName>
 			</PlayerChipInfo>
 		</PlayerChipContainer>
 	);
 };
 
-export default PlayerChip;
+export default memo(PlayerChip);

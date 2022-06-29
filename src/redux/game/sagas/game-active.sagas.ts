@@ -7,6 +7,7 @@ import {
 	select,
 	SelectEffect,
 	takeEvery,
+	takeLeading,
 } from 'redux-saga/effects';
 import ChessGame from '../../../utils/classes/chess-game/chess-game';
 import { db, functions } from '../../../utils/classes/firestore/firestore-app';
@@ -14,6 +15,7 @@ import { listener } from '../../../utils/classes/sagas/saga-listener';
 import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
 import { getPlayerOrientation } from '../../../utils/helpers/get-player-orientation/get-player-orientation';
 import getOrientation from '../../../utils/helpers/orientation/get-orientation';
+import parseGameTime from '../../../utils/helpers/parsers/parse-game-time/parse-game-time';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../../utils/types/chess-move/chess-move';
 import { ConfirmedMove } from '../../../utils/types/confirmed-move/confirmed-move';
@@ -100,6 +102,7 @@ export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
 		const { fen, move, winner, gameOver }: ChessMove = yield select(
 			selectPendingMove
 		);
+		const uid = yield select(selectUserUID);
 
 		yield console.log('ACTIVE GAME: ', game);
 		yield console.log('PENDING MOVE GO?: ', gameOver);
@@ -112,7 +115,7 @@ export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
 			move,
 			winner,
 			gameOver,
-			gameTime: game.gameTime,
+			gameTime: parseGameTime(uid, game),
 		};
 
 		yield console.log('CONFIRMED MOVE:', confirmedMove);
@@ -159,9 +162,7 @@ export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
-	// if (game.id) {
-	// 	yield put(setActiveGame(game));
-	// }
+	yield put(setActiveGame(game));
 }
 
 export function* openActiveGameListenerAsync(): Generator | SelectEffect {
@@ -172,7 +173,7 @@ export function* openActiveGameListenerAsync(): Generator | SelectEffect {
 
 		const gameRef = yield db.getDocumentReference(`games/${game.id}`);
 		const gameChannel: EventChannel<ChessGameType> =
-			yield listener.generateDocumentListener<ChessGameType>(gameRef);
+			yield listener.generateDocumentListener<ChessGameType>(gameRef, true);
 
 		yield listener.initializeChannel<ChessGameType>(gameChannel, getActiveGame);
 	} catch (err) {
@@ -181,7 +182,7 @@ export function* openActiveGameListenerAsync(): Generator | SelectEffect {
 }
 
 export function* onOpenActiveGameListener() {
-	yield takeEvery(
+	yield takeLeading(
 		GameTypes.OPEN_ACTIVE_GAME_LISTENER,
 		openActiveGameListenerAsync
 	);
