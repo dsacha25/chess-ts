@@ -6,6 +6,7 @@ import { selectEnemyInfo } from '../../../../redux/enemies/enemies.selector';
 import { selectActiveGame } from '../../../../redux/game/game.selector';
 import parseGameTime from '../../../../utils/helpers/parsers/parse-game-time/parse-game-time';
 import durationToTime from '../../../../utils/helpers/strings/duration-to-time/duration-to-time';
+import { OnlineStatusIndicator } from '../../../common/online-status-indicator/online-status-indicator.styles';
 import {
 	ChipRating,
 	GameTimeLeft,
@@ -75,7 +76,9 @@ const OpponentChip = () => {
 	if (!enemy) return null;
 	return (
 		<OpponentChipContainer>
-			<OpponentChipAvatar url={enemy.photoURL} />
+			<OpponentChipAvatar url={enemy.photoURL}>
+				<OnlineStatusIndicator online />
+			</OpponentChipAvatar>
 			<OpponentChipInfo>
 				<OpponentUserName>{enemy.displayName}</OpponentUserName>
 				<ChipRating>{enemy.rating}</ChipRating>
