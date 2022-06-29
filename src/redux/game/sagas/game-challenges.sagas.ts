@@ -102,6 +102,7 @@ export function* acceptGameChallengeAsync({
 			enemyUID: enemy.uid,
 			enemyDisplayName: enemy.displayName,
 			displayName,
+			gameMode: enemy.gameMode,
 		});
 
 		yield put(gameChallengeResponseSuccess(enemy.uid));

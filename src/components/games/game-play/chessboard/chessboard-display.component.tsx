@@ -175,7 +175,6 @@ const ChessboardDisplay = () => {
 
 	return (
 		<BoardContainer size={boardSize}>
-			{/* <GameInfoDisplay /> */}
 			<OpponentContainer>
 				<OpponentChip />
 			</OpponentContainer>

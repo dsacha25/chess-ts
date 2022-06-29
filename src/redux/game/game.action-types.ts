@@ -8,6 +8,7 @@ import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type
 import { ChessMove } from '../../utils/types/chess-move/chess-move';
 import GameModeTypes from '../../utils/types/game-mode-type/game-mode-type';
 import GamePlayType from '../../utils/types/game-play-type/game-play-type';
+import GameTime from '../../utils/types/game-time/game-time';
 import { HistoryMove } from '../../utils/types/history-move/history-move';
 import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
 import Orientation from '../../utils/types/orientation/orientation';
@@ -117,6 +118,11 @@ export interface ClearActiveGameAction {
 
 export interface OpenActiveGameListenerAction {
 	type: GameTypes.OPEN_ACTIVE_GAME_LISTENER;
+}
+
+export interface SetActiveGameTimeAction {
+	type: GameTypes.SET_ACTIVE_GAME_TIME;
+	payload: { gameTime: GameTime; side: Orientation };
 }
 
 // ==== INACTIVE GAMES
@@ -274,6 +280,7 @@ type GameActions =
 	| SetInactiveGameByIDStartAction
 	| ClearActiveGameAction
 	| OpenActiveGameListenerAction
+	| SetActiveGameTimeAction
 	| MakePendingMoveAction
 	| MakeConfirmedMoveStartAction
 	| MakeConfirmedMoveSuccessAction

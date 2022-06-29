@@ -25,8 +25,6 @@ import { selectAuxPanelIndex } from '../../../../../redux/indexes/indexes.select
 import GameChat from '../chat/game-chat/game-chat.component';
 
 import { BiMessage } from 'react-icons/bi';
-import { FiCheck } from 'react-icons/fi';
-import { IoClose } from 'react-icons/io5';
 import { FaChessBishop } from 'react-icons/fa';
 
 import Spinner from '../../../../common/spinner/spinner.component';

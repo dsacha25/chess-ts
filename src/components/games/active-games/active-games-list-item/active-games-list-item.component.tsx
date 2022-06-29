@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import Paths from '../../../../utils/types/paths/paths';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import getOpponentName from '../../../../utils/helpers/strings/get-opponent-name/get-opponent-name';
+import parseGameMode from '../../../../utils/helpers/parsers/parse-game-mode/parse-game-mode';
 
 const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 	const { setActiveGame } = useActions();
@@ -40,8 +41,9 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 	// * Display screenshot of current board position
 
 	return (
-		<ActiveListItem columns={1}>
+		<ActiveListItem columns={2} width="auto">
 			<ListItemText>{opponentName}</ListItemText>
+			<ListItemText>{parseGameMode(game.gameMode)}</ListItemText>
 			<JoinGameButton onClick={handleJoinGame} color="secondary">
 				<FaChessKing size="30px" />
 			</JoinGameButton>

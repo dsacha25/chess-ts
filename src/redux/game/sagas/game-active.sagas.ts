@@ -112,6 +112,7 @@ export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
 			move,
 			winner,
 			gameOver,
+			gameTime: game.gameTime,
 		};
 
 		yield console.log('CONFIRMED MOVE:', confirmedMove);

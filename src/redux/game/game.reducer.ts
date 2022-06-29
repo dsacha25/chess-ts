@@ -149,6 +149,14 @@ const gameReducer = produce(
 				state.activeGame = action.payload;
 				state.error = '';
 				return state;
+			case GameTypes.SET_ACTIVE_GAME_TIME:
+				if (!state.activeGame) return state;
+				if (action.payload.side === 'black') {
+					state.activeGame.black.gameTime = action.payload.gameTime;
+				} else {
+					state.activeGame.white.gameTime = action.payload.gameTime;
+				}
+				return state;
 			case GameTypes.CLEAR_ACTIVE_GAME:
 				state.fen = DEFAULT_POSITION;
 				state.activeGame = null;

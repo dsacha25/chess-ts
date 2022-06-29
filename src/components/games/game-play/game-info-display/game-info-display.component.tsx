@@ -6,13 +6,29 @@ import {
 	TimerContainer,
 } from './game-info-display.styles';
 import durationToTime from '../../../../utils/helpers/strings/duration-to-time/duration-to-time';
-import CustomButton from '../../../common/buttons/custom-button/custom-button.component';
+import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
+import { selectActiveGame } from '../../../../redux/game/game.selector';
+import useActions from '../../../../hooks/use-actions/use-actions.hook';
+import { selectUserUID } from '../../../../redux/user/user.selector';
 
 const GameInfoDisplay = () => {
+	const activeGame = useSelector((state) => selectActiveGame(state));
+	const uid = useSelector((state) => selectUserUID(state));
+
+	const { setActiveGameTime } = useActions();
+
 	const [time, setTime] = useState('00:00');
-	const [end, setEnd] = useState(add(new Date(), { minutes: 2 }));
+	const [end, setEnd] = useState(
+		add(new Date(), { days: 0, minutes: 0, seconds: 0 })
+	);
 	const [difference, setDifference] = useState(0);
 	const [paused, setPaused] = useState(false);
+
+	useEffect(() => {
+		if (activeGame) {
+			setEnd(add(new Date(), activeGame.gameTime));
+		}
+	}, []);
 
 	useEffect(() => {
 		// console.log('TIME: ', intervalToDuration({ start: new Date(), end }));
@@ -20,14 +36,21 @@ const GameInfoDisplay = () => {
 		let timeOut = setTimeout(() => {
 			if (paused) return;
 			let newStart = new Date().getMilliseconds() + 1000;
-			setTime(
-				durationToTime(
-					intervalToDuration({
-						start: new Date().setMilliseconds(newStart),
-						end,
-					})
-				)
-			);
+
+			const time = intervalToDuration({
+				start: new Date().setMilliseconds(newStart),
+				end,
+			});
+
+			console.log('GAME TIME: ', time);
+
+			if (uid === activeGame?.black.uid) {
+				setActiveGameTime(time, 'black');
+			} else if (uid === activeGame?.white.uid) {
+				setActiveGameTime(time, 'white');
+			}
+
+			setTime(durationToTime(time));
 		}, 1000);
 
 		return () => {

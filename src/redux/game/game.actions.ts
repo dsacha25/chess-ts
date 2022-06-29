@@ -60,8 +60,10 @@ import {
 	SetActiveGameAiAction,
 	SetPromotionPieceTypeAction,
 	ClearPromotionPieceTypeAction,
+	SetActiveGameTimeAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
+import GameTime from '../../utils/types/game-time/game-time';
 
 // ==== GAME STATE
 export const setAiLevel = (level: AiLevel | null): SetAiLevelAction => ({
@@ -187,6 +189,14 @@ export const clearActiveGame = (): ClearActiveGameAction => ({
 
 export const openActiveGameListener = (): OpenActiveGameListenerAction => ({
 	type: GameTypes.OPEN_ACTIVE_GAME_LISTENER,
+});
+
+export const setActiveGameTime = (
+	gameTime: GameTime,
+	side: Orientation
+): SetActiveGameTimeAction => ({
+	type: GameTypes.SET_ACTIVE_GAME_TIME,
+	payload: { gameTime, side },
 });
 
 // ==== INACTIVE GAMES

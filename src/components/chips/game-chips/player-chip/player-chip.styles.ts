@@ -3,7 +3,7 @@ import ImageContainer from '../../../common/containers/image-container/image-con
 
 export const PlayerChipContainer = styled.div`
 	display: grid;
-	width: 260px;
+	width: 340px;
 	height: 100%;
 
 	position: relative;
@@ -16,7 +16,7 @@ export const PlayerChipContainer = styled.div`
 export const PlayerChipAvatar = styled(ImageContainer)`
 	width: 54px;
 	height: 54px;
-	border-radius: 30px;
+	border-radius: 0.5rem;
 	justify-self: flex-end;
 	z-index: 1;
 	border: 2px solid ${({ theme }) => theme.main};
@@ -30,7 +30,7 @@ export const PlayerChipInfo = styled.div`
 	justify-self: flex-end;
 	place-items: center flex-start;
 
-	grid-template-columns: auto 1fr;
+	grid-template-columns: auto auto 1fr;
 	grid-gap: 10px;
 	padding: 0 18px;
 
@@ -41,8 +41,8 @@ export const PlayerChipInfo = styled.div`
 	background-color: ${({ theme }) => theme.accent};
 	border: 1px solid ${({ theme }) => theme.main};
 
-	border-top-left-radius: 20px;
-	border-bottom-left-radius: 20px;
+	border-top-left-radius: 0.4rem;
+	border-bottom-left-radius: 0.4rem;
 
 	z-index: 0;
 `;
@@ -56,6 +56,13 @@ export const ChipUserName = styled.p`
 
 export const ChipRating = styled.p`
 	font-weight: 600;
+	font-size: 16px;
+	margin: 0;
+	color: ${({ theme }) => theme.white};
+`;
+
+export const GameTimeLeft = styled.p`
+	font-weight: 300;
 	font-size: 16px;
 	margin: 0;
 	color: ${({ theme }) => theme.white};
