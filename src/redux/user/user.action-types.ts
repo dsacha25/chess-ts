@@ -93,6 +93,16 @@ export interface RejectEnemyRequestAction {
 	payload: string;
 }
 
+// ==== ONLINE STATUS
+export interface SetUserStatusStartAction {
+	type: UserTypes.SET_USER_STATUS_START;
+}
+
+export interface SetUserStatusSuccessAction {
+	type: UserTypes.SET_USER_STATUS_SUCCESS;
+	payload: boolean;
+}
+
 // ==== ERROR ACTION
 export interface UserErrorAction {
 	type: UserTypes.USER_ERROR;
@@ -121,6 +131,8 @@ type UserActions =
 	| FetchEnemyRequestsSuccessAction
 	| AcceptEnemyRequestAction
 	| RejectEnemyRequestAction
+	| SetUserStatusStartAction
+	| SetUserStatusSuccessAction
 	| UserErrorAction
 	| ClearUserErrorAction;
 

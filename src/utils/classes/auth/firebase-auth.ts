@@ -69,6 +69,7 @@ export class FirebaseAuth implements Authentication<User> {
 				totalOppRating: 0,
 				wins: 0,
 				losses: 0,
+				online: true,
 			};
 			await this.createUserDocument(newChessUser);
 		});

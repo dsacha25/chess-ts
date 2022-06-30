@@ -24,6 +24,8 @@ import {
 	ReauthenticateStartActon,
 	ReauthenticateSuccessAction,
 	ClearUserErrorAction,
+	SetUserStatusStartAction,
+	SetUserStatusSuccessAction,
 } from './user.action-types';
 import UserTypes from './user.types';
 
@@ -124,7 +126,7 @@ export const fetchEnemyRequestsSuccess = (
 	payload: requests,
 });
 
-// ACCEPT/REJECT ENEMY REQUEST
+// ==== ACCEPT/REJECT ENEMY REQUEST
 export const acceptEnemyRequest = (
 	enemyUID: string
 ): AcceptEnemyRequestAction => ({
@@ -137,6 +139,18 @@ export const rejectEnemyRequest = (
 ): RejectEnemyRequestAction => ({
 	type: UserTypes.REJECT_ENEMY_REQUEST,
 	payload: enemyUID,
+});
+
+// ==== ONLINE STATUS
+export const setUserStatusStart = (): SetUserStatusStartAction => ({
+	type: UserTypes.SET_USER_STATUS_START,
+});
+
+export const setUserStatusSuccess = (
+	online: boolean
+): SetUserStatusSuccessAction => ({
+	type: UserTypes.SET_USER_STATUS_SUCCESS,
+	payload: online,
 });
 
 /// ==== ERRORS

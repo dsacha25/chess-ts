@@ -1,5 +1,6 @@
 import { where } from 'firebase/firestore';
 import { filter, flatMap } from 'lodash';
+import { EventChannel } from 'redux-saga';
 import {
 	all,
 	call,
@@ -10,6 +11,7 @@ import {
 	takeEvery,
 } from 'redux-saga/effects';
 import { db, functions } from '../../utils/classes/firestore/firestore-app';
+import { listener } from '../../utils/classes/sagas/saga-listener';
 import getErrorMessage from '../../utils/helpers/errors/get-error-message';
 import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import { selectChessUser, selectUserUID } from '../user/user.selector';
@@ -26,16 +28,28 @@ import {
 } from './enemies.actions';
 import { EnemyTypes } from './enemies.types';
 
+export function* fetchEnemyInfo(enemy: ChessUser) {
+	yield console.log('INFO: ', enemy);
+
+	yield put(fetchEnemyInfoSuccess(enemy));
+}
+
 export function* fetchEnemyInfoAsync({
 	payload: enemyUID,
 }: FetchEnemyInfoStartAction):
 	| Generator<Promise<ChessUser | undefined>>
 	| PutEffect {
 	try {
-		const enemy: ChessUser = yield db.get<ChessUser>('users', enemyUID);
+		// const enemy: ChessUser = yield db.get<ChessUser>('users', enemyUID);
 
-		yield console.log('ENEMY INFO: ', enemy);
-		yield put(fetchEnemyInfoSuccess(enemy));
+		const enemyRef = yield db.getDocumentReference(`users/${enemyUID}`);
+		const enemyChannel: EventChannel<ChessUser> =
+			yield listener.generateDocumentListener<ChessUser>(enemyRef);
+
+		yield listener.initializeChannel<ChessUser>(enemyChannel, fetchEnemyInfo);
+
+		// yield console.log('ENEMY INFO: ', enemy);
+		// yield put(fetchEnemyInfoSuccess(enemy));
 	} catch (err) {
 		yield put(enemyError(getErrorMessage(err)));
 	}

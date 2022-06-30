@@ -3,7 +3,10 @@ import React, { memo, useEffect, useState } from 'react';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectActiveGame } from '../../../../redux/game/game.selector';
-import { selectChessUser } from '../../../../redux/user/user.selector';
+import {
+	selectChessUser,
+	selectIsUserOnline,
+} from '../../../../redux/user/user.selector';
 import parseGameTime from '../../../../utils/helpers/parsers/parse-game-time/parse-game-time';
 import durationToTime from '../../../../utils/helpers/strings/duration-to-time/duration-to-time';
 import { OnlineStatusIndicator } from '../../../common/online-status-indicator/online-status-indicator.styles';
@@ -20,6 +23,8 @@ const PlayerChip = () => {
 	const { setActiveGameTime } = useActions();
 	const chessUser = useSelector((state) => selectChessUser(state));
 	const game = useSelector((state) => selectActiveGame(state));
+	const online = useSelector((state) => selectIsUserOnline(state));
+
 	const [time, setTime] = useState('00');
 	const [end, setEnd] = useState(
 		add(new Date(), { days: 0, minutes: 0, seconds: 0 })
@@ -76,7 +81,7 @@ const PlayerChip = () => {
 	return (
 		<PlayerChipContainer>
 			<PlayerChipAvatar url={chessUser?.photoURL}>
-				<OnlineStatusIndicator online />
+				<OnlineStatusIndicator online={online} />
 			</PlayerChipAvatar>
 			<PlayerChipInfo>
 				<GameTimeLeft>{time}</GameTimeLeft>

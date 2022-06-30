@@ -5,4 +5,5 @@ export interface ChessUser extends UserInfo {
 	totalOppRating: number;
 	wins: number;
 	losses: number;
+	online: boolean;
 }

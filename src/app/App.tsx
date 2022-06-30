@@ -19,8 +19,12 @@ import Head from '../components/head/head.component';
 import GulagPage from '../pages/gulag-page/gulag-page.component';
 
 function App() {
-	const { checkUserSession, openNotificationListener, getChessUserStart } =
-		useActions();
+	const {
+		checkUserSession,
+		openNotificationListener,
+		getChessUserStart,
+		setUserStatusStart,
+	} = useActions();
 	const auth = useSelector((state) => selectUserAuth(state));
 
 	useEffect(() => {
@@ -28,6 +32,7 @@ function App() {
 
 		if (auth) {
 			getChessUserStart();
+			setUserStatusStart();
 		}
 
 		// eslint-disable-next-line

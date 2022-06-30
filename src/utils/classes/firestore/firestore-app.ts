@@ -7,6 +7,8 @@ import { FirestoreDatabase } from '../database/firestore-database';
 import { FirebaseAuth } from '../auth/firebase-auth';
 import FirebaseFunctions from '../functions/firebase-functions';
 import { FirebaseStorage } from '../storage/firebase-storage';
+import { RealTimeDatabase } from '../real-time/real-time';
+import { Firestore } from 'firebase/firestore';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAIu_0OHjiUObOZJj2YE4didA65vUgA-JU',
@@ -24,6 +26,7 @@ export class FirestoreApp {
 	public db: FirestoreDatabase;
 	public functions: FirebaseFunctions;
 	public storage: FirebaseStorage;
+	public rt: RealTimeDatabase;
 
 	constructor(app: FirebaseApp) {
 		this.app = app;
@@ -31,15 +34,18 @@ export class FirestoreApp {
 		this.db = new FirestoreDatabase('*', app);
 		this.functions = new FirebaseFunctions(app);
 		this.storage = new FirebaseStorage(app);
+		this.rt = new RealTimeDatabase(app);
 	}
 }
 
 export const firestore = new FirestoreApp(initializeApp(firebaseConfig));
 
+export const app = firestore.app;
 export const auth = firestore.auth;
 export const db = firestore.db;
 export const functions = firestore.functions;
 export const storage = firestore.storage;
+export const rt = firestore.rt;
 
 /*
 // Import the functions you need from the SDKs you need

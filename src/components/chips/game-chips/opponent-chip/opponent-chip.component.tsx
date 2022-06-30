@@ -77,7 +77,7 @@ const OpponentChip = () => {
 	return (
 		<OpponentChipContainer>
 			<OpponentChipAvatar url={enemy.photoURL}>
-				<OnlineStatusIndicator online />
+				<OnlineStatusIndicator online={enemy.online} left />
 			</OpponentChipAvatar>
 			<OpponentChipInfo>
 				<OpponentUserName>{enemy.displayName}</OpponentUserName>

@@ -33,8 +33,9 @@ export const OnlineStatusIndicator = styled.div<OnlineStatusProps>`
 	border-radius: 8px;
 
 	position: absolute;
-	top: -4px;
-	right: -4px;
+
+	${({ left }) => (left ? 'top: 0px; left: -8px' : 'top: -4px; right: -6px')};
+
 	z-index: 1;
 
 	margin-bottom: auto;

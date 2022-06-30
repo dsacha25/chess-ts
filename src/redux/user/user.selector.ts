@@ -33,3 +33,8 @@ export const selectIsUserLoading = createSelector(
 	selectUser,
 	(user) => user.loading
 );
+
+export const selectIsUserOnline = createSelector(
+	selectUser,
+	(user) => user.online
+);
