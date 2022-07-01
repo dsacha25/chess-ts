@@ -24,6 +24,26 @@ const OpponentChip = () => {
 	const game = useSelector((state) => selectActiveGame(state));
 
 	const [side, setSide] = useState('white');
+	const [paused, setPaused] = useState(false);
+
+	useEffect(() => {
+		if (!game) return;
+		if (side !== game.turn) {
+			setPaused(true);
+		} else {
+			setPaused(false);
+		}
+	}, [side, game]);
+
+	useEffect(() => {
+		if (!game) return;
+
+		if (!game.blackPresent || !game.whitePresent) {
+			setPaused(true);
+		} else {
+			setPaused(false);
+		}
+	}, [game]);
 
 	useEffect(() => {
 		if (game && enemy) {
@@ -55,7 +75,7 @@ const OpponentChip = () => {
 				<CountdownTimer
 					date={Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {})}
 					getTime={handleTime}
-					isPaused={side !== game.turn}
+					isPaused={paused}
 					hidden={game.gameMode === 'untimed'}
 				/>
 			</PlayerInfo>
