@@ -15,7 +15,7 @@ export const GameHistoryContainer = styled.div`
 `;
 
 export const HistoryMoveList = styled.div`
-	height: 100%;
+	height: -webkit-fill-available;
 	max-height: 60vh;
 	width: 90%;
 	place-self: flex-start center;
@@ -24,8 +24,6 @@ export const HistoryMoveList = styled.div`
 	font-size: 12px;
 
 	overflow-y: auto;
-
-	/* background-color: ${({ theme }) => theme.accentBright}; */
 `;
 
 export const HistoryMove = styled.li`

@@ -1,8 +1,9 @@
 import { formatDuration, isBefore, milliseconds } from 'date-fns';
 import { find } from 'lodash';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DesktopGameLayout from '../../components/games/game-play/layout/desktop-game-layout/desktop-game-layout.component';
 import MobileGameLayout from '../../components/games/game-play/layout/mobile-game-layout/mobile-game-layout.component';
+import WaitingForOpponentMsg from '../../components/games/pre-game-interfaces/waiting-for-opponent-msg/waiting-for-opponent-msg.component';
 import GameToolbar from '../../components/toolbars/game-toolbar/game-toolbar.component';
 import MobileGameToolbar from '../../components/toolbars/mobile-game-toolbar/mobile-game-toolbar.component';
 import useActions from '../../hooks/use-actions/use-actions.hook';
@@ -22,6 +23,7 @@ const PlayPage = () => {
 	const { width } = useWindowSize();
 	const activeGame = useSelector((state) => selectActiveGame(state));
 	const uid = useSelector((state) => selectUserUID(state));
+	const [playersPresent, setPlayersPresent] = useState(false);
 
 	useEffect(() => {
 		if (activeGame) {
@@ -34,6 +36,20 @@ const PlayPage = () => {
 
 		// eslint-disable-next-line
 	}, []);
+
+	useEffect(() => {
+		if (
+			(activeGame && activeGame.blackPresent !== playersPresent) ||
+			(activeGame && activeGame?.whitePresent !== playersPresent)
+		) {
+			console.log('PRESENCE BLACK: ', activeGame.blackPresent);
+			console.log('PRESENCE WHITE: ', activeGame.whitePresent);
+
+			setPlayersPresent(activeGame.blackPresent && activeGame.whitePresent);
+		}
+
+		// eslint-disable-next-line
+	}, [activeGame]);
 
 	useEffect(() => {
 		setGameType('online');
@@ -58,6 +74,7 @@ const PlayPage = () => {
 		<PlayContainer>
 			{width <= 980 ? <MobileGameToolbar /> : <GameToolbar />}
 			{width <= 980 ? <MobileGameLayout /> : <DesktopGameLayout />}
+			<WaitingForOpponentMsg playersPresent={playersPresent} />
 		</PlayContainer>
 	);
 };

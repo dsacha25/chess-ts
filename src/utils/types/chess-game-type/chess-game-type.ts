@@ -12,6 +12,8 @@ export interface ChessGameType extends Enemyship {
 	turn: Orientation;
 	black: Player;
 	white: Player;
+	blackPresent: boolean;
+	whitePresent: boolean;
 	latestMove: string;
 	fen: string;
 	winner: Orientation | null;

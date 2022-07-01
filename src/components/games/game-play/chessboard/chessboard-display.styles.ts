@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Spinner from '../../../common/spinner/spinner.component';
 
 interface BoardProps {
 	size: number;
@@ -35,14 +34,4 @@ export const PlayerContainer = styled.div`
 	height: 60px;
 	place-items: flex-start flex-end;
 	place-self: flex-start;
-`;
-
-export const LoadSpinner = styled(Spinner)`
-	position: absolute;
-	z-index: 5;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	margin: auto;
 `;

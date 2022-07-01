@@ -2,12 +2,9 @@ import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import Title from '../../../../common/title/title.styles';
 import {
 	AuxiliaryPanelContainer,
-	ConfirmActionButton,
-	ConfirmActionContainer,
 	PanelButton,
 	PanelControlsContainer,
 	PanelInfoContainer,
-	RejectActionButton,
 } from './auxiliary-panel.styles';
 
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
@@ -27,7 +24,6 @@ import GameChat from '../chat/game-chat/game-chat.component';
 import { BiMessage } from 'react-icons/bi';
 import { FaChessBishop } from 'react-icons/fa';
 
-import Spinner from '../../../../common/spinner/spinner.component';
 import { NotifButtonFlag } from '../../../../notifications/notification-flag/notification-flag.styles';
 import { AuxActions } from './types';
 import ConfirmActionPrompt from '../confirm-action-prompt/confirm-action-prompt.component';
@@ -133,10 +129,6 @@ const AuxiliaryPanel = () => {
 
 	//// TODO:
 	// * Handle Analysis Page layout
-	// * Seperate Components for
-	// * * ActiveGameControls & InactiveGameControls
-	// * * * *  Inactive controls - Arrows cycling through all moves.
-	// * * * *  Do I need to store each FEN string for every move?
 
 	return (
 		<AuxiliaryPanelContainer>

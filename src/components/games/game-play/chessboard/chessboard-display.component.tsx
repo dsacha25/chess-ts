@@ -3,7 +3,6 @@ import {
 	BoardContainer,
 	OpponentContainer,
 	PlayerContainer,
-	LoadSpinner,
 } from './chessboard-display.styles';
 import { Square } from 'chess.js';
 import OpponentChip from '../../../chips/game-chips/opponent-chip/opponent-chip.component';
@@ -20,10 +19,10 @@ import {
 
 import useWindowSize from '../../../../hooks/use-window-size/use-window-size.hook';
 import Orientation from '../../../../utils/types/orientation/orientation';
-import logMessage from '../../../../utils/helpers/strings/log-message/log-message';
 
 import ChessboardBase from '../boards/chessboard-base/chessboard-base.component';
 import queryBoardSize from '../../../../utils/helpers/screen/query-board-size';
+import { LoadSpinner } from '../boards/board-styles/board-styles.styles';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
@@ -72,21 +71,16 @@ const ChessboardDisplay = () => {
 	}, [fen, gameType, turn, orientation, aiLevel, fenLocal]);
 
 	const aiMove = () => {
-		logMessage('AI MOVE START', 'red');
-
 		if (aiLevel === null) return;
 
 		setAiMoving(true);
-		console.log('ai level : ', aiLevel);
 		let chessMove = game.movePieceAi(aiLevel, fen);
 
 		if (chessMove) {
-			logMessage('CHESS MOVE FOUND', 'green');
 			setFen(chessMove.fen);
 			setFenLocal(chessMove.fen);
 			setTurn(chessMove.turn);
 			movePiece({ move: chessMove.san, fen: chessMove.fen });
-			logMessage('AI MOVE SUCCESS', 'blue');
 		}
 		setAiMoving(false);
 	};

@@ -4,6 +4,7 @@ import { useSelector } from '../../../../../hooks/use-selector/use-typed-selecto
 import { selectAiLevel } from '../../../../../redux/game/game.selector';
 import AiLevelSelect from '../../../pre-game-interfaces/ai-level-select/ai-level-select.component';
 import AuxiliaryPanel from '../../aux-panel/auxiliary-panel/auxiliary-panel.component';
+import AiChessboard from '../../boards/ai-chessboard/ai-chessboard.component';
 import ChessboardDisplay from '../../chessboard/chessboard-display.component';
 
 const DesktopAIGameLayout = () => {
@@ -22,7 +23,7 @@ const DesktopAIGameLayout = () => {
 
 	return (
 		<Fragment>
-			{aiLevel === null ? <AiLevelSelect /> : <ChessboardDisplay />}
+			{aiLevel === null ? <AiLevelSelect /> : <AiChessboard />}
 			<AuxiliaryPanel />
 		</Fragment>
 	);

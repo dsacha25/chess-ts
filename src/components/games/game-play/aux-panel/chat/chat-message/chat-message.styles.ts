@@ -32,7 +32,7 @@ export const Message = styled.p<Pick<ChatMessageProps, 'sender'>>`
 	align-items: center;
 	justify-content: flex-end;
 	background-color: ${({ theme, sender }) =>
-		sender ? theme.main : `${theme.accent}`};
+		sender ? theme.main : `${theme.grey}`};
 	flex: 0;
 	margin: 0;
 	padding: 8px 12px;
@@ -54,8 +54,8 @@ export const ChatAvatar = styled(ImageContainer)<
 
 export const MessageTime = styled.p<Pick<ChatMessageProps, 'sender'>>`
 	font-size: 8px;
-	place-self: flex-end;
+	place-self: ${({ sender }) => (!sender ? 'flex-start' : 'flex-end')};
 	margin: 0;
-	padding-right: 10px;
+	padding: 0 10px;
 	grid-column: ${({ sender }) => (!sender ? '2 / 2' : '1 / 1')};
 `;

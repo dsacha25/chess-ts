@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import HistoryController from '../history-controller/history-controller.component';
 import {
 	BlackMove,
@@ -11,9 +11,17 @@ import {
 import { GameHistoryProps } from './types';
 
 const GameHistory: FC<GameHistoryProps> = ({ history }) => {
+	const movesRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (movesRef.current) {
+			movesRef.current.scrollTop = movesRef.current.scrollHeight;
+		}
+	}, [movesRef]);
+
 	return (
 		<GameHistoryContainer>
-			<HistoryMoveList>
+			<HistoryMoveList ref={movesRef}>
 				{history.map((move, i) => (
 					<HistoryMove key={i}>
 						<MoveNumber>{i + 1}:</MoveNumber>
