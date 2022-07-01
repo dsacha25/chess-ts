@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import useWindowSize from '../../../../../hooks/use-window-size/use-window-size.hook';
-import { BoardContainer } from '../board-styles/board-styles.styles';
+import {
+	BoardContainer,
+	OpponentContainer,
+	PlayerContainer,
+} from '../board-styles/board-styles.styles';
 import { Square } from 'chess.js';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import ChessGame from '../../../../../utils/classes/chess-game/chess-game';
@@ -8,6 +12,8 @@ import { useSelector } from '../../../../../hooks/use-selector/use-typed-selecto
 import { selectFen } from '../../../../../redux/game/game.selector';
 import ChessboardBase from '../../boards/chessboard-base/chessboard-base.component';
 import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
+import PlayerChip from '../../../../chips/game-chips/player-chip/player-chip.component';
+import OpponentChip from '../../../../chips/game-chips/opponent-chip/opponent-chip.component';
 
 const game = new ChessGame();
 
@@ -41,12 +47,18 @@ const SoloChessboard = () => {
 
 	return (
 		<BoardContainer size={boardSize}>
+			<OpponentContainer>
+				<OpponentChip />
+			</OpponentContainer>
 			<ChessboardBase
 				makeMove={makeMove}
 				fen={fen}
 				playersTurn
 				orientation="white"
 			/>
+			<PlayerContainer>
+				<PlayerChip />
+			</PlayerContainer>
 		</BoardContainer>
 	);
 };

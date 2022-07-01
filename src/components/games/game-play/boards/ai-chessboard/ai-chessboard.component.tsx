@@ -9,11 +9,11 @@ import {
 } from '../../../../../redux/game/game.selector';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import ChessGame from '../../../../../utils/classes/chess-game/chess-game';
-import { BoardContainer } from '../../chessboard/chessboard-display.styles';
 import Orientation from '../../../../../utils/types/orientation/orientation';
 import useWindowSize from '../../../../../hooks/use-window-size/use-window-size.hook';
 import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
 import {
+	BoardContainer,
 	LoadSpinner,
 	OpponentContainer,
 	PlayerContainer,

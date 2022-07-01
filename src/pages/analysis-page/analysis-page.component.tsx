@@ -9,7 +9,7 @@ import useWindowSize from '../../hooks/use-window-size/use-window-size.hook';
 import { AnalysisContainer } from './analysis-page.styles';
 
 const AnalysisPage = () => {
-	const game = useQuery('game');
+	const gameUID = useQuery('game');
 	const { clearEnemyInfo, clearActiveGame, setInactiveGameByID, setGameType } =
 		useActions();
 	const { width } = useWindowSize();
@@ -19,8 +19,8 @@ const AnalysisPage = () => {
 		clearActiveGame();
 		setGameType('solo');
 
-		if (game) {
-			setInactiveGameByID(game);
+		if (gameUID) {
+			setInactiveGameByID(gameUID);
 		}
 
 		// eslint-disable-next-line

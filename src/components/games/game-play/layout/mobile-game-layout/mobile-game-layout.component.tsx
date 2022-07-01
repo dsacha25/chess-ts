@@ -8,7 +8,7 @@ import {
 import { selectMobileGameIndex } from '../../../../../redux/indexes/indexes.selector';
 import ActiveGameError from '../../../active-games/active-game-error/active-game-error.component';
 import AuxiliaryPanel from '../../aux-panel/auxiliary-panel/auxiliary-panel.component';
-import ChessboardDisplay from '../../chessboard/chessboard-display.component';
+import OnlineChessboard from '../../boards/online-chessboard/online-chessboard.component';
 import { MobileGameLayoutContainer } from './mobile-game-layout.styles';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import ConfirmActionPrompt from '../../aux-panel/confirm-action-prompt/confirm-action-prompt.component';
@@ -35,7 +35,7 @@ const MobileGameLayout = () => {
 				<AuxiliaryPanel />
 			) : (
 				<Fragment>
-					{activeGame ? <ChessboardDisplay /> : <ActiveGameError />}
+					{activeGame ? <OnlineChessboard /> : <ActiveGameError />}
 				</Fragment>
 			)}
 			{open && (

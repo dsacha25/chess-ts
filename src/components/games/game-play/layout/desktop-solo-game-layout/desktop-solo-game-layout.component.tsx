@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import AuxiliaryPanel from '../../aux-panel/auxiliary-panel/auxiliary-panel.component';
-import ChessboardDisplay from '../../chessboard/chessboard-display.component';
+import SoloChessboard from '../../boards/solo-chessboard/solo-chessboard.component';
 
 const DesktopSoloGameLayout = () => {
 	return (
 		<Fragment>
-			<ChessboardDisplay />
+			<SoloChessboard />
 			<AuxiliaryPanel />
 		</Fragment>
 	);
