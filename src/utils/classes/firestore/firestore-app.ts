@@ -8,7 +8,6 @@ import { FirebaseAuth } from '../auth/firebase-auth';
 import FirebaseFunctions from '../functions/firebase-functions';
 import { FirebaseStorage } from '../storage/firebase-storage';
 import { RealTimeDatabase } from '../real-time/real-time';
-import { Firestore } from 'firebase/firestore';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAIu_0OHjiUObOZJj2YE4didA65vUgA-JU',

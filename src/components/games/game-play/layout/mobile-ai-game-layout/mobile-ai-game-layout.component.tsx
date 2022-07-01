@@ -5,7 +5,6 @@ import { selectMobileGameIndex } from '../../../../../redux/indexes/indexes.sele
 import AiLevelSelect from '../../../pre-game-interfaces/ai-level-select/ai-level-select.component';
 import AuxiliaryPanel from '../../aux-panel/auxiliary-panel/auxiliary-panel.component';
 import AiChessboard from '../../boards/ai-chessboard/ai-chessboard.component';
-import ChessboardDisplay from '../../chessboard/chessboard-display.component';
 import { MobileGameLayoutContainer } from '../mobile-game-layout/mobile-game-layout.styles';
 
 const MobileAiGameLayout = () => {

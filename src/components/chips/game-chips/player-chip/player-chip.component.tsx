@@ -47,7 +47,7 @@ const PlayerChip = () => {
 		}
 	};
 
-	if (!chessUser || !game) return null;
+	if (!chessUser) return null;
 
 	return (
 		<ChipContainer>
@@ -55,14 +55,17 @@ const PlayerChip = () => {
 				<OnlineStatusIndicator online={online} />
 			</ChipAvatar>
 			<PlayerInfo>
-				<CountdownTimer
-					date={
-						Date.now() + milliseconds(parseGameTime(chessUser.uid, game) || {})
-					}
-					getTime={handleTime}
-					isPaused={side !== game.turn}
-					hidden={game.gameMode === 'untimed'}
-				/>
+				{game && (
+					<CountdownTimer
+						date={
+							Date.now() +
+							milliseconds(parseGameTime(chessUser.uid, game) || {})
+						}
+						getTime={handleTime}
+						isPaused={side !== game.turn}
+						hidden={game.gameMode === 'untimed'}
+					/>
+				)}
 				<PlayerRating>{chessUser?.rating}</PlayerRating>
 				<PlayerName>{chessUser?.displayName}</PlayerName>
 			</PlayerInfo>

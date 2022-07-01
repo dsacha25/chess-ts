@@ -7,6 +7,7 @@ import ChessGame from '../../../../../utils/classes/chess-game/chess-game';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectFen } from '../../../../../redux/game/game.selector';
 import ChessboardBase from '../../boards/chessboard-base/chessboard-base.component';
+import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
 
 const game = new ChessGame();
 
@@ -19,25 +20,7 @@ const SoloChessboard = () => {
 
 	const fen = useSelector((state) => selectFen(state));
 
-	useEffect(() => {
-		// IF MOBILE VIEW
-		//// SET SIZE TO WINDOW WIDTH - PADDING
-		if (width > 1500) {
-			setBoardSize(800);
-		}
-		if (width <= 1500 && width > 1300) {
-			setBoardSize(700);
-		}
-		if (width <= 1300 && width > 980) {
-			setBoardSize(500);
-		}
-		if (width <= 980 && width > 300) {
-			setBoardSize(width - 20);
-		}
-	}, [width]);
-
 	const makeMove = (from: Square, to: Square) => {
-		console.log('FROM - TO: ', from, to);
 		if (from === to) return;
 		let chessMove = game.movePieceServer(fen, from, to);
 
@@ -50,6 +33,11 @@ const SoloChessboard = () => {
 			setOrientation(chessMove.turn);
 		}, 500);
 	};
+
+	useEffect(() => {
+		// USE WINDOW SIZE TO DEFINE BOARD SIZE
+		setBoardSize(queryBoardSize(width));
+	}, [width]);
 
 	return (
 		<BoardContainer size={boardSize}>

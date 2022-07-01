@@ -16,9 +16,11 @@ import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size
 import {
 	LoadSpinner,
 	OpponentContainer,
+	PlayerContainer,
 } from '../board-styles/board-styles.styles';
 import ChessboardBase from '../chessboard-base/chessboard-base.component';
 import AiChip from '../../../../chips/game-chips/ai-chip/ai-chip.component';
+import PlayerChip from '../../../../chips/game-chips/player-chip/player-chip.component';
 const game = new ChessGame();
 
 const AiChessboard = () => {
@@ -101,6 +103,10 @@ const AiChessboard = () => {
 			/>
 
 			{aiMoving && <LoadSpinner size="80px" />}
+
+			<PlayerContainer>
+				<PlayerChip />
+			</PlayerContainer>
 		</BoardContainer>
 	);
 };
