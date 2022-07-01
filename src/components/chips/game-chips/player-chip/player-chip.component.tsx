@@ -1,5 +1,5 @@
-import { add, intervalToDuration, milliseconds } from 'date-fns';
 import React, { memo, useEffect, useState } from 'react';
+import { milliseconds } from 'date-fns';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectActiveGame } from '../../../../redux/game/game.selector';
@@ -8,18 +8,17 @@ import {
 	selectIsUserOnline,
 } from '../../../../redux/user/user.selector';
 import parseGameTime from '../../../../utils/helpers/parsers/parse-game-time/parse-game-time';
-import durationToTime from '../../../../utils/helpers/strings/duration-to-time/duration-to-time';
 import CountdownTimer from '../../../common/countdown-timer/countdown-timer.component';
 import { OnlineStatusIndicator } from '../../../common/online-status-indicator/online-status-indicator.styles';
-import {
-	PlayerChipAvatar,
-	PlayerChipContainer,
-	PlayerChipInfo,
-	ChipUserName,
-	ChipRating,
-	GameTimeLeft,
-} from './player-chip.styles';
+
 import { CountdownTimeDelta } from 'react-countdown';
+import {
+	ChipAvatar,
+	ChipContainer,
+	PlayerInfo,
+	PlayerName,
+	PlayerRating,
+} from '../game-chip-styles/game-chip-styles.styles';
 
 const PlayerChip = () => {
 	const { setActiveGameTime } = useActions();
@@ -51,11 +50,11 @@ const PlayerChip = () => {
 	if (!chessUser || !game) return null;
 
 	return (
-		<PlayerChipContainer>
-			<PlayerChipAvatar url={chessUser?.photoURL}>
+		<ChipContainer>
+			<ChipAvatar url={chessUser?.photoURL}>
 				<OnlineStatusIndicator online={online} />
-			</PlayerChipAvatar>
-			<PlayerChipInfo>
+			</ChipAvatar>
+			<PlayerInfo>
 				<CountdownTimer
 					date={
 						Date.now() + milliseconds(parseGameTime(chessUser.uid, game) || {})
@@ -64,10 +63,10 @@ const PlayerChip = () => {
 					isPaused={side !== game.turn}
 					hidden={game.gameMode === 'untimed'}
 				/>
-				<ChipRating>{chessUser?.rating}</ChipRating>
-				<ChipUserName>{chessUser?.displayName}</ChipUserName>
-			</PlayerChipInfo>
-		</PlayerChipContainer>
+				<PlayerRating>{chessUser?.rating}</PlayerRating>
+				<PlayerName>{chessUser?.displayName}</PlayerName>
+			</PlayerInfo>
+		</ChipContainer>
 	);
 };
 

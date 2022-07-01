@@ -13,8 +13,12 @@ import { BoardContainer } from '../../chessboard/chessboard-display.styles';
 import Orientation from '../../../../../utils/types/orientation/orientation';
 import useWindowSize from '../../../../../hooks/use-window-size/use-window-size.hook';
 import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
-import { LoadSpinner } from '../board-styles/board-styles.styles';
+import {
+	LoadSpinner,
+	OpponentContainer,
+} from '../board-styles/board-styles.styles';
 import ChessboardBase from '../chessboard-base/chessboard-base.component';
+import AiChip from '../../../../chips/game-chips/ai-chip/ai-chip.component';
 const game = new ChessGame();
 
 const AiChessboard = () => {
@@ -86,6 +90,9 @@ const AiChessboard = () => {
 
 	return (
 		<BoardContainer size={boardSize}>
+			<OpponentContainer>
+				<AiChip aiLevel={aiLevel} />
+			</OpponentContainer>
 			<ChessboardBase
 				makeMove={makeMove}
 				fen={fen}

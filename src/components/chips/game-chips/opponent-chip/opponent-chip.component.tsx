@@ -1,21 +1,22 @@
-import { add, milliseconds } from 'date-fns';
 import React, { memo, useEffect, useState } from 'react';
+import { milliseconds } from 'date-fns';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectEnemyInfo } from '../../../../redux/enemies/enemies.selector';
 import { selectActiveGame } from '../../../../redux/game/game.selector';
 import parseGameTime from '../../../../utils/helpers/parsers/parse-game-time/parse-game-time';
 import { OnlineStatusIndicator } from '../../../common/online-status-indicator/online-status-indicator.styles';
-import {
-	ChipRating,
-	OpponentChipAvatar,
-	OpponentChipContainer,
-	OpponentChipInfo,
-	OpponentUserName,
-} from './opponent-chip.styles';
+
 import CountdownTimer from '../../../common/countdown-timer/countdown-timer.component';
 
 import { CountdownTimeDelta } from 'react-countdown';
+import {
+	ChipAvatar,
+	ChipContainer,
+	PlayerInfo,
+	PlayerName,
+	PlayerRating,
+} from '../game-chip-styles/game-chip-styles.styles';
 
 const OpponentChip = () => {
 	const { setActiveGameTime } = useActions();
@@ -44,22 +45,21 @@ const OpponentChip = () => {
 
 	if (!enemy || !game) return null;
 	return (
-		<OpponentChipContainer>
-			<OpponentChipAvatar url={enemy.photoURL}>
+		<ChipContainer opponent>
+			<ChipAvatar opponent url={enemy.photoURL}>
 				<OnlineStatusIndicator online={enemy.online} left />
-			</OpponentChipAvatar>
-			<OpponentChipInfo>
-				<OpponentUserName>{enemy.displayName}</OpponentUserName>
-				<ChipRating>{enemy.rating}</ChipRating>
-
+			</ChipAvatar>
+			<PlayerInfo opponent>
+				<PlayerName>{enemy.displayName}</PlayerName>
+				<PlayerRating>{enemy.rating}</PlayerRating>
 				<CountdownTimer
 					date={Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {})}
 					getTime={handleTime}
 					isPaused={side !== game.turn}
 					hidden={game.gameMode === 'untimed'}
 				/>
-			</OpponentChipInfo>
-		</OpponentChipContainer>
+			</PlayerInfo>
+		</ChipContainer>
 	);
 };
 
