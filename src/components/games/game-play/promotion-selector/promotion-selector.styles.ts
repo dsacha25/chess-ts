@@ -29,12 +29,27 @@ export const PromotionSelectorContainer = styled.div`
 
 		font-size: 1.4rem;
 
-		@media screen and (max-width: 1200px) {
-			font-size: 1rem;
+		@media screen and (max-width: 1300px) {
+			grid-column: 1 / span 2;
+			font-size: 1rem !important;
 		}
 	}
 
 	z-index: 10;
+
+	@media screen and (max-width: 1300px) and (min-width: 980px) {
+		height: 400px;
+		grid-template: auto 1fr 1fr / 1fr 1fr;
+	}
+
+	@media screen and (max-width: 980px) {
+		grid-template: auto 1fr 1fr / 1fr 1fr;
+		height: calc(100% - 70px);
+		width: 100vw;
+		margin: unset;
+
+		position: fixed;
+	}
 `;
 
 export const PromotionButton = styled(CustomButton)`

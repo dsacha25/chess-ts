@@ -6,6 +6,12 @@ import {
 	PromotionSelectorContainer,
 } from './promotion-selector.styles';
 import { PromotionPieces } from '../../../../utils/types/promotion-pieces/promotion-pieces';
+import {
+	FaChessQueen,
+	FaChessRook,
+	FaChessBishop,
+	FaChessKnight,
+} from 'react-icons/fa';
 
 const PromotionSelector = () => {
 	const { setPromotionPieceType } = useActions();
@@ -16,18 +22,18 @@ const PromotionSelector = () => {
 
 	return (
 		<PromotionSelectorContainer>
-			<Title>Select Promotion Piece</Title>
+			<Title>Promote Piece</Title>
 			<PromotionButton onClick={handlePromotionSelection} id="q" color="main">
-				Q
+				<FaChessQueen size="50px" />
 			</PromotionButton>
 			<PromotionButton onClick={handlePromotionSelection} id="r" color="main">
-				R
+				<FaChessRook size="50px" />
 			</PromotionButton>
 			<PromotionButton onClick={handlePromotionSelection} id="b" color="main">
-				B
+				<FaChessBishop size="50px" />
 			</PromotionButton>
 			<PromotionButton onClick={handlePromotionSelection} id="n" color="main">
-				N
+				<FaChessKnight size="50px" />
 			</PromotionButton>
 		</PromotionSelectorContainer>
 	);
