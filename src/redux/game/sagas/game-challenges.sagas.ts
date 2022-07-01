@@ -94,16 +94,25 @@ export function* onRejectChallengeRequest() {
 }
 
 export function* acceptGameChallengeAsync({
-	payload: enemy,
-}: AcceptGameChallengeStartAction) {
+	payload: { enemy, callback },
+}: AcceptGameChallengeStartAction): Generator | SelectEffect {
 	try {
 		const { displayName } = yield select(selectChessUser);
-		yield functions.callFirebaseFunction('acceptChallengeRequest', {
-			enemyUID: enemy.uid,
-			enemyDisplayName: enemy.displayName,
-			displayName,
-			gameMode: enemy.gameMode,
-		});
+		const data = yield functions.callFirebaseFunction(
+			'acceptChallengeRequest',
+			{
+				enemyUID: enemy.uid,
+				enemyDisplayName: enemy.displayName,
+				displayName,
+				gameMode: enemy.gameMode,
+			}
+		);
+
+		const gameUID = data.gameUID as string;
+
+		if (gameUID) {
+			callback(gameUID);
+		}
 
 		yield put(gameChallengeResponseSuccess(enemy.uid));
 		yield put(fetchActiveGamesStart());

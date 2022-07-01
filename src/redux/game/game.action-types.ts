@@ -59,7 +59,7 @@ export interface SendGameChallengeAction {
 
 export interface AcceptGameChallengeStartAction {
 	type: GameTypes.ACCEPT_GAME_CHALLENGE_START;
-	payload: NotifSender;
+	payload: { enemy: NotifSender; callback: (gameUID: string) => void };
 }
 
 export interface GameChallengeResponseSuccessAction {

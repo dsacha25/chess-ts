@@ -24,7 +24,7 @@ const GameModeSelector: FC<GameModeSelectorProps> = ({
 		sendGameChallenge(enemyUID, gameMode);
 		handleClose();
 
-		navigate(`/${Paths.PLAY}`);
+		navigate(`/${Paths.DASHBOARD}`);
 	};
 
 	return (

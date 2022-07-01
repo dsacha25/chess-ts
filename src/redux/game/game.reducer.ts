@@ -110,7 +110,7 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.ACCEPT_GAME_CHALLENGE_START:
 				state.loading = true;
-				state.receiver = action.payload.uid;
+				state.receiver = action.payload.enemy.uid;
 				state.error = '';
 				return state;
 			case GameTypes.GAME_CHALLENGE_RESPONSE_SUCCESS:

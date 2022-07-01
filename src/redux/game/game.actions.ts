@@ -114,10 +114,11 @@ export const sendGameChallenge = (
 });
 
 export const acceptGameChallengeStart = (
-	enemy: NotifSender
+	enemy: NotifSender,
+	callback: (gameUID: string) => void
 ): AcceptGameChallengeStartAction => ({
 	type: GameTypes.ACCEPT_GAME_CHALLENGE_START,
-	payload: enemy,
+	payload: { enemy, callback },
 });
 
 export const gameChallengeResponseSuccess = (

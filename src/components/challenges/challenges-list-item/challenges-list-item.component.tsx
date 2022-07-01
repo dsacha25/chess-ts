@@ -16,16 +16,25 @@ import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook
 import { selectGameLoadingState } from '../../../redux/game/game.selector';
 import Spinner from '../../common/spinner/spinner.component';
 import parseGameMode from '../../../utils/helpers/parsers/parse-game-mode/parse-game-mode';
+import { useNavigate } from 'react-router-dom';
+import Paths from '../../../utils/types/paths/paths';
 
 const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
-	const loading = useSelector((state) => selectGameLoadingState(state));
+	const navigate = useNavigate();
 	const { acceptGameChallengeStart, rejectGameChallenge } = useActions();
+
+	const loading = useSelector((state) => selectGameLoadingState(state));
+
 	const [accepting, setAccepting] = useState(false);
 	const [rejecting, setRejecting] = useState(false);
 
+	const handleNavigate = (gameUID: string) => {
+		navigate(`/${Paths.PLAY}?game=${gameUID}`);
+	};
+
 	const handleAcceptChallenge = () => {
 		setAccepting(true);
-		acceptGameChallengeStart(enemy);
+		acceptGameChallengeStart(enemy, handleNavigate);
 	};
 
 	const handleRejectChallenge = () => {
