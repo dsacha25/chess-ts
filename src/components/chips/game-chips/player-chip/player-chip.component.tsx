@@ -27,66 +27,21 @@ const PlayerChip = () => {
 	const game = useSelector((state) => selectActiveGame(state));
 	const online = useSelector((state) => selectIsUserOnline(state));
 
-	const [time, setTime] = useState('00');
-	const [end, setEnd] = useState(
-		add(new Date(), { days: 0, minutes: 0, seconds: 0 })
-	);
 	const [side, setSide] = useState('white');
 
 	useEffect(() => {
 		if (game && chessUser) {
-			setEnd(add(new Date(), parseGameTime(chessUser.uid, game) || {}));
 			setSide(game.black.uid === chessUser.uid ? 'black' : 'white');
 		}
 
 		// eslint-disable-next-line
 	}, []);
 
-	useEffect(() => {
-		if (game && chessUser) {
-			setEnd(add(new Date(), parseGameTime(chessUser.uid, game) || {}));
-			setTime(
-				durationToTime(
-					intervalToDuration({
-						start: new Date(),
-						end: add(new Date(), parseGameTime(chessUser.uid, game) || {}),
-					})
-				)
-			);
-		}
-	}, [game]);
-
-	useEffect(() => {
-		console.log('TURN: ', game?.turn);
-		console.log('UID: ', chessUser?.uid);
-		console.log('BLACK: ', game?.black.uid);
-		console.log('PLAYER SIDE: ', side);
-
-		let timeOut = setTimeout(() => {
-			if (!chessUser || !game || side !== game.turn || time === '00:00') return;
-
-			let newStart = new Date().getMilliseconds() + 1000;
-
-			const newTime = intervalToDuration({
-				start: new Date().setMilliseconds(newStart),
-				end,
-			});
-			setTime(durationToTime(newTime));
-
-			return chessUser.uid === game.black.uid
-				? setActiveGameTime(newTime, 'black')
-				: setActiveGameTime(newTime, 'white');
-		}, 1000);
-
-		return () => {
-			clearTimeout(timeOut);
-		};
-
-		// eslint-disable-next-line
-	}, [time, side]);
-
 	const handleTime = (time: CountdownTimeDelta) => {
 		if (chessUser && game) {
+			console.log('TURN ', game.turn);
+			console.log('PLAYER SIDE', side);
+
 			return chessUser.uid === game.black.uid
 				? setActiveGameTime(time, 'black')
 				: setActiveGameTime(time, 'white');
@@ -106,6 +61,8 @@ const PlayerChip = () => {
 						Date.now() + milliseconds(parseGameTime(chessUser.uid, game) || {})
 					}
 					getTime={handleTime}
+					isPaused={side !== game.turn}
+					hidden={game.gameMode === 'untimed'}
 				/>
 				<ChipRating>{chessUser?.rating}</ChipRating>
 				<ChipUserName>{chessUser?.displayName}</ChipUserName>

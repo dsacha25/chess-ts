@@ -21,28 +21,21 @@ const OpponentChip = () => {
 	const { setActiveGameTime } = useActions();
 	const enemy = useSelector((state) => selectEnemyInfo(state));
 	const game = useSelector((state) => selectActiveGame(state));
-	const [end, setEnd] = useState(
-		add(new Date(), { days: 0, minutes: 0, seconds: 0 })
-	);
+
 	const [side, setSide] = useState('white');
 
 	useEffect(() => {
 		if (game && enemy) {
-			setEnd(add(new Date(), parseGameTime(enemy.uid, game) || {}));
 			setSide(game.black.uid === enemy.uid ? 'black' : 'white');
 		}
 
 		// eslint-disable-next-line
 	}, []);
 
-	useEffect(() => {
-		if (game && enemy) {
-			setEnd(add(new Date(), parseGameTime(enemy.uid, game) || {}));
-		}
-	}, [game]);
-
 	const handleTime = (time: CountdownTimeDelta) => {
 		if (enemy && game) {
+			console.log('TURN ', game.turn);
+			console.log('OPP SIDE', side);
 			return enemy.uid === game.black.uid
 				? setActiveGameTime(time, 'black')
 				: setActiveGameTime(time, 'white');
@@ -62,6 +55,8 @@ const OpponentChip = () => {
 				<CountdownTimer
 					date={Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {})}
 					getTime={handleTime}
+					isPaused={side !== game.turn}
+					hidden={game.gameMode === 'untimed'}
 				/>
 			</OpponentChipInfo>
 		</OpponentChipContainer>
