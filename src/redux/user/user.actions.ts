@@ -26,6 +26,7 @@ import {
 	ClearUserErrorAction,
 	SetUserStatusStartAction,
 	SetUserStatusSuccessAction,
+	SetUserGamePresenceAction,
 } from './user.action-types';
 import UserTypes from './user.types';
 
@@ -151,6 +152,13 @@ export const setUserStatusSuccess = (
 ): SetUserStatusSuccessAction => ({
 	type: UserTypes.SET_USER_STATUS_SUCCESS,
 	payload: online,
+});
+
+export const setUserGamePresence = (
+	present: boolean
+): SetUserGamePresenceAction => ({
+	type: UserTypes.SET_USER_GAME_PRESENCE,
+	payload: present,
 });
 
 /// ==== ERRORS

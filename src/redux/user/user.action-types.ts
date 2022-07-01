@@ -103,6 +103,11 @@ export interface SetUserStatusSuccessAction {
 	payload: boolean;
 }
 
+export interface SetUserGamePresenceAction {
+	type: UserTypes.SET_USER_GAME_PRESENCE;
+	payload: boolean;
+}
+
 // ==== ERROR ACTION
 export interface UserErrorAction {
 	type: UserTypes.USER_ERROR;
@@ -133,6 +138,7 @@ type UserActions =
 	| RejectEnemyRequestAction
 	| SetUserStatusStartAction
 	| SetUserStatusSuccessAction
+	| SetUserGamePresenceAction
 	| UserErrorAction
 	| ClearUserErrorAction;
 

@@ -4,4 +4,5 @@ export interface Player {
 	uid: string;
 	displayName: string;
 	gameTime?: GameTime;
+	present: boolean;
 }

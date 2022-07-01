@@ -1,6 +1,6 @@
+import { formatDuration, isBefore, milliseconds } from 'date-fns';
 import { find } from 'lodash';
 import React, { useEffect } from 'react';
-
 import DesktopGameLayout from '../../components/games/game-play/layout/desktop-game-layout/desktop-game-layout.component';
 import MobileGameLayout from '../../components/games/game-play/layout/mobile-game-layout/mobile-game-layout.component';
 import GameToolbar from '../../components/toolbars/game-toolbar/game-toolbar.component';
@@ -13,11 +13,27 @@ import { selectUserUID } from '../../redux/user/user.selector';
 import { PlayContainer } from './play-page.styles';
 
 const PlayPage = () => {
-	const { setGameType, openActiveGameListener, fetchEnemyInfoStart } =
-		useActions();
+	const {
+		setGameType,
+		openActiveGameListener,
+		fetchEnemyInfoStart,
+		setUserGamePresence,
+	} = useActions();
 	const { width } = useWindowSize();
 	const activeGame = useSelector((state) => selectActiveGame(state));
 	const uid = useSelector((state) => selectUserUID(state));
+
+	useEffect(() => {
+		if (activeGame) {
+			setUserGamePresence(true);
+		}
+
+		return () => {
+			setUserGamePresence(false);
+		};
+
+		// eslint-disable-next-line
+	}, []);
 
 	useEffect(() => {
 		setGameType('online');

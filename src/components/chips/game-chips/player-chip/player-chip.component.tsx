@@ -1,4 +1,4 @@
-import { add, intervalToDuration } from 'date-fns';
+import { add, intervalToDuration, milliseconds } from 'date-fns';
 import React, { memo, useEffect, useState } from 'react';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
@@ -9,6 +9,7 @@ import {
 } from '../../../../redux/user/user.selector';
 import parseGameTime from '../../../../utils/helpers/parsers/parse-game-time/parse-game-time';
 import durationToTime from '../../../../utils/helpers/strings/duration-to-time/duration-to-time';
+import CountdownTimer from '../../../common/countdown-timer/countdown-timer.component';
 import { OnlineStatusIndicator } from '../../../common/online-status-indicator/online-status-indicator.styles';
 import {
 	PlayerChipAvatar,
@@ -18,6 +19,7 @@ import {
 	ChipRating,
 	GameTimeLeft,
 } from './player-chip.styles';
+import { CountdownTimeDelta } from 'react-countdown';
 
 const PlayerChip = () => {
 	const { setActiveGameTime } = useActions();
@@ -35,7 +37,14 @@ const PlayerChip = () => {
 		if (game && chessUser) {
 			setEnd(add(new Date(), parseGameTime(chessUser.uid, game) || {}));
 			setSide(game.black.uid === chessUser.uid ? 'black' : 'white');
+		}
 
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		if (game && chessUser) {
+			setEnd(add(new Date(), parseGameTime(chessUser.uid, game) || {}));
 			setTime(
 				durationToTime(
 					intervalToDuration({
@@ -45,9 +54,7 @@ const PlayerChip = () => {
 				)
 			);
 		}
-
-		// eslint-disable-next-line
-	}, []);
+	}, [game]);
 
 	useEffect(() => {
 		console.log('TURN: ', game?.turn);
@@ -76,7 +83,17 @@ const PlayerChip = () => {
 		};
 
 		// eslint-disable-next-line
-	}, [time]);
+	}, [time, side]);
+
+	const handleTime = (time: CountdownTimeDelta) => {
+		if (chessUser && game) {
+			return chessUser.uid === game.black.uid
+				? setActiveGameTime(time, 'black')
+				: setActiveGameTime(time, 'white');
+		}
+	};
+
+	if (!chessUser || !game) return null;
 
 	return (
 		<PlayerChipContainer>
@@ -84,7 +101,12 @@ const PlayerChip = () => {
 				<OnlineStatusIndicator online={online} />
 			</PlayerChipAvatar>
 			<PlayerChipInfo>
-				<GameTimeLeft>{time}</GameTimeLeft>
+				<CountdownTimer
+					date={
+						Date.now() + milliseconds(parseGameTime(chessUser.uid, game) || {})
+					}
+					getTime={handleTime}
+				/>
 				<ChipRating>{chessUser?.rating}</ChipRating>
 				<ChipUserName>{chessUser?.displayName}</ChipUserName>
 			</PlayerChipInfo>

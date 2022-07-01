@@ -27,9 +27,6 @@ import queryBoardSize from '../../../../utils/helpers/screen/query-board-size';
 const game = new ChessGame();
 
 const ChessboardDisplay = () => {
-	//// TODO: REFACTOR INTO SOLO - ONLINE - AI CHESSBOARDS ////
-	//
-
 	const { width } = useWindowSize();
 
 	const gameType = useSelector((state) => selectGameType(state));
