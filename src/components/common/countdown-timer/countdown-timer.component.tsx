@@ -6,7 +6,6 @@ import Countdown, {
 	zeroPad,
 } from 'react-countdown';
 import { CountdownTimerProps } from './types';
-import { isEqual } from 'lodash';
 
 const renderer: CountdownRendererFn = (props) => {
 	if (props.completed) {
@@ -14,8 +13,9 @@ const renderer: CountdownRendererFn = (props) => {
 	} else {
 		return (
 			<GameTimeLeft>
-				{props.hours && `${props.hours}:`}
-				{props.minutes}:{zeroPad(props.seconds)}
+				{props.hours > 0 && `${props.hours}:`}
+				{props.hours ? zeroPad(props.minutes) : props.minutes}:
+				{zeroPad(props.seconds)}
 			</GameTimeLeft>
 		);
 	}
@@ -57,9 +57,10 @@ const propsAreEqual = (
 	nextProps: CountdownTimerProps
 ) => {
 	return (
+		prevProps.date === nextProps.date &&
 		prevProps.isPaused === nextProps.isPaused &&
 		prevProps.hidden === nextProps.hidden
 	);
 };
 
-export default memo(CountdownTimer, propsAreEqual);
+export default memo(CountdownTimer);

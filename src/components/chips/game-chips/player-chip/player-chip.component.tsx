@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { milliseconds } from 'date-fns';
+import { milliseconds, toDate } from 'date-fns';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectActiveGame } from '../../../../redux/game/game.selector';
@@ -21,6 +21,9 @@ import {
 	PlayerRating,
 } from '../game-chip-styles/game-chip-styles.styles';
 import { isEqual } from 'lodash';
+import parseCurrentPlayer from '../../../../utils/helpers/parsers/parse-current-player/parse-current-player';
+import parseTimeUnit from '../../../../utils/helpers/parsers/parse-time-unit/parse-time-unit';
+import isPresenceRequired from '../../../../utils/helpers/is-presence-required/is-presence-required';
 
 const Rating = memo(PlayerRating);
 const Name = memo(PlayerName);
@@ -35,11 +38,45 @@ const PlayerChip = () => {
 	const online = useSelector((state) => selectIsUserOnline(state));
 
 	const [side, setSide] = useState('white');
+	const [paused, setPaused] = useState(false);
+	const [time, setTime] = useState(Date.now());
 
-	const date = useMemo(
-		() => Date.now() + milliseconds(parseGameTime(uid, game) || {}),
-		[uid, game]
-	);
+	useEffect(() => {
+		if (game) {
+			const { previousMoveTime } = parseCurrentPlayer(uid, game);
+
+			if (previousMoveTime) {
+				setTime(previousMoveTime.toDate().getTime() + parseTimeUnit(game));
+
+				console.log('PREVIOUS MOVE:', previousMoveTime.toDate().getTime());
+			} else if (game.createdAt && !previousMoveTime) {
+				setTime(
+					toDate(game.createdAt.seconds * 1000).getTime() + parseTimeUnit(game)
+				);
+			}
+		}
+	}, [game]);
+
+	useEffect(() => {
+		if (!game) return;
+		if (side !== game.turn) {
+			setPaused(true);
+		} else {
+			setPaused(false);
+		}
+	}, [side, game]);
+
+	useEffect(() => {
+		if (!game) return;
+
+		if (!isPresenceRequired(game.gameMode)) return;
+
+		if (!game.blackPresent || !game.whitePresent) {
+			setPaused(true);
+		} else {
+			setPaused(false);
+		}
+	}, [game]);
 
 	useEffect(() => {
 		if (game && chessUser) {
@@ -69,9 +106,9 @@ const PlayerChip = () => {
 			<PlayerInfo>
 				{game && (
 					<CountdownTimer
-						date={date}
+						date={time}
 						getTime={handleTime}
-						isPaused={side !== game.turn}
+						isPaused={paused}
 						hidden={game.gameMode === 'untimed'}
 					/>
 				)}

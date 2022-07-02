@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useState } from 'react';
-import { milliseconds } from 'date-fns';
+import React, { memo, useEffect, useMemo, useState } from 'react';
+import { milliseconds, toDate } from 'date-fns';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectEnemyInfo } from '../../../../redux/enemies/enemies.selector';
@@ -17,6 +17,9 @@ import {
 	PlayerName,
 	PlayerRating,
 } from '../game-chip-styles/game-chip-styles.styles';
+import parseCurrentPlayer from '../../../../utils/helpers/parsers/parse-current-player/parse-current-player';
+import parseTimeUnit from '../../../../utils/helpers/parsers/parse-time-unit/parse-time-unit';
+import isPresenceRequired from '../../../../utils/helpers/is-presence-required/is-presence-required';
 
 const Name = memo(PlayerName);
 const Rating = memo(PlayerRating);
@@ -29,6 +32,39 @@ const OpponentChip = () => {
 
 	const [side, setSide] = useState('white');
 	const [paused, setPaused] = useState(false);
+	const [time, setTime] = useState(Date.now());
+
+	useEffect(() => {
+		if (game && enemy && side === game.turn) {
+			const { previousMoveTime } = parseCurrentPlayer(enemy.uid, game);
+
+			if (previousMoveTime) {
+				setTime(previousMoveTime.toDate().getTime() + parseTimeUnit(game));
+				console.log('PREVIOUS MOVE:', previousMoveTime.toDate().getTime());
+			} else if (game.createdAt && !previousMoveTime) {
+				console.log(
+					'OPP CREATED AT:',
+					toDate(game.createdAt.seconds).getTime()
+				);
+				console.log(
+					'END TIME:',
+					toDate(game.createdAt.seconds * 1000).getTime() +
+						milliseconds(parseGameTime(enemy.uid, game) || {})
+				);
+				console.log('DATE NOW:', Date.now());
+
+				setTime(
+					toDate(game.createdAt.seconds * 1000).getTime() + parseTimeUnit(game)
+				);
+			}
+		}
+	}, [game, enemy, side]);
+
+	// useEffect(() => {
+	// 	if (game && enemy && side !== game.turn) {
+	// 		setTime(Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {}));
+	// 	}
+	// }, [game, enemy, side]);
 
 	useEffect(() => {
 		if (!game) return;
@@ -41,6 +77,8 @@ const OpponentChip = () => {
 
 	useEffect(() => {
 		if (!game) return;
+
+		if (!isPresenceRequired(game.gameMode)) return;
 
 		if (!game.blackPresent || !game.whitePresent) {
 			setPaused(true);
@@ -77,7 +115,7 @@ const OpponentChip = () => {
 				<Name>{enemy.displayName}</Name>
 				<Rating>{enemy.rating}</Rating>
 				<CountdownTimer
-					date={Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {})}
+					date={time}
 					getTime={handleTime}
 					isPaused={paused}
 					hidden={game.gameMode === 'untimed'}
