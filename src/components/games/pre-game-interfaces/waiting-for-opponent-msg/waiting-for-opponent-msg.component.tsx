@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Paths from '../../../../utils/types/paths/paths';
 import CustomButton from '../../../common/buttons/custom-button/custom-button.component';
@@ -32,4 +32,4 @@ const WaitingForOpponentMsg: FC<WaitingForOpponentMsgProps> = ({
 	) : null;
 };
 
-export default WaitingForOpponentMsg;
+export default memo(WaitingForOpponentMsg);

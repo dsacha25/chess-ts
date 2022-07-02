@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { memo, MouseEvent, useEffect, useRef, useState } from 'react';
 import Title from '../../../../common/title/title.styles';
 import {
 	AuxiliaryPanelContainer,
@@ -11,7 +11,6 @@ import { useSelector } from '../../../../../hooks/use-selector/use-typed-selecto
 import {
 	selectChatUnread,
 	selectGameLoadingState,
-	selectGameType,
 	selectIsGameOver,
 	selectPendingMove,
 	selectTurns,
@@ -35,7 +34,6 @@ const AuxiliaryPanel = () => {
 	const loading = useSelector((state) => selectGameLoadingState(state));
 	const chatUnread = useSelector((state) => selectChatUnread(state));
 	const isGameOver = useSelector((state) => selectIsGameOver(state));
-	const gameType = useSelector((state) => selectGameType(state));
 
 	const [action, setAction] = useState<AuxActions>(AuxActions.MOVE);
 	const [open, setOpen] = useState(false);
@@ -139,30 +137,28 @@ const AuxiliaryPanel = () => {
 				{!index ? <GameHistory history={history} /> : <GameChat />}
 			</PanelInfoContainer>
 
-			{gameType === 'online' && (
-				<PanelControlsContainer>
-					<PanelButton
-						id="resign"
-						color="secondary"
-						onClick={handleOpenActionConfirmation}
-						disabled={action === AuxActions.RESIGN || isGameOver}
-					>
-						Resign
-					</PanelButton>
-					<PanelButton
-						id="draw"
-						color="main"
-						onClick={handleOpenActionConfirmation}
-						disabled={action === AuxActions.DRAW || isGameOver}
-					>
-						Draw
-					</PanelButton>
-					<PanelButton color="light" onClick={handlePanelToggle} inverted>
-						{!index && chatUnread && <NotifButtonFlag unread={chatUnread} />}
-						{index ? <FaChessBishop size="55%" /> : <BiMessage size="60%" />}
-					</PanelButton>
-				</PanelControlsContainer>
-			)}
+			<PanelControlsContainer>
+				<PanelButton
+					id="resign"
+					color="secondary"
+					onClick={handleOpenActionConfirmation}
+					disabled={action === AuxActions.RESIGN || isGameOver}
+				>
+					Resign
+				</PanelButton>
+				<PanelButton
+					id="draw"
+					color="main"
+					onClick={handleOpenActionConfirmation}
+					disabled={action === AuxActions.DRAW || isGameOver}
+				>
+					Draw
+				</PanelButton>
+				<PanelButton color="light" onClick={handlePanelToggle} inverted>
+					{!index && chatUnread && <NotifButtonFlag unread={chatUnread} />}
+					{index ? <FaChessBishop size="55%" /> : <BiMessage size="60%" />}
+				</PanelButton>
+			</PanelControlsContainer>
 
 			{open && (
 				<ConfirmActionPrompt
@@ -175,4 +171,4 @@ const AuxiliaryPanel = () => {
 	);
 };
 
-export default AuxiliaryPanel;
+export default memo(AuxiliaryPanel);

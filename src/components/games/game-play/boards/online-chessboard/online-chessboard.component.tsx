@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import { Square } from 'chess.js';
 import OpponentChip from '../../../../chips/game-chips/opponent-chip/opponent-chip.component';
@@ -77,4 +77,4 @@ const OnlineChessboard = () => {
 	);
 };
 
-export default OnlineChessboard;
+export default memo(OnlineChessboard);

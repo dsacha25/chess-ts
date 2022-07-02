@@ -144,7 +144,6 @@ export function* setActiveGameAsync({
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
-
 	yield put(openActiveGameListener());
 }
 

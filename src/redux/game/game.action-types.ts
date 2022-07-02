@@ -125,6 +125,11 @@ export interface SetActiveGameTimeAction {
 	payload: { gameTime: GameTime; side: Orientation };
 }
 
+export interface FetchGameByIdAction {
+	type: GameTypes.FETCH_GAME_BY_ID;
+	payload: string;
+}
+
 // ==== INACTIVE GAMES
 export interface FetchInactiveGamesStartAction {
 	type: GameTypes.FETCH_INACTIVE_GAMES_START;
@@ -275,6 +280,7 @@ type GameActions =
 	| FetchActiveGamesSuccessAction
 	| FetchInactiveGamesStartAction
 	| FetchInactiveGamesSuccessAction
+	| FetchGameByIdAction
 	| SetActiveGameAction
 	| SetActiveGameAiAction
 	| SetInactiveGameByIDStartAction

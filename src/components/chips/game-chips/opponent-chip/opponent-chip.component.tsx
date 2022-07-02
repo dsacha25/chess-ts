@@ -18,6 +18,10 @@ import {
 	PlayerRating,
 } from '../game-chip-styles/game-chip-styles.styles';
 
+const Name = memo(PlayerName);
+const Rating = memo(PlayerRating);
+const OnlineStatus = memo(OnlineStatusIndicator);
+
 const OpponentChip = () => {
 	const { setActiveGameTime } = useActions();
 	const enemy = useSelector((state) => selectEnemyInfo(state));
@@ -55,8 +59,8 @@ const OpponentChip = () => {
 
 	const handleTime = (time: CountdownTimeDelta) => {
 		if (enemy && game) {
-			console.log('TURN ', game.turn);
-			console.log('OPP SIDE', side);
+			// console.log('TURN ', game.turn);
+			// console.log('OPP SIDE', side);
 			return enemy.uid === game.black.uid
 				? setActiveGameTime(time, 'black')
 				: setActiveGameTime(time, 'white');
@@ -67,11 +71,11 @@ const OpponentChip = () => {
 	return (
 		<ChipContainer opponent>
 			<ChipAvatar opponent url={enemy.photoURL}>
-				<OnlineStatusIndicator online={enemy.online} left />
+				<OnlineStatus online={enemy.online} left />
 			</ChipAvatar>
 			<PlayerInfo opponent>
-				<PlayerName>{enemy.displayName}</PlayerName>
-				<PlayerRating>{enemy.rating}</PlayerRating>
+				<Name>{enemy.displayName}</Name>
+				<Rating>{enemy.rating}</Rating>
 				<CountdownTimer
 					date={Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {})}
 					getTime={handleTime}

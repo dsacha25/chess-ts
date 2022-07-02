@@ -2,6 +2,7 @@ import React, {
 	ChangeEvent,
 	FormEvent,
 	KeyboardEvent,
+	memo,
 	useEffect,
 	useRef,
 	useState,
@@ -106,4 +107,4 @@ const GameChat = () => {
 	);
 };
 
-export default GameChat;
+export default memo(GameChat);

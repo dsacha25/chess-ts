@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectProfilePicture } from '../../../redux/user/user.selector';
 import { ChipAvatar } from '../../chips/toolbar-chip/toolbar-chip.styles';
@@ -25,4 +25,4 @@ const GameToolbar = () => {
 	);
 };
 
-export default GameToolbar;
+export default memo(GameToolbar);

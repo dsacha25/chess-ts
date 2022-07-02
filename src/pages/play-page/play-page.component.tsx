@@ -7,6 +7,7 @@ import WaitingForOpponentMsg from '../../components/games/pre-game-interfaces/wa
 import GameToolbar from '../../components/toolbars/game-toolbar/game-toolbar.component';
 import MobileGameToolbar from '../../components/toolbars/mobile-game-toolbar/mobile-game-toolbar.component';
 import useActions from '../../hooks/use-actions/use-actions.hook';
+import useQuery from '../../hooks/use-query/use-query.hook';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
 import useWindowSize from '../../hooks/use-window-size/use-window-size.hook';
 import { selectActiveGame } from '../../redux/game/game.selector';
@@ -19,11 +20,21 @@ const PlayPage = () => {
 		openActiveGameListener,
 		fetchEnemyInfoStart,
 		setUserGamePresence,
+		fetchGameById,
 	} = useActions();
+	const gameUID = useQuery('game');
 	const { width } = useWindowSize();
 	const activeGame = useSelector((state) => selectActiveGame(state));
 	const uid = useSelector((state) => selectUserUID(state));
 	const [playersPresent, setPlayersPresent] = useState(false);
+
+	useEffect(() => {
+		if (gameUID) {
+			fetchGameById(gameUID);
+		}
+
+		// eslint-disable-next-line
+	}, [gameUID]);
 
 	useEffect(() => {
 		if (activeGame) {
@@ -38,9 +49,20 @@ const PlayPage = () => {
 	}, []);
 
 	useEffect(() => {
+		if (!activeGame) return;
 		if (
-			(activeGame && activeGame.blackPresent !== playersPresent) ||
-			(activeGame && activeGame?.whitePresent !== playersPresent)
+			activeGame.gameMode === 'untimed' ||
+			activeGame.gameMode === 'one_day' ||
+			activeGame.gameMode === 'three_day'
+		) {
+			console.log('GAME MODE: ', activeGame.gameMode);
+
+			return setPlayersPresent(true);
+		}
+
+		if (
+			activeGame.blackPresent !== playersPresent ||
+			activeGame?.whitePresent !== playersPresent
 		) {
 			console.log('PRESENCE BLACK: ', activeGame.blackPresent);
 			console.log('PRESENCE WHITE: ', activeGame.whitePresent);

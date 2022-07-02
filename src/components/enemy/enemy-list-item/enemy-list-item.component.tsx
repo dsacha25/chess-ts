@@ -17,14 +17,22 @@ import {
 import { find } from 'lodash';
 import Spinner from '../../common/spinner/spinner.component';
 import GameModeSelector from '../../games/pre-game-interfaces/game-mode-selector/game-mode-selector.component';
+import { useNavigate } from 'react-router-dom';
+import Paths from '../../../utils/types/paths/paths';
 
 const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
+	const navigate = useNavigate();
 	const [open, setOpen] = useState(false);
 	const isLoading = useSelector((state) => selectGameLoadingState(state));
 	const receiver = useSelector((state) => selectGameInviteReceiver(state));
 	const pendingChallenges = useSelector((state) =>
 		selectPendingChallenges(state)
 	);
+
+	const handleClose = () => {
+		setOpen(false);
+		navigate(`/${Paths.DASHBOARD}`);
+	};
 
 	if (!enemy) return null;
 
@@ -46,10 +54,7 @@ const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
 				)}
 			</ChallengeButton>
 			{open && (
-				<GameModeSelector
-					enemyUID={enemy.uid}
-					handleClose={() => setOpen(false)}
-				/>
+				<GameModeSelector enemyUID={enemy.uid} handleClose={handleClose} />
 			)}
 		</EnemyContainer>
 	);

@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useRef } from 'react';
+import { isEqual } from 'lodash';
+import React, { FC, memo, useEffect, useRef } from 'react';
 import HistoryController from '../history-controller/history-controller.component';
 import {
 	BlackMove,
@@ -11,17 +12,17 @@ import {
 import { GameHistoryProps } from './types';
 
 const GameHistory: FC<GameHistoryProps> = ({ history }) => {
-	const movesRef = useRef<HTMLDivElement>(null);
+	// const movesRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => {
-		if (movesRef.current) {
-			movesRef.current.scrollTop = movesRef.current.scrollHeight;
-		}
-	}, [movesRef]);
+	// useEffect(() => {
+	// 	if (movesRef.current) {
+	// 		movesRef.current.scrollTop = movesRef.current.scrollHeight;
+	// 	}
+	// }, [movesRef]);
 
 	return (
 		<GameHistoryContainer>
-			<HistoryMoveList ref={movesRef}>
+			<HistoryMoveList>
 				{history.map((move, i) => (
 					<HistoryMove key={i}>
 						<MoveNumber>{i + 1}:</MoveNumber>
@@ -35,4 +36,11 @@ const GameHistory: FC<GameHistoryProps> = ({ history }) => {
 	);
 };
 
-export default GameHistory;
+const historyPropsAreEqual = (
+	prevProps: GameHistoryProps,
+	nextProps: GameHistoryProps
+) => {
+	return prevProps.history.length === nextProps.history.length;
+};
+
+export default memo(GameHistory, historyPropsAreEqual);

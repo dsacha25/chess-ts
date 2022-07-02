@@ -1,9 +1,7 @@
 import { ClickAwayListener } from '@material-ui/core';
 import React, { FC, MouseEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import GameModeTypes from '../../../../utils/types/game-mode-type/game-mode-type';
-import Paths from '../../../../utils/types/paths/paths';
 import Title from '../../../common/title/title.styles';
 import {
 	ChallengeButton,
@@ -15,16 +13,14 @@ const GameModeSelector: FC<GameModeSelectorProps> = ({
 	enemyUID,
 	handleClose,
 }) => {
-	const navigate = useNavigate();
 	const { sendGameChallenge } = useActions();
 
 	const handleChallengeRequest = (e: MouseEvent<HTMLButtonElement>) => {
 		const gameMode = e.currentTarget.value as GameModeTypes;
 
 		sendGameChallenge(enemyUID, gameMode);
-		handleClose();
 
-		navigate(`/${Paths.DASHBOARD}`);
+		handleClose();
 	};
 
 	return (

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import {
 	ConfirmActionContainer,
 	ConfirmActionButton,
@@ -26,4 +26,4 @@ const ConfirmActionPrompt: FC<ConfirmActionPromptProps> = ({
 	);
 };
 
-export default ConfirmActionPrompt;
+export default memo(ConfirmActionPrompt);

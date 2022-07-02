@@ -1,4 +1,4 @@
-import React, { FC, createRef, useEffect } from 'react';
+import React, { FC, createRef, useEffect, memo, useMemo } from 'react';
 import { GameTimeLeft } from './countdown-timer.styles';
 import Countdown, {
 	CountdownRendererFn,
@@ -6,6 +6,7 @@ import Countdown, {
 	zeroPad,
 } from 'react-countdown';
 import { CountdownTimerProps } from './types';
+import { isEqual } from 'lodash';
 
 const renderer: CountdownRendererFn = (props) => {
 	if (props.completed) {
@@ -13,6 +14,7 @@ const renderer: CountdownRendererFn = (props) => {
 	} else {
 		return (
 			<GameTimeLeft>
+				{props.hours && `${props.hours}:`}
 				{props.minutes}:{zeroPad(props.seconds)}
 			</GameTimeLeft>
 		);
@@ -27,6 +29,7 @@ const CountdownTimer: FC<CountdownTimerProps> = ({
 }) => {
 	const ref = createRef<Countdown>();
 	const handleTick = () => {
+		if (isPaused) return;
 		const time = calcTimeDelta(date);
 
 		getTime(time);
@@ -49,4 +52,14 @@ const CountdownTimer: FC<CountdownTimerProps> = ({
 	);
 };
 
-export default CountdownTimer;
+const propsAreEqual = (
+	prevProps: CountdownTimerProps,
+	nextProps: CountdownTimerProps
+) => {
+	return (
+		prevProps.isPaused === nextProps.isPaused &&
+		prevProps.hidden === nextProps.hidden
+	);
+};
+
+export default memo(CountdownTimer, propsAreEqual);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import useActions from '../../../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../../../hooks/use-selector/use-typed-selector.hook';
 import {
@@ -57,4 +57,4 @@ const HistoryController = () => {
 	);
 };
 
-export default HistoryController;
+export default memo(HistoryController);
