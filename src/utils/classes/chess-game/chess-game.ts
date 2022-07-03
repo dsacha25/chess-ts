@@ -21,6 +21,7 @@ import {
 } from 'js-chess-engine';
 import { keys, values } from 'lodash';
 import { PromotionPieces } from '../../types/promotion-pieces/promotion-pieces';
+import { SquareStyles } from '../../types/square-styles/square-styles';
 const Chess = require('chess.js');
 
 const DEFAULT_POSITION =
@@ -36,7 +37,7 @@ interface ServerMove {
 class ChessGame {
 	public game: Game = new Game();
 	public chess: ChessInstance = new Chess();
-	public squareStyles: { [square in Square]?: CSSProperties } = {};
+	public squareStyles: SquareStyles = {};
 	public boardConfig: BoardConfig = DEFAULT_POSITION;
 	public fen: string = DEFAULT_POSITION;
 
@@ -181,9 +182,7 @@ class ChessGame {
 	squareStyling(
 		fen: BoardConfig,
 		pieceSquare: Square | undefined
-	): {
-		[key: string]: { [key: string]: string };
-	} {
+	): SquareStyles {
 		const history = this.getHistory(fen);
 
 		const sourceSquare = history.length && history[history.length - 1].from;

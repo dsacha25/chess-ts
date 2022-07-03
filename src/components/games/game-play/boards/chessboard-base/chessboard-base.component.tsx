@@ -14,6 +14,7 @@ import {
 import { game } from '../../../../../utils/classes/chess-game/chess-game';
 import isPromoting from '../../../../../utils/helpers/is-promoting/is-promoting';
 import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
+import { SquareStyles } from '../../../../../utils/types/square-styles/square-styles';
 import { GameOverDisplay } from '../../game-over-display/game-over-display.component';
 import PromotionSelector from '../../promotion-selector/promotion-selector.component';
 import { ChessboardBaseProps } from './types';
@@ -39,11 +40,8 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 		from: Square;
 		to: Square;
 	} | null>(null);
-	const [squareStyles, setSquareStyles] = useState<{
-		[square in Square]?: CSSProperties;
-	}>({});
-	// SQUARE THAT WAS SELECTED - USED FOR STYLING
-	const [startSquare, setStartSquare] = useState<Square>();
+	const [squareStyles, setSquareStyles] = useState<SquareStyles>({});
+	const [startSquare, setStartSquare] = useState<Square>(); // SQUARE THAT WAS SELECTED - USED FOR STYLING
 	const [promoting, setPromoting] = useState(false);
 	const [storedPiece, setStoredPiece] = useState<Piece>('wP');
 	const [gameOver, setGameOver] = useState(false);
@@ -103,9 +101,8 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 
 	// ==== GAME OVER STATE
 	useEffect(() => {
-		setGameOver(game.isGameOver(fen));
-
 		if (game.isGameOver(fen)) {
+			setGameOver(game.isGameOver(fen));
 			console.log('WINNER: ', game.getWinner(fen));
 
 			// UPDATE FIREBASE
