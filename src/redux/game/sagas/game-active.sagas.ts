@@ -9,12 +9,10 @@ import {
 	takeEvery,
 	takeLeading,
 } from 'redux-saga/effects';
-import ChessGame from '../../../utils/classes/chess-game/chess-game';
 import { db, functions } from '../../../utils/classes/firestore/firestore-app';
 import { listener } from '../../../utils/classes/sagas/saga-listener';
 import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
 import { getPlayerOrientation } from '../../../utils/helpers/get-player-orientation/get-player-orientation';
-import getOrientation from '../../../utils/helpers/orientation/get-orientation';
 import parseGameTime from '../../../utils/helpers/parsers/parse-game-time/parse-game-time';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../../utils/types/chess-move/chess-move';

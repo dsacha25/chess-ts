@@ -43,19 +43,35 @@ const PlayerChip = () => {
 
 	useEffect(() => {
 		if (game) {
-			const { previousMoveTime } = parseCurrentPlayer(uid, game);
+			const { previousMoveTime } = parseCurrentPlayer(uid, game, true);
+
+			if (!isPresenceRequired(game.gameMode)) return;
+			console.log('PRESENCE?: ', isPresenceRequired(game.gameMode));
 
 			if (previousMoveTime) {
+				console.log('SET TIME FROM PREVIOUS MOVE');
 				setTime(previousMoveTime.toDate().getTime() + parseTimeUnit(game));
 
 				console.log('PREVIOUS MOVE:', previousMoveTime.toDate().getTime());
 			} else if (game.createdAt && !previousMoveTime) {
+				console.log('SET TIME FROM CREATED AT');
 				setTime(
 					toDate(game.createdAt.seconds * 1000).getTime() + parseTimeUnit(game)
 				);
 			}
 		}
 	}, [game]);
+
+	useEffect(() => {
+		if (game && side !== game.turn && !isPresenceRequired(game.gameMode)) {
+			console.log(
+				'SET TIME FROM USER: ',
+				Date.now() + milliseconds(parseGameTime(uid, game) || {})
+			);
+
+			setTime(Date.now() + milliseconds(parseGameTime(uid, game) || {}));
+		}
+	}, [game, side]);
 
 	useEffect(() => {
 		if (!game) return;
@@ -87,9 +103,12 @@ const PlayerChip = () => {
 	}, []);
 
 	const handleTime = (time: CountdownTimeDelta) => {
+		if (time.completed) {
+			// AUTO RESIGN GAME
+		}
 		if (chessUser && game) {
-			console.log('TURN ', game.turn);
-			console.log('PLAYER SIDE', side);
+			// console.log('TURN ', game.turn);
+			// console.log('PLAYER SIDE', side);
 			return chessUser.uid === game.black.uid
 				? setActiveGameTime(time, 'black')
 				: setActiveGameTime(time, 'white');
@@ -97,6 +116,8 @@ const PlayerChip = () => {
 	};
 
 	if (!chessUser) return null;
+
+	console.log('USER TIME: ', time);
 
 	return (
 		<ChipContainer>

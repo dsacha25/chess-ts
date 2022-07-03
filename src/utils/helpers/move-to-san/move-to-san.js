@@ -1,7 +1,4 @@
-import ChessGame from "../../classes/chess-game/chess-game"
-
-const game = new ChessGame();
-
+import {game} from "../../classes/chess-game/chess-game"
 
 var PAWN = 'p'
 

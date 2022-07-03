@@ -11,13 +11,12 @@ import {
 	selectGameType,
 	selectPromotionPieceType,
 } from '../../../../../redux/game/game.selector';
-import ChessGame from '../../../../../utils/classes/chess-game/chess-game';
+import { game } from '../../../../../utils/classes/chess-game/chess-game';
 import isPromoting from '../../../../../utils/helpers/is-promoting/is-promoting';
 import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
 import { GameOverDisplay } from '../../game-over-display/game-over-display.component';
 import PromotionSelector from '../../promotion-selector/promotion-selector.component';
 import { ChessboardBaseProps } from './types';
-const game = new ChessGame();
 
 const ChessboardBase: FC<ChessboardBaseProps> = ({
 	makeMove,

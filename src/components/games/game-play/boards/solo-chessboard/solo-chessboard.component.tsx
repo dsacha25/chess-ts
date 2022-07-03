@@ -7,15 +7,13 @@ import {
 } from '../board-styles/board-styles.styles';
 import { Square } from 'chess.js';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
-import ChessGame from '../../../../../utils/classes/chess-game/chess-game';
+import { game } from '../../../../../utils/classes/chess-game/chess-game';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectFen } from '../../../../../redux/game/game.selector';
 import ChessboardBase from '../../boards/chessboard-base/chessboard-base.component';
 import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
 import PlayerChip from '../../../../chips/game-chips/player-chip/player-chip.component';
 import OpponentChip from '../../../../chips/game-chips/opponent-chip/opponent-chip.component';
-
-const game = new ChessGame();
 
 const SoloChessboard = () => {
 	const { width } = useWindowSize();
@@ -28,6 +26,7 @@ const SoloChessboard = () => {
 
 	const makeMove = (from: Square, to: Square) => {
 		if (from === to) return;
+
 		let chessMove = game.movePieceServer(fen, from, to);
 
 		if (chessMove === null) return;

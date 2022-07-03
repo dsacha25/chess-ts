@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { Square } from 'chess.js';
 import OpponentChip from '../../../../chips/game-chips/opponent-chip/opponent-chip.component';
 import PlayerChip from '../../../../chips/game-chips/player-chip/player-chip.component';
-import ChessGame from '../../../../../utils/classes/chess-game/chess-game';
+import { game } from '../../../../../utils/classes/chess-game/chess-game';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import {
@@ -20,7 +20,6 @@ import {
 	OpponentContainer,
 	PlayerContainer,
 } from '../board-styles/board-styles.styles';
-const game = new ChessGame();
 
 const OnlineChessboard = () => {
 	const { width } = useWindowSize();
@@ -41,6 +40,7 @@ const OnlineChessboard = () => {
 	const makeMove = (from: Square, to: Square) => {
 		console.log('FROM - TO: ', from, to);
 		if (from === to) return;
+
 		let chessMove = game.movePieceServer(fen, from, to);
 
 		if (chessMove === null) return;

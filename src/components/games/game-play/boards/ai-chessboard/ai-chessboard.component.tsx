@@ -8,7 +8,7 @@ import {
 	selectAiLevel,
 } from '../../../../../redux/game/game.selector';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
-import ChessGame from '../../../../../utils/classes/chess-game/chess-game';
+import { game } from '../../../../../utils/classes/chess-game/chess-game';
 import Orientation from '../../../../../utils/types/orientation/orientation';
 import useWindowSize from '../../../../../hooks/use-window-size/use-window-size.hook';
 import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
@@ -21,7 +21,6 @@ import {
 import ChessboardBase from '../chessboard-base/chessboard-base.component';
 import AiChip from '../../../../chips/game-chips/ai-chip/ai-chip.component';
 import PlayerChip from '../../../../chips/game-chips/player-chip/player-chip.component';
-const game = new ChessGame();
 
 const AiChessboard = () => {
 	const { width } = useWindowSize();

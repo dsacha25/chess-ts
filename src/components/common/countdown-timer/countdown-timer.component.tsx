@@ -8,12 +8,20 @@ import Countdown, {
 import { CountdownTimerProps } from './types';
 
 const renderer: CountdownRendererFn = (props) => {
+	console.log('TIME PROPS: ', props);
+
 	if (props.completed) {
 		return <GameTimeLeft>00:00</GameTimeLeft>;
+	} else if (props.days) {
+		return (
+			<GameTimeLeft>
+				{props.days} Day{props.days > 1 && 's'}
+			</GameTimeLeft>
+		);
 	} else {
 		return (
 			<GameTimeLeft>
-				{props.hours > 0 && `${props.hours}:`}
+				{props.hours && `${props.hours}:`}
 				{props.hours ? zeroPad(props.minutes) : props.minutes}:
 				{zeroPad(props.seconds)}
 			</GameTimeLeft>
@@ -43,7 +51,7 @@ const CountdownTimer: FC<CountdownTimerProps> = ({
 		} else {
 			ref.current.api?.start();
 		}
-	});
+	}, [isPaused]);
 
 	if (hidden) return null;
 

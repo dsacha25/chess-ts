@@ -36,22 +36,16 @@ const OpponentChip = () => {
 
 	useEffect(() => {
 		if (game && enemy && side === game.turn) {
-			const { previousMoveTime } = parseCurrentPlayer(enemy.uid, game);
+			const { previousMoveTime } = parseCurrentPlayer(enemy.uid, game, true);
+
+			if (!isPresenceRequired(game.gameMode)) return;
 
 			if (previousMoveTime) {
+				console.log('SET OPPONENT TIME FROM PREVIOUS MOVE');
 				setTime(previousMoveTime.toDate().getTime() + parseTimeUnit(game));
 				console.log('PREVIOUS MOVE:', previousMoveTime.toDate().getTime());
 			} else if (game.createdAt && !previousMoveTime) {
-				console.log(
-					'OPP CREATED AT:',
-					toDate(game.createdAt.seconds).getTime()
-				);
-				console.log(
-					'END TIME:',
-					toDate(game.createdAt.seconds * 1000).getTime() +
-						milliseconds(parseGameTime(enemy.uid, game) || {})
-				);
-				console.log('DATE NOW:', Date.now());
+				console.log('SET OPPONENT TIME FROM CREATED AT');
 
 				setTime(
 					toDate(game.createdAt.seconds * 1000).getTime() + parseTimeUnit(game)
@@ -60,11 +54,17 @@ const OpponentChip = () => {
 		}
 	}, [game, enemy, side]);
 
-	// useEffect(() => {
-	// 	if (game && enemy && side !== game.turn) {
-	// 		setTime(Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {}));
-	// 	}
-	// }, [game, enemy, side]);
+	useEffect(() => {
+		if (
+			game &&
+			enemy &&
+			side !== game.turn &&
+			!isPresenceRequired(game.gameMode)
+		) {
+			console.log('SET TIME FROM OPPONENT');
+			setTime(Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {}));
+		}
+	}, [game, enemy, side]);
 
 	useEffect(() => {
 		if (!game) return;
@@ -96,6 +96,9 @@ const OpponentChip = () => {
 	}, []);
 
 	const handleTime = (time: CountdownTimeDelta) => {
+		if (time.completed) {
+			// AUTO RESIGN GAME
+		}
 		if (enemy && game) {
 			// console.log('TURN ', game.turn);
 			// console.log('OPP SIDE', side);

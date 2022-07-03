@@ -229,4 +229,6 @@ class ChessGame {
 	}
 }
 
+export const game = new ChessGame();
+
 export default ChessGame;
