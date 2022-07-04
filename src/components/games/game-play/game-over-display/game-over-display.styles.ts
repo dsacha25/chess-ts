@@ -18,4 +18,10 @@ export const GameOverContainer = styled.div`
 	h2 {
 		font-size: 2.5rem;
 	}
+
+	@media screen and (max-width: 1300px) {
+		h2 {
+			font-size: 1.6rem;
+		}
+	}
 `;

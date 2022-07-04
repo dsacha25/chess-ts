@@ -8,8 +8,6 @@ import Countdown, {
 import { CountdownTimerProps } from './types';
 
 const renderer: CountdownRendererFn = (props) => {
-	console.log('TIME PROPS: ', props);
-
 	if (props.completed) {
 		return <GameTimeLeft>00:00</GameTimeLeft>;
 	} else if (props.days) {
@@ -60,15 +58,15 @@ const CountdownTimer: FC<CountdownTimerProps> = ({
 	);
 };
 
-const propsAreEqual = (
-	prevProps: CountdownTimerProps,
-	nextProps: CountdownTimerProps
-) => {
-	return (
-		prevProps.date === nextProps.date &&
-		prevProps.isPaused === nextProps.isPaused &&
-		prevProps.hidden === nextProps.hidden
-	);
-};
+// const propsAreEqual = (
+// 	prevProps: CountdownTimerProps,
+// 	nextProps: CountdownTimerProps
+// ) => {
+// 	return (
+// 		prevProps.date === nextProps.date &&
+// 		prevProps.isPaused === nextProps.isPaused &&
+// 		prevProps.hidden === nextProps.hidden
+// 	);
+// };
 
 export default memo(CountdownTimer);

@@ -9,6 +9,7 @@ import useWindowSize from '../../../../../hooks/use-window-size/use-window-size.
 
 import {
 	selectGameType,
+	selectIsGameOver,
 	selectPromotionPieceType,
 } from '../../../../../redux/game/game.selector';
 import { game } from '../../../../../utils/classes/chess-game/chess-game';
@@ -33,6 +34,7 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 	// ==== REDUX STATE
 	const promotionType = useSelector((state) => selectPromotionPieceType(state));
 	const gameType = useSelector((state) => selectGameType(state));
+	const isGameOver = useSelector((state) => selectIsGameOver(state));
 
 	// ==== LOCAL STATE
 	const [boardSize, setBoardSize] = useState(800);
@@ -102,14 +104,19 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 	// ==== GAME OVER STATE
 	useEffect(() => {
 		if (game.isGameOver(fen)) {
-			setGameOver(game.isGameOver(fen));
-			console.log('WINNER: ', game.getWinner(fen));
+			if (gameType === 'online' && isGameOver) {
+				return setGameOver(game.isGameOver(fen));
+			} else if (gameType !== 'online') {
+				console.log('GAME TYPE: ', gameType);
+				console.log('WINNER: ', game.getWinner(fen));
+				return setGameOver(game.isGameOver(fen));
+			}
 
 			// UPDATE FIREBASE
 		}
 
 		// eslint-disable-next-line
-	}, [fen]);
+	}, [fen, isGameOver]);
 
 	const handleMouseOverSquare = (square: Square) => {
 		// IF NOT PLAYERS TURN DO NOTHING
@@ -196,7 +203,7 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 				onDrop={handleDrop}
 			/>
 			{promoting && <PromotionSelector />}
-			{gameOver && <GameOverDisplay />}
+			{gameOver && <GameOverDisplay winner={game.getWinner(fen)} />}
 		</Fragment>
 	);
 };

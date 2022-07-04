@@ -117,8 +117,6 @@ const PlayerChip = () => {
 
 	if (!chessUser) return null;
 
-	console.log('USER TIME: ', time);
-
 	return (
 		<ChipContainer>
 			<Avatar url={chessUser.photoURL}>

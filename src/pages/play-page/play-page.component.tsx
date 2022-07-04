@@ -55,8 +55,6 @@ const PlayPage = () => {
 			activeGame.gameMode === 'one_day' ||
 			activeGame.gameMode === 'three_day'
 		) {
-			console.log('GAME MODE: ', activeGame.gameMode);
-
 			return setPlayersPresent(true);
 		}
 
