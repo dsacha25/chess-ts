@@ -64,8 +64,8 @@ const PlayPage = () => {
 			activeGame.blackPresent !== playersPresent ||
 			activeGame.whitePresent !== playersPresent
 		) {
-			console.log('PRESENCE BLACK: ', activeGame.blackPresent);
-			console.log('PRESENCE WHITE: ', activeGame.whitePresent);
+			// console.log('PRESENCE BLACK: ', activeGame.blackPresent);
+			// console.log('PRESENCE WHITE: ', activeGame.whitePresent);
 
 			setPlayersPresent(activeGame.blackPresent && activeGame.whitePresent);
 		}

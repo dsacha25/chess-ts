@@ -29,7 +29,7 @@ import {
 import { EnemyTypes } from './enemies.types';
 
 export function* fetchEnemyInfo(enemy: ChessUser) {
-	yield console.log('INFO: ', enemy);
+	// yield console.log('INFO: ', enemy);
 
 	yield put(fetchEnemyInfoSuccess(enemy));
 }
@@ -68,13 +68,13 @@ export function* fetchEnemiesAsync(): Generator | SelectEffect {
 			where('users', 'array-contains', uid)
 		);
 
-		yield console.log('ENEMIES: ', enemyDocuments);
+		// yield console.log('ENEMIES: ', enemyDocuments);
 
 		const enemyships = flatMap(enemyDocuments, (enemy) =>
 			filter(enemy.users, (userUID) => userUID !== uid)
 		);
 
-		yield console.log('ENEMYSHIPS: ', enemyships);
+		// yield console.log('ENEMYSHIPS: ', enemyships);
 
 		let enemies: ChessUser[] = [];
 

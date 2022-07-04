@@ -118,8 +118,7 @@ export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
 		);
 		const uid = yield select(selectUserUID);
 
-		yield console.log('ACTIVE GAME: ', game);
-		yield console.log('PENDING MOVE GO?: ', gameOver);
+		// yield console.log('ACTIVE GAME: ', game);
 
 		if (!game) return;
 
@@ -153,7 +152,7 @@ export function* setActiveGameAsync({
 
 	if (gameType !== 'online') return;
 
-	yield console.log('GAME STATE MOVES: ', game.moves);
+	// yield console.log('GAME STATE MOVES: ', game.moves);
 
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
@@ -166,7 +165,7 @@ export function* onSetActiveGame() {
 }
 
 export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
-	yield console.log('CHESS GAME LISTENER: ', game);
+	// yield console.log('CHESS GAME LISTENER: ', game);
 	const uid = yield select(selectUserUID);
 	const gameType = yield select(selectGameType);
 
@@ -211,7 +210,7 @@ export function* fetchActiveGamesAsync(): Generator | SelectEffect {
 			where('gameOver', '==', false)
 		);
 
-		yield console.log('GAMES: ', games);
+		// yield console.log('GAMES: ', games);
 		yield put(fetchActiveGamesSuccess(games));
 	} catch (err) {
 		yield put(gameError(getErrorMessage(err)));
