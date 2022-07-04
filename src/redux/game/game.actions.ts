@@ -62,6 +62,7 @@ import {
 	ClearPromotionPieceTypeAction,
 	SetActiveGameTimeAction,
 	FetchGameByIdAction,
+	AutoResignOpponentAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 import GameTime from '../../utils/types/game-time/game-time';
@@ -274,6 +275,10 @@ export const getLatestMove = (): GetLatestMoveAction => ({
 // ==== RESIGN & DRAW
 export const resignGame = (): ResignGameAction => ({
 	type: GameTypes.RESIGN_GAME,
+});
+
+export const autoResignOpponent = (): AutoResignOpponentAction => ({
+	type: GameTypes.AUTO_RESIGN_OPPONENT,
 });
 
 export const requestDraw = (): RequestDrawAction => ({

@@ -80,6 +80,22 @@ export function* onRequestDraw() {
 	yield takeEvery(GameTypes.REQUEST_DRAW, requestDrawAsync);
 }
 
+export function* callOpponentAutoResign() {
+	try {
+		const game: ChessGameType = yield select(selectActiveGame);
+
+		yield functions.callFirebaseFunction('autoResignOpponent', {
+			gameUID: game.id,
+		});
+	} catch (err) {
+		yield put(gameError(getErrorMessage(err)));
+	}
+}
+
+export function* onAutoResignOpponent() {
+	yield takeEvery(GameTypes.AUTO_RESIGN_OPPONENT, callOpponentAutoResign);
+}
+
 export function* resignGameAsync(): Generator | SelectEffect {
 	try {
 		const game: ChessGameType = yield select(selectActiveGame);
@@ -213,6 +229,7 @@ export function* gameActiveSagas() {
 		call(onMakeConfirmedMove),
 		call(onOpenActiveGameListener),
 		call(onResignGame),
+		call(onAutoResignOpponent),
 		call(onRequestDraw),
 		call(onAcceptDrawRequest),
 		call(onRejectDrawRequest),

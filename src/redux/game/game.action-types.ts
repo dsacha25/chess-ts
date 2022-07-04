@@ -192,6 +192,10 @@ export interface ResignGameAction {
 	type: GameTypes.RESIGN_GAME;
 }
 
+export interface AutoResignOpponentAction {
+	type: GameTypes.AUTO_RESIGN_OPPONENT;
+}
+
 export interface RequestDrawAction {
 	type: GameTypes.REQUEST_DRAW;
 }
@@ -267,6 +271,7 @@ type GameActions =
 	| GameChallengeResponseSuccessAction
 	| RejectGameChallengeAction
 	| ResignGameAction
+	| AutoResignOpponentAction
 	| RequestDrawAction
 	| AcceptDrawRequestAction
 	| RejectDrawRequestAction

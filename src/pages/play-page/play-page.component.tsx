@@ -36,6 +36,7 @@ const PlayPage = () => {
 		// eslint-disable-next-line
 	}, [gameUID]);
 
+	// ==== FIREBASE PRESENCE STATE
 	useEffect(() => {
 		if (activeGame) {
 			setUserGamePresence(true);
@@ -48,6 +49,7 @@ const PlayPage = () => {
 		// eslint-disable-next-line
 	}, []);
 
+	// ==== LOCAL PRESENCE STATE
 	useEffect(() => {
 		if (!activeGame) return;
 		if (
@@ -60,7 +62,7 @@ const PlayPage = () => {
 
 		if (
 			activeGame.blackPresent !== playersPresent ||
-			activeGame?.whitePresent !== playersPresent
+			activeGame.whitePresent !== playersPresent
 		) {
 			console.log('PRESENCE BLACK: ', activeGame.blackPresent);
 			console.log('PRESENCE WHITE: ', activeGame.whitePresent);
@@ -94,7 +96,9 @@ const PlayPage = () => {
 		<PlayContainer>
 			{width <= 980 ? <MobileGameToolbar /> : <GameToolbar />}
 			{width <= 980 ? <MobileGameLayout /> : <DesktopGameLayout />}
-			<WaitingForOpponentMsg playersPresent={playersPresent} />
+			{!activeGame?.gameOver && (
+				<WaitingForOpponentMsg playersPresent={playersPresent} />
+			)}
 		</PlayContainer>
 	);
 };

@@ -8,9 +8,7 @@ import Countdown, {
 import { CountdownTimerProps } from './types';
 
 const renderer: CountdownRendererFn = (props) => {
-	if (props.completed) {
-		return <GameTimeLeft>00:00</GameTimeLeft>;
-	} else if (props.days) {
+	if (props.days) {
 		return (
 			<GameTimeLeft>
 				{props.days} Day{props.days > 1 && 's'}
@@ -20,7 +18,7 @@ const renderer: CountdownRendererFn = (props) => {
 		return (
 			<GameTimeLeft>
 				{props.hours && `${props.hours}:`}
-				{props.hours ? zeroPad(props.minutes) : props.minutes}:
+				{props.hours > 0 ? zeroPad(props.minutes) : props.minutes}:
 				{zeroPad(props.seconds)}
 			</GameTimeLeft>
 		);
@@ -54,7 +52,13 @@ const CountdownTimer: FC<CountdownTimerProps> = ({
 	if (hidden) return null;
 
 	return (
-		<Countdown date={date} renderer={renderer} onTick={handleTick} ref={ref} />
+		<Countdown
+			date={date}
+			renderer={renderer}
+			onTick={handleTick}
+			ref={ref}
+			onComplete={handleTick}
+		/>
 	);
 };
 
