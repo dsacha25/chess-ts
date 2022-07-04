@@ -1,7 +1,6 @@
-import { CSSProperties } from '@material-ui/core/styles/withStyles';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { Square } from 'chess.js';
 import Chessboard, { Piece } from 'chessboardjsx';
-import React, { FC, Fragment, useEffect, useState } from 'react';
 import globalStyles from '../../../../../global-styles/global-styles';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
@@ -9,6 +8,7 @@ import useWindowSize from '../../../../../hooks/use-window-size/use-window-size.
 
 import {
 	selectGameType,
+	selectGameWinner,
 	selectIsGameOver,
 	selectPromotionPieceType,
 } from '../../../../../redux/game/game.selector';
@@ -35,6 +35,7 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 	const promotionType = useSelector((state) => selectPromotionPieceType(state));
 	const gameType = useSelector((state) => selectGameType(state));
 	const isGameOver = useSelector((state) => selectIsGameOver(state));
+	const winner = useSelector((state) => selectGameWinner(state));
 
 	// ==== LOCAL STATE
 	const [boardSize, setBoardSize] = useState(800);
@@ -103,6 +104,10 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 
 	// ==== GAME OVER STATE
 	useEffect(() => {
+		if (gameType === 'online' && isGameOver) {
+			setGameOver(true);
+		}
+
 		if (game.isGameOver(fen)) {
 			if (gameType === 'online' && isGameOver) {
 				return setGameOver(game.isGameOver(fen));
@@ -203,7 +208,9 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 				onDrop={handleDrop}
 			/>
 			{promoting && <PromotionSelector />}
-			{gameOver && <GameOverDisplay winner={game.getWinner(fen)} />}
+			{gameOver && (
+				<GameOverDisplay winner={winner ? winner : game.getWinner(fen)} />
+			)}
 		</Fragment>
 	);
 };
