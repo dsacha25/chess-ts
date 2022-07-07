@@ -63,6 +63,7 @@ import {
 	SetActiveGameTimeAction,
 	FetchGameByIdAction,
 	AutoResignOpponentAction,
+	SetCurrentGameAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 import GameTime from '../../utils/types/game-time/game-time';
@@ -176,6 +177,11 @@ export const fetchActiveGamesSuccess = (
 // ==== ACTIVE GAMES
 export const setActiveGame = (game: ChessGameType): SetActiveGameAction => ({
 	type: GameTypes.SET_ACTIVE_GAME,
+	payload: game,
+});
+
+export const setCurrentGame = (game: ChessGameType): SetCurrentGameAction => ({
+	type: GameTypes.SET_CURRENT_GAME,
 	payload: game,
 });
 

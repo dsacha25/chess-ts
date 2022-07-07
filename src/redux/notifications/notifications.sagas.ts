@@ -1,5 +1,5 @@
 import { orderBy, where } from 'firebase/firestore';
-import { differenceWith, isEqual } from 'lodash';
+import { differenceWith, filter, isEqual } from 'lodash';
 import { EventChannel } from 'redux-saga';
 import {
 	all,
@@ -26,7 +26,9 @@ import {
 } from './notifications.action-types';
 import {
 	addReadNotification,
+	addReadNotifications,
 	addUnreadNotification,
+	addUnreadNotifications,
 	notificationError,
 } from './notifications.actions';
 import { selectAllNotifications } from './notifications.selector';
@@ -67,10 +69,14 @@ export function* getNotifications(
 	notifications: Notification[]
 ): Generator | SelectEffect {
 	const allNotifications = yield select(selectAllNotifications);
+	console.log('NOTIFICATION PAYLOAD: ', notifications);
 
 	const difference = differenceWith(notifications, allNotifications, isEqual);
 
 	console.log('DIFFERENCE: ', difference);
+
+	yield put(addUnreadNotifications(filter(notifications, ['unread', true])));
+	yield put(addReadNotifications(filter(notifications, ['unread', false])));
 
 	if (difference.length === 0) {
 		return;
@@ -91,7 +97,7 @@ export function* getNotifications(
 
 	for (const notification of notifications) {
 		if (notification.unread) {
-			yield put(addUnreadNotification(notification));
+			// yield put(addUnreadNotification(notification));
 
 			if (notification.type === 'challenge' && !notificationFetches.challenge) {
 				yield put(fetchGameChallengesStart());
@@ -122,8 +128,6 @@ export function* getNotifications(
 
 				notificationFetches.enemyRequestAccepted = true;
 			}
-		} else {
-			yield put(addReadNotification(notification));
 		}
 	}
 }

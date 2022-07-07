@@ -3,7 +3,10 @@ import { milliseconds, toDate } from 'date-fns';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
 import { selectEnemyInfo } from '../../../../redux/enemies/enemies.selector';
-import { selectActiveGame } from '../../../../redux/game/game.selector';
+import {
+	selectActiveGame,
+	selectGameTurn,
+} from '../../../../redux/game/game.selector';
 import parseGameTime from '../../../../utils/helpers/parsers/parse-game-time/parse-game-time';
 import { OnlineStatusIndicator } from '../../../common/online-status-indicator/online-status-indicator.styles';
 
@@ -29,13 +32,14 @@ const OpponentChip = () => {
 	const { setActiveGameTime } = useActions();
 	const enemy = useSelector((state) => selectEnemyInfo(state));
 	const game = useSelector((state) => selectActiveGame(state));
+	const turn = useSelector((state) => selectGameTurn(state));
 
 	const [side, setSide] = useState('white');
 	const [paused, setPaused] = useState(false);
 	const [time, setTime] = useState(Date.now());
 
 	useEffect(() => {
-		if (game && enemy && side === game.turn) {
+		if (game && enemy) {
 			const { previousMoveTime } = parseCurrentPlayer(enemy.uid, game, true);
 
 			if (!isPresenceRequired(game.gameMode)) return;
@@ -52,25 +56,26 @@ const OpponentChip = () => {
 				);
 			}
 		}
-	}, [game, enemy, side]);
+	}, [enemy]);
 
 	useEffect(() => {
-		if (
-			game &&
-			enemy &&
-			side !== game.turn &&
-			!isPresenceRequired(game.gameMode)
-		) {
-			console.log('SET TIME FROM OPPONENT');
+		if (game && enemy && side === turn && !isPresenceRequired(game.gameMode)) {
+			console.log(
+				'SET TIME FROM OPPONENT: ',
+				Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {})
+			);
+
 			setTime(Date.now() + milliseconds(parseGameTime(enemy.uid, game) || {}));
 		}
-	}, [game, enemy, side]);
+	}, [game, enemy, turn, side]);
 
 	useEffect(() => {
 		if (!game) return;
 		if (side !== game.turn) {
+			console.log('OPP PAUSE');
 			setPaused(true);
 		} else {
+			console.log('OPP START');
 			setPaused(false);
 		}
 	}, [side, game]);
@@ -96,12 +101,14 @@ const OpponentChip = () => {
 	}, []);
 
 	const handleTime = (time: CountdownTimeDelta) => {
+		console.log('OPP TIME: ', time);
+
 		if (time.completed) {
 			// AUTO RESIGN GAME
 		}
 		if (enemy && game) {
-			// console.log('TURN ', game.turn);
-			// console.log('OPP SIDE', side);
+			console.log('TURN ', game.turn);
+			console.log('OPP SIDE', side);
 			return enemy.uid === game.black.uid
 				? setActiveGameTime(time, 'black')
 				: setActiveGameTime(time, 'white');

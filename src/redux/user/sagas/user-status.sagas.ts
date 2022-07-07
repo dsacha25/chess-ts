@@ -26,20 +26,18 @@ import { selectActiveGame } from '../../game/game.selector';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 
 export function* setUserPresence({
-	payload: present,
+	payload: { present, gameUID },
 }: SetUserGamePresenceAction): Generator | SelectEffect {
 	try {
 		const uid = yield select(selectUserUID);
-		const game: ChessGameType | null = yield select(selectActiveGame);
-
-		if (!game) return;
+		const game = yield db.get<ChessGameType>('games', gameUID);
 
 		if (game.black.uid === uid) {
-			yield db.update('games', game.id, { blackPresent: present });
+			yield db.update('games', gameUID, { blackPresent: present });
 		}
 
 		if (game.white.uid === uid) {
-			yield db.update('games', game.id, { whitePresent: present });
+			yield db.update('games', gameUID, { whitePresent: present });
 		}
 	} catch (err) {
 		yield put(userError(getErrorMessage(err)));
@@ -73,7 +71,6 @@ export function* setUserStatus(): Generator<DatabaseReference> | SelectEffect {
 		yield onValue(statusRef, (snapshot) => {
 			if (snapshot.val() === false) {
 				setUserStatusSuccess(false);
-				return;
 			}
 
 			onDisconnect(userRef)

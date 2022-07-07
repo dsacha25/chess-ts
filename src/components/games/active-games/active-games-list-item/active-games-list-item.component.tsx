@@ -14,6 +14,8 @@ import Paths from '../../../../utils/types/paths/paths';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import getOpponentName from '../../../../utils/helpers/strings/get-opponent-name/get-opponent-name';
 import parseGameMode from '../../../../utils/helpers/parsers/parse-game-mode/parse-game-mode';
+import PreviewChessboard from '../../game-play/boards/preview-chessboard/preview-chessboard.component';
+import parsePlayerSide from '../../../../utils/helpers/parsers/parse-player-side/parse-player-side';
 
 const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 	const { setActiveGame } = useActions();
@@ -41,9 +43,13 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 	// * Display screenshot of current board position
 
 	return (
-		<ActiveListItem columns={2} width="auto">
+		<ActiveListItem columns={3} width="auto">
 			<ListItemText>{opponentName}</ListItemText>
 			<ListItemText>{parseGameMode(game.gameMode)}</ListItemText>
+			<PreviewChessboard
+				fen={game.fen}
+				orientation={parsePlayerSide(game, uid)}
+			/>
 			<JoinGameButton onClick={handleJoinGame} color="secondary">
 				<FaChessKing size="30px" />
 			</JoinGameButton>

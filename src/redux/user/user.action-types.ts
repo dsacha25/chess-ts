@@ -105,7 +105,7 @@ export interface SetUserStatusSuccessAction {
 
 export interface SetUserGamePresenceAction {
 	type: UserTypes.SET_USER_GAME_PRESENCE;
-	payload: boolean;
+	payload: { present: boolean; gameUID: string };
 }
 
 // ==== ERROR ACTION

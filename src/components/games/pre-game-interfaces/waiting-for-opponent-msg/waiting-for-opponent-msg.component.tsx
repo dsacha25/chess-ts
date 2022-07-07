@@ -22,7 +22,7 @@ const WaitingForOpponentMsg: FC<WaitingForOpponentMsgProps> = ({
 	const { autoResignOpponent } = useActions();
 
 	const handleAutoResign = (time: CountdownTimeDelta) => {
-		console.log('TIME: ', time);
+		// console.log('TIME: ', time);
 
 		if (time.completed) {
 			console.log('Player Resigned');
@@ -38,10 +38,10 @@ const WaitingForOpponentMsg: FC<WaitingForOpponentMsgProps> = ({
 				<p>opponent auto resigns in...</p>
 				<AutoResignContainer>
 					<AutoResignSpinner size="120px" />
-					<CountdownTimer
-						date={Date.now() + milliseconds({ seconds: 60 })}
+					{/* <CountdownTimer
+						date={Date.now() + milliseconds({ seconds: 600 })}
 						getTime={handleAutoResign}
-					/>
+					/> */}
 				</AutoResignContainer>
 
 				<CustomButton

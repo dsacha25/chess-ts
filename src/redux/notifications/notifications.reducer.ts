@@ -22,12 +22,19 @@ const notificationsReducer = produce(
 		action: NotificationActionTypes
 	) => {
 		switch (action.type) {
+			case NotificationTypes.ADD_UNREAD_NOTIFICATIONS:
+				state.unreadNotifications = action.payload;
+				return state;
 			case NotificationTypes.ADD_UNREAD_NOTIFICATION:
 				state.unreadNotifications = uniqWith(
 					concat(state.unreadNotifications, action.payload),
 					isEqual
 				);
 				state.error = '';
+				return state;
+
+			case NotificationTypes.ADD_READ_NOTIFICATIONS:
+				state.readNotifications = action.payload;
 				return state;
 			case NotificationTypes.ADD_READ_NOTIFICATION:
 				state.readNotifications = uniqWith(

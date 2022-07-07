@@ -14,6 +14,15 @@ export interface AddReadNotificationAction {
 	type: NotificationTypes.ADD_READ_NOTIFICATION;
 	payload: Notification;
 }
+export interface AddUnreadNotificationsAction {
+	type: NotificationTypes.ADD_UNREAD_NOTIFICATIONS;
+	payload: Notification[];
+}
+
+export interface AddReadNotificationsAction {
+	type: NotificationTypes.ADD_READ_NOTIFICATIONS;
+	payload: Notification[];
+}
 
 export interface DeleteNotificationAction {
 	type: NotificationTypes.DELETE_NOTIFICATION;
@@ -33,7 +42,9 @@ export interface NotificationErrorAction {
 type NotificationActionTypes =
 	| OpenNotificationListenerAction
 	| AddUnreadNotificationAction
+	| AddUnreadNotificationsAction
 	| AddReadNotificationAction
+	| AddReadNotificationsAction
 	| DeleteNotificationAction
 	| ReadNotificationAction
 	| NotificationErrorAction;

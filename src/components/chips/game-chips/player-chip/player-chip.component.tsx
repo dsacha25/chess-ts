@@ -2,7 +2,10 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { milliseconds, toDate } from 'date-fns';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
-import { selectActiveGame } from '../../../../redux/game/game.selector';
+import {
+	selectActiveGame,
+	selectGameTurn,
+} from '../../../../redux/game/game.selector';
 import {
 	selectChessUser,
 	selectIsUserOnline,
@@ -24,6 +27,7 @@ import { isEqual } from 'lodash';
 import parseCurrentPlayer from '../../../../utils/helpers/parsers/parse-current-player/parse-current-player';
 import parseTimeUnit from '../../../../utils/helpers/parsers/parse-time-unit/parse-time-unit';
 import isPresenceRequired from '../../../../utils/helpers/is-presence-required/is-presence-required';
+import parsePlayerSide from '../../../../utils/helpers/parsers/parse-player-side/parse-player-side';
 
 const Rating = memo(PlayerRating);
 const Name = memo(PlayerName);
@@ -36,6 +40,7 @@ const PlayerChip = () => {
 	const uid = useSelector((state) => selectUserUID(state)) as string;
 	const game = useSelector((state) => selectActiveGame(state));
 	const online = useSelector((state) => selectIsUserOnline(state));
+	const turn = useSelector((state) => selectGameTurn(state));
 
 	const [side, setSide] = useState('white');
 	const [paused, setPaused] = useState(false);
@@ -45,8 +50,8 @@ const PlayerChip = () => {
 		if (game) {
 			const { previousMoveTime } = parseCurrentPlayer(uid, game, true);
 
-			if (!isPresenceRequired(game.gameMode)) return;
 			console.log('PRESENCE?: ', isPresenceRequired(game.gameMode));
+			if (!isPresenceRequired(game.gameMode)) return;
 
 			if (previousMoveTime) {
 				console.log('SET TIME FROM PREVIOUS MOVE');
@@ -55,15 +60,13 @@ const PlayerChip = () => {
 				console.log('PREVIOUS MOVE:', previousMoveTime.toDate().getTime());
 			} else if (game.createdAt && !previousMoveTime) {
 				console.log('SET TIME FROM CREATED AT');
-				setTime(
-					toDate(game.createdAt.seconds * 1000).getTime() + parseTimeUnit(game)
-				);
+				setTime(Date.now() + parseTimeUnit(game));
 			}
 		}
-	}, [game]);
+	}, [game, turn, side]);
 
 	useEffect(() => {
-		if (game && side !== game.turn && !isPresenceRequired(game.gameMode)) {
+		if (game && side === turn && !isPresenceRequired(game.gameMode)) {
 			console.log(
 				'SET TIME FROM USER: ',
 				Date.now() + milliseconds(parseGameTime(uid, game) || {})
@@ -71,16 +74,20 @@ const PlayerChip = () => {
 
 			setTime(Date.now() + milliseconds(parseGameTime(uid, game) || {}));
 		}
-	}, [game, side]);
+	}, [game, turn, side]);
 
 	useEffect(() => {
 		if (!game) return;
-		if (side !== game.turn) {
+		if (side !== turn) {
+			console.log('PAUSE');
+
 			setPaused(true);
 		} else {
+			console.log('START');
+
 			setPaused(false);
 		}
-	}, [side, game]);
+	}, [side, turn]);
 
 	useEffect(() => {
 		if (!game) return;
@@ -96,19 +103,20 @@ const PlayerChip = () => {
 
 	useEffect(() => {
 		if (game && chessUser) {
-			setSide(game.black.uid === chessUser.uid ? 'black' : 'white');
+			setSide(parsePlayerSide(game, chessUser.uid));
 		}
 
 		// eslint-disable-next-line
 	}, []);
 
 	const handleTime = (time: CountdownTimeDelta) => {
+		console.log('USER TIME: ', time);
 		if (time.completed) {
 			// AUTO RESIGN GAME
 		}
 		if (chessUser && game) {
-			// console.log('TURN ', game.turn);
-			// console.log('PLAYER SIDE', side);
+			console.log('TURN ', game.turn);
+			console.log('PLAYER SIDE', side);
 			return chessUser.uid === game.black.uid
 				? setActiveGameTime(time, 'black')
 				: setActiveGameTime(time, 'white');

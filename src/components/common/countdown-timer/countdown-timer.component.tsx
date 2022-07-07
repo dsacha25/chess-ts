@@ -1,4 +1,4 @@
-import React, { FC, createRef, useEffect, memo, useMemo } from 'react';
+import React, { FC, createRef, useEffect } from 'react';
 import { GameTimeLeft } from './countdown-timer.styles';
 import Countdown, {
 	CountdownRendererFn,
@@ -40,6 +40,7 @@ const CountdownTimer: FC<CountdownTimerProps> = ({
 	};
 
 	useEffect(() => {
+		console.log('IS PAUSED: ', isPaused);
 		if (!ref.current) return;
 
 		if (isPaused) {
@@ -73,4 +74,4 @@ const CountdownTimer: FC<CountdownTimerProps> = ({
 // 	);
 // };
 
-export default memo(CountdownTimer);
+export default CountdownTimer;

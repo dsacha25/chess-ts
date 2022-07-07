@@ -21,6 +21,7 @@ const PlayPage = () => {
 		fetchEnemyInfoStart,
 		setUserGamePresence,
 		fetchGameById,
+		clearActiveGame,
 	} = useActions();
 	const gameUID = useQuery('game');
 	const { width } = useWindowSize();
@@ -30,20 +31,29 @@ const PlayPage = () => {
 
 	useEffect(() => {
 		if (gameUID) {
+			clearActiveGame();
 			fetchGameById(gameUID);
+			setUserGamePresence(true, gameUID);
 		}
 
+		return () => {
+			if (gameUID) {
+				setUserGamePresence(false, gameUID);
+			}
+		};
 		// eslint-disable-next-line
 	}, [gameUID]);
 
 	// ==== FIREBASE PRESENCE STATE
 	useEffect(() => {
 		if (activeGame) {
-			setUserGamePresence(true);
+			setUserGamePresence(true, activeGame.id);
 		}
 
 		return () => {
-			setUserGamePresence(false);
+			if (!activeGame) return;
+			setUserGamePresence(false, activeGame.id);
+			clearActiveGame();
 		};
 
 		// eslint-disable-next-line

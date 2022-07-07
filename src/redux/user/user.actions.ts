@@ -155,10 +155,11 @@ export const setUserStatusSuccess = (
 });
 
 export const setUserGamePresence = (
-	present: boolean
+	present: boolean,
+	gameUID: string
 ): SetUserGamePresenceAction => ({
 	type: UserTypes.SET_USER_GAME_PRESENCE,
-	payload: present,
+	payload: { present, gameUID },
 });
 
 /// ==== ERRORS

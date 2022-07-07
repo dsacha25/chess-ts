@@ -5,9 +5,9 @@ const parseGameMode = (gameMode: GameModeTypes): string => {
 		case 'five_by_five':
 			return '5 | 5';
 		case 'five_minute':
-			return '5 Minute';
+			return '5 Min';
 		case 'ten_minute':
-			return '10 Minute';
+			return '10 Min';
 		case 'ten_by_fifteen':
 			return '10 | 15';
 		case 'one_day':

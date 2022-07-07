@@ -21,7 +21,8 @@ import Paths from '../../../utils/types/paths/paths';
 
 const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
 	const navigate = useNavigate();
-	const { acceptGameChallengeStart, rejectGameChallenge } = useActions();
+	const { acceptGameChallengeStart, rejectGameChallenge, clearActiveGame } =
+		useActions();
 
 	const loading = useSelector((state) => selectGameLoadingState(state));
 
@@ -33,6 +34,7 @@ const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
 	};
 
 	const handleAcceptChallenge = () => {
+		clearActiveGame();
 		setAccepting(true);
 		acceptGameChallengeStart(enemy, handleNavigate);
 	};

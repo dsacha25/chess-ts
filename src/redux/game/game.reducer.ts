@@ -145,6 +145,7 @@ const gameReducer = produce(
 			case GameTypes.FETCH_INACTIVE_GAMES_SUCCESS:
 				state.inactiveGames = action.payload;
 				return state;
+			case GameTypes.SET_CURRENT_GAME:
 			case GameTypes.SET_ACTIVE_GAME:
 				state.activeGame = action.payload;
 				state.error = '';

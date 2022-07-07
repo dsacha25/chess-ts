@@ -3,6 +3,7 @@ import { EventChannel } from 'redux-saga';
 import {
 	all,
 	call,
+	CallEffect,
 	put,
 	select,
 	SelectEffect,
@@ -17,8 +18,9 @@ import parseGameTime from '../../../utils/helpers/parsers/parse-game-time/parse-
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../../utils/types/chess-move/chess-move';
 import { ConfirmedMove } from '../../../utils/types/confirmed-move/confirmed-move';
+import { setUserGamePresence } from '../../user/user.actions';
 import { selectUserUID } from '../../user/user.selector';
-import { SetActiveGameAction } from '../game.action-types';
+import { FetchGameByIdAction, SetActiveGameAction } from '../game.action-types';
 import {
 	fetchActiveGamesStart,
 	fetchActiveGamesSuccess,
@@ -26,6 +28,7 @@ import {
 	makeConfirmedMoveSuccess,
 	openActiveGameListener,
 	setActiveGame,
+	setCurrentGame,
 	setFen,
 	setGameHistory,
 	setOrientation,
@@ -165,7 +168,7 @@ export function* onSetActiveGame() {
 }
 
 export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
-	// yield console.log('CHESS GAME LISTENER: ', game);
+	yield console.log('CHESS GAME LISTENER: ', game);
 	const uid = yield select(selectUserUID);
 	const gameType = yield select(selectGameType);
 
@@ -174,7 +177,7 @@ export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
 	yield put(setFen(game.fen));
 	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
 	yield put(setGameHistory(game.moves));
-	yield put(setActiveGame(game));
+	yield put(setCurrentGame(game));
 }
 
 export function* openActiveGameListenerAsync(): Generator | SelectEffect {
@@ -182,6 +185,7 @@ export function* openActiveGameListenerAsync(): Generator | SelectEffect {
 		const game: ChessGameType | null = yield select(selectActiveGame);
 
 		if (!game) return;
+		yield console.log('LISTEN FOR: ', game.id);
 
 		const gameRef = yield db.getDocumentReference(`games/${game.id}`);
 		const gameChannel: EventChannel<ChessGameType> =
@@ -198,6 +202,30 @@ export function* onOpenActiveGameListener() {
 		GameTypes.OPEN_ACTIVE_GAME_LISTENER,
 		openActiveGameListenerAsync
 	);
+}
+
+export function* fetchGameByIdAsync({
+	payload: gameUID,
+}: FetchGameByIdAction): Generator | CallEffect {
+	try {
+		const uid = yield select(selectUserUID);
+
+		const game = yield db.get<ChessGameType>('games', gameUID);
+		yield console.log('GAME BY ID: ', game);
+
+		yield put(setFen(game.fen));
+		yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
+		yield put(setGameHistory(game.moves));
+		yield put(setActiveGame(game));
+
+		// yield call(setActiveGameAsync, game);
+	} catch (err) {
+		yield put(gameError(getErrorMessage(err)));
+	}
+}
+
+export function* onFetchGameByID() {
+	yield takeEvery(GameTypes.FETCH_GAME_BY_ID, fetchGameByIdAsync);
 }
 
 export function* fetchActiveGamesAsync(): Generator | SelectEffect {
@@ -232,5 +260,6 @@ export function* gameActiveSagas() {
 		call(onRequestDraw),
 		call(onAcceptDrawRequest),
 		call(onRejectDrawRequest),
+		call(onFetchGameByID),
 	]);
 }

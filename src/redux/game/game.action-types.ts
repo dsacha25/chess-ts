@@ -105,6 +105,11 @@ export interface SetActiveGameAction {
 	payload: ChessGameType;
 }
 
+export interface SetCurrentGameAction {
+	type: GameTypes.SET_CURRENT_GAME;
+	payload: ChessGameType;
+}
+
 export interface SetActiveGameAiAction {
 	type: GameTypes.SET_ACTIVE_GAME_AI;
 	payload: ChessGameAiType;
@@ -285,6 +290,7 @@ type GameActions =
 	| FetchInactiveGamesSuccessAction
 	| FetchGameByIdAction
 	| SetActiveGameAction
+	| SetCurrentGameAction
 	| SetActiveGameAiAction
 	| SetInactiveGameByIDStartAction
 	| ClearActiveGameAction
