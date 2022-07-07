@@ -72,10 +72,10 @@ const OpponentChip = () => {
 	useEffect(() => {
 		if (!game) return;
 		if (side !== game.turn) {
-			console.log('OPP PAUSE');
+			console.log('OPP PAUSE', side);
 			setPaused(true);
 		} else {
-			console.log('OPP START');
+			console.log('OPP START', side);
 			setPaused(false);
 		}
 	}, [side, game]);
@@ -94,6 +94,8 @@ const OpponentChip = () => {
 
 	useEffect(() => {
 		if (game && enemy) {
+			console.log('BLACK UID: ', game.black.uid);
+			console.log('ENEMY UID: ', enemy.uid);
 			setSide(game.black.uid === enemy.uid ? 'black' : 'white');
 		}
 

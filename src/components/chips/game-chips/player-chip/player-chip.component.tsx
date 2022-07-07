@@ -48,6 +48,17 @@ const PlayerChip = () => {
 
 	useEffect(() => {
 		if (game) {
+			console.log('BLACK UID: ', game.black.uid);
+			console.log('UID: ', uid);
+
+			setSide(game.black.uid === uid ? 'black' : 'white');
+		}
+
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		if (game) {
 			const { previousMoveTime } = parseCurrentPlayer(uid, game, true);
 
 			console.log('PRESENCE?: ', isPresenceRequired(game.gameMode));
@@ -78,16 +89,16 @@ const PlayerChip = () => {
 
 	useEffect(() => {
 		if (!game) return;
-		if (side !== turn) {
-			console.log('PAUSE');
+		if (side !== game.turn) {
+			console.log('PLAYER PAUSE', side);
 
 			setPaused(true);
 		} else {
-			console.log('START');
+			console.log('PLAYER START', side);
 
 			setPaused(false);
 		}
-	}, [side, turn]);
+	}, [game, side]);
 
 	useEffect(() => {
 		if (!game) return;
@@ -100,14 +111,6 @@ const PlayerChip = () => {
 			setPaused(false);
 		}
 	}, [game]);
-
-	useEffect(() => {
-		if (game && chessUser) {
-			setSide(parsePlayerSide(game, chessUser.uid));
-		}
-
-		// eslint-disable-next-line
-	}, []);
 
 	const handleTime = (time: CountdownTimeDelta) => {
 		console.log('USER TIME: ', time);

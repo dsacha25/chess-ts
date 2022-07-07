@@ -62,11 +62,6 @@ export const selectGameTurn = createSelector(
 	(activeGame) => activeGame?.turn
 );
 
-// export const selectGameTurn = createSelector(
-// 	selectActiveGame,
-// 	(activeGame) => activeGame?.turn
-// );
-
 export const selectActiveGameMode = createSelector(
 	selectActiveGame,
 	(activeGame) => activeGame?.gameMode
