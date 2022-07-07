@@ -17,6 +17,7 @@ import AnalysisPage from '../pages/analysis-page/analysis-page.component';
 import PlayAiPage from '../pages/play-ai-page/play-ai-page.component';
 import Head from '../components/head/head.component';
 import GulagPage from '../pages/gulag-page/gulag-page.component';
+import ErrorBoundary from '../components/common/error-boundary/error-boundary.component';
 
 function App() {
 	const {
@@ -50,31 +51,32 @@ function App() {
 		<SiteContainer>
 			<Head />
 			<Header />
-			<Routes>
-				<Route index element={<HomePage />} />
-				<Route path={Paths.CREATE_ACCOUNT} element={<CreateAccountPage />} />
-				<Route path={Paths.LOGIN} element={<LogInPage />} />
-				<Route path={Paths.DASHBOARD} element={<PrivateRoute />}>
-					<Route index element={<DashboardPage />} />
-				</Route>
+			<ErrorBoundary>
+				<Routes>
+					<Route index element={<HomePage />} />
+					<Route path={Paths.CREATE_ACCOUNT} element={<CreateAccountPage />} />
+					<Route path={Paths.LOGIN} element={<LogInPage />} />
+					<Route path={Paths.DASHBOARD} element={<PrivateRoute />}>
+						<Route index element={<DashboardPage />} />
+					</Route>
 
-				<Route path={Paths.PLAY} element={<PrivateRoute />}>
-					<Route index element={<PlayPage />} />
-				</Route>
+					<Route path={Paths.PLAY} element={<PrivateRoute />}>
+						<Route index element={<PlayPage />} />
+					</Route>
 
-				<Route path={Paths.GULAG} element={<PrivateRoute />}>
-					<Route index element={<GulagPage />} />
-				</Route>
+					<Route path={Paths.GULAG} element={<PrivateRoute />}>
+						<Route index element={<GulagPage />} />
+					</Route>
 
-				<Route path={Paths.ANALYSIS} element={<PrivateRoute />}>
-					<Route index element={<AnalysisPage />} />
-				</Route>
+					<Route path={Paths.ANALYSIS} element={<PrivateRoute />}>
+						<Route index element={<AnalysisPage />} />
+					</Route>
 
-				<Route path={Paths.AI} element={<PrivateRoute />}>
-					<Route index element={<PlayAiPage />} />
-				</Route>
-			</Routes>
-
+					<Route path={Paths.AI} element={<PrivateRoute />}>
+						<Route index element={<PlayAiPage />} />
+					</Route>
+				</Routes>
+			</ErrorBoundary>
 			<SiteBackground />
 		</SiteContainer>
 	);
