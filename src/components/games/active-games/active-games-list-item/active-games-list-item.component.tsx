@@ -39,9 +39,6 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 		navigate(`/${Paths.PLAY}`);
 	};
 
-	//// TODO:
-	// * Display screenshot of current board position
-
 	return (
 		<ActiveListItem columns={3} width="auto">
 			<ListItemText>{opponentName}</ListItemText>
