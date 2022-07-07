@@ -11,14 +11,14 @@ import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.h
 import { selectUserUID } from '../../../../redux/user/user.selector';
 import { useNavigate } from 'react-router-dom';
 import Paths from '../../../../utils/types/paths/paths';
-import useActions from '../../../../hooks/use-actions/use-actions.hook';
+// import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import getOpponentName from '../../../../utils/helpers/strings/get-opponent-name/get-opponent-name';
 import parseGameMode from '../../../../utils/helpers/parsers/parse-game-mode/parse-game-mode';
 import PreviewChessboard from '../../game-play/boards/preview-chessboard/preview-chessboard.component';
 import parsePlayerSide from '../../../../utils/helpers/parsers/parse-player-side/parse-player-side';
 
 const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
-	const { setActiveGame } = useActions();
+	// const { setActiveGame } = useActions();
 	const navigate = useNavigate();
 	const uid = useSelector((state) => selectUserUID(state));
 
