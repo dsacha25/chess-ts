@@ -17,11 +17,11 @@ import {
 import { find } from 'lodash';
 import Spinner from '../../common/spinner/spinner.component';
 import GameModeSelector from '../../games/pre-game-interfaces/game-mode-selector/game-mode-selector.component';
-import { useNavigate } from 'react-router-dom';
 import Paths from '../../../utils/types/paths/paths';
+import useActions from '../../../hooks/use-actions/use-actions.hook';
 
 const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
-	const navigate = useNavigate();
+	const { setDashboardIndex } = useActions();
 	const [open, setOpen] = useState(false);
 	const isLoading = useSelector((state) => selectGameLoadingState(state));
 	const receiver = useSelector((state) => selectGameInviteReceiver(state));
@@ -31,7 +31,7 @@ const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {
 
 	const handleClose = () => {
 		setOpen(false);
-		navigate(`/${Paths.DASHBOARD}`);
+		setDashboardIndex(0);
 	};
 
 	if (!enemy) return null;

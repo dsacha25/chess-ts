@@ -34,9 +34,9 @@ const ActiveGamesListItem: FC<ActiveGamesListItemProps> = ({ game }) => {
 
 	const handleJoinGame = () => {
 		// Set active game
-		setActiveGame(game);
+		// setActiveGame(game);
 		// Redirect to /play
-		navigate(`/${Paths.PLAY}`);
+		navigate(`/${Paths.PLAY}?game=${game.id}`);
 	};
 
 	return (
