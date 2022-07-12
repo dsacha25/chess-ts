@@ -9,6 +9,7 @@ import { END, EventChannel, eventChannel } from 'redux-saga';
 import {
 	call,
 	CallEffect,
+	cancelled,
 	ChannelTakeEffect,
 	fork,
 	ForkEffect,
@@ -73,6 +74,7 @@ export class SagaListener {
 						return emitter({ ...snapshot.data() });
 					}
 				} else {
+					console.log('END LISTENER');
 					emitter(END);
 				}
 			});

@@ -30,6 +30,12 @@ const PlayPage = () => {
 	const [playersPresent, setPlayersPresent] = useState(false);
 
 	useEffect(() => {
+		return () => {
+			clearActiveGame();
+		};
+	}, []);
+
+	useEffect(() => {
 		if (gameUID) {
 			clearActiveGame();
 			fetchGameById(gameUID);
@@ -45,19 +51,18 @@ const PlayPage = () => {
 	}, [gameUID]);
 
 	// ==== FIREBASE PRESENCE STATE
-	useEffect(() => {
-		if (activeGame) {
-			setUserGamePresence(true, activeGame.id);
-		}
+	// useEffect(() => {
+	// 	if (activeGame) {
+	// 		setUserGamePresence(true, activeGame.id);
+	// 	}
 
-		return () => {
-			if (!activeGame) return;
-			setUserGamePresence(false, activeGame.id);
-			clearActiveGame();
-		};
+	// 	return () => {
+	// 		if (!activeGame) return;
+	// 		setUserGamePresence(false, activeGame.id);
+	// 	};
 
-		// eslint-disable-next-line
-	}, []);
+	// 	// eslint-disable-next-line
+	// }, []);
 
 	// ==== LOCAL PRESENCE STATE
 	useEffect(() => {

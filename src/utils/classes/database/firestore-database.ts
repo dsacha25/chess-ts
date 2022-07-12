@@ -81,7 +81,10 @@ export class FirestoreDatabase implements Database {
 		this.setCollection(collectionName);
 		let pendingQuery = query<T>(this.collection, ...queryContstraints);
 
-		const snapshot = await getDocs(pendingQuery);
+		const snapshot = await getDocs(pendingQuery).catch((err) => {
+			console.log('Firebase Error: ', err, ' Name: ', collectionName);
+			return err;
+		});
 
 		return this.convertSnapshot<T>(snapshot);
 	}
@@ -174,7 +177,7 @@ export class FirestoreDatabase implements Database {
 	async delete(collectionName: string, id: string): Promise<void> {
 		const collectionRef = this.getCollection(collectionName);
 		const docRef = doc(collectionRef, id);
-		await deleteDoc(docRef)
+		return await deleteDoc(docRef)
 			.then(() => {
 				console.log(`Document ${id} deleted`);
 			})
@@ -191,8 +194,7 @@ export class FirestoreDatabase implements Database {
 		const collectionRef = this.getCollection<T>(collectionName);
 		const documentRef = doc<T>(collectionRef, id);
 
-		const unsubscribe = onSnapshot<T>(documentRef, observer);
-		return unsubscribe;
+		return onSnapshot<T>(documentRef, observer);
 	}
 
 	openCollectionListener<T>(
@@ -203,8 +205,7 @@ export class FirestoreDatabase implements Database {
 		const collectionRef = this.getCollection<T>(collectionName);
 		let pendingQuery = query<T>(collectionRef, ...queryContstraints);
 
-		const unsubscribe = onSnapshot<T>(pendingQuery, observer);
-		return unsubscribe;
+		return onSnapshot<T>(pendingQuery, observer);
 	}
 
 	async searchCollection<T>(

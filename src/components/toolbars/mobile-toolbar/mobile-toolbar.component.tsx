@@ -6,8 +6,7 @@ import {
 	MobileToolbarContainer,
 } from './mobile-toolbar.styles';
 
-import { FaHandMiddleFinger } from 'react-icons/fa';
-import { GiEvilLove } from 'react-icons/gi';
+import { GiEvilLove, GiTabletopPlayers } from 'react-icons/gi';
 import { IoStatsChart } from 'react-icons/io5';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { FiCheck } from 'react-icons/fi';
@@ -35,32 +34,32 @@ const MobileToolbar = () => {
 				color="light"
 				active={index === 0}
 			>
-				<FaHandMiddleFinger color="black" size="24px" />
+				<GiTabletopPlayers color="black" size="40px" />
 			</MobileToolbarButton>
 			<MobileToolbarButton
 				onClick={() => setDashboardIndex(1)}
 				color="light"
 				active={index === 1}
 			>
-				<GiEvilLove color="black" size="30px" />
+				<GiEvilLove color="black" size="40px" />
 			</MobileToolbarButton>
 			<MobileToolbarButton
 				onClick={() => setDashboardIndex(2)}
 				color="light"
 				active={index === 2}
 			>
-				<IoStatsChart color="black" size="24px" />
+				<IoStatsChart color="black" size="34px" />
 			</MobileToolbarButton>
 			<MobileToolbarButton
 				onClick={() => setDashboardIndex(3)}
 				color="light"
 				active={index === 3}
 			>
-				<AvatarChip size="30px" url={photoURL} />
+				<AvatarChip size="40px" url={photoURL} />
 			</MobileToolbarButton>
 			<NotificationButton mobile />
 			<MobileToolbarButton onClick={() => setOpen(!open)} color="light">
-				<RiLogoutCircleRLine color="black" size="30px" />
+				<RiLogoutCircleRLine color="black" size="40px" />
 			</MobileToolbarButton>
 
 			{open && (

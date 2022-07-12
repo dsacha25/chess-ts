@@ -4,9 +4,12 @@ import {
 	all,
 	call,
 	CallEffect,
+	cancel,
+	ForkEffect,
 	put,
 	select,
 	SelectEffect,
+	take,
 	takeEvery,
 	takeLeading,
 } from 'redux-saga/effects';
@@ -198,7 +201,7 @@ export function* openActiveGameListenerAsync(): Generator | SelectEffect {
 }
 
 export function* onOpenActiveGameListener() {
-	yield takeLeading(
+	yield takeEvery(
 		GameTypes.OPEN_ACTIVE_GAME_LISTENER,
 		openActiveGameListenerAsync
 	);

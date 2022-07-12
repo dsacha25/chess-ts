@@ -28,6 +28,7 @@ import parseCurrentPlayer from '../../../../utils/helpers/parsers/parse-current-
 import parseTimeUnit from '../../../../utils/helpers/parsers/parse-time-unit/parse-time-unit';
 import isPresenceRequired from '../../../../utils/helpers/is-presence-required/is-presence-required';
 import parsePlayerSide from '../../../../utils/helpers/parsers/parse-player-side/parse-player-side';
+import { Timestamp } from 'firebase/firestore';
 
 const Rating = memo(PlayerRating);
 const Name = memo(PlayerName);
@@ -50,8 +51,9 @@ const PlayerChip = () => {
 		if (game) {
 			console.log('BLACK UID: ', game.black.uid);
 			console.log('UID: ', uid);
-
+			console.log('BLACK UID === PLAYER UID: ', game.black.uid === uid);
 			setSide(game.black.uid === uid ? 'black' : 'white');
+			console.log('PLAYER SIDE: ', side);
 		}
 
 		// eslint-disable-next-line
@@ -64,7 +66,9 @@ const PlayerChip = () => {
 			console.log('PRESENCE?: ', isPresenceRequired(game.gameMode));
 			if (!isPresenceRequired(game.gameMode)) return;
 
-			if (previousMoveTime) {
+			console.log('PREVIOUS MOVE TIME: ', previousMoveTime);
+
+			if (previousMoveTime instanceof Timestamp) {
 				console.log('SET TIME FROM PREVIOUS MOVE');
 				setTime(previousMoveTime.toDate().getTime() + parseTimeUnit(game));
 
@@ -126,7 +130,7 @@ const PlayerChip = () => {
 		}
 	};
 
-	if (!chessUser) return null;
+	if (!chessUser || !game) return null;
 
 	return (
 		<ChipContainer>
@@ -134,14 +138,12 @@ const PlayerChip = () => {
 				<OnlineStatus online={online} />
 			</Avatar>
 			<PlayerInfo>
-				{game && (
-					<CountdownTimer
-						date={time}
-						getTime={handleTime}
-						isPaused={paused}
-						hidden={game.gameMode === 'untimed'}
-					/>
-				)}
+				<CountdownTimer
+					date={time}
+					getTime={handleTime}
+					isPaused={paused}
+					hidden={game.gameMode === 'untimed'}
+				/>
 				<Rating>{chessUser.rating}</Rating>
 				<Name>{chessUser.displayName}</Name>
 			</PlayerInfo>

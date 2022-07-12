@@ -4,17 +4,13 @@ import CustomButton from '../../../common/buttons/custom-button/custom-button.co
 
 export const GameTypeSelectorContainer = styled.div`
 	display: grid;
-	/* grid-template-columns: repeat(3, 1fr); */
-
 	position: absolute;
-
 	margin: auto;
 
 	left: 0;
 	right: 0;
 
 	width: 30vw;
-	/* height: 100%; */
 	gap: 10px;
 	padding-bottom: 20px;
 

@@ -25,9 +25,7 @@ import {
 	ReadNotificationAction,
 } from './notifications.action-types';
 import {
-	addReadNotification,
 	addReadNotifications,
-	addUnreadNotification,
 	addUnreadNotifications,
 	notificationError,
 } from './notifications.actions';
@@ -69,11 +67,11 @@ export function* getNotifications(
 	notifications: Notification[]
 ): Generator | SelectEffect {
 	const allNotifications = yield select(selectAllNotifications);
-	console.log('NOTIFICATION PAYLOAD: ', notifications);
+	// console.log('NOTIFICATION PAYLOAD: ', notifications);
 
 	const difference = differenceWith(notifications, allNotifications, isEqual);
 
-	console.log('DIFFERENCE: ', difference);
+	// console.log('DIFFERENCE: ', difference);
 
 	yield put(addUnreadNotifications(filter(notifications, ['unread', true])));
 	yield put(addReadNotifications(filter(notifications, ['unread', false])));
@@ -97,8 +95,6 @@ export function* getNotifications(
 
 	for (const notification of notifications) {
 		if (notification.unread) {
-			// yield put(addUnreadNotification(notification));
-
 			if (notification.type === 'challenge' && !notificationFetches.challenge) {
 				yield put(fetchGameChallengesStart());
 				notificationFetches.challenge = true;

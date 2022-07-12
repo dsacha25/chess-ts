@@ -19,7 +19,7 @@ const EnemyList = () => {
 
 	return (
 		<EnemyListContainer>
-			<Title fontSize="30px">Enmities</Title>
+			<Title fontSize="30px">Enemy List:</Title>
 			{enemies.map((enemy, i) => (
 				<EnemyListItem key={i} enemy={enemy} />
 			))}

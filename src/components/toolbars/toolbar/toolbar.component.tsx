@@ -40,7 +40,7 @@ const Toolbar = () => {
 				active={index === 2}
 				icon={<IoStatsChart color="black" size="24px" />}
 			>
-				You Suck
+				Game Stats
 			</ExpandingButton>
 			<ExpandingButton
 				onClick={() => setDashboardIndex(3)}

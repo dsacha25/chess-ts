@@ -104,10 +104,12 @@ const AuxiliaryPanel = () => {
 	};
 
 	useEffect(() => {
-		openChatListenerStart();
+		if (index) {
+			openChatListenerStart();
+		}
 
 		// eslint-disable-next-line
-	}, []);
+	}, [index]);
 
 	useEffect(() => {
 		if (index && chatUnread) {

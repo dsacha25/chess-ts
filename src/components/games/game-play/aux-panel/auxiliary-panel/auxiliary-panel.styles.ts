@@ -19,7 +19,6 @@ export const AuxiliaryPanelContainer = styled.div`
 
 	grid-template-rows: auto 1fr auto;
 
-	/* background-color: ${({ theme }) => theme.secondary}; */
 	color: ${({ theme }) => theme.main};
 
 	h2 {
@@ -29,7 +28,7 @@ export const AuxiliaryPanelContainer = styled.div`
 	grid-gap: 20px;
 
 	@media screen and (max-width: 980px) {
-		height: calc(100% - 70px);
+		height: calc(100vh - 70px);
 
 		border-radius: 0;
 	}

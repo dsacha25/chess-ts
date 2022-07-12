@@ -10,10 +10,9 @@ import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
 import { setUserStatusSuccess, userError } from '../user.actions';
 import { selectUserUID } from '../user.selector';
 import UserTypes from '../user.types';
-import { app, db, rt } from '../../../utils/classes/firestore/firestore-app';
+import { app, db } from '../../../utils/classes/firestore/firestore-app';
 
 import {
-	Database,
 	getDatabase,
 	ref,
 	set,
@@ -22,13 +21,14 @@ import {
 	DatabaseReference,
 } from 'firebase/database';
 import { SetUserGamePresenceAction } from '../user.action-types';
-import { selectActiveGame } from '../../game/game.selector';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 
 export function* setUserPresence({
 	payload: { present, gameUID },
 }: SetUserGamePresenceAction): Generator | SelectEffect {
 	try {
+		yield console.log('PRESENCE GAME  ID:  ', gameUID);
+
 		const uid = yield select(selectUserUID);
 		const game = yield db.get<ChessGameType>('games', gameUID);
 

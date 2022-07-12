@@ -25,7 +25,7 @@ const NotificationButton: FC<NotificationButtonProps> = ({ mobile }) => {
 					color={mobile ? 'light' : 'main'}
 				>
 					<NotifButtonFlag unread={unreadNotifs.length > 0} />
-					<RiNotificationFill size="28px" />
+					<RiNotificationFill size="36px" />
 				</NotifButton>
 
 				{open ? <NotificationsWindow /> : null}

@@ -51,12 +51,11 @@ const StatsTab = () => {
 	return (
 		<StatsContainer>
 			<TabTitle>Stats Page</TabTitle>
-			<p>A comprehensive analysis of how shitty you are.</p>
-			<p>Spoiler alert, its a lot.</p>
+			<p>You're not very good, are you?.</p>
+
 			<p>
 				<strong>WINS:</strong> {wins} <br /> <strong>LOSSES:</strong> {losses}
 			</p>
-			<p>Also eat a dick.</p>
 		</StatsContainer>
 	);
 };

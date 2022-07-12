@@ -23,6 +23,7 @@ import {
 import parseCurrentPlayer from '../../../../utils/helpers/parsers/parse-current-player/parse-current-player';
 import parseTimeUnit from '../../../../utils/helpers/parsers/parse-time-unit/parse-time-unit';
 import isPresenceRequired from '../../../../utils/helpers/is-presence-required/is-presence-required';
+import { Timestamp } from 'firebase/firestore';
 
 const Name = memo(PlayerName);
 const Rating = memo(PlayerRating);
@@ -44,7 +45,9 @@ const OpponentChip = () => {
 
 			if (!isPresenceRequired(game.gameMode)) return;
 
-			if (previousMoveTime) {
+			console.log('PREVIOUS MOVE TIME: ', previousMoveTime);
+
+			if (previousMoveTime instanceof Timestamp) {
 				console.log('SET OPPONENT TIME FROM PREVIOUS MOVE');
 				setTime(previousMoveTime.toDate().getTime() + parseTimeUnit(game));
 				console.log('PREVIOUS MOVE:', previousMoveTime.toDate().getTime());
@@ -56,7 +59,7 @@ const OpponentChip = () => {
 				);
 			}
 		}
-	}, [enemy]);
+	}, [game, enemy]);
 
 	useEffect(() => {
 		if (game && enemy && side === turn && !isPresenceRequired(game.gameMode)) {
@@ -96,7 +99,9 @@ const OpponentChip = () => {
 		if (game && enemy) {
 			console.log('BLACK UID: ', game.black.uid);
 			console.log('ENEMY UID: ', enemy.uid);
+			console.log('BLACK UID === ENEMY UID: ', game.black.uid === enemy.uid);
 			setSide(game.black.uid === enemy.uid ? 'black' : 'white');
+			console.log('OPP SIDE: ', side);
 		}
 
 		// eslint-disable-next-line

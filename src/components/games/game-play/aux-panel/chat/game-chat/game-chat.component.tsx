@@ -1,5 +1,6 @@
 import React, {
 	ChangeEvent,
+	ChangeEventHandler,
 	FormEvent,
 	KeyboardEvent,
 	memo,
@@ -37,7 +38,7 @@ const GameChat = () => {
 	const [message, setMessage] = useState('');
 	const [inputEnabled, setInputEnabled] = useState(true);
 
-	const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+	const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
 		if (e.nativeEvent.type === 'insertLineBreak') {
 			console.log('Line break');
 		}
@@ -96,7 +97,7 @@ const GameChat = () => {
 					onChange={handleChange}
 					onKeyDown={handleKeyDown}
 					value={message}
-					placeholder="Call them a bitch..."
+					placeholder="Demoralize your enemy..."
 					maxLength={160}
 				/>
 				<SendMessageButton type="submit" color="light" ref={buttonRef}>
