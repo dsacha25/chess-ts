@@ -34,7 +34,7 @@ export const ProfileTabContents = styled.div`
 
 export const UpdateProfileForm = styled.form`
 	display: grid;
-
+	max-width: 980px;
 	place-items: stretch center;
 
 	grid-template: auto auto auto / auto 1fr;
@@ -100,10 +100,16 @@ export const ReauthContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	max-width: 980px;
 	height: 100%;
 	place-items: center;
 
 	position: relative;
+
+	h2 {
+		align-self: flex-start;
+		grid-column: 1 / span 2;
+	}
 
 	@media screen and (max-width: 980px) {
 		margin-bottom: 100px;
