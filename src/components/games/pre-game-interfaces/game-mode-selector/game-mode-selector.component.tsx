@@ -8,6 +8,7 @@ import {
 	GameTypeSelectorContainer,
 } from './game-mode-selector.styles';
 import { GameModeSelectorProps } from './types';
+import { IoClose } from 'react-icons/io5';
 
 const GameModeSelector: FC<GameModeSelectorProps> = ({
 	enemyUID,
@@ -75,6 +76,9 @@ const GameModeSelector: FC<GameModeSelectorProps> = ({
 					color="secondary"
 				>
 					Three Day
+				</ChallengeButton>
+				<ChallengeButton onClick={handleClose}>
+					<IoClose size="40px" color="black" />
 				</ChallengeButton>
 			</GameTypeSelectorContainer>
 		</ClickAwayListener>

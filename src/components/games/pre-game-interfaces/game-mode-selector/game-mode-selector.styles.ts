@@ -18,6 +18,15 @@ export const GameTypeSelectorContainer = styled.div`
 	z-index: 10;
 
 	${StarBorderFilled};
+
+	@media screen and (max-width: 980px) {
+		top: 8px;
+		width: 96vw;
+
+		h2 {
+			font-size: 20px;
+		}
+	}
 `;
 
 export const ChallengeButton = styled(CustomButton)`
@@ -26,4 +35,8 @@ export const ChallengeButton = styled(CustomButton)`
 	border-radius: 0.4rem !important;
 	margin: 0;
 	place-content: center;
+
+	@media screen and (max-width: 980px) {
+		width: 60%;
+	}
 `;
