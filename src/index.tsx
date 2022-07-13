@@ -14,13 +14,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<BrowserRouter>
-				<ThemeProvider theme={globalStyles}>
-					<PersistGate persistor={persistor}>
+			<PersistGate persistor={persistor}>
+				<BrowserRouter>
+					<ThemeProvider theme={globalStyles}>
 						<App />
-					</PersistGate>
-				</ThemeProvider>
-			</BrowserRouter>
+					</ThemeProvider>
+				</BrowserRouter>
+			</PersistGate>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')
