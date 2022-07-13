@@ -3,13 +3,6 @@ import { FormInputProps } from './types';
 
 const secondary = '#b6babd';
 
-const errorStyles = css`
-	background-color: #ffe9e9 !important;
-	border-color: #ff3636 !important;
-	outline: 0;
-	box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.4) !important;
-`;
-
 const labelStyles = css`
 	display: unset;
 	align-items: unset;
@@ -21,52 +14,20 @@ const labelStyles = css`
 	letter-spacing: -0.05rem;
 `;
 
-export const FormInputWrapper = styled.div<FormInputProps>`
-	display: inline;
-	position: relative;
-	flex: 1;
-	width: 100%;
-	margin: ${({ margin }) => margin};
-
-	input[type='password'] {
-		letter-spacing: 0.3rem;
-
-		@media screen and (max-width: 980px) {
-			font-size: 16px;
-			letter-spacing: 0.1rem;
-		}
-	}
-`;
-
-export const FormInputComponent = styled.input<FormInputProps>`
-	display: block;
-	width: 100%;
-	height: 100%;
+const FormInputBase = css`
+	color: ${({ theme }) => theme.main};
 
 	border-radius: 0.5rem;
 	border: 1px solid ${secondary};
-
-	/* background: ${({ theme }) => theme.accentBright}; */
-	color: ${({ theme }) => theme.main};
 	padding: 10px 25px;
 	max-width: -webkit-fill-available;
-
 	font-family: 'Lexend Peta', sans-serif;
 	font-size: 26px;
 	font-weight: 400;
 	font-style: italic;
 	letter-spacing: 0.15rem;
 	line-height: 2rem;
-
-	pointer-events: ${({ noClick }) => noClick && 'none'};
 	cursor: pointer;
-
-	${({ error }) => error && errorStyles}
-
-	::placeholder {
-		color: ${({ theme }) => theme.main};
-		font-size: 1.25rem;
-	}
 
 	:focus {
 		outline: none;
@@ -85,6 +46,11 @@ export const FormInputComponent = styled.input<FormInputProps>`
 		cursor: unset;
 	}
 
+	::placeholder {
+		color: ${({ theme }) => theme.main};
+		font-size: 1.25rem;
+	}
+
 	::-webkit-calendar-picker-indicator {
 		cursor: pointer;
 	}
@@ -93,6 +59,59 @@ export const FormInputComponent = styled.input<FormInputProps>`
 		font-size: 16px;
 		letter-spacing: 0.1rem;
 	}
+`;
+
+const errorStyles = css`
+	background-color: #ffe9e9 !important;
+	border-color: #ff3636 !important;
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.4) !important;
+`;
+
+export const FormInputWrapper = styled.div<FormInputProps<any>>`
+	display: inline;
+	position: relative;
+	flex: 1;
+	width: 100%;
+	margin: ${({ margin }) => margin};
+
+	input[type='password'] {
+		letter-spacing: 0.3rem;
+
+		@media screen and (max-width: 980px) {
+			font-size: 16px;
+			letter-spacing: 0.1rem;
+		}
+	}
+`;
+
+export const FormInputComponent = styled.input<FormInputProps<'input'>>`
+	display: block;
+	width: 100%;
+	height: 100%;
+
+	pointer-events: ${({ noClick }) => noClick && 'none'};
+
+	${({ error }) => error && errorStyles}
+
+	${FormInputBase};
+`;
+
+export const FormInputTextAreaComponent = styled.textarea<
+	FormInputProps<'textarea'>
+>`
+	display: block;
+	width: 100%;
+	height: 100%;
+
+	pointer-events: ${({ noClick }) => noClick && 'none'};
+
+	resize: vertical;
+	min-height: 100px;
+
+	${({ error }) => error && errorStyles}
+
+	${FormInputBase};
 `;
 
 export const InputLabel = styled.label`

@@ -1,10 +1,14 @@
-import { ComponentPropsWithRef } from 'react';
+import React, { ComponentPropsWithRef } from 'react';
 import { FieldError } from 'react-hook-form';
 
-export interface FormInputProps extends ComponentPropsWithRef<'input'> {
-	label?: string;
-	error?: FieldError | string;
-	noClick?: boolean;
-	margin?: string;
-	hasData?: boolean;
-}
+export type InputType = 'input' | 'textarea';
+
+export type FormInputProps<T extends React.ElementType> =
+	ComponentPropsWithRef<T> & {
+		label?: string;
+		error?: FieldError | string;
+		noClick?: boolean;
+		margin?: string;
+		hasData?: boolean;
+		inputType?: InputType;
+	};
