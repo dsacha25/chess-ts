@@ -4,12 +4,9 @@ import {
 	all,
 	call,
 	CallEffect,
-	cancel,
-	ForkEffect,
 	put,
 	select,
 	SelectEffect,
-	take,
 	takeEvery,
 	takeLeading,
 } from 'redux-saga/effects';
@@ -21,7 +18,6 @@ import parseGameTime from '../../../utils/helpers/parsers/parse-game-time/parse-
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { ChessMove } from '../../../utils/types/chess-move/chess-move';
 import { ConfirmedMove } from '../../../utils/types/confirmed-move/confirmed-move';
-import { setUserGamePresence } from '../../user/user.actions';
 import { selectUserUID } from '../../user/user.selector';
 import { FetchGameByIdAction, SetActiveGameAction } from '../game.action-types';
 import {

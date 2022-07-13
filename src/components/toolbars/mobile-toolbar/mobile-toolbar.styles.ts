@@ -14,7 +14,7 @@ export const MobileToolbarContainer = styled.div`
 	bottom: 0;
 	place-items: center;
 
-	grid-template-columns: repeat(6, 1fr);
+	grid-template-columns: repeat(7, 1fr);
 
 	background-color: ${({ theme }) => theme.light};
 	z-index: 6;

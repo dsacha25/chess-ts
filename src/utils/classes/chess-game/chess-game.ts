@@ -1,11 +1,9 @@
-import { CSSProperties } from 'react';
 import { ChessInstance, Square } from 'chess.js';
 
 import Orientation from '../../types/orientation/orientation';
 
 import {
 	Game,
-	move,
 	status,
 	moves,
 	aiMove,
@@ -15,8 +13,6 @@ import {
 	History,
 	ConfigObject,
 	Position,
-	Move,
-	Moves,
 	AiLevel,
 } from 'js-chess-engine';
 import { keys, values } from 'lodash';

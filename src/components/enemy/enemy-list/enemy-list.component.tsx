@@ -13,6 +13,7 @@ const EnemyList = () => {
 
 	useEffect(() => {
 		fetchPendingChallengesStart();
+		// eslint-disable-next-line
 	}, []);
 
 	if (enemies.length === 0) return null;

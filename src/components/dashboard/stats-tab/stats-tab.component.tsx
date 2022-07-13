@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectInactiveGames } from '../../../redux/game/game.selector';
 import { selectUserUID } from '../../../redux/user/user.selector';
-import Title from '../../common/title/title.styles';
-import { TabTitle } from '../challenge-tab/challenge-tab.styles';
+import { TabTitle } from '../tab-styles/tab-styles..styles';
 import { StatsContainer } from './stats-tab.styles';
 
 const StatsTab = () => {
@@ -53,6 +52,9 @@ const StatsTab = () => {
 			<TabTitle>Stats Page</TabTitle>
 			<p>You're not very good, are you?.</p>
 
+			<p>
+				<strong>TOTAL GAMES:</strong> {total}
+			</p>
 			<p>
 				<strong>WINS:</strong> {wins} <br /> <strong>LOSSES:</strong> {losses}
 			</p>

@@ -4,11 +4,10 @@ import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectEnemySearchResults } from '../../../redux/enemies/enemies.selector';
 import SearchInput from '../../common/inputs/search-input/search-input.component';
-import Title from '../../common/title/title.styles';
 import EnemyList from '../../enemy/enemy-list/enemy-list.component';
 import EnemyRequestsList from '../../enemy/enemy-requests-list/enemy-requests-list.component';
 import EnemySearchResult from '../../enemy/enemy-search-result/enemy-search-result.component';
-import { TabTitle } from '../challenge-tab/challenge-tab.styles';
+import { TabTitle } from '../tab-styles/tab-styles..styles';
 import { EnemiesContainer, EnemySearchContainer } from './enemies-tab.styles';
 
 const EnemiesTab = () => {

@@ -1,8 +1,7 @@
 import React, {
-	ChangeEvent,
 	ChangeEventHandler,
 	FormEvent,
-	KeyboardEvent,
+	KeyboardEventHandler,
 	memo,
 	useEffect,
 	useRef,
@@ -48,7 +47,7 @@ const GameChat = () => {
 		}
 	};
 
-	const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+	const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
 		setInputEnabled(true);
 		if (e.key === 'Enter' && !e.shiftKey) {
 			setInputEnabled(false);

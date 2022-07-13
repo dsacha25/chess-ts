@@ -48,7 +48,7 @@ const CountdownTimer: FC<CountdownTimerProps> = ({
 		} else {
 			ref.current.api?.start();
 		}
-	}, [isPaused]);
+	}, [ref, isPaused]);
 
 	if (hidden) return null;
 

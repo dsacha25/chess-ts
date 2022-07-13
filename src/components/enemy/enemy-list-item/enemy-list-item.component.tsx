@@ -17,7 +17,6 @@ import {
 import { find } from 'lodash';
 import Spinner from '../../common/spinner/spinner.component';
 import GameModeSelector from '../../games/pre-game-interfaces/game-mode-selector/game-mode-selector.component';
-import Paths from '../../../utils/types/paths/paths';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 
 const EnemyListItem: FC<EnemyListItemProps> = ({ enemy }) => {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { ColumnsContainer } from '../../components/common/containers/grids/grids.styles';
 import {
 	CreateAccountContainer,
 	CreateAccountTitle,

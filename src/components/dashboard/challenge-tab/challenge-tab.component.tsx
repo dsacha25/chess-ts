@@ -1,13 +1,11 @@
 import React, { MouseEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Title from '../../common/title/title.styles';
 import {
 	ButtonsContainer,
 	ChallengeButton,
 	ChallengeLabel,
 	ChallengesContainer,
 	ListsContainer,
-	TabTitle,
 } from './challenge-tab.styles';
 import Paths from '../../../utils/types/paths/paths';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
@@ -18,6 +16,7 @@ import InactiveGamesList from '../../games/inactive-games/inactive-games-list/in
 import { GiBattleAxe } from 'react-icons/gi';
 import { ImSad2 } from 'react-icons/im';
 import { BsCpuFill } from 'react-icons/bs';
+import { TabTitle } from '../tab-styles/tab-styles..styles';
 
 const ChallengeTab = () => {
 	const navigate = useNavigate();

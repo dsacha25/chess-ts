@@ -1,5 +1,5 @@
-import { arrayUnion, FieldValue, where } from 'firebase/firestore';
-import { find, orderBy, reduce, union, unionWith } from 'lodash';
+import { arrayUnion } from 'firebase/firestore';
+import { find, orderBy, union } from 'lodash';
 import { EventChannel } from 'redux-saga';
 import {
 	all,

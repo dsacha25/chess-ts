@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Square } from 'chess.js';
-import Chessboard from 'chessboardjsx';
 import { useSelector } from '../../../../../hooks/use-selector/use-typed-selector.hook';
 import {
 	selectOrientation,

@@ -6,6 +6,7 @@ const useQuery = (queryName: string) => {
 
 	return React.useMemo(
 		() => new URLSearchParams(search).get(queryName),
+		// eslint-disable-next-line
 		[search]
 	);
 };

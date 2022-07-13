@@ -1,6 +1,5 @@
-import { formatDuration, isBefore, milliseconds } from 'date-fns';
-import { find } from 'lodash';
 import React, { useEffect, useState } from 'react';
+import { find } from 'lodash';
 import DesktopGameLayout from '../../components/games/game-play/layout/desktop-game-layout/desktop-game-layout.component';
 import MobileGameLayout from '../../components/games/game-play/layout/mobile-game-layout/mobile-game-layout.component';
 import WaitingForOpponentMsg from '../../components/games/pre-game-interfaces/waiting-for-opponent-msg/waiting-for-opponent-msg.component';
@@ -33,6 +32,8 @@ const PlayPage = () => {
 		return () => {
 			clearActiveGame();
 		};
+
+		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {

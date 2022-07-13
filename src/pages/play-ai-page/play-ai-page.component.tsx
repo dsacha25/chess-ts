@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 import GameToolbar from '../../components/toolbars/game-toolbar/game-toolbar.component';
 import useActions from '../../hooks/use-actions/use-actions.hook';
-import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
 import MobileGameToolbar from '../../components/toolbars/mobile-game-toolbar/mobile-game-toolbar.component';
 import useWindowSize from '../../hooks/use-window-size/use-window-size.hook';
 import { PlayAiContainer } from './play-ai-page.styles';

@@ -18,6 +18,8 @@ const DesktopAIGameLayout = () => {
 		return () => {
 			setAiLevel(null);
 		};
+
+		// eslint-disable-next-line
 	}, []);
 
 	return (

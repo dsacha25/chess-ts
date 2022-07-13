@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ListItemText } from '../../../common/lists/list-item-text/list-item-text.styles';
-import { ListItem } from '../../../common/lists/list-item/list-item.styles';
 import {
 	ActiveListItem,
 	JoinGameButton,

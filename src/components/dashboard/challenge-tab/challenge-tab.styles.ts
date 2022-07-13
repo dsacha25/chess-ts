@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import CustomButton from '../../common/buttons/custom-button/custom-button.component';
-import Title from '../../common/title/title.styles';
 
 export const ChallengesContainer = styled.div`
 	display: grid;
@@ -27,17 +26,7 @@ export const ChallengesContainer = styled.div`
 	}
 `;
 
-export const TabTitle = styled(Title)`
-	@media screen and (max-width: 980px) {
-		font-size: 25px !important;
-		margin: 0 !important;
 
-		width: 100vw;
-		height: 60px !important;
-
-		text-align: center;
-	}
-`;
 
 export const ButtonsContainer = styled.div`
 	display: grid;

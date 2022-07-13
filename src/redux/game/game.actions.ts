@@ -1,4 +1,4 @@
-import { AiLevel, Game } from 'js-chess-engine';
+import { AiLevel } from 'js-chess-engine';
 import { ChatMessage } from '../../utils/types/chat-message/chat-message';
 import { ChatUsers } from '../../utils/types/chat-users/chat-users';
 import { ChessGameAiType } from '../../utils/types/chess-game-ai-type/chess-game-ai-type';

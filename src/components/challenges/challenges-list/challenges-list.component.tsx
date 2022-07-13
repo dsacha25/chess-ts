@@ -4,7 +4,6 @@ import { selectGameChallenges } from '../../../redux/game/game.selector';
 import { List } from '../../common/lists/list/list.styles';
 import Title from '../../common/title/title.styles';
 import ChallengesListItem from '../challenges-list-item/challenges-list-item.component';
-import { ChallengesListContainer } from './challenges-list.styles';
 
 const ChallengesList = () => {
 	const challenges = useSelector((state) => selectGameChallenges(state));

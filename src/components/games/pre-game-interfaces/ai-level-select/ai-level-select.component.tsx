@@ -1,12 +1,12 @@
 import React from 'react';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
-import { TabTitle } from '../../../dashboard/challenge-tab/challenge-tab.styles';
 import {
 	AiLevelSelectContainer,
 	AiLevelSelectOptions,
 	SelectAiLevelButton,
 } from './ai-level-select.styles';
 import { BsCpuFill } from 'react-icons/bs';
+import { TabTitle } from '../../../dashboard/tab-styles/tab-styles..styles';
 
 const AiLevelSelect = () => {
 	const { setAiLevel } = useActions();

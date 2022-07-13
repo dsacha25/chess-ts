@@ -9,7 +9,6 @@ import { END, EventChannel, eventChannel } from 'redux-saga';
 import {
 	call,
 	CallEffect,
-	cancelled,
 	ChannelTakeEffect,
 	fork,
 	ForkEffect,

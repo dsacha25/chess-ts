@@ -6,11 +6,10 @@ import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook
 import { selectChessUser } from '../../../redux/user/user.selector';
 import { UpdateCredentials } from '../../../utils/types/update-credentials/update-credentials';
 import LoginModule from '../../auth/login-module/login-module.component';
-import CustomButton from '../../common/buttons/custom-button/custom-button.component';
 import FormInput from '../../common/inputs/form-input/form-input.component';
 import PhotoUploader from '../../common/inputs/photo-uploader/photo-uploader.component';
 import Title from '../../common/title/title.styles';
-import { TabTitle } from '../challenge-tab/challenge-tab.styles';
+import { TabTitle } from '../tab-styles/tab-styles..styles';
 import {
 	DeleteAccountButton,
 	ProfileContainer,

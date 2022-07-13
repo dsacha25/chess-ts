@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Paths from '../../../../utils/types/paths/paths';
 import CustomButton from '../../../common/buttons/custom-button/custom-button.component';
 import Spinner from '../../../common/spinner/spinner.component';
-import { TabTitle } from '../../../dashboard/challenge-tab/challenge-tab.styles';
+import { TabTitle } from '../../../dashboard/tab-styles/tab-styles..styles';
 import {
 	GulagContent,
 	GulagWaitingAreaContainer,

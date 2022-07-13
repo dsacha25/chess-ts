@@ -1,5 +1,5 @@
-import { milliseconds } from 'date-fns';
 import React, { FC, memo } from 'react';
+import { milliseconds } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import Paths from '../../../../utils/types/paths/paths';
 import CustomButton from '../../../common/buttons/custom-button/custom-button.component';

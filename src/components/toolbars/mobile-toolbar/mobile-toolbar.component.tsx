@@ -19,6 +19,7 @@ import NotificationButton from '../../notifications/notification-button/notifica
 import Title from '../../common/title/title.styles';
 import { AvatarChip } from '../../chips/avatar-chip/avatar-chip.styles';
 import { selectProfilePicture } from '../../../redux/user/user.selector';
+import { BsInfoSquare } from 'react-icons/bs';
 
 const MobileToolbar = () => {
 	const { setDashboardIndex, logOutStart } = useActions();
@@ -56,6 +57,13 @@ const MobileToolbar = () => {
 				active={index === 3}
 			>
 				<AvatarChip size="40px" url={photoURL} />
+			</MobileToolbarButton>
+			<MobileToolbarButton
+				onClick={() => setDashboardIndex(4)}
+				color="light"
+				active={index === 4}
+			>
+				<BsInfoSquare size="40px" color="black" />
 			</MobileToolbarButton>
 			<NotificationButton mobile />
 			<MobileToolbarButton onClick={() => setOpen(!open)} color="light">
