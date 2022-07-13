@@ -9,6 +9,7 @@ import { AestheticBar, ToolbarContainer } from './toolbar.styles';
 import { GiEvilLove, GiTabletopPlayers } from 'react-icons/gi';
 import { IoStatsChart } from 'react-icons/io5';
 import { CgProfile } from 'react-icons/cg';
+import { BsInfoSquare } from 'react-icons/bs';
 
 const Toolbar = () => {
 	const { setDashboardIndex } = useActions();
@@ -49,6 +50,14 @@ const Toolbar = () => {
 				icon={<CgProfile color="black" size="32px" />}
 			>
 				Profile
+			</ExpandingButton>
+			<ExpandingButton
+				onClick={() => setDashboardIndex(4)}
+				color="light"
+				active={index === 4}
+				icon={<BsInfoSquare color="black" size="32px" />}
+			>
+				Info
 			</ExpandingButton>
 			<AestheticBar />
 		</ToolbarContainer>

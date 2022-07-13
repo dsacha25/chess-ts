@@ -2,6 +2,7 @@ import React from 'react';
 import ComponentSwitcher from '../../components/common/component-switcher/component-switcher.component';
 import ChallengeTab from '../../components/dashboard/challenge-tab/challenge-tab.component';
 import EnemiesTab from '../../components/dashboard/enemies-tab/enemies-tab.component';
+import InfoTab from '../../components/dashboard/info-tab/info-tab.component';
 import ProfileTab from '../../components/dashboard/profile-tab/profile-tab.component';
 import StatsTab from '../../components/dashboard/stats-tab/stats-tab.component';
 import MobileToolbar from '../../components/toolbars/mobile-toolbar/mobile-toolbar.component';
@@ -24,6 +25,7 @@ const DashboardPage = () => {
 				<EnemiesTab />
 				<StatsTab />
 				<ProfileTab />
+				<InfoTab />
 			</ComponentSwitcher>
 		</DashboardContainer>
 	);
