@@ -6,13 +6,11 @@ import {
 	call,
 	put,
 	select,
-	SelectEffect,
 	takeEvery,
 	takeLatest,
-} from 'redux-saga/effects';
+} from 'typed-redux-saga/macro';
 import { db } from '../../utils/classes/firestore/firestore-app';
 import { listener } from '../../utils/classes/sagas/saga-listener';
-import getErrorMessage from '../../utils/helpers/errors/get-error-message';
 import { Notification } from '../../utils/types/notification/notification';
 import { fetchEnemiesStart } from '../enemies/enemies.actions';
 import {
@@ -38,12 +36,12 @@ export function* deleteNotificationAsync({
 	try {
 		yield db.delete('notifications', id);
 	} catch (err) {
-		yield put(notificationError(getErrorMessage(err)));
+		yield* put(notificationError((err as Error).message));
 	}
 }
 
 export function* onDeleteNotification() {
-	yield takeEvery(
+	yield* takeEvery(
 		NotificationTypes.DELETE_NOTIFICATION,
 		deleteNotificationAsync
 	);
@@ -55,26 +53,24 @@ export function* markNotificationAsRead({
 	try {
 		yield db.update('notifications', notification.id, { unread: false });
 	} catch (err) {
-		yield put(notificationError(getErrorMessage(err)));
+		yield* put(notificationError((err as Error).message));
 	}
 }
 
 export function* onReadNotification() {
-	yield takeEvery(NotificationTypes.READ_NOTIFICATION, markNotificationAsRead);
+	yield* takeEvery(NotificationTypes.READ_NOTIFICATION, markNotificationAsRead);
 }
 
-export function* getNotifications(
-	notifications: Notification[]
-): Generator | SelectEffect {
-	const allNotifications = yield select(selectAllNotifications);
+export function* getNotifications(notifications: Notification[]) {
+	const allNotifications = yield* select(selectAllNotifications);
 	// console.log('NOTIFICATION PAYLOAD: ', notifications);
 
 	const difference = differenceWith(notifications, allNotifications, isEqual);
 
 	// console.log('DIFFERENCE: ', difference);
 
-	yield put(addUnreadNotifications(filter(notifications, ['unread', true])));
-	yield put(addReadNotifications(filter(notifications, ['unread', false])));
+	yield* put(addUnreadNotifications(filter(notifications, ['unread', true])));
+	yield* put(addReadNotifications(filter(notifications, ['unread', false])));
 
 	if (difference.length === 0) {
 		return;
@@ -96,7 +92,7 @@ export function* getNotifications(
 	for (const notification of notifications) {
 		if (notification.unread) {
 			if (notification.type === 'challenge' && !notificationFetches.challenge) {
-				yield put(fetchGameChallengesStart());
+				yield* put(fetchGameChallengesStart());
 				notificationFetches.challenge = true;
 			}
 
@@ -104,7 +100,7 @@ export function* getNotifications(
 				notification.type === 'challenge_accepted' &&
 				!notificationFetches.challengeAccepted
 			) {
-				yield put(fetchActiveGamesStart());
+				yield* put(fetchActiveGamesStart());
 				notificationFetches.challengeAccepted = true;
 			}
 
@@ -112,7 +108,7 @@ export function* getNotifications(
 				notification.type === 'opponent_moved' &&
 				!notificationFetches.opponentMoved
 			) {
-				yield put(fetchActiveGamesStart());
+				yield* put(fetchActiveGamesStart());
 				notificationFetches.opponentMoved = true;
 			}
 
@@ -120,7 +116,7 @@ export function* getNotifications(
 				notification.type === 'request_accepted' &&
 				!notificationFetches.enemyRequestAccepted
 			) {
-				yield put(fetchEnemiesStart());
+				yield* put(fetchEnemiesStart());
 
 				notificationFetches.enemyRequestAccepted = true;
 			}
@@ -128,9 +124,10 @@ export function* getNotifications(
 	}
 }
 
-export function* openNotificationListener(): Generator | SelectEffect {
+export function* openNotificationListener() {
 	try {
-		const uid = yield select(selectUserUID);
+		const uid = yield* select(selectUserUID);
+		if (!uid) return;
 
 		const notificationsChannel: EventChannel<unknown> =
 			yield listener.generateCollectionListener(
@@ -141,19 +138,19 @@ export function* openNotificationListener(): Generator | SelectEffect {
 
 		yield listener.initializeChannel(notificationsChannel, getNotifications);
 	} catch (err) {
-		yield put(notificationError(getErrorMessage(err)));
+		yield* put(notificationError((err as Error).message));
 	}
 }
 
 export function* onOpenNotificationListener() {
-	yield takeLatest(
+	yield* takeLatest(
 		NotificationTypes.OPEN_NOTIFICATION_LISTENER,
 		openNotificationListener
 	);
 }
 
 export function* notificationSagas() {
-	yield all([
+	yield* all([
 		call(onOpenNotificationListener),
 		call(onReadNotification),
 		call(onDeleteNotification),

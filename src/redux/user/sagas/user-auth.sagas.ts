@@ -3,19 +3,16 @@ import {
 	all,
 	call,
 	put,
-	PutEffect,
 	select,
-	SelectEffect,
 	takeEvery,
 	takeLatest,
-} from 'redux-saga/effects';
+} from 'typed-redux-saga/macro';
 import {
 	auth,
 	db,
 	storage,
 } from '../../../utils/classes/firestore/firestore-app';
 import { listener } from '../../../utils/classes/sagas/saga-listener';
-import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
 import {
 	logInSuccess,
 	createAccountSuccess,
@@ -54,11 +51,11 @@ export function* reauthenticateUser({
 	try {
 		yield auth.reauthenticate(credentials);
 
-		yield put(reauthenticateSuccess());
+		yield* put(reauthenticateSuccess());
 
-		yield put(deleteUserAccount(credentials));
+		yield* put(deleteUserAccount(credentials));
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
@@ -68,18 +65,19 @@ export function* onReauthenticateStart() {
 }
 
 // ==== UPDATE PROFILE
-export function* updateProfilePicture(
-	photoURL: BaseImage
-): Generator | SelectEffect {
+export function* updateProfilePicture(photoURL: BaseImage) {
 	try {
-		const uid = yield select(selectUserUID);
+		const uid = yield* select(selectUserUID);
+		if (!uid) return;
 
 		yield console.log('PHOTO URL: ', photoURL);
 
 		const url: Blob = yield fetch(photoURL.image).then((res) => res.blob());
 
 		if (url instanceof Blob) {
-			const photo: string = yield call(uploadProfilePictureToStorage, url, uid);
+			const photo = yield* call(uploadProfilePictureToStorage, url, uid);
+
+			if (typeof photo !== 'string') return;
 
 			console.log('RESULT: ', photo);
 
@@ -101,7 +99,7 @@ export function* updateProfilePicture(
 				});
 		}
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
@@ -123,7 +121,7 @@ export function* updateProfileAsync({
 			yield auth.updateEmailAddress(email);
 		}
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
@@ -132,31 +130,32 @@ export function* onUpdateProfileInfo() {
 }
 
 // ==== UPLOAD PHOTO TO STORAGE
-export function* uploadProfilePictureToStorage(
-	blob: Blob,
-	uid: string
-): Generator<string> | SelectEffect {
+export function* uploadProfilePictureToStorage(blob: Blob, uid: string) {
 	try {
-		yield console.log('UPLOAD TO STORAGE');
+		// yield console.log('UPLOAD TO STORAGE');
 
 		const path = `users/${uid}/userPhoto_${uid}`;
 
 		const uploadResult: UploadResult = yield storage.uploadFile(blob, path);
 
 		const photoURL: string = yield storage.getFileUrl(uploadResult.ref);
-		yield console.log('PHOTO FROM STORAGE: ', photoURL);
+		// yield console.log('PHOTO FROM STORAGE: ', photoURL);
 
 		return photoURL;
 	} catch (err) {
-		yield userError(getErrorMessage(err));
+		yield* put(userError((err as Error).message));
 	}
 }
 
-export function* uploadUserPhotoAsync(uid: string): Generator | SelectEffect {
+export function* uploadUserPhotoAsync(uid: string) {
 	try {
-		const { photoURL }: NewCredentials = yield select(selectNewCredentails);
-		if (!photoURL) return;
+		const credentials = yield* select(selectNewCredentails);
+		if (!credentials) return;
+
+		const { photoURL } = credentials;
 		/// converts DATA URL to BLOB
+		if (!photoURL) return;
+
 		console.log('PHOTO URL: ', photoURL);
 
 		const url: Blob = yield fetch(photoURL.image).then((res) => res.blob());
@@ -187,21 +186,21 @@ export function* uploadUserPhotoAsync(uid: string): Generator | SelectEffect {
 				});
 		}
 
-		yield put(getChessUserStart());
+		yield* put(getChessUserStart());
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
 export function* checkUserState(user: User) {
 	yield console.log('USER: ', user);
 
-	yield put(logInSuccess(user));
+	yield* put(logInSuccess(user));
 
 	return;
 }
 
-export function* openAuthListener(): Generator | SelectEffect {
+export function* openAuthListener() {
 	try {
 		yield console.log('USER LISTENER OPENED');
 
@@ -211,38 +210,38 @@ export function* openAuthListener(): Generator | SelectEffect {
 		);
 		yield console.log('LISTENER CLOSED');
 
-		const auth = yield select(selectUserAuth);
+		const auth = yield* select(selectUserAuth);
 
 		if (auth) {
-			yield put(logOutStart());
+			yield* put(logOutStart());
 		}
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
 export function* onOpenAuthListener() {
-	yield takeEvery(UserTypes.CHECK_USER_SESSION, openAuthListener);
+	yield* takeEvery(UserTypes.CHECK_USER_SESSION, openAuthListener);
 }
 
-export function* checkUserSessionAsync(): Generator<PutEffect> | User | null {
+export function* checkUserSessionAsync() {
 	try {
 		const user: User = yield auth.getCurrentUser();
 		if (user) {
-			yield put(logInSuccess(user));
+			yield* put(logInSuccess(user));
 		}
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
 export function* checkUserAuthSession() {
-	yield takeEvery(UserTypes.CHECK_USER_SESSION, checkUserSessionAsync);
+	yield* takeEvery(UserTypes.CHECK_USER_SESSION, checkUserSessionAsync);
 }
 
 export function* logInUserAsync({
 	payload: { credentials, callback },
-}: LogInStartAction): Generator<PutEffect> | Promise<User> {
+}: LogInStartAction) {
 	const { email, password } = credentials;
 	try {
 		const user: User = yield auth.logInUser(email, password);
@@ -252,27 +251,28 @@ export function* logInUserAsync({
 			callback();
 		}
 
-		yield put(logInSuccess(user));
-		yield put(getChessUserStart());
+		yield* put(logInSuccess(user));
+		yield* put(getChessUserStart());
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
 export function* logInUser() {
-	yield takeEvery(UserTypes.LOG_IN_START, logInUserAsync);
+	yield* takeEvery(UserTypes.LOG_IN_START, logInUserAsync);
 }
 
 /// ==== LISTEN FOR CHESS USER
 export function* listenForChessUser(chessUser: ChessUser) {
 	yield console.log('CHESS USER:', chessUser);
 
-	yield put(getChessUserSuccess(chessUser));
+	yield* put(getChessUserSuccess(chessUser));
 }
 
-export function* openChessUserListener(): Generator | SelectEffect {
+export function* openChessUserListener(): Generator<any, void, any> {
 	try {
-		const uid = yield select(selectUserUID);
+		const uid = yield* select(selectUserUID);
+		if (!uid) return;
 
 		const docRef = yield db.getDocumentReference(`users/${uid}`);
 
@@ -284,18 +284,18 @@ export function* openChessUserListener(): Generator | SelectEffect {
 			listenForChessUser
 		);
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
 export function* onGetChessUserStart() {
-	yield takeEvery(UserTypes.GET_CHESS_USER_START, openChessUserListener);
+	yield* takeEvery(UserTypes.GET_CHESS_USER_START, openChessUserListener);
 }
 
 /// ==== CREATE ACCOUNT
 export function* createAccountAsync({
 	payload: { credentials, callback },
-}: CreateAccountStartAction): Generator<Promise<User>> | PutEffect {
+}: CreateAccountStartAction) {
 	try {
 		yield console.log('CREDENTIALS: ', credentials);
 
@@ -303,30 +303,28 @@ export function* createAccountAsync({
 
 		if (user && callback) yield callback();
 
-		yield put(createAccountSuccess(user));
-		yield put(checkUserSession());
-		yield call(uploadUserPhotoAsync, user.uid);
+		yield* put(createAccountSuccess(user));
+		yield* put(checkUserSession());
+		yield* call(uploadUserPhotoAsync, user.uid);
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
 export function* onCreateAccount() {
-	yield takeEvery(UserTypes.CREATE_ACCOUNT_START, createAccountAsync);
+	yield* takeEvery(UserTypes.CREATE_ACCOUNT_START, createAccountAsync);
 }
 
-export function* logOutAsync({
-	payload: callback,
-}: LogOutStartAction): Generator<void | PutEffect> | Promise<void> {
+export function* logOutAsync({ payload: callback }: LogOutStartAction) {
 	yield auth.logOutUser();
-	yield put(logOutSuccess());
+	yield* put(logOutSuccess());
 	if (callback) {
 		callback();
 	}
 }
 
 export function* onLogOutUser() {
-	yield takeLatest(UserTypes.LOG_OUT_START, logOutAsync);
+	yield* takeLatest(UserTypes.LOG_OUT_START, logOutAsync);
 }
 
 export function* deleteUserAccountAsync({
@@ -337,16 +335,16 @@ export function* deleteUserAccountAsync({
 		yield auth.deleteUser();
 		yield auth.logOutUser();
 	} catch (err) {
-		yield put(userError(getErrorMessage(err)));
+		yield* put(userError((err as Error).message));
 	}
 }
 
 export function* onDeleteUserAccount() {
-	yield takeLatest(UserTypes.DELETE_USER_ACCOUNT, deleteUserAccountAsync);
+	yield* takeLatest(UserTypes.DELETE_USER_ACCOUNT, deleteUserAccountAsync);
 }
 
 export function* userAuthSagas() {
-	yield all([
+	yield* all([
 		call(logInUser),
 		call(onCreateAccount),
 		call(onLogOutUser),

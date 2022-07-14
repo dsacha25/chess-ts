@@ -1,15 +1,7 @@
 import { where } from 'firebase/firestore';
 import { filter, flatMap } from 'lodash';
 import { EventChannel } from 'redux-saga';
-import {
-	all,
-	call,
-	put,
-	PutEffect,
-	select,
-	SelectEffect,
-	takeEvery,
-} from 'redux-saga/effects';
+import { all, call, put, select, takeEvery } from 'typed-redux-saga/macro';
 import { db, functions } from '../../utils/classes/firestore/firestore-app';
 import { listener } from '../../utils/classes/sagas/saga-listener';
 import getErrorMessage from '../../utils/helpers/errors/get-error-message';
@@ -31,37 +23,33 @@ import { EnemyTypes } from './enemies.types';
 export function* fetchEnemyInfo(enemy: ChessUser) {
 	// yield console.log('INFO: ', enemy);
 
-	yield put(fetchEnemyInfoSuccess(enemy));
+	yield* put(fetchEnemyInfoSuccess(enemy));
 }
 
 export function* fetchEnemyInfoAsync({
 	payload: enemyUID,
-}: FetchEnemyInfoStartAction):
-	| Generator<Promise<ChessUser | undefined>>
-	| PutEffect {
+}: FetchEnemyInfoStartAction): Generator<any, void, any> {
 	try {
 		// const enemy: ChessUser = yield db.get<ChessUser>('users', enemyUID);
 
 		const enemyRef = yield db.getDocumentReference(`users/${enemyUID}`);
 		const enemyChannel: EventChannel<ChessUser> =
 			yield listener.generateDocumentListener<ChessUser>(enemyRef);
-
 		yield listener.initializeChannel<ChessUser>(enemyChannel, fetchEnemyInfo);
-
-		// yield console.log('ENEMY INFO: ', enemy);
-		// yield put(fetchEnemyInfoSuccess(enemy));
 	} catch (err) {
-		yield put(enemyError(getErrorMessage(err)));
+		yield* put(enemyError((err as Error).message));
 	}
 }
 
 export function* onFetchEnemyInfoStart() {
-	yield takeEvery(EnemyTypes.FETCH_ENEMY_INFO_START, fetchEnemyInfoAsync);
+	yield* takeEvery(EnemyTypes.FETCH_ENEMY_INFO_START, fetchEnemyInfoAsync);
 }
 
-export function* fetchEnemiesAsync(): Generator | SelectEffect {
+export function* fetchEnemiesAsync(): Generator<any, void, any> {
 	try {
-		const uid = yield select(selectUserUID);
+		const uid = yield* select(selectUserUID);
+
+		if (!uid) return;
 
 		const enemyDocuments = yield db.getAll(
 			'enmities',
@@ -85,38 +73,41 @@ export function* fetchEnemiesAsync(): Generator | SelectEffect {
 			enemies.push(enemy);
 		}
 
-		yield put(fetchEnemiesSuccess(enemies));
+		yield* put(fetchEnemiesSuccess(enemies));
 	} catch (err) {
-		yield put(enemyError(getErrorMessage(err)));
+		yield* put(enemyError((err as Error).message));
 	}
 }
 
 export function* onFetchEnemiesStart() {
-	yield takeEvery(EnemyTypes.FETCH_ENEMIES_START, fetchEnemiesAsync);
+	yield* takeEvery(EnemyTypes.FETCH_ENEMIES_START, fetchEnemiesAsync);
 }
 
 export function* sendEnemyRequestAsync({
 	payload: enemyUID,
-}: SendEnemyRequestAction): Generator | SelectEffect {
+}: SendEnemyRequestAction) {
 	try {
-		const { displayName } = yield select(selectChessUser);
+		const chessUser = yield* select(selectChessUser);
+		if (!chessUser) return;
+
+		const { displayName } = chessUser;
 
 		yield functions.callFirebaseFunction('sendEnemyRequest', {
 			enemyUID,
 			displayName,
 		});
 	} catch (err) {
-		yield put(enemyError(getErrorMessage(err)));
+		yield* put(enemyError((err as Error).message));
 	}
 }
 
 export function* onSendEnemyRequest() {
-	yield takeEvery(EnemyTypes.SEND_ENEMY_REQUEST, sendEnemyRequestAsync);
+	yield* takeEvery(EnemyTypes.SEND_ENEMY_REQUEST, sendEnemyRequestAsync);
 }
 
 export function* searchEnemiesAsync({
 	payload: query,
-}: SearchEnemiesStartAction): Generator<Promise<ChessUser[]>> | PutEffect {
+}: SearchEnemiesStartAction) {
 	try {
 		const result: ChessUser[] = yield db.searchCollection<ChessUser>(
 			query,
@@ -126,18 +117,18 @@ export function* searchEnemiesAsync({
 
 		console.log('SEARCH RESULT: ', result);
 
-		yield put(searchEnemiesSuccess(result));
+		yield* put(searchEnemiesSuccess(result));
 	} catch (err) {
-		yield put(enemyError(getErrorMessage(err)));
+		yield* put(enemyError((err as Error).message));
 	}
 }
 
 export function* onSearchEnemiesStart() {
-	yield takeEvery(EnemyTypes.SEARCH_ENEMIES_START, searchEnemiesAsync);
+	yield* takeEvery(EnemyTypes.SEARCH_ENEMIES_START, searchEnemiesAsync);
 }
 
 export function* enemySagas() {
-	yield all([
+	yield* all([
 		call(onSearchEnemiesStart),
 		call(onSendEnemyRequest),
 		call(onFetchEnemiesStart),
