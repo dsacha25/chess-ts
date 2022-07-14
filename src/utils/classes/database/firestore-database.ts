@@ -131,11 +131,11 @@ export class FirestoreDatabase implements Database {
 			console.error(err);
 			return err;
 		});
-		return this.convertDocSnapshot<T>(snapshot);
+		return await this.convertDocSnapshot<T>(snapshot);
 	}
 
-	getDocumentReference(documentPath: string): DocumentReference {
-		return doc(this.db, documentPath);
+	getDocumentReference<T>(documentPath: string): DocumentReference<T> {
+		return doc(this.db, documentPath) as DocumentReference<T>;
 	}
 
 	async create<T>(

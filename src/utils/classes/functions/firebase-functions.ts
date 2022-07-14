@@ -8,9 +8,9 @@ class FirebaseFunctions {
 		this.functions = getFunctions(app);
 	}
 
-	callFirebaseFunction<T, K>(name: string, data?: T) {
+	async callFirebaseFunction<T, K>(name: string, data?: T) {
 		const callable = httpsCallable<T, K>(this.functions, name);
-		return callable(data)
+		return await callable(data)
 			.then((response) => {
 				console.log('Function succesffuly called');
 				let data = response.data;

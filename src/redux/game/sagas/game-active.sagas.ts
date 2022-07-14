@@ -3,20 +3,16 @@ import { EventChannel } from 'redux-saga';
 import {
 	all,
 	call,
-	CallEffect,
 	put,
 	select,
-	SelectEffect,
 	takeEvery,
 	takeLeading,
-} from 'redux-saga/effects';
+} from 'typed-redux-saga/macro';
 import { db, functions } from '../../../utils/classes/firestore/firestore-app';
 import { listener } from '../../../utils/classes/sagas/saga-listener';
-import getErrorMessage from '../../../utils/helpers/errors/get-error-message';
 import { getPlayerOrientation } from '../../../utils/helpers/get-player-orientation/get-player-orientation';
 import parseGameTime from '../../../utils/helpers/parsers/parse-game-time/parse-game-time';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
-import { ChessMove } from '../../../utils/types/chess-move/chess-move';
 import { ConfirmedMove } from '../../../utils/types/confirmed-move/confirmed-move';
 import { selectUserUID } from '../../user/user.selector';
 import { FetchGameByIdAction, SetActiveGameAction } from '../game.action-types';
@@ -40,89 +36,93 @@ import {
 import { GameTypes } from '../game.types';
 
 // === GAME DRAW
-export function* rejectDrawRequestAsync(): Generator | SelectEffect {
+export function* rejectDrawRequestAsync() {
 	try {
-		const game: ChessGameType = yield select(selectActiveGame);
+		const game = yield* select(selectActiveGame);
+		if (!game) return;
 
 		yield functions.callFirebaseFunction('rejectDrawRequest', { id: game.id });
 	} catch (err) {
-		yield put(gameError(getErrorMessage(err)));
+		yield* put(gameError((err as Error).message));
 	}
 }
 
 export function* onRejectDrawRequest() {
-	yield takeEvery(GameTypes.REJECT_DRAW_REQUEST, rejectDrawRequestAsync);
+	yield* takeEvery(GameTypes.REJECT_DRAW_REQUEST, rejectDrawRequestAsync);
 }
 
-export function* acceptDrawRequestAsync(): Generator | SelectEffect {
+export function* acceptDrawRequestAsync() {
 	try {
-		const game: ChessGameType = yield select(selectActiveGame);
+		const game = yield* select(selectActiveGame);
+		if (!game) return;
 
 		yield functions.callFirebaseFunction('acceptDrawRequest', { id: game.id });
 	} catch (err) {
-		yield put(gameError(getErrorMessage(err)));
+		yield* put(gameError((err as Error).message));
 	}
 }
 
 export function* onAcceptDrawRequest() {
-	yield takeEvery(GameTypes.ACCEPT_DRAW_REQUEST, acceptDrawRequestAsync);
+	yield* takeEvery(GameTypes.ACCEPT_DRAW_REQUEST, acceptDrawRequestAsync);
 }
 
-export function* requestDrawAsync(): Generator | SelectEffect {
+export function* requestDrawAsync() {
 	try {
-		const game: ChessGameType = yield select(selectActiveGame);
+		const game = yield* select(selectActiveGame);
+		if (!game) return;
 
 		yield functions.callFirebaseFunction('requestDraw', { id: game.id });
 	} catch (err) {
-		yield put(gameError(getErrorMessage(err)));
+		yield* put(gameError((err as Error).message));
 	}
 }
 
 export function* onRequestDraw() {
-	yield takeEvery(GameTypes.REQUEST_DRAW, requestDrawAsync);
+	yield* takeEvery(GameTypes.REQUEST_DRAW, requestDrawAsync);
 }
 
 export function* callOpponentAutoResign() {
 	try {
-		const game: ChessGameType = yield select(selectActiveGame);
+		const game = yield* select(selectActiveGame);
+		if (!game) return;
 
 		yield functions.callFirebaseFunction('autoResignOpponent', {
 			gameUID: game.id,
 		});
 	} catch (err) {
-		yield put(gameError(getErrorMessage(err)));
+		yield* put(gameError((err as Error).message));
 	}
 }
 
 export function* onAutoResignOpponent() {
-	yield takeEvery(GameTypes.AUTO_RESIGN_OPPONENT, callOpponentAutoResign);
+	yield* takeEvery(GameTypes.AUTO_RESIGN_OPPONENT, callOpponentAutoResign);
 }
 
-export function* resignGameAsync(): Generator | SelectEffect {
+export function* resignGameAsync() {
 	try {
-		const game: ChessGameType = yield select(selectActiveGame);
+		const game = yield* select(selectActiveGame);
+		if (!game) return;
 
 		yield functions.callFirebaseFunction('resignChessGame', { id: game.id });
 	} catch (err) {
-		yield put(gameError(getErrorMessage(err)));
+		yield* put(gameError((err as Error).message));
 	}
 }
 
 export function* onResignGame() {
-	yield takeEvery(GameTypes.RESIGN_GAME, resignGameAsync);
+	yield* takeEvery(GameTypes.RESIGN_GAME, resignGameAsync);
 }
 
-export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
+export function* makeConfirmedMoveAsync() {
 	try {
-		const game: ChessGameType | null = yield select(selectActiveGame);
-		const { fen, move, winner, gameOver }: ChessMove = yield select(
-			selectPendingMove
-		);
-		const uid = yield select(selectUserUID);
+		const game = yield* select(selectActiveGame);
+		const pendingMove = yield* select(selectPendingMove);
 
-		// yield console.log('ACTIVE GAME: ', game);
+		const uid = yield* select(selectUserUID);
 
-		if (!game) return;
+		if (!game || !uid || !pendingMove) return;
+
+		const { fen, move, winner, gameOver } = pendingMove;
 
 		const confirmedMove: ConfirmedMove = {
 			fen,
@@ -135,101 +135,105 @@ export function* makeConfirmedMoveAsync(): Generator | SelectEffect {
 
 		yield console.log('CONFIRMED MOVE:', confirmedMove);
 		yield functions.callFirebaseFunction('makeConfirmedMove', confirmedMove);
-		yield put(makeConfirmedMoveSuccess());
-		yield put(fetchActiveGamesStart());
+		yield* put(makeConfirmedMoveSuccess());
+		yield* put(fetchActiveGamesStart());
 	} catch (err) {
-		yield put(gameError(getErrorMessage(err)));
+		yield* put(gameError((err as Error).message));
 	}
 }
 
 export function* onMakeConfirmedMove() {
-	yield takeEvery(GameTypes.MAKE_CONFIRMED_MOVE_START, makeConfirmedMoveAsync);
+	yield* takeEvery(GameTypes.MAKE_CONFIRMED_MOVE_START, makeConfirmedMoveAsync);
 }
 
-export function* setActiveGameAsync({
-	payload: game,
-}: SetActiveGameAction): Generator | SelectEffect {
-	const uid = yield select(selectUserUID);
-	const gameType = yield select(selectGameType);
+export function* setActiveGameAsync({ payload: game }: SetActiveGameAction) {
+	const uid = yield* select(selectUserUID);
+	const gameType = yield* select(selectGameType);
 
-	if (gameType !== 'online') return;
+	if (gameType !== 'online' || !uid) return;
 
 	// yield console.log('GAME STATE MOVES: ', game.moves);
 
-	yield put(setFen(game.fen));
-	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
-	yield put(setGameHistory(game.moves));
-	yield put(openActiveGameListener());
+	yield* put(setFen(game.fen));
+	yield* put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
+	yield* put(setGameHistory(game.moves));
+	yield* put(openActiveGameListener());
 }
 
 export function* onSetActiveGame() {
-	yield takeEvery(GameTypes.SET_ACTIVE_GAME, setActiveGameAsync);
+	yield* takeEvery(GameTypes.SET_ACTIVE_GAME, setActiveGameAsync);
 }
 
-export function* getActiveGame(game: ChessGameType): Generator | SelectEffect {
+export function* getActiveGame(game: ChessGameType) {
 	yield console.log('CHESS GAME LISTENER: ', game);
-	const uid = yield select(selectUserUID);
-	const gameType = yield select(selectGameType);
+	const uid = yield* select(selectUserUID);
+	const gameType = yield* select(selectGameType);
 
-	if (gameType !== 'online') return;
+	if (gameType !== 'online' || !uid) return;
 
-	yield put(setFen(game.fen));
-	yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
-	yield put(setGameHistory(game.moves));
-	yield put(setCurrentGame(game));
+	yield* put(setFen(game.fen));
+	yield* put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
+	yield* put(setGameHistory(game.moves));
+	yield* put(setCurrentGame(game));
 }
 
-export function* openActiveGameListenerAsync(): Generator | SelectEffect {
+export function* openActiveGameListenerAsync() {
 	try {
-		const game: ChessGameType | null = yield select(selectActiveGame);
+		const game = yield* select(selectActiveGame);
 
 		if (!game) return;
 		yield console.log('LISTEN FOR: ', game.id);
 
-		const gameRef = yield db.getDocumentReference(`games/${game.id}`);
-		const gameChannel: EventChannel<ChessGameType> =
-			yield listener.generateDocumentListener<ChessGameType>(gameRef, true);
+		const gameRef = db.getDocumentReference<ChessGameType>(`games/${game.id}`);
+		const gameChannel = listener.generateDocumentListener<ChessGameType>(
+			gameRef,
+			true
+		);
 
-		yield listener.initializeChannel<ChessGameType>(gameChannel, getActiveGame);
+		yield* listener.initializeChannel<ChessGameType>(
+			gameChannel,
+			getActiveGame
+		);
 	} catch (err) {
-		yield put(gameError(getErrorMessage(err)));
+		yield* put(gameError((err as Error).message));
 	}
 }
 
 export function* onOpenActiveGameListener() {
-	yield takeEvery(
+	yield* takeEvery(
 		GameTypes.OPEN_ACTIVE_GAME_LISTENER,
 		openActiveGameListenerAsync
 	);
 }
 
-export function* fetchGameByIdAsync({
-	payload: gameUID,
-}: FetchGameByIdAction): Generator | CallEffect {
+export function* fetchGameByIdAsync({ payload: gameUID }: FetchGameByIdAction) {
 	try {
-		const uid = yield select(selectUserUID);
+		const uid = yield* select(selectUserUID);
 
-		const game = yield db.get<ChessGameType>('games', gameUID);
+		const game: ChessGameType = yield db.get<ChessGameType>('games', gameUID);
+
 		yield console.log('GAME BY ID: ', game);
 
-		yield put(setFen(game.fen));
-		yield put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
-		yield put(setGameHistory(game.moves));
-		yield put(setActiveGame(game));
+		if (!game || !uid) return;
+
+		yield* put(setFen(game.fen));
+		yield* put(setOrientation(getPlayerOrientation(game.white.uid, uid)));
+		yield* put(setGameHistory(game.moves));
+		yield* put(setActiveGame(game));
 
 		// yield call(setActiveGameAsync, game);
 	} catch (err) {
-		yield put(gameError(getErrorMessage(err)));
+		yield* put(gameError((err as Error).message));
 	}
 }
 
 export function* onFetchGameByID() {
-	yield takeEvery(GameTypes.FETCH_GAME_BY_ID, fetchGameByIdAsync);
+	yield* takeEvery(GameTypes.FETCH_GAME_BY_ID, fetchGameByIdAsync);
 }
 
-export function* fetchActiveGamesAsync(): Generator | SelectEffect {
+export function* fetchActiveGamesAsync() {
 	try {
-		const uid = yield select(selectUserUID);
+		const uid = yield* select(selectUserUID);
 
 		const games: ChessGameType[] = yield db.getAllWithID<ChessGameType[]>(
 			'games',
@@ -238,18 +242,18 @@ export function* fetchActiveGamesAsync(): Generator | SelectEffect {
 		);
 
 		// yield console.log('GAMES: ', games);
-		yield put(fetchActiveGamesSuccess(games));
+		yield* put(fetchActiveGamesSuccess(games));
 	} catch (err) {
-		yield put(gameError(getErrorMessage(err)));
+		yield* put(gameError((err as Error).message));
 	}
 }
 
 export function* onFetchActiveGames() {
-	yield takeEvery(GameTypes.FETCH_ACTIVE_GAMES_START, fetchActiveGamesAsync);
+	yield* takeEvery(GameTypes.FETCH_ACTIVE_GAMES_START, fetchActiveGamesAsync);
 }
 
 export function* gameActiveSagas() {
-	yield all([
+	yield* all([
 		call(onFetchActiveGames),
 		call(onSetActiveGame),
 		call(onMakeConfirmedMove),
