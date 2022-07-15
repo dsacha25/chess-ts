@@ -8,7 +8,7 @@ class FirebaseFunctions {
 		this.functions = getFunctions(app);
 	}
 
-	async callFirebaseFunction<T, K>(name: string, data?: T) {
+	callFirebaseFunction = async <T, K>(name: string, data?: T) => {
 		const callable = httpsCallable<T, K>(this.functions, name);
 		return await callable(data)
 			.then((response) => {
@@ -22,7 +22,7 @@ class FirebaseFunctions {
 				console.log('Function call unsuccessful');
 				return error;
 			});
-	}
+	};
 }
 
 export default FirebaseFunctions;

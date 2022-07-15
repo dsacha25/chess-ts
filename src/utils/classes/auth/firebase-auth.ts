@@ -35,6 +35,10 @@ export class FirebaseAuth implements Authentication<User> {
 		this.auth = getAuth(app);
 	}
 
+	get currentUser() {
+		return this.auth.currentUser;
+	}
+
 	private getCredential(email: string, password: string) {
 		return EmailAuthProvider.credential(email, password);
 	}
@@ -85,20 +89,19 @@ export class FirebaseAuth implements Authentication<User> {
 		const customer = await db.get<Customer>('customers', uid);
 		if ((customer as Customer) && customer) {
 			return customer;
-		} else {
-			console.log('FUCK YOU ASSHOLE');
 		}
 	}
 
 	async updateEmailAddress(email: string) {
-		const user = this.auth.currentUser;
+		const user = this.currentUser;
 		if (user) {
 			await updateEmail(user, email);
 		}
 	}
 
-	async updateUserProfile(credentials: ProfileTypes): Promise<void> {
-		const user = this.auth.currentUser;
+	updateUserProfile = async (credentials: ProfileTypes): Promise<void> => {
+		const user = this.currentUser;
+
 		if (user) {
 			await updateProfile(user, credentials);
 
@@ -108,16 +111,16 @@ export class FirebaseAuth implements Authentication<User> {
 				});
 			}
 		}
-	}
+	};
 
-	async logInUser(email: string, password: string): Promise<User> {
+	logInUser = async (email: string, password: string): Promise<User> => {
 		const credential = await signInWithEmailAndPassword(
 			this.auth,
 			email,
 			password
 		);
 		return credential.user;
-	}
+	};
 
 	async googleSignIn(): Promise<User> {
 		const provider = new GoogleAuthProvider();

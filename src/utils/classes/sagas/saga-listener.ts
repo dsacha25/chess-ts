@@ -6,24 +6,25 @@ import {
 	QueryConstraint,
 } from 'firebase/firestore';
 import { END, EventChannel, eventChannel } from 'redux-saga';
+// import { call, fork, take, takeLatest } from 'typed-redux-saga/macro';
 import {
 	call,
+	fork,
+	take,
+	takeLatest,
 	CallEffect,
 	ChannelTakeEffect,
-	fork,
 	ForkEffect,
-	take,
 	TakeEffect,
-	takeLatest,
 } from 'redux-saga/effects';
 import { auth, db } from '../firestore/firestore-app';
 
 export class SagaListener {
-	*closeListener<T>(channel: EventChannel<T>): Generator {
+	*closeListener<T>(channel: EventChannel<T>) {
 		yield channel.close();
 	}
 
-	*onListenerClose<T>(channel: EventChannel<T>, ACTION: string): Generator {
+	*onListenerClose<T>(channel: EventChannel<T>, ACTION: string) {
 		yield takeLatest(ACTION, this.closeListener, channel);
 	}
 
@@ -33,7 +34,7 @@ export class SagaListener {
 	): Generator<ChannelTakeEffect<T>> | CallEffect<T> | TakeEffect {
 		try {
 			while (true) {
-				const channelProps: ChannelTakeEffect<T> = yield take(channel);
+				const channelProps = yield take(channel);
 
 				if (channelProps) {
 					yield call(callback, channelProps);
@@ -48,17 +49,17 @@ export class SagaListener {
 	*initializeListener<T>(
 		listener: () => EventChannel<T>,
 		callback: (args?: any) => any
-	): Generator<CallEffect | ForkEffect> | CallEffect<EventChannel<T>> {
+	): Generator<ForkEffect> | CallEffect<EventChannel<T>> {
 		const channel: EventChannel<T> = yield call(listener);
 		yield fork(this.setListener, channel, callback);
 	}
 
-	*initializeChannel<T>(
+	initializeChannel = <T>(
 		channel: EventChannel<T>,
 		callback: (args?: any) => any
-	): Generator<CallEffect | ForkEffect> {
-		yield fork(this.setListener, channel, callback);
-	}
+	) => {
+		return fork(this.setListener, channel, callback);
+	};
 
 	generateDocumentListener<T>(
 		query: DocumentReference<T>,
@@ -82,10 +83,10 @@ export class SagaListener {
 		});
 	}
 
-	generateCollectionListener<T>(
+	generateCollectionListener = <T>(
 		collectionName: string,
 		...constraints: QueryConstraint[]
-	): EventChannel<unknown> {
+	): EventChannel<unknown> => {
 		const collectionRef = db.getCollection<T>(collectionName);
 		return eventChannel<any>((emitter) => {
 			const unsubscribe = onSnapshot(
@@ -106,13 +107,11 @@ export class SagaListener {
 
 			return unsubscribe;
 		});
-	}
+	};
 
 	generateAuthListener(): EventChannel<User> {
 		return eventChannel((emitter) => {
 			const unsubscribe = auth.onAuthChange((user) => {
-				console.log('AUTH LISTENER: ', user);
-
 				if (user) {
 					emitter(user);
 				} else {

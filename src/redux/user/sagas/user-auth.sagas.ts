@@ -34,22 +34,22 @@ import {
 	ReauthenticateStartActon,
 } from '../user.action-types';
 import UserTypes from '../user.types';
-import { UploadResult } from 'firebase/storage';
 import {
 	selectNewCredentails,
 	selectUserAuth,
 	selectUserUID,
 } from '../user.selector';
-import { NewCredentials } from '../../../utils/types/new-credentials/new-credentials';
-import { EventChannel } from 'redux-saga';
 import { ChessUser } from '../../../utils/types/chess-user/chess-user';
 import { BaseImage } from '../../../utils/types/image-types/base-image/base-image';
+import { EventChannel } from 'redux-saga';
+import { DocumentReference } from 'firebase/firestore';
+import getReturn from '../../../utils/helpers/sagas/get-return-type';
 
 export function* reauthenticateUser({
 	payload: credentials,
 }: ReauthenticateStartActon) {
 	try {
-		yield auth.reauthenticate(credentials);
+		yield* call(auth.reauthenticate, credentials);
 
 		yield* put(reauthenticateSuccess());
 
@@ -61,7 +61,7 @@ export function* reauthenticateUser({
 
 // ==== REAUTHENTICATE
 export function* onReauthenticateStart() {
-	yield takeEvery(UserTypes.REAUTHENTICATE_START, reauthenticateUser);
+	yield* takeEvery(UserTypes.REAUTHENTICATE_START, reauthenticateUser);
 }
 
 // ==== UPDATE PROFILE
@@ -87,16 +87,12 @@ export function* updateProfilePicture(photoURL: BaseImage) {
 			}
 
 			/// UPDATE AUTH OBJECT
-			yield auth.updateUserProfile({ photoURL: photo });
+			yield* call(auth.updateUserProfile, { photoURL: photo });
 
 			/// UPDATE CHESS-USER OBJECT
-			yield db
-				.update('users', uid, {
-					photoURL: photo,
-				})
-				.catch((err) => {
-					console.log('UPLOAD ERROR: ', err);
-				});
+			yield* call(db.update, 'users', uid, {
+				photoURL: photo,
+			});
 		}
 	} catch (err) {
 		yield* put(userError((err as Error).message));
@@ -107,18 +103,20 @@ export function* updateProfileAsync({
 	payload: updateCredentials,
 }: UpdateProfileInfoAction) {
 	try {
+		// yield console.log('CREDENTIALS: ', auth.updateUserProfile);
+
 		const { displayName, email, photoURL } = updateCredentials;
 
 		if (photoURL) {
-			yield updateProfilePicture(photoURL);
+			yield* call(updateProfilePicture, photoURL);
 		}
 
 		if (displayName) {
-			yield auth.updateUserProfile({ displayName });
+			yield* call(auth.updateUserProfile, { displayName });
 		}
 
 		if (email) {
-			yield auth.updateEmailAddress(email);
+			yield* call(auth.updateEmailAddress, email);
 		}
 	} catch (err) {
 		yield* put(userError((err as Error).message));
@@ -126,20 +124,17 @@ export function* updateProfileAsync({
 }
 
 export function* onUpdateProfileInfo() {
-	yield takeEvery(UserTypes.UPDATE_PROFILE_INFO, updateProfileAsync);
+	yield* takeEvery(UserTypes.UPDATE_PROFILE_INFO, updateProfileAsync);
 }
 
 // ==== UPLOAD PHOTO TO STORAGE
 export function* uploadProfilePictureToStorage(blob: Blob, uid: string) {
 	try {
-		// yield console.log('UPLOAD TO STORAGE');
-
 		const path = `users/${uid}/userPhoto_${uid}`;
 
-		const uploadResult: UploadResult = yield storage.uploadFile(blob, path);
+		const uploadResult = yield* call(storage.uploadFile, blob, path);
 
-		const photoURL: string = yield storage.getFileUrl(uploadResult.ref);
-		// yield console.log('PHOTO FROM STORAGE: ', photoURL);
+		const photoURL = yield* call(storage.getFileUrl, uploadResult.ref);
 
 		return photoURL;
 	} catch (err) {
@@ -161,20 +156,14 @@ export function* uploadUserPhotoAsync(uid: string) {
 		const url: Blob = yield fetch(photoURL.image).then((res) => res.blob());
 
 		if (url instanceof Blob) {
-			const photoURL: string = yield call(
-				uploadProfilePictureToStorage,
-				url,
-				uid
-			);
+			const photoURL = yield* call(uploadProfilePictureToStorage, url, uid);
 
 			console.log('RESULT: ', photoURL);
 
-			if (!photoURL) {
-				console.log('NO PHOTO');
-				return;
-			}
+			if (!photoURL || typeof photoURL !== 'string') return;
+
 			/// UPDATE AUTH OBJECT
-			yield auth.updateUserProfile({ photoURL });
+			yield* call(auth.updateUserProfile, { photoURL });
 
 			/// UPDATE CHESS-USER OBJECT
 			yield db
@@ -193,22 +182,16 @@ export function* uploadUserPhotoAsync(uid: string) {
 }
 
 export function* checkUserState(user: User) {
-	yield console.log('USER: ', user);
-
 	yield* put(logInSuccess(user));
-
-	return;
 }
 
 export function* openAuthListener() {
 	try {
-		yield console.log('USER LISTENER OPENED');
-
-		yield listener.initializeListener<User>(
+		yield console.log('AUTH LISTEN');
+		yield listener.initializeListener(
 			listener.generateAuthListener,
 			checkUserState
 		);
-		yield console.log('LISTENER CLOSED');
 
 		const auth = yield* select(selectUserAuth);
 
@@ -227,6 +210,8 @@ export function* onOpenAuthListener() {
 export function* checkUserSessionAsync() {
 	try {
 		const user: User = yield auth.getCurrentUser();
+		yield console.log('CHECK SESSION: ', user);
+
 		if (user) {
 			yield* put(logInSuccess(user));
 		}
@@ -244,8 +229,8 @@ export function* logInUserAsync({
 }: LogInStartAction) {
 	const { email, password } = credentials;
 	try {
-		const user: User = yield auth.logInUser(email, password);
-		console.log('USER: ', user);
+		const user = yield* call(auth.logInUser, email, password);
+		yield console.log('USER: ', user);
 
 		if (user && callback) {
 			callback();
@@ -264,8 +249,6 @@ export function* logInUser() {
 
 /// ==== LISTEN FOR CHESS USER
 export function* listenForChessUser(chessUser: ChessUser) {
-	yield console.log('CHESS USER:', chessUser);
-
 	yield* put(getChessUserSuccess(chessUser));
 }
 
@@ -274,15 +257,28 @@ export function* openChessUserListener(): Generator<any, void, any> {
 		const uid = yield* select(selectUserUID);
 		if (!uid) return;
 
-		const docRef = yield db.getDocumentReference(`users/${uid}`);
-
-		const chessUserChannel: EventChannel<ChessUser> =
-			yield listener.generateDocumentListener<ChessUser>(docRef);
-
-		yield listener.initializeChannel<ChessUser>(
-			chessUserChannel,
-			listenForChessUser
+		const docRef = yield* call<any[], getReturn<DocumentReference<ChessUser>>>(
+			db.getDocumentReference,
+			`users/${uid}`
 		);
+
+		const chessUserChannel = yield* call<
+			DocumentReference<ChessUser>[],
+			getReturn<EventChannel<ChessUser>>
+		>(listener.generateDocumentListener, docRef);
+
+		/**
+		 * Stop listening to user to updates
+		 */
+		yield takeEvery(UserTypes.CLOSE_CHESS_USER_LISTENER, function* () {
+			yield console.log('CLOSE_CHESS_USER_LISTENER');
+			yield chessUserChannel.close();
+		});
+
+		/**
+		 * Initialize user listener
+		 */
+		yield listener.initializeChannel(chessUserChannel, listenForChessUser);
 	} catch (err) {
 		yield* put(userError((err as Error).message));
 	}

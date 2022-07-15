@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import {
 	selectChessUser,
@@ -15,13 +15,20 @@ import {
 const ToolbarChip = () => {
 	const photoURL = useSelector((state) => selectProfilePicture(state));
 	const chessUser = useSelector((state) => selectChessUser(state));
+
+	const [name, setName] = useState('');
+
+	useEffect(() => {
+		if (chessUser && chessUser.displayName) {
+			setName(chessUser.displayName);
+		}
+	}, [chessUser]);
+
 	return (
 		<ToolbarChipContainer>
 			<AvatarChip url={photoURL} />
 			<ChipInfoContianer>
-				<UserName>
-					{chessUser ? chessUser.displayName : 'Noot McScooter'}
-				</UserName>
+				<UserName>{name}</UserName>
 				<Rating>{chessUser?.rating}</Rating>
 			</ChipInfoContianer>
 		</ToolbarChipContainer>

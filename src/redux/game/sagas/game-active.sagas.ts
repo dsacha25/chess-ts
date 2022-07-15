@@ -1,4 +1,4 @@
-import { where } from 'firebase/firestore';
+import { DocumentReference, where } from 'firebase/firestore';
 import { EventChannel } from 'redux-saga';
 import {
 	all,
@@ -12,6 +12,7 @@ import { db, functions } from '../../../utils/classes/firestore/firestore-app';
 import { listener } from '../../../utils/classes/sagas/saga-listener';
 import { getPlayerOrientation } from '../../../utils/helpers/get-player-orientation/get-player-orientation';
 import parseGameTime from '../../../utils/helpers/parsers/parse-game-time/parse-game-time';
+import getReturn from '../../../utils/helpers/sagas/get-return-type';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { ConfirmedMove } from '../../../utils/types/confirmed-move/confirmed-move';
 import { selectUserUID } from '../../user/user.selector';
@@ -41,7 +42,9 @@ export function* rejectDrawRequestAsync() {
 		const game = yield* select(selectActiveGame);
 		if (!game) return;
 
-		yield functions.callFirebaseFunction('rejectDrawRequest', { id: game.id });
+		yield* call(functions.callFirebaseFunction, 'rejectDrawRequest', {
+			id: game.id,
+		});
 	} catch (err) {
 		yield* put(gameError((err as Error).message));
 	}
@@ -56,7 +59,9 @@ export function* acceptDrawRequestAsync() {
 		const game = yield* select(selectActiveGame);
 		if (!game) return;
 
-		yield functions.callFirebaseFunction('acceptDrawRequest', { id: game.id });
+		yield* call(functions.callFirebaseFunction, 'acceptDrawRequest', {
+			id: game.id,
+		});
 	} catch (err) {
 		yield* put(gameError((err as Error).message));
 	}
@@ -71,7 +76,7 @@ export function* requestDrawAsync() {
 		const game = yield* select(selectActiveGame);
 		if (!game) return;
 
-		yield functions.callFirebaseFunction('requestDraw', { id: game.id });
+		yield* call(functions.callFirebaseFunction, 'requestDraw', { id: game.id });
 	} catch (err) {
 		yield* put(gameError((err as Error).message));
 	}
@@ -86,7 +91,7 @@ export function* callOpponentAutoResign() {
 		const game = yield* select(selectActiveGame);
 		if (!game) return;
 
-		yield functions.callFirebaseFunction('autoResignOpponent', {
+		yield* call(functions.callFirebaseFunction, 'autoResignOpponent', {
 			gameUID: game.id,
 		});
 	} catch (err) {
@@ -103,7 +108,9 @@ export function* resignGameAsync() {
 		const game = yield* select(selectActiveGame);
 		if (!game) return;
 
-		yield functions.callFirebaseFunction('resignChessGame', { id: game.id });
+		yield* call(functions.callFirebaseFunction, 'resignChessGame', {
+			id: game.id,
+		});
 	} catch (err) {
 		yield* put(gameError((err as Error).message));
 	}
@@ -117,7 +124,6 @@ export function* makeConfirmedMoveAsync() {
 	try {
 		const game = yield* select(selectActiveGame);
 		const pendingMove = yield* select(selectPendingMove);
-
 		const uid = yield* select(selectUserUID);
 
 		if (!game || !uid || !pendingMove) return;
@@ -134,7 +140,11 @@ export function* makeConfirmedMoveAsync() {
 		};
 
 		yield console.log('CONFIRMED MOVE:', confirmedMove);
-		yield functions.callFirebaseFunction('makeConfirmedMove', confirmedMove);
+		yield* call(
+			functions.callFirebaseFunction,
+			'makeConfirmedMove',
+			confirmedMove
+		);
 		yield* put(makeConfirmedMoveSuccess());
 		yield* put(fetchActiveGamesStart());
 	} catch (err) {
@@ -182,18 +192,20 @@ export function* openActiveGameListenerAsync() {
 		const game = yield* select(selectActiveGame);
 
 		if (!game) return;
+
+		const gameRef = yield* call<
+			any[],
+			getReturn<DocumentReference<ChessGameType>>
+		>(db.getDocumentReference, `games/${game.id}`);
+
+		const gameChannel = yield* call<
+			any[],
+			getReturn<EventChannel<ChessGameType>>
+		>(listener.generateDocumentListener, gameRef, true);
+
 		yield console.log('LISTEN FOR: ', game.id);
 
-		const gameRef = db.getDocumentReference<ChessGameType>(`games/${game.id}`);
-		const gameChannel = listener.generateDocumentListener<ChessGameType>(
-			gameRef,
-			true
-		);
-
-		yield* listener.initializeChannel<ChessGameType>(
-			gameChannel,
-			getActiveGame
-		);
+		yield listener.initializeChannel(gameChannel, getActiveGame);
 	} catch (err) {
 		yield* put(gameError((err as Error).message));
 	}

@@ -58,7 +58,7 @@ export class FirestoreDatabase implements Database {
 		}
 	}
 
-	getCollection<T>(collectionName: string): CollectionReference<T> {
+	getCollection = <T>(collectionName: string): CollectionReference<T> => {
 		return collection(this.db, collectionName).withConverter<T>({
 			toFirestore: (data: T) => {
 				return data;
@@ -67,17 +67,17 @@ export class FirestoreDatabase implements Database {
 				return snap.data() as T;
 			},
 		});
-	}
+	};
 
-	setCollection<T>(collectionName: string): void {
+	setCollection = <T>(collectionName: string): void => {
 		this.collection = this.getCollection<T>(collectionName);
-	}
+	};
 
 	// Fetch all documents within specified collection
-	async getAll<T>(
+	getAll = async <T>(
 		collectionName: string,
 		...queryContstraints: QueryConstraint[]
-	): Promise<T[]> {
+	): Promise<T[]> => {
 		this.setCollection(collectionName);
 		let pendingQuery = query<T>(this.collection, ...queryContstraints);
 
@@ -87,12 +87,12 @@ export class FirestoreDatabase implements Database {
 		});
 
 		return this.convertSnapshot<T>(snapshot);
-	}
+	};
 
-	async getAllWithID<T>(
+	getAllWithID = async <T>(
 		collectionName: string,
 		...queryContstraints: QueryConstraint[]
-	): Promise<T[]> {
+	): Promise<T[]> => {
 		this.setCollection(collectionName);
 		let pendingQuery = query<T>(this.collection, ...queryContstraints);
 
@@ -102,12 +102,12 @@ export class FirestoreDatabase implements Database {
 		});
 
 		return this.convertSnapshot<T>(snapshot, true);
-	}
+	};
 
-	async getAllPaginated<T>(
+	getAllPaginated = async <T>(
 		collectionName: string,
 		...queryContstraints: QueryConstraint[]
-	) {
+	) => {
 		this.setCollection(collectionName);
 		let pendingQuery = query<T>(this.collection, ...queryContstraints);
 
@@ -122,9 +122,14 @@ export class FirestoreDatabase implements Database {
 		const endRef = docs[docs.length - 1].ref;
 		const data = this.convertSnapshot<T>(snapshot);
 		return { data, startRef, endRef };
-	}
+	};
 
-	async get<T>(collectionName: string, id: string): Promise<T | undefined> {
+	get = async <T>(
+		collectionName: string,
+		id: string
+	): Promise<T | undefined> => {
+		console.log('GET');
+
 		const collectionRef = this.getCollection<T>(collectionName);
 		const docRef = doc<T>(collectionRef, id);
 		const snapshot = await getDoc<T>(docRef).catch((err) => {
@@ -132,17 +137,17 @@ export class FirestoreDatabase implements Database {
 			return err;
 		});
 		return await this.convertDocSnapshot<T>(snapshot);
-	}
+	};
 
-	getDocumentReference<T>(documentPath: string): DocumentReference<T> {
+	getDocumentReference = <T>(documentPath: string): DocumentReference<T> => {
 		return doc(this.db, documentPath) as DocumentReference<T>;
-	}
+	};
 
-	async create<T>(
+	create = async <T>(
 		collectionPath: string,
 		id: string,
 		item: T
-	): Promise<void | string> {
+	): Promise<void | string> => {
 		const collectionRef = this.getCollection<T>(collectionPath);
 		const docRef = doc(collectionRef, id);
 		const error = await setDoc(docRef, item).catch((err) => {
@@ -153,13 +158,13 @@ export class FirestoreDatabase implements Database {
 		if (error) {
 			return error;
 		}
-	}
+	};
 
-	async update(
+	update = async (
 		collectionName: string,
 		id: string,
 		item: UpdateData<any>
-	): Promise<void | string> {
+	): Promise<void | string> => {
 		const collectionRef = this.getCollection(collectionName);
 		// TODO: is setting collection necessary?
 		this.setCollection(collectionName);
@@ -172,9 +177,9 @@ export class FirestoreDatabase implements Database {
 		if (error) {
 			return error;
 		}
-	}
+	};
 
-	async delete(collectionName: string, id: string): Promise<void> {
+	delete = async (collectionName: string, id: string): Promise<void> => {
 		const collectionRef = this.getCollection(collectionName);
 		const docRef = doc(collectionRef, id);
 		return await deleteDoc(docRef)
@@ -184,35 +189,35 @@ export class FirestoreDatabase implements Database {
 			.catch((err) => {
 				console.error(err);
 			});
-	}
+	};
 
-	openDocumentListener<T>(
+	openDocumentListener = <T>(
 		collectionName: string,
 		id: string,
 		observer: Observer<DocumentSnapshot<T>>
-	): Unsubscribe {
+	): Unsubscribe => {
 		const collectionRef = this.getCollection<T>(collectionName);
 		const documentRef = doc<T>(collectionRef, id);
 
 		return onSnapshot<T>(documentRef, observer);
-	}
+	};
 
-	openCollectionListener<T>(
+	openCollectionListener = <T>(
 		collectionName: string,
 		queryContstraints: QueryConstraint[],
 		observer: Observer<QuerySnapshot<T>>
-	): Unsubscribe {
+	): Unsubscribe => {
 		const collectionRef = this.getCollection<T>(collectionName);
 		let pendingQuery = query<T>(collectionRef, ...queryContstraints);
 
 		return onSnapshot<T>(pendingQuery, observer);
-	}
+	};
 
-	async searchCollection<T>(
+	searchCollection = async <T>(
 		searchQuery: string,
 		collectionName: string,
 		_orderBy?: string
-	): Promise<T[]> {
+	): Promise<T[]> => {
 		if (_orderBy) {
 			return this.getAll<T>(
 				collectionName,
@@ -229,5 +234,5 @@ export class FirestoreDatabase implements Database {
 				limit(10)
 			);
 		}
-	}
+	};
 }

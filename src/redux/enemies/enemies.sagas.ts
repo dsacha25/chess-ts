@@ -4,8 +4,8 @@ import { EventChannel } from 'redux-saga';
 import { all, call, put, select, takeEvery } from 'typed-redux-saga/macro';
 import { db, functions } from '../../utils/classes/firestore/firestore-app';
 import { listener } from '../../utils/classes/sagas/saga-listener';
-import getErrorMessage from '../../utils/helpers/errors/get-error-message';
 import { ChessUser } from '../../utils/types/chess-user/chess-user';
+import { Enemyship } from '../../utils/types/enemyship/enemyship';
 import { selectChessUser, selectUserUID } from '../user/user.selector';
 import {
 	FetchEnemyInfoStartAction,
@@ -21,20 +21,20 @@ import {
 import { EnemyTypes } from './enemies.types';
 
 export function* fetchEnemyInfo(enemy: ChessUser) {
-	// yield console.log('INFO: ', enemy);
-
 	yield* put(fetchEnemyInfoSuccess(enemy));
 }
 
 export function* fetchEnemyInfoAsync({
 	payload: enemyUID,
-}: FetchEnemyInfoStartAction): Generator<any, void, any> {
+}: FetchEnemyInfoStartAction) {
 	try {
 		// const enemy: ChessUser = yield db.get<ChessUser>('users', enemyUID);
 
-		const enemyRef = yield db.getDocumentReference(`users/${enemyUID}`);
+		const enemyRef = yield* call(db.getDocumentReference, `users/${enemyUID}`);
+
 		const enemyChannel: EventChannel<ChessUser> =
-			yield listener.generateDocumentListener<ChessUser>(enemyRef);
+			yield listener.generateDocumentListener(enemyRef);
+
 		yield listener.initializeChannel<ChessUser>(enemyChannel, fetchEnemyInfo);
 	} catch (err) {
 		yield* put(enemyError((err as Error).message));
@@ -45,29 +45,26 @@ export function* onFetchEnemyInfoStart() {
 	yield* takeEvery(EnemyTypes.FETCH_ENEMY_INFO_START, fetchEnemyInfoAsync);
 }
 
-export function* fetchEnemiesAsync(): Generator<any, void, any> {
+export function* fetchEnemiesAsync() {
 	try {
 		const uid = yield* select(selectUserUID);
 
 		if (!uid) return;
 
-		const enemyDocuments = yield db.getAll(
+		const enemyDocuments: Enemyship[] = yield call(
+			db.getAll,
 			'enmities',
 			where('users', 'array-contains', uid)
 		);
-
-		// yield console.log('ENEMIES: ', enemyDocuments);
 
 		const enemyships = flatMap(enemyDocuments, (enemy) =>
 			filter(enemy.users, (userUID) => userUID !== uid)
 		);
 
-		// yield console.log('ENEMYSHIPS: ', enemyships);
-
 		let enemies: ChessUser[] = [];
 
 		for (const enemyUID of enemyships) {
-			const enemy: ChessUser = yield db.get<ChessUser>('users', enemyUID);
+			const enemy: ChessUser = yield call(db.get, 'users', enemyUID);
 			yield console.log('ENEMY: ', enemy);
 
 			enemies.push(enemy);
