@@ -12,7 +12,9 @@ import { db, functions } from '../../../utils/classes/firestore/firestore-app';
 import { listener } from '../../../utils/classes/sagas/saga-listener';
 import { getPlayerOrientation } from '../../../utils/helpers/get-player-orientation/get-player-orientation';
 import parseGameTime from '../../../utils/helpers/parsers/parse-game-time/parse-game-time';
-import getReturn from '../../../utils/helpers/sagas/get-return-type';
+import getReturn, {
+	getPromiseReturn,
+} from '../../../utils/helpers/sagas/get-return-type';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { ConfirmedMove } from '../../../utils/types/confirmed-move/confirmed-move';
 import { selectUserUID } from '../../user/user.selector';
@@ -222,7 +224,11 @@ export function* fetchGameByIdAsync({ payload: gameUID }: FetchGameByIdAction) {
 	try {
 		const uid = yield* select(selectUserUID);
 
-		const game: ChessGameType = yield db.get<ChessGameType>('games', gameUID);
+		const game = yield* call<string[], getPromiseReturn<ChessGameType>>(
+			db.get,
+			'games',
+			gameUID
+		);
 
 		yield console.log('GAME BY ID: ', game);
 
