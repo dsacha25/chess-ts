@@ -124,8 +124,6 @@ export function* searchEnemiesAsync({
 			'displayName'
 		);
 
-		console.log('SEARCH RESULT: ', result);
-
 		yield* put(searchEnemiesSuccess(result));
 	} catch (err) {
 		yield* put(enemyError((err as Error).message));

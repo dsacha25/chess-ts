@@ -1,13 +1,6 @@
 import { DocumentReference, where } from 'firebase/firestore';
 import { EventChannel } from 'redux-saga';
-import {
-	all,
-	call,
-	put,
-	select,
-	takeEvery,
-	takeLeading,
-} from 'typed-redux-saga/macro';
+import { all, call, put, select, takeEvery } from 'typed-redux-saga/macro';
 import { db, functions } from '../../../utils/classes/firestore/firestore-app';
 import { listener } from '../../../utils/classes/sagas/saga-listener';
 import { getPlayerOrientation } from '../../../utils/helpers/get-player-orientation/get-player-orientation';
