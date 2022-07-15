@@ -23,9 +23,14 @@ export function* fetchPendingChallengesAsync() {
 	try {
 		const uid = yield* select(selectUserUID);
 
-		const pendingChallenges: PendingRequest[] = yield db.getAll<
-			PendingRequest[]
-		>(`users/${uid}/pending_requests`, where('type', '==', 'challenge'));
+		const pendingChallenges = yield* call<
+			any[],
+			(...args: any) => Promise<PendingRequest[]>
+		>(
+			db.getAll,
+			`users/${uid}/pending_requests`,
+			where('type', '==', 'challenge')
+		);
 
 		yield console.log('PENDING CHALLENGES: ', pendingChallenges);
 		yield* put(fetchPendingChallengesSuccess(pendingChallenges));
@@ -45,10 +50,10 @@ export function* fetchGameChallengesAsync() {
 	try {
 		const uid = yield* select(selectUserUID);
 
-		const challengeRequests: NotifSender[] = yield db.getAll<NotifSender[]>(
-			`users/${uid}/requests`,
-			where('type', '==', 'challenge')
-		);
+		const challengeRequests = yield* call<
+			any[],
+			(...args: any) => Promise<NotifSender[]>
+		>(db.getAll, `users/${uid}/requests`, where('type', '==', 'challenge'));
 
 		yield console.log('GAME CHALLENGES: ', challengeRequests);
 		yield* put(fetchGameChallengesSuccess(challengeRequests));
@@ -85,7 +90,7 @@ export function* rejectGameChallengeAsync({
 }
 
 export function* onRejectChallengeRequest() {
-	yield takeEvery(GameTypes.REJECT_GAME_CHALLENGE, rejectGameChallengeAsync);
+	yield* takeEvery(GameTypes.REJECT_GAME_CHALLENGE, rejectGameChallengeAsync);
 }
 
 export function* acceptGameChallengeAsync({
@@ -123,7 +128,7 @@ export function* acceptGameChallengeAsync({
 }
 
 export function* onAcceptChallengeRequest() {
-	yield takeEvery(
+	yield* takeEvery(
 		GameTypes.ACCEPT_GAME_CHALLENGE_START,
 		acceptGameChallengeAsync
 	);
@@ -133,7 +138,10 @@ export function* sendChallengeRequestAsync({
 	payload: { enemyUID, gameMode },
 }: SendGameChallengeAction) {
 	try {
-		const { displayName } = yield select(selectChessUser);
+		const user = yield* select(selectChessUser);
+		if (!user) return;
+
+		const { displayName } = user;
 
 		yield functions.callFirebaseFunction('sendChallengeRequest', {
 			enemyUID,
@@ -148,11 +156,11 @@ export function* sendChallengeRequestAsync({
 }
 
 export function* onSendChallengeRequest() {
-	yield takeEvery(GameTypes.SEND_GAME_CHALLENGE, sendChallengeRequestAsync);
+	yield* takeEvery(GameTypes.SEND_GAME_CHALLENGE, sendChallengeRequestAsync);
 }
 
 export function* gameChallengesSagas() {
-	yield all([
+	yield* all([
 		call(onSendChallengeRequest),
 		call(onAcceptChallengeRequest),
 		call(onRejectChallengeRequest),
