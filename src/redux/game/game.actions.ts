@@ -64,6 +64,7 @@ import {
 	FetchGameByIdAction,
 	AutoResignOpponentAction,
 	SetCurrentGameAction,
+	CloseActiveGameListenerAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 import GameTime from '../../utils/types/game-time/game-time';
@@ -198,6 +199,10 @@ export const clearActiveGame = (): ClearActiveGameAction => ({
 
 export const openActiveGameListener = (): OpenActiveGameListenerAction => ({
 	type: GameTypes.OPEN_ACTIVE_GAME_LISTENER,
+});
+
+export const closeActiveGameListener = (): CloseActiveGameListenerAction => ({
+	type: GameTypes.CLOSE_ACTIVE_GAME_LISTENER,
 });
 
 export const fetchGameById = (gameUID: string): FetchGameByIdAction => ({

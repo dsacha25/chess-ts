@@ -1,6 +1,7 @@
 import { orderBy, where } from 'firebase/firestore';
 import { all, call, put, select, takeEvery } from 'typed-redux-saga/macro';
 import { db } from '../../../utils/classes/firestore/firestore-app';
+import { getPromiseReturn } from '../../../utils/helpers/sagas/get-return-type';
 import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
 import { selectUserUID } from '../../user/user.selector';
 import { SetInactiveGameByIDStartAction } from '../game.action-types';
@@ -15,13 +16,12 @@ export function* setInactiveGameByIDAsync({
 	payload: gameUID,
 }: SetInactiveGameByIDStartAction): Generator<any, void, any> {
 	try {
-		const game: ChessGameType | undefined = yield db.get<ChessGameType>(
+		const game = yield* call<any[], getPromiseReturn<ChessGameType>>(
+			db.get,
 			'games',
 			gameUID
 		);
 		if (!game) return;
-
-		yield console.log('GAME FOUND: ', game);
 
 		yield* put(setActiveGame(game));
 	} catch (err) {
@@ -40,9 +40,11 @@ export function* fetchInactiveGamesAsync() {
 	try {
 		const uid = yield* select(selectUserUID);
 
-		const inactiveGames: ChessGameType[] = yield db.getAllWithID<
-			ChessGameType[]
+		const inactiveGames = yield* call<
+			any[],
+			(...args: any) => Promise<ChessGameType[]>
 		>(
+			db.getAllWithID,
 			'games',
 			where('users', 'array-contains', uid),
 			where('gameOver', '==', true),

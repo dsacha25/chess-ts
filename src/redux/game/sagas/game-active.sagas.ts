@@ -207,6 +207,11 @@ export function* openActiveGameListenerAsync() {
 
 		yield console.log('LISTEN FOR: ', game.id);
 
+		yield takeEvery(GameTypes.CLOSE_ACTIVE_GAME_LISTENER, function* () {
+			yield console.log('CLOSE GAME LISTENER');
+			yield gameChannel.close();
+		});
+
 		yield listener.initializeChannel(gameChannel, getActiveGame);
 	} catch (err) {
 		yield* put(gameError((err as Error).message));

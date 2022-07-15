@@ -270,7 +270,7 @@ export function* openChessUserListener(): Generator<any, void, any> {
 		/**
 		 * Stop listening to user to updates
 		 */
-		yield takeEvery(UserTypes.CLOSE_CHESS_USER_LISTENER, function* () {
+		yield* takeEvery(UserTypes.CLOSE_CHESS_USER_LISTENER, function* () {
 			yield console.log('CLOSE_CHESS_USER_LISTENER');
 			yield chessUserChannel.close();
 		});

@@ -21,6 +21,7 @@ const PlayPage = () => {
 		setUserGamePresence,
 		fetchGameById,
 		clearActiveGame,
+		closeActiveGameListener,
 	} = useActions();
 	const gameUID = useQuery('game');
 	const { width } = useWindowSize();
@@ -104,6 +105,10 @@ const PlayPage = () => {
 				}
 			}
 		}
+
+		return () => {
+			closeActiveGameListener();
+		};
 
 		// eslint-disable-next-line
 	}, []);

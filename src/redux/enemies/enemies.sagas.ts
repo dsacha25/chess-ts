@@ -1,9 +1,12 @@
-import { where } from 'firebase/firestore';
+import { DocumentReference, where } from 'firebase/firestore';
 import { filter, flatMap } from 'lodash';
 import { EventChannel } from 'redux-saga';
 import { all, call, put, select, takeEvery } from 'typed-redux-saga/macro';
 import { db, functions } from '../../utils/classes/firestore/firestore-app';
 import { listener } from '../../utils/classes/sagas/saga-listener';
+import getReturn, {
+	getPromiseReturn,
+} from '../../utils/helpers/sagas/get-return-type';
 import { ChessUser } from '../../utils/types/chess-user/chess-user';
 import { Enemyship } from '../../utils/types/enemyship/enemyship';
 import { selectChessUser, selectUserUID } from '../user/user.selector';
@@ -28,12 +31,15 @@ export function* fetchEnemyInfoAsync({
 	payload: enemyUID,
 }: FetchEnemyInfoStartAction) {
 	try {
-		// const enemy: ChessUser = yield db.get<ChessUser>('users', enemyUID);
+		const enemyRef = yield* call<
+			string[],
+			getReturn<DocumentReference<ChessUser>>
+		>(db.getDocumentReference, `users/${enemyUID}`);
 
-		const enemyRef = yield* call(db.getDocumentReference, `users/${enemyUID}`);
-
-		const enemyChannel: EventChannel<ChessUser> =
-			yield listener.generateDocumentListener(enemyRef);
+		const enemyChannel = yield* call<
+			DocumentReference<ChessUser>[],
+			getReturn<EventChannel<ChessUser>>
+		>(listener.generateDocumentListener, enemyRef);
 
 		yield listener.initializeChannel<ChessUser>(enemyChannel, fetchEnemyInfo);
 	} catch (err) {
@@ -51,11 +57,10 @@ export function* fetchEnemiesAsync() {
 
 		if (!uid) return;
 
-		const enemyDocuments: Enemyship[] = yield call(
-			db.getAll,
-			'enmities',
-			where('users', 'array-contains', uid)
-		);
+		const enemyDocuments = yield* call<
+			any[],
+			(args: any) => Promise<Enemyship[]>
+		>(db.getAll, 'enmities', where('users', 'array-contains', uid));
 
 		const enemyships = flatMap(enemyDocuments, (enemy) =>
 			filter(enemy.users, (userUID) => userUID !== uid)
@@ -64,7 +69,13 @@ export function* fetchEnemiesAsync() {
 		let enemies: ChessUser[] = [];
 
 		for (const enemyUID of enemyships) {
-			const enemy: ChessUser = yield call(db.get, 'users', enemyUID);
+			const enemy = yield* call<any[], getPromiseReturn<ChessUser>>(
+				db.get,
+				'users',
+				enemyUID
+			);
+
+			if (!enemy) return;
 			yield console.log('ENEMY: ', enemy);
 
 			enemies.push(enemy);
@@ -89,7 +100,7 @@ export function* sendEnemyRequestAsync({
 
 		const { displayName } = chessUser;
 
-		yield functions.callFirebaseFunction('sendEnemyRequest', {
+		yield* call(functions.callFirebaseFunction, 'sendEnemyRequest', {
 			enemyUID,
 			displayName,
 		});
@@ -106,7 +117,8 @@ export function* searchEnemiesAsync({
 	payload: query,
 }: SearchEnemiesStartAction) {
 	try {
-		const result: ChessUser[] = yield db.searchCollection<ChessUser>(
+		const result = yield* call<any[], (...args: any) => Promise<ChessUser[]>>(
+			db.searchCollection,
 			query,
 			'users',
 			'displayName'

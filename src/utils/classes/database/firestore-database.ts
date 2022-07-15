@@ -128,8 +128,6 @@ export class FirestoreDatabase implements Database {
 		collectionName: string,
 		id: string
 	): Promise<T | undefined> => {
-		console.log('GET');
-
 		const collectionRef = this.getCollection<T>(collectionName);
 		const docRef = doc<T>(collectionRef, id);
 		const snapshot = await getDoc<T>(docRef).catch((err) => {

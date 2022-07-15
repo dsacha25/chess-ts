@@ -123,6 +123,10 @@ export interface OpenActiveGameListenerAction {
 	type: GameTypes.OPEN_ACTIVE_GAME_LISTENER;
 }
 
+export interface CloseActiveGameListenerAction {
+	type: GameTypes.CLOSE_ACTIVE_GAME_LISTENER;
+}
+
 export interface SetActiveGameTimeAction {
 	type: GameTypes.SET_ACTIVE_GAME_TIME;
 	payload: { gameTime: GameTime; side: Orientation };
@@ -295,6 +299,7 @@ type GameActions =
 	| SetInactiveGameByIDStartAction
 	| ClearActiveGameAction
 	| OpenActiveGameListenerAction
+	| CloseActiveGameListenerAction
 	| SetActiveGameTimeAction
 	| MakePendingMoveAction
 	| MakeConfirmedMoveStartAction
