@@ -6,7 +6,7 @@ const queryBoardSize = (width: number): number => {
 	} else if (width <= 1300 && width > 980) {
 		return 500;
 	} else if (width <= 980 && width > 300) {
-		return width - 20;
+		return width - 40;
 	} else return width;
 };
 

@@ -13,6 +13,6 @@ export const PlayContainer = styled.div`
 		grid-template-columns: 1fr;
 		padding: 0;
 		max-height: calc(100vh - 70px);
-		overflow: hidden;
+		overflow: scroll;
 	}
 `;

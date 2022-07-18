@@ -7,6 +7,11 @@ export const ConfirmActionContainer = styled.div`
 	height: 60px;
 	grid-template-columns: 1fr 1fr;
 	place-items: center;
+
+	@media screen and (max-width: 980px) {
+		padding: 10px 20px;
+		margin-bottom: 20px;
+	}
 `;
 
 export const ConfirmActionButton = styled(CustomButton)`

@@ -122,8 +122,8 @@ const PlayerChip = () => {
 			// AUTO RESIGN GAME
 		}
 		if (chessUser && game) {
-			console.log('TURN ', game.turn);
-			console.log('PLAYER SIDE', side);
+			// console.log('TURN ', game.turn);
+			// console.log('PLAYER SIDE', side);
 			return chessUser.uid === game.black.uid
 				? setActiveGameTime(time, 'black')
 				: setActiveGameTime(time, 'white');
