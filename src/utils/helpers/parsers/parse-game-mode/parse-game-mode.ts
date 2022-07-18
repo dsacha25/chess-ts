@@ -1,4 +1,4 @@
-import GameModeTypes from '../../../types/game-mode-type/game-mode-type';
+import GameModeTypes from '../../../types/chess/game-mode-type/game-mode-type';
 
 const parseGameMode = (gameMode: GameModeTypes): string => {
 	switch (gameMode) {

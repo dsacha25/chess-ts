@@ -1,5 +1,5 @@
-import { ChessGameType } from '../../../types/chess-game-type/chess-game-type';
-import { Player } from '../../../types/player/player';
+import { ChessGameType } from '../../../types/chess/chess-game-type/chess-game-type';
+import { Player } from '../../../types/users/player/player';
 
 const parseCurrentPlayer = (
 	uid: string,

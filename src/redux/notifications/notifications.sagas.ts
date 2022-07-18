@@ -11,7 +11,7 @@ import {
 } from 'typed-redux-saga/macro';
 import { db } from '../../utils/classes/firestore/firestore-app';
 import { listener } from '../../utils/classes/sagas/saga-listener';
-import { Notification } from '../../utils/types/notification/notification';
+import { Notification } from '../../utils/types/notifications/notification-type/notification-type';
 import { fetchEnemiesStart } from '../enemies/enemies.actions';
 import {
 	fetchActiveGamesStart,

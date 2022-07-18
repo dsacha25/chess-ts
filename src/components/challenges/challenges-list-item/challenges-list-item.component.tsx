@@ -17,7 +17,7 @@ import { selectGameLoadingState } from '../../../redux/game/game.selector';
 import Spinner from '../../common/spinner/spinner.component';
 import parseGameMode from '../../../utils/helpers/parsers/parse-game-mode/parse-game-mode';
 import { useNavigate } from 'react-router-dom';
-import Paths from '../../../utils/types/paths/paths';
+import Paths from '../../../utils/types/util/paths/paths';
 
 const ChallengesListItem: FC<ChallengeItemProps> = ({ enemy }) => {
 	const navigate = useNavigate();

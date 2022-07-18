@@ -1,7 +1,7 @@
 import { ClickAwayListener } from '@material-ui/core';
 import React, { FC, MouseEvent } from 'react';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
-import GameModeTypes from '../../../../utils/types/game-mode-type/game-mode-type';
+import GameModeTypes from '../../../../utils/types/chess/game-mode-type/game-mode-type';
 import Title from '../../../common/title/title.styles';
 import {
 	ChallengeButton,

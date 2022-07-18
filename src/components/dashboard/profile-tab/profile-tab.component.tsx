@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectChessUser } from '../../../redux/user/user.selector';
-import { UpdateCredentials } from '../../../utils/types/update-credentials/update-credentials';
+import { UpdateCredentials } from '../../../utils/types/users/update-credentials/update-credentials';
 import LoginModule from '../../auth/login-module/login-module.component';
 import FormInput from '../../common/inputs/form-input/form-input.component';
 import PhotoUploader from '../../common/inputs/photo-uploader/photo-uploader.component';

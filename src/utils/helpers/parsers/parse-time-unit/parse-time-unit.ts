@@ -1,4 +1,4 @@
-import { ChessGameType } from '../../../types/chess-game-type/chess-game-type';
+import { ChessGameType } from '../../../types/chess/chess-game-type/chess-game-type';
 
 const parseTimeUnit = (game: ChessGameType): number => {
 	switch (game.gameMode) {

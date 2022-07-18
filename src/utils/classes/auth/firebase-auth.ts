@@ -20,11 +20,11 @@ import {
 	updateProfile,
 	updateEmail,
 } from 'firebase/auth';
-import { ChessUser } from '../../types/chess-user/chess-user';
-import { Credentials } from '../../types/credentials/credentials';
-import { Customer } from '../../types/customer/customer';
-import { NewCredentials } from '../../types/new-credentials/new-credentials';
-import { ProfileTypes } from '../../types/profile-info/profile-info-types';
+import { ChessUser } from '../../types/users/chess-user/chess-user';
+import { Credentials } from '../../types/users/credentials/credentials';
+import { Customer } from '../../types/users/customer/customer';
+import { NewCredentials } from '../../types/users/new-credentials/new-credentials';
+import { ProfileTypes } from '../../types/users/profile-info/profile-info-types';
 import { db } from '../firestore/firestore-app';
 import { Authentication } from './auth';
 

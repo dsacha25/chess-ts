@@ -5,7 +5,7 @@ import {
 	PromotionButton,
 	PromotionSelectorContainer,
 } from './promotion-selector.styles';
-import { PromotionPieces } from '../../../../utils/types/promotion-pieces/promotion-pieces';
+import { PromotionPieces } from '../../../../utils/types/chess/promotion-pieces/promotion-pieces';
 import {
 	FaChessQueen,
 	FaChessRook,

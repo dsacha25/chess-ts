@@ -7,9 +7,9 @@ import { listener } from '../../../utils/classes/sagas/saga-listener';
 import {
 	ChatMessage,
 	ChatMessageServer,
-} from '../../../utils/types/chat-message/chat-message';
-import { ChatMessages } from '../../../utils/types/chat-messages/chat-messages';
-import { ChatUsers } from '../../../utils/types/chat-users/chat-users';
+} from '../../../utils/types/chess/chat-message/chat-message';
+import { ChatMessages } from '../../../utils/types/chess/chat-messages/chat-messages';
+import { ChatUsers } from '../../../utils/types/users/chat-users/chat-users';
 import { selectProfilePicture, selectUserUID } from '../../user/user.selector';
 import { SendChatMessageStartAction } from '../game.action-types';
 import {

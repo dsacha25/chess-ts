@@ -12,7 +12,7 @@ import {
 	onValue,
 } from 'firebase/database';
 import { SetUserGamePresenceAction } from '../user.action-types';
-import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
+import { ChessGameType } from '../../../utils/types/chess/chess-game-type/chess-game-type';
 import { getPromiseReturn } from '../../../utils/helpers/sagas/get-return-type';
 
 export function* setUserPresence({

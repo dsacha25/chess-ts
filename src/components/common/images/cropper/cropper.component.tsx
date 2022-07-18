@@ -1,7 +1,7 @@
 import React, { FC, Fragment, useState } from 'react';
 import { Area, Point } from 'react-easy-crop/types';
 import { photo } from '../../../../utils/classes/image/image';
-import { BaseImage } from '../../../../utils/types/image-types/base-image/base-image';
+import { BaseImage } from '../../../../utils/types/util/base-image/base-image';
 import { CropButton, ImageCropper } from './cropper.styles';
 import { CropperProps } from './types';
 

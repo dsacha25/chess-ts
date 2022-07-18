@@ -8,7 +8,7 @@ import {
 } from '../../../../../redux/game/game.selector';
 import useActions from '../../../../../hooks/use-actions/use-actions.hook';
 import { game } from '../../../../../utils/classes/chess-game/chess-game';
-import Orientation from '../../../../../utils/types/orientation/orientation';
+import Orientation from '../../../../../utils/types/chess/orientation/orientation';
 import useWindowSize from '../../../../../hooks/use-window-size/use-window-size.hook';
 import queryBoardSize from '../../../../../utils/helpers/screen/query-board-size';
 import {

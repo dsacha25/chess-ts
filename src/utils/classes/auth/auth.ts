@@ -1,6 +1,5 @@
-import { User } from 'firebase/auth';
-import { NewCredentials } from '../../types/new-credentials/new-credentials';
-import { ProfileTypes } from '../../types/profile-info/profile-info-types';
+import { NewCredentials } from '../../types/users/new-credentials/new-credentials';
+import { ProfileTypes } from '../../types/users/profile-info/profile-info-types';
 
 export interface Authentication<T> {
 	createNewUser(credentials: NewCredentials): Promise<T>;

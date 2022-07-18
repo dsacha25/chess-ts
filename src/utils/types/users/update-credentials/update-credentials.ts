@@ -1,4 +1,4 @@
-import { BaseImage } from '../image-types/base-image/base-image';
+import { BaseImage } from '../../util/base-image/base-image';
 
 export interface UpdateCredentials {
 	displayName?: string;

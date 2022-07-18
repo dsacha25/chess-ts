@@ -1,4 +1,4 @@
-import { ChatMessage, ChatMessageServer } from '../chat-message/chat-message';
+import { ChatMessageServer } from '../chat-message/chat-message';
 
 export interface ChatMessages {
 	messages: ChatMessageServer[];

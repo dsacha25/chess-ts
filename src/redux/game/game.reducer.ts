@@ -1,19 +1,19 @@
-import GamePlayType from '../../utils/types/game-play-type/game-play-type';
-import Orientation from '../../utils/types/orientation/orientation';
+import GamePlayType from '../../utils/types/chess/game-play-type/game-play-type';
+import Orientation from '../../utils/types/chess/orientation/orientation';
 import GameActions from './game.action-types';
 import { GameTypes } from './game.types';
 import { produce } from 'immer';
-import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
-import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
-import { PendingRequest } from '../../utils/types/pending-request/pending-request';
-import { ChessMove } from '../../utils/types/chess-move/chess-move';
-import { ChatMessage } from '../../utils/types/chat-message/chat-message';
-import { HistoryMove } from '../../utils/types/history-move/history-move';
-import { PromotionPieces } from '../../utils/types/promotion-pieces/promotion-pieces';
-import { ChatUsers } from '../../utils/types/chat-users/chat-users';
+import { NotifSender } from '../../utils/types/notifications/notif-sender/notif-sender';
+import { ChessGameType } from '../../utils/types/chess/chess-game-type/chess-game-type';
+import { PendingRequest } from '../../utils/types/requests/pending-request/pending-request';
+import { ChessMove } from '../../utils/types/chess/chess-move/chess-move';
+import { ChatMessage } from '../../utils/types/chess/chat-message/chat-message';
+import { HistoryMove } from '../../utils/types/chess/history-move/history-move';
+import { PromotionPieces } from '../../utils/types/chess/promotion-pieces/promotion-pieces';
+import { ChatUsers } from '../../utils/types/users/chat-users/chat-users';
 import { AiLevel } from 'js-chess-engine';
 import getPreviousMove from '../../utils/helpers/strings/get-previous-move/get-previous-move';
-import GameModeTypes from '../../utils/types/game-mode-type/game-mode-type';
+import GameModeTypes from '../../utils/types/chess/game-mode-type/game-mode-type';
 
 export interface GameState {
 	aiLevel: AiLevel | null;

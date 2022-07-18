@@ -1,4 +1,4 @@
-import { Notification } from '../../utils/types/notification/notification';
+import { Notification } from '../../utils/types/notifications/notification-type/notification-type';
 import NotificationActionTypes from './notifications.action-types';
 import { NotificationTypes } from './notifications.types';
 import { produce } from 'immer';

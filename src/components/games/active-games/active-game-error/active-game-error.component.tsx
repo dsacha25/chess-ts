@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Paths from '../../../../utils/types/paths/paths';
+import Paths from '../../../../utils/types/util/paths/paths';
 import {
 	ActiveGameErrorContainer,
 	GameErrorMessage,

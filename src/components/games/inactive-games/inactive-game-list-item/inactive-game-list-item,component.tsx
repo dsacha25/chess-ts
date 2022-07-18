@@ -14,7 +14,7 @@ import { FaChessBoard } from 'react-icons/fa';
 import { GiAchievement } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-import Paths from '../../../../utils/types/paths/paths';
+import Paths from '../../../../utils/types/util/paths/paths';
 import formatTimestamp from '../../../../utils/helpers/strings/format-timestamp/format-timestamp';
 
 const InactiveGameListItem: FC<InactiveGamesListItemProps> = ({ game }) => {

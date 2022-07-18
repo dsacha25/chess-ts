@@ -1,5 +1,5 @@
-import { ChatMessage } from '../../../types/chat-message/chat-message';
-import { ChatUsers } from '../../../types/chat-users/chat-users';
+import { ChatMessage } from '../../../types/chess/chat-message/chat-message';
+import { ChatUsers } from '../../../types/users/chat-users/chat-users';
 
 const parseChatUserPhotoURL = (
 	chatMsg: ChatMessage,

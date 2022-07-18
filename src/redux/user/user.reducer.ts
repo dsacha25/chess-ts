@@ -2,9 +2,9 @@ import { User } from 'firebase/auth';
 import UserActions from './user.action-types';
 import UserTypes from './user.types';
 import { produce } from 'immer';
-import { ChessUser } from '../../utils/types/chess-user/chess-user';
-import { NewCredentials } from '../../utils/types/new-credentials/new-credentials';
-import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
+import { ChessUser } from '../../utils/types/users/chess-user/chess-user';
+import { NewCredentials } from '../../utils/types/users/new-credentials/new-credentials';
+import { NotifSender } from '../../utils/types/notifications/notif-sender/notif-sender';
 
 export interface UserState {
 	auth: User | null;

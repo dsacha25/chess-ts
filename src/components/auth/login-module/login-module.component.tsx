@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Credentials } from '../../../utils/types/credentials/credentials';
+import { Credentials } from '../../../utils/types/users/credentials/credentials';
 import FormInput from '../../common/inputs/form-input/form-input.component';
 import {
 	BackdropContainer,

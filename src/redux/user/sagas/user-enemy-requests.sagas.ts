@@ -1,7 +1,7 @@
 import { where } from 'firebase/firestore';
 import { all, call, put, select, takeEvery } from 'typed-redux-saga/macro';
 import { db, functions } from '../../../utils/classes/firestore/firestore-app';
-import { NotifSender } from '../../../utils/types/notif-sender/notif-sender';
+import { NotifSender } from '../../../utils/types/notifications/notif-sender/notif-sender';
 import {
 	AcceptEnemyRequestAction,
 	RejectEnemyRequestAction,

@@ -1,5 +1,5 @@
-interface HasID {
+type HasID = {
 	id: string;
-}
+};
 
 export default HasID;

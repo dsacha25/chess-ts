@@ -6,7 +6,7 @@ import ExpandingButton from '../../common/buttons/expanding-button/expanding-but
 import { AestheticBar, GameToolbarContainer } from './game-toolbar.styles';
 import { HiHome } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
-import Paths from '../../../utils/types/paths/paths';
+import Paths from '../../../utils/types/util/paths/paths';
 
 const GameToolbar = () => {
 	const navigate = useNavigate();

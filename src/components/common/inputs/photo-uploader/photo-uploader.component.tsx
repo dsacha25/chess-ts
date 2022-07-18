@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { photo } from '../../../../utils/classes/image/image';
-import { BaseImage } from '../../../../utils/types/image-types/base-image/base-image';
+import { BaseImage } from '../../../../utils/types/util/base-image/base-image';
 import Cropper from '../../images/cropper/cropper.component';
 import ImageUploadControls from '../../images/image-upload-controls/image-upload-controls.component';
 import {

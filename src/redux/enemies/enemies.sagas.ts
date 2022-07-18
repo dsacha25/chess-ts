@@ -7,8 +7,8 @@ import { listener } from '../../utils/classes/sagas/saga-listener';
 import getReturn, {
 	getPromiseReturn,
 } from '../../utils/helpers/sagas/get-return-type';
-import { ChessUser } from '../../utils/types/chess-user/chess-user';
-import { Enemyship } from '../../utils/types/enemyship/enemyship';
+import { ChessUser } from '../../utils/types/users/chess-user/chess-user';
+import { Enemyship } from '../../utils/types/users/enemyship/enemyship';
 import { selectChessUser, selectUserUID } from '../user/user.selector';
 import {
 	FetchEnemyInfoStartAction,

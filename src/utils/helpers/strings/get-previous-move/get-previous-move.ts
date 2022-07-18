@@ -1,4 +1,4 @@
-import { HistoryMove } from '../../../types/history-move/history-move';
+import { HistoryMove } from '../../../types/chess/history-move/history-move';
 
 const getPreviousMove = (history: HistoryMove[]): string => {
 	if (history.length < 1) {

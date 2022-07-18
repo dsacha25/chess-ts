@@ -15,7 +15,7 @@ import { FaChessBoard } from 'react-icons/fa';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 
 import { useNavigate } from 'react-router-dom';
-import Paths from '../../../utils/types/paths/paths';
+import Paths from '../../../utils/types/util/paths/paths';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectMobileGameIndex } from '../../../redux/indexes/indexes.selector';

@@ -1,5 +1,5 @@
 import { Square } from 'chess.js';
-import Orientation from '../../../../../utils/types/orientation/orientation';
+import Orientation from '../../../../../utils/types/chess/orientation/orientation';
 
 export interface ChessboardBaseProps {
 	fen: string;

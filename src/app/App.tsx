@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { SiteBackground, SiteContainer } from './app.styles';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/home-page/home-page.component';
-import Paths from '../utils/types/paths/paths';
+import Paths from '../utils/types/util/paths/paths';
 import CreateAccountPage from '../pages/create-account-page/create-account-page.component';
 import LogInPage from '../pages/log-in-page/log-in-page.component';
 import Header from '../components/header/header.component';

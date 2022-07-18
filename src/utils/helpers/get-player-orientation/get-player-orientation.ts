@@ -1,4 +1,4 @@
-import Orientation from '../../types/orientation/orientation';
+import Orientation from '../../types/chess/orientation/orientation';
 
 export const getPlayerOrientation = (
 	whiteUID: string,

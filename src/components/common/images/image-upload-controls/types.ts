@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { BaseImage } from '../../../../utils/types/image-types/base-image/base-image';
+import { BaseImage } from '../../../../utils/types/util/base-image/base-image';
 
 export interface ImageUploadControlsProps {
 	hover: boolean;

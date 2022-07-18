@@ -1,5 +1,5 @@
-import { ChessGameType } from '../../../types/chess-game-type/chess-game-type';
-import GameTime from '../../../types/game-time/game-time';
+import { ChessGameType } from '../../../types/chess/chess-game-type/chess-game-type';
+import GameTime from '../../../types/chess/game-time/game-time';
 import parseCurrentPlayer from '../parse-current-player/parse-current-player';
 
 const parseGameTime = (

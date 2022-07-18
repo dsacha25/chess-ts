@@ -1,5 +1,5 @@
-import { NotifSender } from '../../../types/notif-sender/notif-sender';
-import { NotificationTypes } from '../../../types/notification-types/notification-types';
+import { NotifSender } from '../../../types/notifications/notif-sender/notif-sender';
+import { NotificationTypes } from '../../../types/notifications/notification-types/notification-types';
 
 const constructNotifMessage = (
 	notificationType: NotificationTypes,

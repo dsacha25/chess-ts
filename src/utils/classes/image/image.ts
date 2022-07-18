@@ -1,5 +1,5 @@
 import { Area } from 'react-easy-crop/types';
-import { BaseImage } from '../../types/image-types/base-image/base-image';
+import { BaseImage } from '../../types/util/base-image/base-image';
 
 class Photo {
 	getBase64(blob: Blob): Promise<string> {

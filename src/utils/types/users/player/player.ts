@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import GameTime from '../game-time/game-time';
+import GameTime from '../../chess/game-time/game-time';
 
 export interface Player {
 	uid: string;

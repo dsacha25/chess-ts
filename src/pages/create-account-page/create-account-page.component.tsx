@@ -7,13 +7,13 @@ import {
 	SubmitButton,
 } from './create-account-page.styles';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { NewCredentials } from '../../utils/types/new-credentials/new-credentials';
+import { NewCredentials } from '../../utils/types/users/new-credentials/new-credentials';
 import FormInput from '../../components/common/inputs/form-input/form-input.component';
 import PhotoUploader from '../../components/common/inputs/photo-uploader/photo-uploader.component';
 import useActions from '../../hooks/use-actions/use-actions.hook';
 import Spinner from '../../components/common/spinner/spinner.component';
 import { useNavigate } from 'react-router-dom';
-import Paths from '../../utils/types/paths/paths';
+import Paths from '../../utils/types/util/paths/paths';
 import { useSelector } from '../../hooks/use-selector/use-typed-selector.hook';
 import { selectAuthError } from '../../redux/user/user.selector';
 

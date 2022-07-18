@@ -2,7 +2,7 @@ import { orderBy, where } from 'firebase/firestore';
 import { all, call, put, select, takeEvery } from 'typed-redux-saga/macro';
 import { db } from '../../../utils/classes/firestore/firestore-app';
 import { getPromiseReturn } from '../../../utils/helpers/sagas/get-return-type';
-import { ChessGameType } from '../../../utils/types/chess-game-type/chess-game-type';
+import { ChessGameType } from '../../../utils/types/chess/chess-game-type/chess-game-type';
 import { selectUserUID } from '../../user/user.selector';
 import { SetInactiveGameByIDStartAction } from '../game.action-types';
 import {

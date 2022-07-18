@@ -7,7 +7,7 @@ import {
 	ChallengesContainer,
 	ListsContainer,
 } from './challenge-tab.styles';
-import Paths from '../../../utils/types/paths/paths';
+import Paths from '../../../utils/types/util/paths/paths';
 import useActions from '../../../hooks/use-actions/use-actions.hook';
 import ChallengesList from '../../challenges/challenges-list/challenges-list.component';
 import ActiveGamesList from '../../games/active-games/active-games-list/active-games-list.component';

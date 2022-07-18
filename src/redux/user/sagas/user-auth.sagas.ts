@@ -39,8 +39,8 @@ import {
 	selectUserAuth,
 	selectUserUID,
 } from '../user.selector';
-import { ChessUser } from '../../../utils/types/chess-user/chess-user';
-import { BaseImage } from '../../../utils/types/image-types/base-image/base-image';
+import { ChessUser } from '../../../utils/types/users/chess-user/chess-user';
+import { BaseImage } from '../../../utils/types/util/base-image/base-image';
 import { EventChannel } from 'redux-saga';
 import { DocumentReference } from 'firebase/firestore';
 import getReturn from '../../../utils/helpers/sagas/get-return-type';

@@ -1,6 +1,6 @@
 import { ChessInstance, Square } from 'chess.js';
 
-import Orientation from '../../types/orientation/orientation';
+import Orientation from '../../types/chess/orientation/orientation';
 
 import {
 	Game,
@@ -16,8 +16,8 @@ import {
 	AiLevel,
 } from 'js-chess-engine';
 import { keys, values } from 'lodash';
-import { PromotionPieces } from '../../types/promotion-pieces/promotion-pieces';
-import { SquareStyles } from '../../types/square-styles/square-styles';
+import { PromotionPieces } from '../../types/chess/promotion-pieces/promotion-pieces';
+import { SquareStyles } from '../../types/chess/square-styles/square-styles';
 const Chess = require('chess.js');
 
 const DEFAULT_POSITION =
@@ -36,7 +36,6 @@ class ChessGame {
 	public squareStyles: SquareStyles = {};
 	public boardConfig: BoardConfig = DEFAULT_POSITION;
 	public fen: string = DEFAULT_POSITION;
-
 	public hoverColor: string = '#091e3b';
 	public moveColor: string = '#bccbf2';
 
@@ -72,6 +71,17 @@ class ChessGame {
 
 	inCheckMate(fen: BoardConfig): boolean {
 		return status(fen).checkMate;
+	}
+
+	inDraw(fen: string): boolean {
+		this.chess.load(fen);
+
+		/// CHECKMATE / STALEMATE / DRAW
+		const draw = this.chess.in_draw();
+		const stalemate = this.chess.in_stalemate();
+		const insufficient = this.chess.insufficient_material();
+		const threefold = this.chess.in_threefold_repetition();
+		return draw || stalemate || insufficient || threefold ? true : false;
 	}
 
 	setGame(config: BoardConfig) {
@@ -156,13 +166,17 @@ class ChessGame {
 
 		// UPDATE BOARD STATE
 		this.chess.load(fen);
+
+		/// CHECKMATE / STALEMATE / DRAW
+		const draw = this.inDraw(fen);
+
 		this.getStatus(fen);
 
 		return {
 			fen,
 			san: chessMove.san,
 			turn: this.getStatus(fen).turn,
-			winner: this.getWinner(fen),
+			winner: !draw ? this.getWinner(fen) : null,
 		};
 	}
 

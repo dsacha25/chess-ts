@@ -1,5 +1,5 @@
-import { ChessGameType } from '../../../types/chess-game-type/chess-game-type';
-import Orientation from '../../../types/orientation/orientation';
+import { ChessGameType } from '../../../types/chess/chess-game-type/chess-game-type';
+import Orientation from '../../../types/chess/orientation/orientation';
 
 const parsePlayerSide = (game: ChessGameType, uid?: string): Orientation => {
 	if (!uid) return 'white';

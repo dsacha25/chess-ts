@@ -1,16 +1,16 @@
 import { AiLevel } from 'js-chess-engine';
-import { ChatMessage } from '../../utils/types/chat-message/chat-message';
-import { ChatUsers } from '../../utils/types/chat-users/chat-users';
-import { ChessGameAiType } from '../../utils/types/chess-game-ai-type/chess-game-ai-type';
-import { ChessGameType } from '../../utils/types/chess-game-type/chess-game-type';
-import { ChessMove } from '../../utils/types/chess-move/chess-move';
-import GamePlayType from '../../utils/types/game-play-type/game-play-type';
-import GameModeType from '../../utils/types/game-mode-type/game-mode-type';
-import { HistoryMove } from '../../utils/types/history-move/history-move';
-import { NotifSender } from '../../utils/types/notif-sender/notif-sender';
-import Orientation from '../../utils/types/orientation/orientation';
-import { PendingRequest } from '../../utils/types/pending-request/pending-request';
-import { PromotionPieces } from '../../utils/types/promotion-pieces/promotion-pieces';
+import { ChatMessage } from '../../utils/types/chess/chat-message/chat-message';
+import { ChatUsers } from '../../utils/types/users/chat-users/chat-users';
+import { ChessGameAiType } from '../../utils/types/chess/chess-game-ai-type/chess-game-ai-type';
+import { ChessGameType } from '../../utils/types/chess/chess-game-type/chess-game-type';
+import { ChessMove } from '../../utils/types/chess/chess-move/chess-move';
+import GamePlayType from '../../utils/types/chess/game-play-type/game-play-type';
+import GameModeType from '../../utils/types/chess/game-mode-type/game-mode-type';
+import { HistoryMove } from '../../utils/types/chess/history-move/history-move';
+import { NotifSender } from '../../utils/types/notifications/notif-sender/notif-sender';
+import Orientation from '../../utils/types/chess/orientation/orientation';
+import { PendingRequest } from '../../utils/types/requests/pending-request/pending-request';
+import { PromotionPieces } from '../../utils/types/chess/promotion-pieces/promotion-pieces';
 import {
 	AcceptGameChallengeStartAction,
 	GameChallengeResponseSuccessAction,
@@ -67,7 +67,7 @@ import {
 	CloseActiveGameListenerAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
-import GameTime from '../../utils/types/game-time/game-time';
+import GameTime from '../../utils/types/chess/game-time/game-time';
 
 // ==== GAME STATE
 export const setAiLevel = (level: AiLevel | null): SetAiLevelAction => ({

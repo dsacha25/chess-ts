@@ -2,10 +2,10 @@ import React from 'react';
 import FormInput from '../../components/common/inputs/form-input/form-input.component';
 import { LogInButton, LogInContainer, LoginTitle } from './log-in-page.styles';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Credentials } from '../../utils/types/credentials/credentials';
+import { Credentials } from '../../utils/types/users/credentials/credentials';
 import useActions from '../../hooks/use-actions/use-actions.hook';
 import { useNavigate } from 'react-router-dom';
-import Paths from '../../utils/types/paths/paths';
+import Paths from '../../utils/types/util/paths/paths';
 
 const LogInPage = () => {
 	const navigate = useNavigate();

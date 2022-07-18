@@ -1,7 +1,7 @@
 import EnemyActions from './enemies.action-types';
 import { EnemyTypes } from './enemies.types';
 import { produce } from 'immer';
-import { ChessUser } from '../../utils/types/chess-user/chess-user';
+import { ChessUser } from '../../utils/types/users/chess-user/chess-user';
 
 export interface EnemyState {
 	enemySearchResults: ChessUser[];
