@@ -18,6 +18,8 @@ import {
 import { keys, values } from 'lodash';
 import { PromotionPieces } from '../../types/chess/promotion-pieces/promotion-pieces';
 import { SquareStyles } from '../../types/chess/square-styles/square-styles';
+import GameOverType from '../../types/chess/game-over/game-over-type/game-over-type';
+import GameOverTypes from '../../types/chess/game-over/game-over-types.ts/game-over-types';
 const Chess = require('chess.js');
 
 const DEFAULT_POSITION =
@@ -27,7 +29,7 @@ interface ServerMove {
 	fen: string;
 	san: string;
 	turn: Orientation;
-	winner: Orientation | null;
+	gameOver: GameOverType;
 }
 
 class ChessGame {
@@ -73,7 +75,7 @@ class ChessGame {
 		return status(fen).checkMate;
 	}
 
-	inDraw(fen: string): boolean {
+	inDraw(fen: string): { type: GameOverTypes | null; isGameOver: boolean } {
 		this.chess.load(fen);
 
 		/// CHECKMATE / STALEMATE / DRAW
@@ -81,7 +83,31 @@ class ChessGame {
 		const stalemate = this.chess.in_stalemate();
 		const insufficient = this.chess.insufficient_material();
 		const threefold = this.chess.in_threefold_repetition();
-		return draw || stalemate || insufficient || threefold ? true : false;
+
+		console.log('DRAW: ', draw);
+		console.log('STALEMATE: ', stalemate);
+		console.log('INSUFFICIENT: ', insufficient);
+		console.log('THREEFOLD: ', threefold);
+
+		if (draw && insufficient) {
+			return {
+				type: GameOverTypes.DRAW_INSUFFICIENT_MATERIAL,
+				isGameOver: true,
+			};
+		}
+
+		if (draw && threefold) {
+			return {
+				type: GameOverTypes.DRAW_REPETITION,
+				isGameOver: true,
+			};
+		}
+
+		if (stalemate) {
+			return { type: GameOverTypes.DRAW_STALEMATE, isGameOver: true };
+		}
+
+		return { type: null, isGameOver: false };
 	}
 
 	setGame(config: BoardConfig) {
@@ -168,7 +194,8 @@ class ChessGame {
 		this.chess.load(fen);
 
 		/// CHECKMATE / STALEMATE / DRAW
-		const draw = this.inDraw(fen);
+		const { type, isGameOver } = this.inDraw(fen);
+		const gameOver = this.inCheckMate(fen);
 
 		this.getStatus(fen);
 
@@ -176,7 +203,11 @@ class ChessGame {
 			fen,
 			san: chessMove.san,
 			turn: this.getStatus(fen).turn,
-			winner: !draw ? this.getWinner(fen) : null,
+			gameOver: {
+				isGameOver: gameOver || isGameOver,
+				winner: !type ? this.getWinner(fen) : null,
+				type,
+			},
 		};
 	}
 

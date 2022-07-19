@@ -123,13 +123,12 @@ export function* makeConfirmedMoveAsync() {
 
 		if (!game || !uid || !pendingMove) return;
 
-		const { fen, move, winner, gameOver } = pendingMove;
+		const { fen, move, gameOver } = pendingMove;
 
 		const confirmedMove: ConfirmedMove = {
 			fen,
 			id: game.id,
 			move,
-			winner,
 			gameOver,
 			gameTime: parseGameTime(uid, game),
 		};

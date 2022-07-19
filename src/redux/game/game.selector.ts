@@ -104,14 +104,19 @@ export const selectIndexedMove = createSelector(
 	(game) => game.history[game.moveIndex]
 );
 
-export const selectIsGameOver = createSelector(
+export const selectGameOverState = createSelector(
 	selectActiveGame,
 	(game) => game?.gameOver
 );
 
+export const selectIsGameOver = createSelector(
+	selectActiveGame,
+	(game) => game?.gameOver.isGameOver
+);
+
 export const selectGameWinner = createSelector(
 	selectActiveGame,
-	(activeGame) => activeGame?.winner
+	(activeGame) => activeGame?.gameOver.winner
 );
 
 export const selectPromotionPieceType = createSelector(

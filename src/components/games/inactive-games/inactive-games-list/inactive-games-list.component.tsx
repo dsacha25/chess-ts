@@ -30,19 +30,19 @@ const InactiveGamesList = () => {
 			const isWhite = game.white.uid === uid;
 
 			// IS WHITE
-			if (isWhite && game.winner === 'white') {
+			if (isWhite && game.gameOver.winner === 'white') {
 				totalWins = totalWins + 1;
 				setWins(totalWins);
-			} else if (isWhite && game.winner === 'black') {
+			} else if (isWhite && game.gameOver.winner === 'black') {
 				totalLosses = totalLosses + 1;
 				setLosses(totalLosses);
 			}
 
 			// IS BLACK
-			if (!isWhite && game.winner === 'black') {
+			if (!isWhite && game.gameOver.winner === 'black') {
 				totalWins = totalWins + 1;
 				setWins(totalWins);
-			} else if (!isWhite && game.winner === 'white') {
+			} else if (!isWhite && game.gameOver.winner === 'white') {
 				totalLosses = totalLosses + 1;
 				setLosses(totalLosses);
 			}

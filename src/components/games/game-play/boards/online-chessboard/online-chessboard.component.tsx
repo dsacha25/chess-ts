@@ -47,12 +47,17 @@ const OnlineChessboard = () => {
 
 		console.log('CHESS MOVE', chessMove);
 		if (chessMove.turn !== orientation) {
+			const { gameOver, fen, san } = chessMove;
+
 			setFen(chessMove.fen);
 			makePendingMove({
-				fen: chessMove.fen,
-				move: chessMove.san,
-				winner: game.getWinner(chessMove.fen),
-				gameOver: game.isGameOver(chessMove.fen),
+				fen,
+				move: san,
+				gameOver: {
+					isGameOver: game.isGameOver(fen),
+					winner: gameOver.winner,
+					type: gameOver.type,
+				},
 			});
 		}
 	};

@@ -39,16 +39,16 @@ const InactiveGameListItem: FC<InactiveGamesListItemProps> = ({ game }) => {
 	useEffect(() => {
 		const isWhite = game.white.uid === uid;
 
-		if (isWhite && game.winner === 'white') {
+		if (isWhite && game.gameOver.winner === 'white') {
 			setWon(true);
-		} else if (isWhite && game.winner === 'black') {
+		} else if (isWhite && game.gameOver.winner === 'black') {
 			setWon(false);
 		}
 
 		// IS BLACK
-		if (!isWhite && game.winner === 'black') {
+		if (!isWhite && game.gameOver.winner === 'black') {
 			setWon(true);
-		} else if (!isWhite && game.winner === 'white') {
+		} else if (!isWhite && game.gameOver.winner === 'white') {
 			setWon(false);
 		}
 

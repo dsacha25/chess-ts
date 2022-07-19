@@ -3,10 +3,11 @@ import GameModeTypes from '../game-mode-type/game-mode-type';
 import { HistoryMove } from '../history-move/history-move';
 import Orientation from '../orientation/orientation';
 import { Player } from '../../users/player/player';
+import GameOverType from '../game-over/game-over-type/game-over-type';
 
 export interface ChessGameType extends Enemyship {
 	id: string;
-	gameOver: boolean;
+	gameOver: GameOverType;
 	gameMode: GameModeTypes;
 	moves: HistoryMove[];
 	turn: Orientation;
@@ -16,5 +17,4 @@ export interface ChessGameType extends Enemyship {
 	whitePresent: boolean;
 	latestMove: string;
 	fen: string;
-	winner: Orientation | null;
 }

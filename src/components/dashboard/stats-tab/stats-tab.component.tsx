@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectInactiveGames } from '../../../redux/game/game.selector';
 import { selectUserUID } from '../../../redux/user/user.selector';
+import DoughnutChart from '../../charts/doughnut-chart/doughnut-chart.component';
+import HorizontalBarChart from '../../charts/horizontal-bar-chart/horizontal-bar-chart.component';
+import LineChart from '../../charts/line-chart/line-chart.component';
+import StackedBarChart from '../../charts/stacked-bar-chart/stacked-bar-chart.component';
 import { TabTitle } from '../tab-styles/tab-styles..styles';
 import { StatsContainer } from './stats-tab.styles';
 
@@ -20,19 +24,19 @@ const StatsTab = () => {
 			const isWhite = game.white.uid === uid;
 
 			// IS WHITE
-			if (isWhite && game.winner === 'white') {
+			if (isWhite && game.gameOver.winner === 'white') {
 				totalWins = totalWins + 1;
 				setWins(totalWins);
-			} else if (isWhite && game.winner === 'black') {
+			} else if (isWhite && game.gameOver.winner === 'black') {
 				totalLosses = totalLosses + 1;
 				setLosses(totalLosses);
 			}
 
 			// IS BLACK
-			if (!isWhite && game.winner === 'black') {
+			if (!isWhite && game.gameOver.winner === 'black') {
 				totalWins = totalWins + 1;
 				setWins(totalWins);
-			} else if (!isWhite && game.winner === 'white') {
+			} else if (!isWhite && game.gameOver.winner === 'white') {
 				totalLosses = totalLosses + 1;
 				setLosses(totalLosses);
 			}
@@ -50,14 +54,21 @@ const StatsTab = () => {
 	return (
 		<StatsContainer>
 			<TabTitle>Stats Page</TabTitle>
-			<p>You're not very good, are you?.</p>
+			<div>
+				<p>You're not very good, are you?.</p>
 
-			<p>
-				<strong>TOTAL GAMES:</strong> {total}
-			</p>
-			<p>
-				<strong>WINS:</strong> {wins} <br /> <strong>LOSSES:</strong> {losses}
-			</p>
+				<p>
+					<strong>TOTAL GAMES:</strong> {total}
+				</p>
+				<p>
+					<strong>WINS:</strong> {wins} <br /> <strong>LOSSES:</strong> {losses}
+				</p>
+
+				<HorizontalBarChart />
+				<LineChart />
+				<StackedBarChart />
+				<DoughnutChart />
+			</div>
 		</StatsContainer>
 	);
 };

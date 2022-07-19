@@ -61,21 +61,6 @@ export class FirebaseAuth implements Authentication<User> {
 
 		await updateProfile(credential.user, {
 			displayName: newCredential.displayName,
-		}).then(async () => {
-			const newChessUser: ChessUser = {
-				uid: credential.user.uid,
-				displayName: credential.user.displayName,
-				email: credential.user.email,
-				photoURL: credential.user.photoURL,
-				phoneNumber: credential.user.phoneNumber,
-				providerId: credential.providerId || '',
-				rating: 800,
-				totalOppRating: 0,
-				wins: 0,
-				losses: 0,
-				online: true,
-			};
-			await this.createUserDocument(newChessUser);
 		});
 
 		return credential.user;

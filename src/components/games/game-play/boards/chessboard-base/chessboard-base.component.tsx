@@ -73,11 +73,13 @@ const ChessboardBase: FC<ChessboardBaseProps> = ({
 		if (chessMove) {
 			setFen(chessMove.fen);
 
+			const { gameOver } = chessMove;
+
 			if (gameType === 'online') {
 				makePendingMove({
 					fen: chessMove.fen,
 					move: chessMove.san,
-					winner: chessMove.winner,
+					gameOver,
 				});
 			} else {
 				movePiece({ move: chessMove.san, fen: chessMove.fen });
