@@ -1,34 +1,39 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import DoughnutChartProps from './types';
+import { DoughnutContainer } from './doughnut-chart.styles';
+import { blueGrey } from '@mui/material/colors';
+import ColorIndexes from '../../../utils/types/util/color-indexes/color-indexes';
+import { floor } from 'lodash';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DoughnutChart = () => {
-	const data = {
-		labels: ['Checkmate', 'Resignation', 'Abandonment', 'Timeout'],
+const DoughnutChart: FC<DoughnutChartProps> = ({ title, data, labels }) => {
+	const dataFormatted = {
+		labels,
 		datasets: [
 			{
 				label: '# of Votes',
-				data: [12, 19, 3, 5],
-				backgroundColor: [
-					'rgb(218, 17, 17)',
-					'rgb(7, 156, 255)',
-					'rgb(255, 183, 0)',
-					'rgb(0, 255, 255)',
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-				],
+				data,
+				backgroundColor: data.map((value, i) => {
+					const color = floor(
+						900 - (900 / data.length) * i,
+						-2
+					) as ColorIndexes;
+					return blueGrey[color];
+				}),
+				borderColor: 'black',
 				borderWidth: 1,
 			},
 		],
 	};
 
-	return <Doughnut data={data} />;
+	return (
+		<DoughnutContainer>
+			<Doughnut data={dataFormatted} options={{ radius: 100 }} />
+		</DoughnutContainer>
+	);
 };
 
 export default DoughnutChart;

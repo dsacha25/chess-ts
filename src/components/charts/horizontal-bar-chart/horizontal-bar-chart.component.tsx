@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -9,10 +9,9 @@ import {
 	Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import CanvasJSReact from '../../../canvasjs-3.6.6/canvasjs.react';
-import GameModeTypes from '../../../utils/types/chess/game-mode-type/game-mode-type';
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+import { blueGrey } from '@mui/material/colors';
+import HorizontalBarChartProps from './types';
+import ColorIndexes from '../../../utils/types/util/color-indexes/color-indexes';
 
 ChartJS.register(
 	CategoryScale,
@@ -23,7 +22,11 @@ ChartJS.register(
 	Legend
 );
 
-const HorizontalBarChart = () => {
+const HorizontalBarChart: FC<HorizontalBarChartProps> = ({
+	title,
+	labels,
+	data,
+}) => {
 	const options = {
 		indexAxis: 'y' as const,
 		elements: {
@@ -39,34 +42,35 @@ const HorizontalBarChart = () => {
 			},
 			title: {
 				display: true,
-				text: 'Chart.js Horizontal Bar Chart',
+				text: title,
 			},
 		},
 	};
 
-	const labels = [
-		'Untimed',
-		'5 minute',
-		'5 | 5',
-		'10 minute',
-		'10 | 15',
-		'1 Day',
-		'3 Day',
-	];
-
-	const data = {
+	const dataFormatted = {
 		labels,
-		datasets: [
-			{
-				label: 'Game Types',
-				data: [10, 1, 14, 4, 0, 7, 2],
-				borderColor: 'rgb(34, 4, 4)',
-				backgroundColor: 'rgb(191, 16, 16)',
-			},
-		],
+		datasets: data.map((value, i) => {
+			const color = (900 - i * 100) as ColorIndexes;
+
+			// return blueGrey[color];
+
+			let zeroPadding: number[] = [];
+
+			for (let index = 0; index < i; index++) {
+				zeroPadding.unshift(0);
+			}
+
+			return {
+				label: labels[i],
+				data: [...zeroPadding, data[i]],
+				borderColor: blueGrey[color],
+				backgroundColor: blueGrey[color],
+				stack: '1',
+			};
+		}),
 	};
 
-	return <Bar options={options} data={data} />;
+	return <Bar options={options} data={dataFormatted} />;
 };
 
 export default HorizontalBarChart;

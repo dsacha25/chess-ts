@@ -10,6 +10,7 @@ import {
 	Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { blueGrey } from '@mui/material/colors';
 
 ChartJS.register(
 	CategoryScale,
@@ -51,8 +52,8 @@ const LineChart = () => {
 			{
 				label: 'Rating',
 				data: [800, 600, 1200, 1150, 1100, 1400, 1320],
-				borderColor: 'rgb(68, 7, 20)',
-				backgroundColor: 'rgb(45, 6, 14)',
+				borderColor: blueGrey[900],
+				backgroundColor: blueGrey[900],
 			},
 		],
 	};

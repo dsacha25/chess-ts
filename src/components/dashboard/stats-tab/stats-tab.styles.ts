@@ -4,6 +4,7 @@ export const StatsContainer = styled.div`
 	display: grid;
 	width: 100%;
 	height: 100%;
+	max-height: 100vh;
 
 	place-items: center;
 
@@ -12,7 +13,7 @@ export const StatsContainer = styled.div`
 		font-size: 20px;
 	}
 
-	grid-template-rows: 1fr auto auto 1fr;
+	grid-template-rows: auto 1fr;
 
 	@media screen and (max-width: 980px) {
 		display: flex;
@@ -25,4 +26,17 @@ export const StatsContainer = styled.div`
 			font-size: unset;
 		}
 	}
+`;
+
+export const StatsData = styled.div`
+	display: grid;
+	width: 100%;
+	height: 100%;
+	max-height: 83vh;
+
+	overflow-y: auto;
+
+	gap: 40px;
+
+	place-items: center;
 `;

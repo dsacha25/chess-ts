@@ -47,7 +47,7 @@ export function* fetchInactiveGamesAsync() {
 			db.getAllWithID,
 			'games',
 			where('users', 'array-contains', uid),
-			where('gameOver', '==', true),
+			where('gameOver.isGameOver', '==', true),
 			orderBy('createdAt', 'desc')
 		);
 

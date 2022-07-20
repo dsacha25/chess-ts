@@ -7,7 +7,9 @@ export const ToolbarContainer = styled.div`
 	place-items: center flex-start;
 	width: 100%;
 	height: 60%;
+	max-height: 600px;
 	grid-template-rows: repeat(6, 1fr);
+	margin-top: 40px;
 
 	position: relative;
 `;
