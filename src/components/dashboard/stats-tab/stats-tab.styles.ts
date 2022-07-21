@@ -36,7 +36,9 @@ export const StatsData = styled.div`
 
 	overflow-y: auto;
 
-	gap: 40px;
+	gap: 60px;
 
 	place-items: center;
+
+	padding-bottom: 80px;
 `;

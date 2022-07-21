@@ -2,7 +2,7 @@ import { filter, forEach } from 'lodash';
 import React, { FC, useEffect, useState } from 'react';
 import parseGameMode from '../../../utils/helpers/parsers/parse-game-mode/parse-game-mode';
 import HorizontalBarChart from '../../charts/horizontal-bar-chart/horizontal-bar-chart.component';
-import { GameTypesChartContainer } from './game-types-played.styles';
+import { StatsContainer } from '../statistics-styles/statistics-styles.styles';
 import GameTypesPlayedProps from './types';
 
 const GameTypesPlayed: FC<GameTypesPlayedProps> = ({ games }) => {
@@ -35,13 +35,13 @@ const GameTypesPlayed: FC<GameTypesPlayedProps> = ({ games }) => {
 	}, []);
 
 	return (
-		<GameTypesChartContainer>
+		<StatsContainer>
 			<HorizontalBarChart
 				labels={labels}
 				title="Game Types Played"
 				data={typesPlayed}
 			/>
-		</GameTypesChartContainer>
+		</StatsContainer>
 	);
 };
 

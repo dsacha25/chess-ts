@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { filter } from 'lodash';
 import DoughnutChart from '../../charts/doughnut-chart/doughnut-chart.component';
-import { GameResultsByContainer } from './game-results-by.styles';
 import GameResultsByProps from './types';
 import { selectUserUID } from '../../../redux/user/user.selector';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
+import { StatsContainer } from '../statistics-styles/statistics-styles.styles';
 
 const GameResultsBy: FC<GameResultsByProps> = ({ games }) => {
 	const uid = useSelector((state) => selectUserUID(state));
@@ -63,7 +63,7 @@ const GameResultsBy: FC<GameResultsByProps> = ({ games }) => {
 	}, []);
 
 	return (
-		<GameResultsByContainer>
+		<StatsContainer>
 			<DoughnutChart
 				title="Game Results By..."
 				data={wins}
@@ -85,7 +85,7 @@ const GameResultsBy: FC<GameResultsByProps> = ({ games }) => {
 					'Insufficient Material',
 				]}
 			/>
-		</GameResultsByContainer>
+		</StatsContainer>
 	);
 };
 

@@ -64,12 +64,12 @@ const StatsTab = () => {
 		<StatsContainer>
 			<TabTitle>Stats Page</TabTitle>
 			<StatsData>
-				<p>You're not very good, are you?</p>
-
 				<p>
-					<strong>TOTAL GAMES:</strong> {total}
+					You're not very good, are you?
 					<br />
-					<strong>WINS:</strong> {wins} <br /> <strong>LOSSES:</strong> {losses}
+					<br />
+					<strong>TOTAL:</strong> {total} | <strong>WINS:</strong> {wins} |{' '}
+					<strong>LOSSES:</strong> {losses}
 				</p>
 
 				<RatingOverTime games={gameSummaries} />

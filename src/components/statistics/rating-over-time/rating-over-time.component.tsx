@@ -3,9 +3,8 @@ import { subDays } from 'date-fns/esm';
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectUserUID } from '../../../redux/user/user.selector';
-import { game } from '../../../utils/classes/chess-game/chess-game';
 import LineChart from '../../charts/line-chart/line-chart.component';
-import { RatingOverTimeContainer } from './rating-over-time.styles';
+import { StatsContainer } from '../statistics-styles/statistics-styles.styles';
 import RatingOverTimeProps from './types';
 
 const RatingOverTime: FC<RatingOverTimeProps> = ({ games }) => {
@@ -40,9 +39,9 @@ const RatingOverTime: FC<RatingOverTimeProps> = ({ games }) => {
 	}, []);
 
 	return (
-		<RatingOverTimeContainer>
+		<StatsContainer>
 			<LineChart title="Rating Over Time" labels={dates} data={data} />
-		</RatingOverTimeContainer>
+		</StatsContainer>
 	);
 };
 

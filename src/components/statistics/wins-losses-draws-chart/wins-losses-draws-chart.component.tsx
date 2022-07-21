@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
-import { format, isSameMonth, subMonths, toDate } from 'date-fns';
+import { format, isSameMonth, subMonths } from 'date-fns';
 import { filter, forEach } from 'lodash';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectUserUID } from '../../../redux/user/user.selector';
 import { ChessGameType } from '../../../utils/types/chess/chess-game-type/chess-game-type';
 import StackedBarChart from '../../charts/stacked-bar-chart/stacked-bar-chart.component';
 import WinsLossesDrawsProps from './types';
-import { WinsLossesDrawsContainer } from './wins-losses-draws-chart.styles';
 import { blueGrey } from '@mui/material/colors';
+import { StatsContainer } from '../statistics-styles/statistics-styles.styles';
 
 const WinsLossesDrawsChart: FC<WinsLossesDrawsProps> = ({ games }) => {
 	const uid = useSelector((state) => selectUserUID(state));
@@ -97,7 +97,7 @@ const WinsLossesDrawsChart: FC<WinsLossesDrawsProps> = ({ games }) => {
 	console.log('wins:  ', wins);
 
 	return (
-		<WinsLossesDrawsContainer>
+		<StatsContainer>
 			<StackedBarChart
 				title="Wins/Draws/Losses"
 				labels={labels}
@@ -107,7 +107,7 @@ const WinsLossesDrawsChart: FC<WinsLossesDrawsProps> = ({ games }) => {
 					{ label: 'Losses', data: losses, backgroundColor: blueGrey[600] },
 				]}
 			/>
-		</WinsLossesDrawsContainer>
+		</StatsContainer>
 	);
 };
 
