@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -8,9 +8,11 @@ import {
 	Title,
 	Tooltip,
 	Legend,
+	Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { blueGrey } from '@mui/material/colors';
+import LineChartProps from './types';
 
 ChartJS.register(
 	CategoryScale,
@@ -19,10 +21,11 @@ ChartJS.register(
 	LineElement,
 	Title,
 	Tooltip,
-	Legend
+	Legend,
+	Filler
 );
 
-const LineChart = () => {
+const LineChart: FC<LineChartProps> = ({ title, labels, data }) => {
 	const options = {
 		responsive: true,
 		plugins: {
@@ -31,34 +34,37 @@ const LineChart = () => {
 			},
 			title: {
 				display: true,
-				text: 'Chart.js Line Chart',
+				text: title,
+			},
+			subtitle: {
+				display: true,
+				text: 'Custom Chart Subtitle',
+			},
+			label: {
+				display: false,
+			},
+		},
+		scales: {
+			y: {
+				grace: 50,
 			},
 		},
 	};
 
-	const labels = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-	];
-
-	const data = {
+	const dataFormatted = {
 		labels,
 		datasets: [
 			{
-				label: 'Rating',
-				data: [800, 600, 1200, 1150, 1100, 1400, 1320],
+				label: 'Chess Rating',
+				fill: true,
+				data,
 				borderColor: blueGrey[900],
-				backgroundColor: blueGrey[900],
+				backgroundColor: `${blueGrey[600]}aa`,
 			},
 		],
 	};
 
-	return <Line options={options} data={data} />;
+	return <Line options={options} data={dataFormatted} />;
 };
 
 export default LineChart;

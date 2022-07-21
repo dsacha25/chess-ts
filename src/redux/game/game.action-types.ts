@@ -13,6 +13,7 @@ import Orientation from '../../utils/types/chess/orientation/orientation';
 import { PendingRequest } from '../../utils/types/requests/pending-request/pending-request';
 import { PromotionPieces } from '../../utils/types/chess/promotion-pieces/promotion-pieces';
 import { GameTypes } from './game.types';
+import { GameSummary } from '../../utils/types/chess/game-summary/game-summary';
 
 // ==== GAME STATE
 export interface SetAiLevelAction {
@@ -150,6 +151,11 @@ export interface FetchInactiveGamesSuccessAction {
 export interface SetInactiveGameByIDStartAction {
 	type: GameTypes.SET_INACTIVE_GAME_BY_ID_START;
 	payload: string;
+}
+
+export interface FetchInactiveGameSummariesSuccessAction {
+	type: GameTypes.FETCH_INACTIVE_GAME_SUMMARIES_SUCCESS;
+	payload: GameSummary[];
 }
 
 // ==== MOVES
@@ -292,6 +298,7 @@ type GameActions =
 	| FetchActiveGamesSuccessAction
 	| FetchInactiveGamesStartAction
 	| FetchInactiveGamesSuccessAction
+	| FetchInactiveGameSummariesSuccessAction
 	| FetchGameByIdAction
 	| SetActiveGameAction
 	| SetCurrentGameAction

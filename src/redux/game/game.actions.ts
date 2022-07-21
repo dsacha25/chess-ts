@@ -65,9 +65,11 @@ import {
 	AutoResignOpponentAction,
 	SetCurrentGameAction,
 	CloseActiveGameListenerAction,
+	FetchInactiveGameSummariesSuccessAction,
 } from './game.action-types';
 import { GameTypes } from './game.types';
 import GameTime from '../../utils/types/chess/game-time/game-time';
+import { GameSummary } from '../../utils/types/chess/game-summary/game-summary';
 
 // ==== GAME STATE
 export const setAiLevel = (level: AiLevel | null): SetAiLevelAction => ({
@@ -228,6 +230,13 @@ export const fetchInactiveGamesSuccess = (
 ): FetchInactiveGamesSuccessAction => ({
 	type: GameTypes.FETCH_INACTIVE_GAMES_SUCCESS,
 	payload: inactiveGames,
+});
+
+export const fetchInactiveGameSummariesSuccess = (
+	gameSummaries: GameSummary[]
+): FetchInactiveGameSummariesSuccessAction => ({
+	type: GameTypes.FETCH_INACTIVE_GAME_SUMMARIES_SUCCESS,
+	payload: gameSummaries,
 });
 
 export const setInactiveGameByID = (

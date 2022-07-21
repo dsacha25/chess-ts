@@ -14,7 +14,6 @@ const DoughnutChart: FC<DoughnutChartProps> = ({ title, data, labels }) => {
 		labels,
 		datasets: [
 			{
-				label: '# of Votes',
 				data,
 				backgroundColor: data.map((value, i) => {
 					const color = floor(
@@ -24,7 +23,7 @@ const DoughnutChart: FC<DoughnutChartProps> = ({ title, data, labels }) => {
 					return blueGrey[color];
 				}),
 				borderColor: 'black',
-				borderWidth: 1,
+				borderWidth: 0,
 			},
 		],
 	};

@@ -52,6 +52,11 @@ export const selectInactiveGames = createSelector(
 	(game) => game.inactiveGames
 );
 
+export const selectGameSummaries = createSelector(
+	selectGame,
+	(game) => game.gameSummaries
+);
+
 export const selectActiveGame = createSelector(
 	selectGame,
 	(game) => game.activeGame

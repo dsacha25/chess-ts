@@ -14,6 +14,7 @@ import { ChatUsers } from '../../utils/types/users/chat-users/chat-users';
 import { AiLevel } from 'js-chess-engine';
 import getPreviousMove from '../../utils/helpers/strings/get-previous-move/get-previous-move';
 import GameModeTypes from '../../utils/types/chess/game-mode-type/game-mode-type';
+import { GameSummary } from '../../utils/types/chess/game-summary/game-summary';
 
 export interface GameState {
 	aiLevel: AiLevel | null;
@@ -30,6 +31,7 @@ export interface GameState {
 	games: ChessGameType[];
 	activeGame: ChessGameType | null;
 	inactiveGames: ChessGameType[];
+	gameSummaries: GameSummary[];
 	pendingMove: ChessMove | null;
 	promotionPieceType: PromotionPieces | null;
 	receiver: string;
@@ -56,6 +58,7 @@ const INITIAL_STATE: GameState = {
 	games: [],
 	activeGame: null,
 	inactiveGames: [],
+	gameSummaries: [],
 	pendingMove: null,
 	promotionPieceType: null,
 	receiver: '',
@@ -144,6 +147,11 @@ const gameReducer = produce(
 				return state;
 			case GameTypes.FETCH_INACTIVE_GAMES_SUCCESS:
 				state.inactiveGames = action.payload;
+				state.error = '';
+				return state;
+			case GameTypes.FETCH_INACTIVE_GAME_SUMMARIES_SUCCESS:
+				state.gameSummaries = action.payload;
+				state.error = '';
 				return state;
 			case GameTypes.SET_CURRENT_GAME:
 			case GameTypes.SET_ACTIVE_GAME:

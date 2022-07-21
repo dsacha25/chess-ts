@@ -3,10 +3,12 @@ import { all, call, put, select, takeEvery } from 'typed-redux-saga/macro';
 import { db } from '../../../utils/classes/firestore/firestore-app';
 import { getPromiseReturn } from '../../../utils/helpers/sagas/get-return-type';
 import { ChessGameType } from '../../../utils/types/chess/chess-game-type/chess-game-type';
+import { GameSummary } from '../../../utils/types/chess/game-summary/game-summary';
 import { selectUserUID } from '../../user/user.selector';
 import { SetInactiveGameByIDStartAction } from '../game.action-types';
 import {
 	fetchInactiveGamesSuccess,
+	fetchInactiveGameSummariesSuccess,
 	gameError,
 	setActiveGame,
 } from '../game.actions';
@@ -59,13 +61,36 @@ export function* fetchInactiveGamesAsync() {
 	}
 }
 
-export function* onFetchInstactiveGames() {
+export function* onFetchInactiveGames() {
 	yield* takeEvery(
 		GameTypes.FETCH_INACTIVE_GAMES_START,
 		fetchInactiveGamesAsync
 	);
 }
 
+export function* fetchGameSummaries() {
+	try {
+		const uid = yield* select(selectUserUID);
+
+		const gameSummaries = yield* call<
+			any[],
+			(...args: any) => Promise<GameSummary[]>
+		>(db.getAllWithID, `users/${uid}/games`);
+
+		yield* put(fetchInactiveGameSummariesSuccess(gameSummaries));
+	} catch (err) {
+		yield* put(gameError((err as Error).message));
+	}
+}
+
+export function* onFetchInactiveGameSummaries() {
+	yield* takeEvery(GameTypes.FETCH_INACTIVE_GAMES_START, fetchGameSummaries);
+}
+
 export function* gamesInactiveSagas() {
-	yield* all([call(onFetchInstactiveGames), call(onSetInactiveGameByID)]);
+	yield* all([
+		call(onFetchInactiveGames),
+		call(onSetInactiveGameByID),
+		call(onFetchInactiveGameSummaries),
+	]);
 }

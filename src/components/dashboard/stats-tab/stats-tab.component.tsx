@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
-import { selectInactiveGames } from '../../../redux/game/game.selector';
+import {
+	selectGameSummaries,
+	selectInactiveGames,
+} from '../../../redux/game/game.selector';
 import { selectUserUID } from '../../../redux/user/user.selector';
 import DoughnutChart from '../../charts/doughnut-chart/doughnut-chart.component';
 import LineChart from '../../charts/line-chart/line-chart.component';
 import GameResultsBy from '../../statistics/game-results-by/game-results-by.component';
 import GameTypesPlayed from '../../statistics/game-types-played/game-types-played.component';
+import RatingOverTime from '../../statistics/rating-over-time/rating-over-time.component';
 import WinsLossesDrawsChart from '../../statistics/wins-losses-draws-chart/wins-losses-draws-chart.component';
 import { TabTitle } from '../tab-styles/tab-styles..styles';
 import { StatsContainer, StatsData } from './stats-tab.styles';
@@ -13,6 +17,7 @@ import { StatsContainer, StatsData } from './stats-tab.styles';
 const StatsTab = () => {
 	const uid = useSelector((state) => selectUserUID(state));
 	const inactiveGames = useSelector((state) => selectInactiveGames(state));
+	const gameSummaries = useSelector((state) => selectGameSummaries(state));
 	const [total, setTotal] = useState(0);
 	const [wins, setWins] = useState(0);
 	const [losses, setLosses] = useState(0);
@@ -67,10 +72,10 @@ const StatsTab = () => {
 					<strong>WINS:</strong> {wins} <br /> <strong>LOSSES:</strong> {losses}
 				</p>
 
+				<RatingOverTime games={gameSummaries} />
 				<GameTypesPlayed games={inactiveGames} />
 				<WinsLossesDrawsChart games={inactiveGames} />
 				<GameResultsBy games={inactiveGames} />
-				<LineChart />
 			</StatsData>
 		</StatsContainer>
 	);
