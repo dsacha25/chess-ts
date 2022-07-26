@@ -125,6 +125,8 @@ export function* makeConfirmedMoveAsync() {
 
 		const { fen, move, gameOver } = pendingMove;
 
+		console.log('GAME OVER: ', gameOver);
+
 		const confirmedMove: ConfirmedMove = {
 			fen,
 			id: game.id,
@@ -253,7 +255,7 @@ export function* fetchActiveGamesAsync() {
 		const games: ChessGameType[] = yield db.getAllWithID<ChessGameType[]>(
 			'games',
 			where('users', 'array-contains', uid),
-			where('gameOver', '==', false)
+			where('gameOver.isGameOver', '==', false)
 		);
 
 		// yield console.log('GAMES: ', games);

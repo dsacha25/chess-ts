@@ -16,7 +16,8 @@ export const GameOverContainer = styled.div`
 	z-index: 5;
 
 	h2 {
-		font-size: 2.5rem;
+		font-size: 1.5rem;
+		white-space: pre-wrap;
 	}
 
 	@media screen and (max-width: 1300px) {

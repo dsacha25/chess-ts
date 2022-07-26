@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -60,6 +60,7 @@ const LineChart: FC<LineChartProps> = ({ title, labels, data }) => {
 				data,
 				borderColor: blueGrey[900],
 				backgroundColor: `${blueGrey[600]}aa`,
+				tension: 0.25,
 			},
 		],
 	};
