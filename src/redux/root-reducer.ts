@@ -14,7 +14,7 @@ type ExtendedPersistConfig = PersistConfig<RootState> & {
 const persistConfig: ExtendedPersistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['user', 'enemy', 'game'],
+	whitelist: ['user', 'enemy', 'game', 'indexes'],
 };
 
 const rootReducer = combineReducers({

@@ -1,5 +1,5 @@
 import GameModeTypes from '../../chess/game-mode-type/game-mode-type';
-import RequestTypes from '../../request-types/request-types';
+import RequestTypes from '../../requests/request-types/request-types';
 
 export interface NotifSender {
 	uid: string;

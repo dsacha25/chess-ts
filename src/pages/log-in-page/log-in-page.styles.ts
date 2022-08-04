@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { StarBorderFilled } from '../../components/common/border-styles/border-styles';
 import CustomButton from '../../components/common/buttons/custom-button/custom-button.component';
 import Title from '../../components/common/title/title.styles';
+import { gb_disabled, gb_normal, gb_pressed } from '../../assets/google-button';
 
 export const LogInContainer = styled.form`
 	display: grid;
@@ -60,5 +61,41 @@ export const LogInButton = styled(CustomButton)`
 		position: unset;
 		right: unset;
 		bottom: unset;
+	}
+`;
+
+export const GoogleLogInButton = styled.button`
+	width: 185px;
+	height: 41px;
+	border-radius: 1px;
+	padding: 0;
+	align-self: left;
+
+	cursor: pointer;
+
+	background-color: transparent;
+	background-image: url(${gb_normal});
+	background-position: center;
+	border: none;
+	outline: none;
+	background-repeat: no-repeat;
+
+	box-shadow: 0 2px 8px -1px #a9a9a9;
+
+	justify-self: left;
+
+	:focus {
+		border-color: #80bdff;
+		outline: 0;
+		box-shadow: 0 0 1px 0.2rem rgba(63, 129, 238, 0.25);
+	}
+
+	:disabled {
+		background-image: url(${gb_disabled});
+	}
+
+	:active {
+		background-image: url(${gb_pressed});
+		box-shadow: 0 2px 8px -1px #828282;
 	}
 `;
