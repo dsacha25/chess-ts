@@ -5,7 +5,6 @@ import ImageContainer from '../common/containers/image-container/image-container
 export const HeaderContainer = styled.div`
 	display: grid;
 	width: 210px;
-	/* height: 50px; */
 
 	grid-template-columns: auto 150px;
 	place-items: flex-start center;

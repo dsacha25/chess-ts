@@ -29,18 +29,20 @@ function App() {
 	const auth = useSelector((state) => selectUserAuth(state));
 
 	useEffect(() => {
+		/**
+		 * CHECK IF USER IS AUTHENTICATED
+		 */
 		checkUserSession();
 
+		/**
+		 * IF AUTHED
+		 *  - FETCH USER INFO
+		 *  - SET ONLINE STATUS
+		 *  - OPEN NOTIFICATION LISTENER
+		 */
 		if (auth) {
 			getChessUserStart();
 			setUserStatusStart();
-		}
-
-		// eslint-disable-next-line
-	}, [auth]);
-
-	useEffect(() => {
-		if (auth) {
 			openNotificationListener();
 		}
 
