@@ -56,8 +56,11 @@ function App() {
 			<ErrorBoundary>
 				<Routes>
 					<Route index element={<HomePage />} />
+
 					<Route path={Paths.CREATE_ACCOUNT} element={<CreateAccountPage />} />
+
 					<Route path={Paths.LOGIN} element={<LogInPage />} />
+
 					<Route path={Paths.DASHBOARD} element={<PrivateRoute />}>
 						<Route index element={<DashboardPage />} />
 					</Route>

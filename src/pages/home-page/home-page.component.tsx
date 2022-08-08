@@ -18,7 +18,7 @@ const HomePage = () => {
 	const user = useSelector((state) => selectUserAuth(state));
 
 	return user ? (
-		<Navigate to="dashboard" />
+		<Navigate to={Paths.DASHBOARD} />
 	) : (
 		<HomePageContainer>
 			<HomeIconWrapper>
