@@ -26,7 +26,7 @@ import { auth, db } from '../firestore/firestore-app';
  *
  * @method generateAuthListener creates an `EventChannel` listening to `Firebase` auth `onAuthChange` method and returns `listener`
  *
- * @method initializeChannel final initialization of the `listener` | `forks` the `callback` with the provided `EventChannel`
+ * @method initializeChannel final initialization of the `listener` - `forks` the `callback` with the provided `EventChannel`
  * @note `initializeChannel` *must* be called after `onListenerClose`
  *
  */
@@ -36,7 +36,7 @@ export class SagaListener {
 	 * Closes the Saga `EventChannel` and unsubscribes from the listener
 	 *
 	 * @param channel the `EventChannel` object to be closed
-	 * @param ACTION dispatched `ACTION` to listen for
+	 * @param ACTION the dispatched `ACTION` to listen for
 	 */
 	public *onListenerClose<T>(channel: EventChannel<T>, ACTION: string) {
 		yield takeLatest(ACTION, function* () {
