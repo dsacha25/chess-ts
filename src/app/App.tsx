@@ -20,12 +20,8 @@ import GulagPage from '../pages/gulag-page/gulag-page.component';
 import ErrorBoundary from '../components/common/error-boundary/error-boundary.component';
 
 function App() {
-	const {
-		checkUserSession,
-		openNotificationListener,
-		getChessUserStart,
-		setUserStatusStart,
-	} = useActions();
+	const { checkUserSession, openNotificationListener, setUserStatusStart } =
+		useActions();
 	const auth = useSelector((state) => selectUserAuth(state));
 
 	useEffect(() => {
@@ -41,7 +37,6 @@ function App() {
 		 *  - OPEN NOTIFICATION LISTENER
 		 */
 		if (auth) {
-			getChessUserStart();
 			setUserStatusStart();
 			openNotificationListener();
 		}

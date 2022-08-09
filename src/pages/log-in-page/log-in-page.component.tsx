@@ -15,7 +15,7 @@ import { auth } from '../../utils/classes/firestore/firestore-app';
 
 const LogInPage = () => {
 	const navigate = useNavigate();
-	const { logInStart, logInSuccess } = useActions();
+	const { logInStart, logInSuccess, getChessUserStart } = useActions();
 	const {
 		register,
 		watch,
@@ -36,6 +36,8 @@ const LogInPage = () => {
 	const handleGoogleLogIn = async () => {
 		await auth.googleSignIn().then((user) => {
 			logInSuccess(user);
+			getChessUserStart();
+			callback();
 		});
 	};
 

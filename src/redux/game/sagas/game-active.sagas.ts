@@ -189,22 +189,17 @@ export function* openActiveGameListenerAsync() {
 
 		if (!game) return;
 
-		const gameRef = yield* call<
-			any[],
-			getReturn<DocumentReference<ChessGameType>>
-		>(db.getDocumentReference, `games/${game.id}`);
-
 		const gameChannel = yield* call<
 			any[],
 			getReturn<EventChannel<ChessGameType>>
-		>(listener.generateDocumentListener, gameRef, true);
+		>(listener.generateDocListener, `games/${game.id}`, true);
 
 		yield console.log('LISTEN FOR: ', game.id);
 
-		yield takeEvery(GameTypes.CLOSE_ACTIVE_GAME_LISTENER, function* () {
-			yield console.log('CLOSE GAME LISTENER');
-			yield gameChannel.close();
-		});
+		yield* listener.onListenerClose(
+			gameChannel,
+			GameTypes.CLOSE_ACTIVE_GAME_LISTENER
+		);
 
 		yield listener.initializeChannel(gameChannel, getActiveGame);
 	} catch (err) {

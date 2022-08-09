@@ -11,7 +11,7 @@ import { ChessUser } from '../../utils/types/users/chess-user/chess-user';
 import { Enemyship } from '../../utils/types/users/enemyship/enemyship';
 import { selectChessUser, selectUserUID } from '../user/user.selector';
 import {
-	FetchEnemyInfoStartAction,
+	OpenEnemyInfoListenerAction,
 	SearchEnemiesStartAction,
 	SendEnemyRequestAction,
 } from './enemies.action-types';
@@ -29,17 +29,17 @@ export function* fetchEnemyInfo(enemy: ChessUser) {
 
 export function* fetchEnemyInfoAsync({
 	payload: enemyUID,
-}: FetchEnemyInfoStartAction) {
+}: OpenEnemyInfoListenerAction) {
 	try {
-		const enemyRef = yield* call<
-			string[],
-			getReturn<DocumentReference<ChessUser>>
-		>(db.getDocumentReference, `users/${enemyUID}`);
+		const enemyChannel = yield* call<any[], getReturn<EventChannel<ChessUser>>>(
+			listener.generateDocListener,
+			`users/${enemyUID}`
+		);
 
-		const enemyChannel = yield* call<
-			DocumentReference<ChessUser>[],
-			getReturn<EventChannel<ChessUser>>
-		>(listener.generateDocumentListener, enemyRef);
+		yield* listener.onListenerClose(
+			enemyChannel,
+			EnemyTypes.CLOSE_ENEMY_INFO_LISTENER
+		);
 
 		yield listener.initializeChannel<ChessUser>(enemyChannel, fetchEnemyInfo);
 	} catch (err) {
@@ -47,8 +47,8 @@ export function* fetchEnemyInfoAsync({
 	}
 }
 
-export function* onFetchEnemyInfoStart() {
-	yield* takeEvery(EnemyTypes.FETCH_ENEMY_INFO_START, fetchEnemyInfoAsync);
+export function* onOpenEnemyInfoListener() {
+	yield* takeEvery(EnemyTypes.OPEN_ENEMY_INFO_LISTENER, fetchEnemyInfoAsync);
 }
 
 export function* fetchEnemiesAsync() {
@@ -139,6 +139,6 @@ export function* enemySagas() {
 		call(onSearchEnemiesStart),
 		call(onSendEnemyRequest),
 		call(onFetchEnemiesStart),
-		call(onFetchEnemyInfoStart),
+		call(onOpenEnemyInfoListener),
 	]);
 }

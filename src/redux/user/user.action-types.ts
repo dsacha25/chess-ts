@@ -52,6 +52,10 @@ export interface GetChessUserSuccessAction {
 	payload: ChessUser;
 }
 
+export interface CloseChessUserListenerAction {
+	type: UserTypes.CLOSE_CHESS_USER_LISTENER;
+}
+
 // ==== LOG OUT ACTIONS
 export interface LogOutStartAction {
 	type: UserTypes.LOG_OUT_START;
@@ -127,6 +131,7 @@ type UserActions =
 	| ReauthenticateSuccessAction
 	| GetChessUserStartAction
 	| GetChessUserSuccessAction
+	| CloseChessUserListenerAction
 	| LogOutStartAction
 	| LogOutSuccessAction
 	| DeleteUserAccountAction

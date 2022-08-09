@@ -28,7 +28,6 @@ import {
 import {
 	DeleteUserAccountAction,
 	LogInStartAction,
-	LogOutStartAction,
 	CreateAccountStartAction,
 	UpdateProfileInfoAction,
 	ReauthenticateStartActon,
@@ -42,7 +41,7 @@ import {
 import { ChessUser } from '../../../utils/types/users/chess-user/chess-user';
 import { BaseImage } from '../../../utils/types/util/base-image/base-image';
 import { EventChannel } from 'redux-saga';
-import { DocumentReference } from 'firebase/firestore';
+// import { DocumentReference } from 'firebase/firestore';
 import getReturn from '../../../utils/helpers/sagas/get-return-type';
 
 export function* reauthenticateUser({
@@ -187,17 +186,23 @@ export function* checkUserState(user: User) {
 
 export function* openAuthListener() {
 	try {
-		yield console.log('AUTH LISTEN');
-		yield listener.initializeListener(
-			listener.generateAuthListener,
-			checkUserState
-		);
-
 		const auth = yield* select(selectUserAuth);
+		if (!auth) return;
 
-		if (auth) {
-			yield* put(logOutStart());
-		}
+		/**
+		 * GENERATE AUTH LISTENER CHANNEL
+		 */
+		const authChannel = listener.generateAuthListener();
+
+		/**
+		 * UNSUBSCRIBE FROM AUTH LISTENER ON LOG OUT
+		 */
+		yield* listener.onListenerClose(authChannel, UserTypes.LOG_OUT_SUCCESS);
+
+		/**
+		 * SUBSCRIBE TO THE AUTHENTICATION LISTENER
+		 */
+		yield listener.initializeChannel(authChannel, checkUserState);
 	} catch (err) {
 		yield* put(userError((err as Error).message));
 	}
@@ -243,40 +248,46 @@ export function* logInUserAsync({
 	}
 }
 
-export function* logInUser() {
+export function* onLogInUser() {
 	yield* takeEvery(UserTypes.LOG_IN_START, logInUserAsync);
 }
 
 /// ==== LISTEN FOR CHESS USER
+
+/**
+ * `Callback` for realtime listener
+ * * sends `chessUser` to *redux* store
+ */
 export function* listenForChessUser(chessUser: ChessUser) {
 	yield* put(getChessUserSuccess(chessUser));
 }
 
+/**
+ * opens & closes listener for `ChessUser` Firebase object
+ */
 export function* openChessUserListener() {
 	try {
 		const uid = yield* select(selectUserUID);
 		if (!uid) return;
 
-		const docRef = yield* call<any[], getReturn<DocumentReference<ChessUser>>>(
-			db.getDocumentReference,
-			`users/${uid}`
+		/**
+		 * Create `EventChannel` listening to users Firebase document
+		 */
+		const chessUserChannel = yield* call<
+			string[],
+			getReturn<EventChannel<ChessUser>>
+		>(listener.generateDocListener, `users/${uid}`);
+
+		/**
+		 * Unsubscribe from `ChessUser` listener when `CLOSE_CHESS_USER_LISTENER` action is dispatched
+		 */
+		yield* listener.onListenerClose(
+			chessUserChannel,
+			UserTypes.CLOSE_CHESS_USER_LISTENER
 		);
 
-		const chessUserChannel = yield* call<
-			DocumentReference<ChessUser>[],
-			getReturn<EventChannel<ChessUser>>
-		>(listener.generateDocumentListener, docRef);
-
 		/**
-		 * Stop listening to user to updates
-		 */
-		yield* takeEvery(UserTypes.CLOSE_CHESS_USER_LISTENER, function* () {
-			yield console.log('CLOSE_CHESS_USER_LISTENER');
-			yield chessUserChannel.close();
-		});
-
-		/**
-		 * Initialize user listener
+		 * Initialize `ChessUser` listener
 		 */
 		yield listener.initializeChannel(chessUserChannel, listenForChessUser);
 	} catch (err) {
@@ -284,6 +295,9 @@ export function* openChessUserListener() {
 	}
 }
 
+/**
+ * Connects `openChessUserListener` to redux-saga
+ */
 export function* onGetChessUserStart() {
 	yield* takeEvery(UserTypes.GET_CHESS_USER_START, openChessUserListener);
 }
@@ -338,7 +352,7 @@ export function* onDeleteUserAccount() {
 
 export function* userAuthSagas() {
 	yield* all([
-		call(logInUser),
+		call(onLogInUser),
 		call(onCreateAccount),
 		call(onLogOutUser),
 		call(onDeleteUserAccount),

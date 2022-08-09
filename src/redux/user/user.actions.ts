@@ -27,6 +27,7 @@ import {
 	SetUserStatusStartAction,
 	SetUserStatusSuccessAction,
 	SetUserGamePresenceAction,
+	CloseChessUserListenerAction,
 } from './user.action-types';
 import UserTypes from './user.types';
 
@@ -96,6 +97,10 @@ export const getChessUserSuccess = (
 ): GetChessUserSuccessAction => ({
 	type: UserTypes.GET_CHESS_USER_SUCCESS,
 	payload: chessUser,
+});
+
+export const closeChessUserListener = (): CloseChessUserListenerAction => ({
+	type: UserTypes.CLOSE_CHESS_USER_LISTENER,
 });
 
 /// ==== DELETE ACCOUNT

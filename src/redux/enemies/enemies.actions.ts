@@ -5,11 +5,12 @@ import {
 	EnemyErrorAction,
 	FetchEnemiesStartAction,
 	FetchEnemiesSuccessAction,
-	FetchEnemyInfoStartAction,
+	OpenEnemyInfoListenerAction,
 	FetchEnemyInfoSuccessAction,
 	SearchEnemiesStartAction,
 	SearchEnemiesSuccessAction,
 	SendEnemyRequestAction,
+	CloseEnemyInfoListenerAction,
 } from './enemies.action-types';
 import { EnemyTypes } from './enemies.types';
 
@@ -32,10 +33,10 @@ export const clearSearchResult = (): ClearSearchResultAction => ({
 });
 
 // ==== ENEMY INFO
-export const fetchEnemyInfoStart = (
+export const openEnemyInfoListener = (
 	enemyUID: string
-): FetchEnemyInfoStartAction => ({
-	type: EnemyTypes.FETCH_ENEMY_INFO_START,
+): OpenEnemyInfoListenerAction => ({
+	type: EnemyTypes.OPEN_ENEMY_INFO_LISTENER,
 	payload: enemyUID,
 });
 
@@ -44,6 +45,10 @@ export const fetchEnemyInfoSuccess = (
 ): FetchEnemyInfoSuccessAction => ({
 	type: EnemyTypes.FETCH_ENEMY_INFO_SUCCESS,
 	payload: enemy,
+});
+
+export const closeEnemyInfoListener = (): CloseEnemyInfoListenerAction => ({
+	type: EnemyTypes.CLOSE_ENEMY_INFO_LISTENER,
 });
 
 export const clearEnemyInfo = (): ClearEnemyInfoAction => ({

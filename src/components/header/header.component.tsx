@@ -15,8 +15,13 @@ import useWindowSize from '../../hooks/use-window-size/use-window-size.hook';
 
 const Header = () => {
 	const photoURL = useSelector((state) => selectProfilePicture(state));
-	const { logOutStart } = useActions();
+	const { logOutStart, closeChessUserListener } = useActions();
 	const { width } = useWindowSize();
+
+	const handleLogOut = () => {
+		logOutStart();
+		closeChessUserListener();
+	};
 
 	if (width <= 980) return null;
 
@@ -25,7 +30,7 @@ const Header = () => {
 			<HeaderContainer>
 				<NotificationButton />
 				<LogOutContainer>
-					<LogOutButton onClick={() => logOutStart()} color="secondary">
+					<LogOutButton onClick={handleLogOut} color="secondary">
 						Log Out
 					</LogOutButton>
 					<Avatar url={photoURL} />

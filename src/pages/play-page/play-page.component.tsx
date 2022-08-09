@@ -17,7 +17,8 @@ const PlayPage = () => {
 	const {
 		setGameType,
 		openActiveGameListener,
-		fetchEnemyInfoStart,
+		openEnemyInfoListener,
+		closeEnemyInfoListener,
 		setUserGamePresence,
 		fetchGameById,
 		clearActiveGame,
@@ -30,14 +31,6 @@ const PlayPage = () => {
 	const [playersPresent, setPlayersPresent] = useState(false);
 
 	useEffect(() => {
-		return () => {
-			clearActiveGame();
-		};
-
-		// eslint-disable-next-line
-	}, []);
-
-	useEffect(() => {
 		if (gameUID) {
 			clearActiveGame();
 			fetchGameById(gameUID);
@@ -45,6 +38,7 @@ const PlayPage = () => {
 		}
 
 		return () => {
+			clearActiveGame();
 			if (gameUID) {
 				setUserGamePresence(false, gameUID);
 			}
@@ -101,12 +95,13 @@ const PlayPage = () => {
 				const enemyUID = find(activeGame.users, (player) => player !== uid);
 				console.log('ENEMY UID: ', enemyUID);
 				if (enemyUID) {
-					fetchEnemyInfoStart(enemyUID);
+					openEnemyInfoListener(enemyUID);
 				}
 			}
 		}
 
 		return () => {
+			closeEnemyInfoListener();
 			closeActiveGameListener();
 		};
 
