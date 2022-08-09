@@ -50,9 +50,8 @@ export const logInSuccess = (user: User): LogInSuccessAction => ({
 });
 
 /// ==== LOG OUT
-export const logOutStart = (callback?: () => void): LogOutStartAction => ({
+export const logOutStart = (): LogOutStartAction => ({
 	type: UserTypes.LOG_OUT_START,
-	payload: callback,
 });
 
 export const logOutSuccess = (): LogOutSuccessAction => ({

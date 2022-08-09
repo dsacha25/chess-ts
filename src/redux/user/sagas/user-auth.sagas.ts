@@ -252,7 +252,7 @@ export function* listenForChessUser(chessUser: ChessUser) {
 	yield* put(getChessUserSuccess(chessUser));
 }
 
-export function* openChessUserListener(): Generator<any, void, any> {
+export function* openChessUserListener() {
 	try {
 		const uid = yield* select(selectUserUID);
 		if (!uid) return;
@@ -311,12 +311,9 @@ export function* onCreateAccount() {
 	yield* takeEvery(UserTypes.CREATE_ACCOUNT_START, createAccountAsync);
 }
 
-export function* logOutAsync({ payload: callback }: LogOutStartAction) {
+export function* logOutAsync() {
 	yield auth.logOutUser();
 	yield* put(logOutSuccess());
-	if (callback) {
-		callback();
-	}
 }
 
 export function* onLogOutUser() {

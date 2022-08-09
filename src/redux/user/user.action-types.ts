@@ -55,7 +55,6 @@ export interface GetChessUserSuccessAction {
 // ==== LOG OUT ACTIONS
 export interface LogOutStartAction {
 	type: UserTypes.LOG_OUT_START;
-	payload: (() => void) | undefined;
 }
 export interface LogOutSuccessAction {
 	type: UserTypes.LOG_OUT_SUCCESS;
