@@ -21,7 +21,7 @@ import {
 	checkUserSession,
 	userError,
 	getChessUserSuccess,
-	getChessUserStart,
+	openChessUserListener,
 	reauthenticateSuccess,
 	deleteUserAccount,
 } from '../user.actions';
@@ -173,8 +173,6 @@ export function* uploadUserPhotoAsync(uid: string) {
 					console.log('UPLOAD ERROR: ', err);
 				});
 		}
-
-		yield* put(getChessUserStart());
 	} catch (err) {
 		yield* put(userError((err as Error).message));
 	}
@@ -242,7 +240,7 @@ export function* logInUserAsync({
 		}
 
 		yield* put(logInSuccess(user));
-		yield* put(getChessUserStart());
+		yield* put(openChessUserListener());
 	} catch (err) {
 		yield* put(userError((err as Error).message));
 	}
@@ -265,7 +263,7 @@ export function* listenForChessUser(chessUser: ChessUser) {
 /**
  * opens & closes listener for `ChessUser` Firebase object
  */
-export function* openChessUserListener() {
+export function* createChessUserListener() {
 	try {
 		const uid = yield* select(selectUserUID);
 		if (!uid) return;
@@ -296,10 +294,10 @@ export function* openChessUserListener() {
 }
 
 /**
- * Connects `openChessUserListener` to redux-saga
+ * Connects `createChessUserListener` to redux-saga
  */
-export function* onGetChessUserStart() {
-	yield* takeEvery(UserTypes.GET_CHESS_USER_START, openChessUserListener);
+export function* onOpenChessUserListener() {
+	yield* takeEvery(UserTypes.OPEN_CHESS_USER_LISTENER, createChessUserListener);
 }
 
 /// ==== CREATE ACCOUNT
@@ -316,6 +314,7 @@ export function* createAccountAsync({
 		yield* put(createAccountSuccess(user));
 		yield* put(checkUserSession());
 		yield* call(uploadUserPhotoAsync, user.uid);
+		yield* put(openChessUserListener());
 	} catch (err) {
 		yield* put(userError((err as Error).message));
 	}
@@ -357,7 +356,7 @@ export function* userAuthSagas() {
 		call(onLogOutUser),
 		call(onDeleteUserAccount),
 		call(onOpenAuthListener),
-		call(onGetChessUserStart),
+		call(onOpenChessUserListener),
 		call(onUpdateProfileInfo),
 	]);
 }

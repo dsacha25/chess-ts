@@ -43,8 +43,8 @@ export interface ReauthenticateSuccessAction {
 }
 
 // GET CHESS USER
-export interface GetChessUserStartAction {
-	type: UserTypes.GET_CHESS_USER_START;
+export interface OpenChessUserListenerAction {
+	type: UserTypes.OPEN_CHESS_USER_LISTENER;
 }
 
 export interface GetChessUserSuccessAction {
@@ -129,7 +129,7 @@ type UserActions =
 	| CreateAccountSuccessAction
 	| ReauthenticateStartActon
 	| ReauthenticateSuccessAction
-	| GetChessUserStartAction
+	| OpenChessUserListenerAction
 	| GetChessUserSuccessAction
 	| CloseChessUserListenerAction
 	| LogOutStartAction

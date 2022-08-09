@@ -15,7 +15,7 @@ import {
 	UserErrorAction,
 	CheckUserSessionAction,
 	UpdateProfileInfoAction,
-	GetChessUserStartAction,
+	OpenChessUserListenerAction,
 	GetChessUserSuccessAction,
 	FetchEnemyRequestsStartAction,
 	FetchEnemyRequestsSuccessAction,
@@ -88,8 +88,8 @@ export const reauthenticateSuccess = (): ReauthenticateSuccessAction => ({
 });
 
 /// ==== GET CHESS USER
-export const getChessUserStart = (): GetChessUserStartAction => ({
-	type: UserTypes.GET_CHESS_USER_START,
+export const openChessUserListener = (): OpenChessUserListenerAction => ({
+	type: UserTypes.OPEN_CHESS_USER_LISTENER,
 });
 
 export const getChessUserSuccess = (
