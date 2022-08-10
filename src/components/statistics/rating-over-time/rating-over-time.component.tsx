@@ -1,4 +1,11 @@
-import { format, isAfter, isBefore, subMonths, subWeeks } from 'date-fns';
+import {
+	format,
+	isAfter,
+	isBefore,
+	subMonths,
+	subWeeks,
+	toDate,
+} from 'date-fns';
 import { subDays } from 'date-fns/esm';
 import { Timestamp } from 'firebase/firestore';
 import React, { FC, useEffect, useState } from 'react';
@@ -24,15 +31,10 @@ const RatingOverTime: FC<RatingOverTimeProps> = ({ games }) => {
 		for (const game of games) {
 			if (i > 12) return;
 
-			console.log('created at: ', typeof game.createdAt);
-
-			if (
-				game.createdAt instanceof Timestamp &&
-				isBefore(timeSpan, game.createdAt.toDate())
-			) {
+			if (isBefore(timeSpan, toDate(game.createdAt.seconds * 1000))) {
 				setDates((dates) => [
 					...dates,
-					format(game.createdAt.toDate(), 'MMM dd'),
+					format(toDate(game.createdAt.seconds * 1000), 'MMM dd'),
 				]);
 				if (game.black.uid === uid) {
 					setData((data) => [...data, game.black.rating]);

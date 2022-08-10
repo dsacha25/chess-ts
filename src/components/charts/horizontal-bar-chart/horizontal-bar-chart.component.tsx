@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { blueGrey } from '@mui/material/colors';
 import HorizontalBarChartProps from './types';
-import ColorIndexes from '../../../utils/types/util/color-indexes/color-indexes';
+import ColorIndexes from '../../../utils/types/util/colors/color-indexes/color-indexes';
 
 ChartJS.register(
 	CategoryScale,

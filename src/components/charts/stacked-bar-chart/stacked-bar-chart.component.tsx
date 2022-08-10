@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import StackedBarChartProps from './types';
 import { blueGrey } from '@mui/material/colors';
-import ColorIndexes from '../../../utils/types/util/color-indexes/color-indexes';
+import ColorIndexes from '../../../utils/types/util/colors/color-indexes/color-indexes';
 import { floor } from 'lodash';
 
 ChartJS.register(

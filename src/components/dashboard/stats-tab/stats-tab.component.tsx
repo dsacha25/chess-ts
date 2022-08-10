@@ -72,10 +72,10 @@ const StatsTab = () => {
 					<strong>LOSSES:</strong> {losses}
 				</p>
 
-				{/* <RatingOverTime games={gameSummaries} /> */}
+				<GameResultsBy games={inactiveGames} />
+				<RatingOverTime games={gameSummaries} />
 				<GameTypesPlayed games={inactiveGames} />
 				<WinsLossesDrawsChart games={inactiveGames} />
-				<GameResultsBy games={inactiveGames} />
 			</StatsData>
 		</StatsContainer>
 	);

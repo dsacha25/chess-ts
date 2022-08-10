@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { format, isSameMonth, subMonths } from 'date-fns';
+import { format, isSameMonth, subMonths, toDate } from 'date-fns';
 import { filter, forEach } from 'lodash';
 import { useSelector } from '../../../hooks/use-selector/use-typed-selector.hook';
 import { selectUserUID } from '../../../redux/user/user.selector';
@@ -8,6 +8,7 @@ import StackedBarChart from '../../charts/stacked-bar-chart/stacked-bar-chart.co
 import WinsLossesDrawsProps from './types';
 import { blueGrey } from '@mui/material/colors';
 import { StatsContainer } from '../statistics-styles/statistics-styles.styles';
+import { Timestamp } from 'firebase/firestore';
 
 const WinsLossesDrawsChart: FC<WinsLossesDrawsProps> = ({ games }) => {
 	const uid = useSelector((state) => selectUserUID(state));
@@ -36,7 +37,7 @@ const WinsLossesDrawsChart: FC<WinsLossesDrawsProps> = ({ games }) => {
 			forEach(w, (win) => {
 				const date = win.createdAt;
 
-				if (isSameMonth(month, date.toDate())) {
+				if (isSameMonth(month, toDate(date.seconds * 1000))) {
 					count += 1;
 				}
 			});
@@ -61,7 +62,7 @@ const WinsLossesDrawsChart: FC<WinsLossesDrawsProps> = ({ games }) => {
 			forEach(l, (loss) => {
 				const date = loss.createdAt;
 
-				if (isSameMonth(month, date.toDate())) {
+				if (isSameMonth(month, toDate(date.seconds * 1000))) {
 					count += 1;
 				}
 			});
@@ -85,7 +86,7 @@ const WinsLossesDrawsChart: FC<WinsLossesDrawsProps> = ({ games }) => {
 			forEach(d, (draw) => {
 				const date = draw.createdAt;
 
-				if (isSameMonth(month, date.toDate())) {
+				if (isSameMonth(month, toDate(date.seconds * 1000))) {
 					count += 1;
 				}
 			});

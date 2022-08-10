@@ -4,8 +4,10 @@ import { StarBorderFilled } from '../../common/border-styles/border-styles';
 export const StatsContainer = styled.div`
 	display: grid;
 	width: 80%;
-	height: 100%;
-	place-items: center;
+	height: 400px;
+	place-items: flex-start center;
+
+	grid-template-columns: repeat(3, 1fr);
 
 	padding: 40px;
 

@@ -65,17 +65,13 @@ const GameResultsBy: FC<GameResultsByProps> = ({ games }) => {
 	return (
 		<StatsContainer>
 			<DoughnutChart
-				title="Game Results By..."
+				title="Wins"
 				data={wins}
 				labels={['Checkmate', 'Resignation', 'Abandonment', 'Timeout']}
+				colorName="blueGrey"
 			/>
 			<DoughnutChart
-				title="Game Results By..."
-				data={losses}
-				labels={['Checkmate', 'Resignation', 'Abandonment', 'Timeout']}
-			/>
-			<DoughnutChart
-				title="Game Results By..."
+				title="Draws"
 				data={draws}
 				labels={[
 					'Stalement',
@@ -84,6 +80,13 @@ const GameResultsBy: FC<GameResultsByProps> = ({ games }) => {
 					'Repetion',
 					'Insufficient Material',
 				]}
+				colorName="grey"
+			/>
+			<DoughnutChart
+				title="Losses"
+				data={losses}
+				labels={['Checkmate', 'Resignation', 'Abandonment', 'Timeout']}
+				colorName="pink"
 			/>
 		</StatsContainer>
 	);
