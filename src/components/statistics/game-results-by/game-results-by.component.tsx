@@ -86,7 +86,7 @@ const GameResultsBy: FC<GameResultsByProps> = ({ games }) => {
 				title="Losses"
 				data={losses}
 				labels={['Checkmate', 'Resignation', 'Abandonment', 'Timeout']}
-				colorName="pink"
+				colorName="red"
 			/>
 		</StatsContainer>
 	);
