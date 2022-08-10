@@ -186,7 +186,6 @@ export function* getActiveGame(game: ChessGameType) {
 export function* openActiveGameListenerAsync() {
 	try {
 		const game = yield* select(selectActiveGame);
-
 		if (!game) return;
 
 		const gameChannel = yield* call<

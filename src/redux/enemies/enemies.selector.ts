@@ -8,9 +8,9 @@ export const selectEnemySearchResults = createSelector(
 	(enemy) => enemy.enemySearchResults
 );
 
-export const selectEnemyInfo = createSelector(
+export const selectOpponentInfo = createSelector(
 	selectEnemy,
-	(enemy) => enemy.enemyInfo
+	(enemy) => enemy.opponentInfo
 );
 
 export const selectEnemies = createSelector(

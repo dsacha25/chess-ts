@@ -2,7 +2,7 @@ import React, { memo, useEffect, useMemo, useState } from 'react';
 import { milliseconds, toDate } from 'date-fns';
 import useActions from '../../../../hooks/use-actions/use-actions.hook';
 import { useSelector } from '../../../../hooks/use-selector/use-typed-selector.hook';
-import { selectEnemyInfo } from '../../../../redux/enemies/enemies.selector';
+import { selectOpponentInfo } from '../../../../redux/enemies/enemies.selector';
 import {
 	selectActiveGame,
 	selectGameTurn,
@@ -31,7 +31,7 @@ const OnlineStatus = memo(OnlineStatusIndicator);
 
 const OpponentChip = () => {
 	const { setActiveGameTime } = useActions();
-	const enemy = useSelector((state) => selectEnemyInfo(state));
+	const enemy = useSelector((state) => selectOpponentInfo(state));
 	const game = useSelector((state) => selectActiveGame(state));
 	const turn = useSelector((state) => selectGameTurn(state));
 
